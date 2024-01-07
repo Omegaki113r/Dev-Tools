@@ -34,23 +34,23 @@ class ApplicationView extends StatelessWidget {
                   children: [
                     Container(
                       color: Colors.green,
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
+                      child: const Padding(
+                        padding: EdgeInsets.all(10.0),
                         child: Text(
                           "Type\nConverter",
                           textAlign: TextAlign.center,
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
+                    const Padding(
+                      padding: EdgeInsets.all(10.0),
                       child: Text(
                         "Type\nConverter",
                         textAlign: TextAlign.center,
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
+                    const Padding(
+                      padding: EdgeInsets.all(10.0),
                       child: Text(
                         "Type\nConverter",
                         textAlign: TextAlign.center,
@@ -61,10 +61,8 @@ class ApplicationView extends StatelessWidget {
             Expanded(
               flex: 10,
               child: switch (context.watch<AppProvider>().selectedView) {
-                SelectedView.TYPE_CONVERTER => TypeConverterView(),
-                SelectedView.STREAMER => Container(
-                    color: Colors.red,
-                  )
+                SelectedView.TYPE_CONVERTER => const TypeConverterView(),
+                SelectedView.STREAMER => Container()
               },
             )
           ],
