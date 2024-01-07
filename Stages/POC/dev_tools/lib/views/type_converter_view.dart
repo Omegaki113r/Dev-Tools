@@ -1,4 +1,5 @@
 import 'package:dev_tools/models/type_converter_model.dart';
+import 'package:dev_tools/providers/app_provider.dart';
 import 'package:dev_tools/providers/type_converter_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,6 +17,7 @@ class _TypeConverterViewState extends State<TypeConverterView> {
       TextEditingController();
   final TextEditingController _binaryEditingController =
       TextEditingController();
+  final TextEditingController _octalEditingController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     context.watch<TypeConverterProvider>().addListener(
@@ -25,6 +27,7 @@ class _TypeConverterViewState extends State<TypeConverterView> {
         _hexEditingController.text = model.hexText;
         _decimalEditingController.text = model.decimalText;
         _binaryEditingController.text = model.binaryText;
+        _octalEditingController.text = model.octalText;
       },
     );
     return Container(
@@ -84,43 +87,53 @@ class _TypeConverterViewState extends State<TypeConverterView> {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextField(
-                  onChanged: (value) {
-                    context
-                        .read<TypeConverterProvider>()
-                        .change_text(ChangedType.HEX, value);
-                  },
-                  controller: _hexEditingController,
-                ),
-              ),
-            ),
-          ),
-          Expanded(
-            child: Card(
-              color: Colors.white54,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextField(
-                  controller: _decimalEditingController,
-                  onChanged: (value) {
-                    context
-                        .read<TypeConverterProvider>()
-                        .change_text(ChangedType.DECIMAL, value);
-                  },
-                ),
-              ),
-            ),
-          ),
-          Expanded(
-            child: Card(
-              color: Colors.white54,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextField(
                   controller: _binaryEditingController,
+                  autocorrect: false,
+                  enableSuggestions: false,
+                  autofocus: false,
                   onChanged: (value) {
                     context
                         .read<TypeConverterProvider>()
                         .change_text(ChangedType.BINARY, value);
+                  },
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            child: Card(
+              color: Colors.white54,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextField(
+                  controller: _octalEditingController,
+                  autocorrect: false,
+                  enableSuggestions: false,
+                  autofocus: false,
+                  onChanged: (value) {
+                    context
+                        .read<TypeConverterProvider>()
+                        .change_text(ChangedType.OCTAL, value);
+                  },
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            child: Card(
+              color: Colors.white54,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextField(
+                  controller: _hexEditingController,
+                  autocorrect: false,
+                  enableSuggestions: false,
+                  autofocus: false,
+                  keyboardType: TextInputType.text,
+                  onChanged: (value) {
+                    context
+                        .read<TypeConverterProvider>()
+                        .change_text(ChangedType.HEX, value);
                   },
                 ),
               ),
