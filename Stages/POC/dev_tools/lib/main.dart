@@ -5,6 +5,7 @@ import 'package:dev_tools/models/type_converter_model.dart';
 import 'package:dev_tools/providers/app_provider.dart';
 import 'package:dev_tools/providers/type_converter_provider.dart';
 import 'package:dev_tools/views/application_view.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 // import 'package:provider/provider.dart';
@@ -12,31 +13,26 @@ import 'package:window_manager/window_manager.dart';
 import 'package:desktop_window/desktop_window.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  // if (Platform.isWindows) {
-  await windowManager.ensureInitialized();
-  WindowOptions windowOptions = const WindowOptions(
-    size: Size(1200, 1000),
-    minimumSize: Size(1200, 1000),
-  );
-  windowManager.waitUntilReadyToShow(windowOptions, () async {
-    await windowManager.show();
-    // await windowManager.maximize();
-    await windowManager.focus();
-  });
+  if (kIsWeb) {
+  } else if (Platform.isWindows || Platform.isMacOS || Platform.isLinux) {
+    WidgetsFlutterBinding.ensureInitialized();
+    await windowManager.ensureInitialized();
+    WindowOptions windowOptions = const WindowOptions(
+        size: Size(1280, 720),
+        minimumSize: Size(1280, 720),
+        // titleBarStyle: TitleBarStyle.hidden,
+        title: "Xtronic DevTools"
+        // center: true,
+        );
+    // await windowManager.setResizable(false);
+    windowManager.waitUntilReadyToShow(windowOptions, () async {
+      await windowManager.show();
 
-  // Size size = await DesktopWindow.getWindowSize();
-  // print(size);
-  // await DesktopWindow.setWindowSize(Size(1200, 1000));
-  // await DesktopWindow.setMinWindowSize(Size(5200, 1000));
-  // await DesktopWindow.setMaxWindowSize(Size(1200, 1000));
-
-  // await DesktopWindow.resetMaxWindowSize();
-  // await DesktopWindow.toggleFullScreen();
-  // await DesktopWindow.toggleFullScreen();
-  // bool isFullScreen = await DesktopWindow.getFullScreen();
-  // await DesktopWindow.setFullScreen(true);
-  // }
+      // await windowManager.setAsFrameless();
+      // await windowManager.maximize();
+      await windowManager.focus();
+    });
+  }
   runApp(const ProviderWidget());
 }
 
