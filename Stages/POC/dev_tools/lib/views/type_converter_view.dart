@@ -31,6 +31,53 @@ class _TypeConverterViewState extends State<TypeConverterView> {
       color: Colors.green,
       child: Column(
         children: [
+          Row(
+            children: [
+              Expanded(
+                child: Card(
+                  color: Colors.white54,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextField(
+                      controller: _decimalEditingController,
+                      autocorrect: false,
+                      enableSuggestions: false,
+                      autofocus: false,
+                      onChanged: (value) {
+                        context
+                            .read<TypeConverterProvider>()
+                            .change_text(ChangedType.DECIMAL, value);
+                      },
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Card(
+                  color: Colors.white54,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Consumer<TypeConverterProvider>(
+                      builder: (context, value, child) {
+                        return Text(
+                            value.typeConverterModel.decimal2sComplimentText);
+                      },
+                    ),
+                    // TextField(
+                    //   controller: _decimal2sComplimentEditingController,
+                    //   autocorrect: false,
+                    //   enableSuggestions: false,
+                    //   autofocus: false,
+                    //   onChanged: (value) {
+                    //     context.read<TypeConverterProvider>().change_text(
+                    //         ChangedType.DECIMAL_2S_COMPLIMENT, value);
+                    //   },
+                    // ),
+                  ),
+                ),
+              ),
+            ],
+          ),
           Expanded(
             child: Card(
               color: Colors.white54,
