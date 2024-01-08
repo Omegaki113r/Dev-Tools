@@ -17,7 +17,7 @@ Map<int, Color> color1Map = {
 };
 MaterialColor color1MaterialColor = MaterialColor(0xFFE8BCB9, color1Map);
 
-const color2 = Color.fromRGBO(255, 166, 93, 1);
+const color2 = Color(0xFFFFA65D);
 Map<int, Color> color2Map = {
   50: const Color.fromRGBO(243, 159, 90, 0.1),
   100: const Color.fromRGBO(243, 159, 90, 0.2),
@@ -30,7 +30,7 @@ Map<int, Color> color2Map = {
   800: const Color.fromRGBO(243, 159, 90, 0.9),
   900: const Color.fromRGBO(243, 159, 90, 1),
 };
-MaterialColor color2MaterialColor = MaterialColor(0xFFF39F5A, color1Map);
+MaterialColor color2MaterialColor = MaterialColor(0xFFF39F5A, color2Map);
 
 const color3 = Color(0xFFAE445A);
 Map<int, Color> color3Map = {
@@ -45,7 +45,7 @@ Map<int, Color> color3Map = {
   800: const Color.fromRGBO(174, 68, 90, 0.9),
   900: const Color.fromRGBO(174, 68, 90, 1),
 };
-MaterialColor color3MaterialColor = MaterialColor(0xFFAE445A, color1Map);
+MaterialColor color3MaterialColor = MaterialColor(0xFFAE445A, color3Map);
 
 const color4 = Color(0xFF662549);
 Map<int, Color> color4Map = {
@@ -60,7 +60,7 @@ Map<int, Color> color4Map = {
   800: const Color.fromRGBO(102, 37, 73, 0.9),
   900: const Color.fromRGBO(102, 37, 73, 1),
 };
-MaterialColor color4MaterialColor = MaterialColor(0xFF662549, color1Map);
+MaterialColor color4MaterialColor = MaterialColor(0xFF662549, color4Map);
 
 const color5 = Color(0xFF451952);
 Map<int, Color> color5Map = {
@@ -75,7 +75,7 @@ Map<int, Color> color5Map = {
   800: const Color.fromRGBO(69, 25, 82, 0.9),
   900: const Color.fromRGBO(69, 25, 82, 1),
 };
-MaterialColor color5MaterialColor = MaterialColor(0xFF451952, color1Map);
+MaterialColor color5MaterialColor = MaterialColor(0xFF451952, color5Map);
 
 const color6 = Color(0xFF1D1A39);
 Map<int, Color> color6Map = {
@@ -90,4 +90,4 @@ Map<int, Color> color6Map = {
   800: const Color.fromRGBO(29, 26, 57, 0.9),
   900: const Color.fromRGBO(29, 26, 57, 1),
 };
-MaterialColor color6MaterialColor = MaterialColor(0xFF1D1A39, color1Map);
+MaterialColor color6MaterialColor = MaterialColor(0xFF1D1A39, color6Map);
