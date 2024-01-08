@@ -25,10 +25,18 @@ class _TypeConverterViewState extends State<TypeConverterView> {
       () {
         TypeConverterModel model =
             context.read<TypeConverterProvider>().typeConverterModel;
-        _hexEditingController.text = model.hexText;
         _decimalEditingController.text = model.decimalText;
+        _decimalEditingController.selection =
+            TextSelection.collapsed(offset: model.decimalText.length);
+        _hexEditingController.text = model.hexText;
+        _hexEditingController.selection =
+            TextSelection.collapsed(offset: model.hexText.length);
         _binaryEditingController.text = model.binaryText;
+        _binaryEditingController.selection =
+            TextSelection.collapsed(offset: model.binaryText.length);
         _octalEditingController.text = model.octalText;
+        _octalEditingController.selection =
+            TextSelection.collapsed(offset: model.octalText.length);
       },
     );
     return Container(
@@ -70,9 +78,6 @@ class _TypeConverterViewState extends State<TypeConverterView> {
                         padding: const EdgeInsets.all(8.0),
                         child: TextField(
                           controller: _decimalEditingController,
-                          autocorrect: false,
-                          enableSuggestions: false,
-                          autofocus: false,
                           onChanged: (value) {
                             context
                                 .read<TypeConverterProvider>()
@@ -93,16 +98,6 @@ class _TypeConverterViewState extends State<TypeConverterView> {
                                 .typeConverterModel.decimal2sComplimentText);
                           },
                         ),
-                        // TextField(
-                        //   controller: _decimal2sComplimentEditingController,
-                        //   autocorrect: false,
-                        //   enableSuggestions: false,
-                        //   autofocus: false,
-                        //   onChanged: (value) {
-                        //     context.read<TypeConverterProvider>().change_text(
-                        //         ChangedType.DECIMAL_2S_COMPLIMENT, value);
-                        //   },
-                        // ),
                       ),
                     ),
                   ),
