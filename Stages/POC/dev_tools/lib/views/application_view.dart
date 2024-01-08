@@ -32,32 +32,33 @@ class ApplicationView extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Container(
-                      color: Colors.green,
-                      child: const Padding(
-                        padding: EdgeInsets.all(10.0),
-                        child: Text(
+                SidebarButton(
                           "Type\nConverter",
-                          textAlign: TextAlign.center,
+                  onPressed: () {
+                    print("pressed");
+                  },
                         ),
+                SidebarButton(
+                  "Type\nConverter",
+                  onPressed: () {
+                    print("pressed");
+                  },
                       ),
+                SidebarButton(
+                  "Type\nConverter",
+                  onPressed: () {
+                    print("pressed");
+                  },
                     ),
-                    const Padding(
-                      padding: EdgeInsets.all(10.0),
-                      child: Text(
+                SidebarButton(
                         "Type\nConverter",
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.all(10.0),
-                      child: Text(
-                        "Type\nConverter",
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
+                  onPressed: () {
+                    print("pressed");
+                  },
+                ),
                   ],
-                )),
+            ),
+          ),
             Expanded(
               flex: 10,
               child: switch (context.watch<AppProvider>().selectedView) {
