@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dev_tools/const/app_colors.dart';
+import 'package:dev_tools/const/app_themes.dart';
 import 'package:dev_tools/models/type_converter_model.dart';
 import 'package:dev_tools/providers/app_provider.dart';
 import 'package:dev_tools/providers/type_converter_provider.dart';
@@ -18,12 +19,13 @@ void main() async {
     WidgetsFlutterBinding.ensureInitialized();
     await windowManager.ensureInitialized();
     WindowOptions windowOptions = const WindowOptions(
-        size: Size(1280, 720),
-        minimumSize: Size(1280, 720),
-        // titleBarStyle: TitleBarStyle.hidden,
-        title: "Xtronic DevTools"
-        // center: true,
-        );
+      size: Size(1920, 1080),
+      minimumSize: Size(1280, 720),
+      // titleBarStyle: TitleBarStyle.hidden,
+      title: "Xtronic DevTools",
+      // backgroundColor: Colors.transparent,
+      // center: true,
+    );
     // await windowManager.setResizable(false);
     windowManager.waitUntilReadyToShow(windowOptions, () async {
       await windowManager.show();
@@ -41,14 +43,14 @@ class ProviderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider<AppProvider>(
-          create: (context) => AppProvider(),
-        ),
-        ChangeNotifierProvider<TypeConverterProvider>(
-          create: (context) => TypeConverterProvider(),
-        ),
-      ],
+        providers: [
+          ChangeNotifierProvider<AppProvider>(
+            create: (context) => AppProvider(),
+          ),
+          ChangeNotifierProvider<TypeConverterProvider>(
+            create: (context) => TypeConverterProvider(),
+          ),
+        ],
         child: MaterialApp(
           themeMode: ThemeMode.system,
           theme: lightTheme,
