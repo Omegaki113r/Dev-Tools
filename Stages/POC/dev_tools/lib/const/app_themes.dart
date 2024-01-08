@@ -19,3 +19,6 @@
       ),
     ),
   ),
+  cardTheme: CardTheme(
+    color: color5,
+  ),
