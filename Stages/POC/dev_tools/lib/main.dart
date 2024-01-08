@@ -49,7 +49,11 @@ class ProviderWidget extends StatelessWidget {
           create: (context) => TypeConverterProvider(),
         ),
       ],
-      child: const ApplicationView(),
-    );
+        child: MaterialApp(
+          themeMode: ThemeMode.system,
+          theme: lightTheme,
+          darkTheme: darkTheme,
+          home: const ApplicationView(),
+        ));
   }
 }
