@@ -1,3 +1,4 @@
+import 'package:dev_tools/const/app_colors.dart';
 import 'package:dev_tools/models/type_converter_model.dart';
 import 'package:dev_tools/providers/app_provider.dart';
 import 'package:dev_tools/providers/type_converter_provider.dart';
@@ -31,25 +32,96 @@ class _TypeConverterViewState extends State<TypeConverterView> {
       },
     );
     return Container(
-      color: Colors.green,
-      child: Column(
-        children: [
-          Row(
+      padding: EdgeInsets.all(1),
+      clipBehavior: Clip.hardEdge,
+      decoration: BoxDecoration(
+        color: color1,
+        boxShadow: [
+          BoxShadow(
+            offset: Offset(-10, 0),
+            blurRadius: 20,
+            color: Colors.black,
+          ),
+        ],
+        gradient: LinearGradient(colors: [
+          Color.fromRGBO(255, 255, 255, 0.2),
+          Color.fromRGBO(255, 255, 255, 0),
+        ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20), bottomLeft: Radius.circular(20)),
+      ),
+      child: Container(
+        decoration: const BoxDecoration(
+          color: color6,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20),
+            bottomLeft: Radius.circular(20),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
             children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextField(
+                          controller: _decimalEditingController,
+                          autocorrect: false,
+                          enableSuggestions: false,
+                          autofocus: false,
+                          onChanged: (value) {
+                            context
+                                .read<TypeConverterProvider>()
+                                .change_text(ChangedType.DECIMAL, value);
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Card(
+                      // color: Colors.white54,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Consumer<TypeConverterProvider>(
+                          builder: (context, value, child) {
+                            return Text(value
+                                .typeConverterModel.decimal2sComplimentText);
+                          },
+                        ),
+                        // TextField(
+                        //   controller: _decimal2sComplimentEditingController,
+                        //   autocorrect: false,
+                        //   enableSuggestions: false,
+                        //   autofocus: false,
+                        //   onChanged: (value) {
+                        //     context.read<TypeConverterProvider>().change_text(
+                        //         ChangedType.DECIMAL_2S_COMPLIMENT, value);
+                        //   },
+                        // ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
               Expanded(
                 child: Card(
-                  color: Colors.white54,
+                  // color: Colors.white54,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextField(
-                      controller: _decimalEditingController,
+                      controller: _binaryEditingController,
                       autocorrect: false,
                       enableSuggestions: false,
                       autofocus: false,
                       onChanged: (value) {
                         context
                             .read<TypeConverterProvider>()
-                            .change_text(ChangedType.DECIMAL, value);
+                            .change_text(ChangedType.BINARY, value);
                       },
                     ),
                   ),
@@ -57,89 +129,46 @@ class _TypeConverterViewState extends State<TypeConverterView> {
               ),
               Expanded(
                 child: Card(
-                  color: Colors.white54,
+                  // color: Colors.white54,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Consumer<TypeConverterProvider>(
-                      builder: (context, value, child) {
-                        return Text(
-                            value.typeConverterModel.decimal2sComplimentText);
+                    child: TextField(
+                      controller: _octalEditingController,
+                      autocorrect: false,
+                      enableSuggestions: false,
+                      autofocus: false,
+                      onChanged: (value) {
+                        context
+                            .read<TypeConverterProvider>()
+                            .change_text(ChangedType.OCTAL, value);
                       },
                     ),
-                    // TextField(
-                    //   controller: _decimal2sComplimentEditingController,
-                    //   autocorrect: false,
-                    //   enableSuggestions: false,
-                    //   autofocus: false,
-                    //   onChanged: (value) {
-                    //     context.read<TypeConverterProvider>().change_text(
-                    //         ChangedType.DECIMAL_2S_COMPLIMENT, value);
-                    //   },
-                    // ),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Card(
+                  // color: Colors.white54,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextField(
+                      controller: _hexEditingController,
+                      autocorrect: false,
+                      enableSuggestions: false,
+                      autofocus: false,
+                      keyboardType: TextInputType.text,
+                      onChanged: (value) {
+                        context
+                            .read<TypeConverterProvider>()
+                            .change_text(ChangedType.HEX, value);
+                      },
+                    ),
                   ),
                 ),
               ),
             ],
           ),
-          Expanded(
-            child: Card(
-              color: Colors.white54,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextField(
-                  controller: _binaryEditingController,
-                  autocorrect: false,
-                  enableSuggestions: false,
-                  autofocus: false,
-                  onChanged: (value) {
-                    context
-                        .read<TypeConverterProvider>()
-                        .change_text(ChangedType.BINARY, value);
-                  },
-                ),
-              ),
-            ),
-          ),
-          Expanded(
-            child: Card(
-              color: Colors.white54,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextField(
-                  controller: _octalEditingController,
-                  autocorrect: false,
-                  enableSuggestions: false,
-                  autofocus: false,
-                  onChanged: (value) {
-                    context
-                        .read<TypeConverterProvider>()
-                        .change_text(ChangedType.OCTAL, value);
-                  },
-                ),
-              ),
-            ),
-          ),
-          Expanded(
-            child: Card(
-              color: Colors.white54,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextField(
-                  controller: _hexEditingController,
-                  autocorrect: false,
-                  enableSuggestions: false,
-                  autofocus: false,
-                  keyboardType: TextInputType.text,
-                  onChanged: (value) {
-                    context
-                        .read<TypeConverterProvider>()
-                        .change_text(ChangedType.HEX, value);
-                  },
-                ),
-              ),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
