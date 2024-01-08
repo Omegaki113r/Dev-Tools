@@ -41,6 +41,9 @@ class TypeConverterProvider with ChangeNotifier {
             if (roundedUpTo > 16) {
               roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 16);
             }
+            if (roundedUpTo == 0) {
+              roundedUpTo = 8;
+            }
             _typeConverterModel.decimal2sComplimentText +=
                 ("${int_element.toSigned(roundedUpTo) < BigInt.zero ? int_element.toSigned(roundedUpTo).toString() : "N/A"} ");
           }
@@ -60,6 +63,9 @@ class TypeConverterProvider with ChangeNotifier {
             }
             if (roundedUpTo > 16) {
               roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 16);
+            }
+            if (roundedUpTo == 0) {
+              roundedUpTo = 8;
             }
             print(roundedUpTo);
             _typeConverterModel.decimal2sComplimentText =
@@ -100,6 +106,9 @@ class TypeConverterProvider with ChangeNotifier {
             if (roundedUpTo > 16) {
               roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 16);
             }
+            if (roundedUpTo == 0) {
+              roundedUpTo = 8;
+            }
             _typeConverterModel.decimal2sComplimentText +=
                 ("${int_element.toSigned(roundedUpTo) < BigInt.zero ? int_element.toSigned(roundedUpTo).toString() : "N/A"} ");
           }
@@ -120,13 +129,16 @@ class TypeConverterProvider with ChangeNotifier {
             if (roundedUpTo > 16) {
               roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 16);
             }
+            if(roundedUpTo == 0){
+              roundedUpTo = 8;
+            }
             print(roundedUpTo);
             _typeConverterModel.decimal2sComplimentText =
                 (parsed.toSigned(roundedUpTo) < BigInt.zero
                     ? parsed.toSigned(roundedUpTo).toString()
                     : "N/A");
-            _typeConverterModel.decimalText = text;
           }
+          _typeConverterModel.decimalText = text;
         }
 
         break;
@@ -159,6 +171,9 @@ class TypeConverterProvider with ChangeNotifier {
             if (roundedUpTo > 16) {
               roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 16);
             }
+            if (roundedUpTo == 0) {
+              roundedUpTo = 8;
+            }
             _typeConverterModel.decimal2sComplimentText +=
                 ("${int_element.toSigned(roundedUpTo) < BigInt.zero ? int_element.toSigned(roundedUpTo).toString() : "N/A"} ");
           }
@@ -178,6 +193,9 @@ class TypeConverterProvider with ChangeNotifier {
             }
             if (roundedUpTo > 16) {
               roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 16);
+            }
+            if (roundedUpTo == 0) {
+              roundedUpTo = 8;
             }
             print(roundedUpTo);
             _typeConverterModel.decimal2sComplimentText =
@@ -218,6 +236,9 @@ class TypeConverterProvider with ChangeNotifier {
             if (roundedUpTo > 16) {
               roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 16);
             }
+            if (roundedUpTo == 0) {
+              roundedUpTo = 8;
+            }
             _typeConverterModel.decimal2sComplimentText +=
                 ("${int_element.toSigned(roundedUpTo) < BigInt.zero ? int_element.toSigned(roundedUpTo).toString() : "N/A"} ");
           }
@@ -237,6 +258,9 @@ class TypeConverterProvider with ChangeNotifier {
             }
             if (roundedUpTo > 16) {
               roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 16);
+            }
+            if (roundedUpTo == 0) {
+              roundedUpTo = 8;
             }
             print(roundedUpTo);
             _typeConverterModel.decimal2sComplimentText =
