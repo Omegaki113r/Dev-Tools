@@ -1,3 +1,12 @@
+import 'package:dev_tools/const/app_colors.dart';
+import 'package:flutter/material.dart';
+
+final ThemeData lightTheme = ThemeData(
+  colorScheme: ColorScheme.fromSwatch(
+    primarySwatch: color1MaterialColor,
+    accentColor: color1MaterialColor,
+    backgroundColor: color6MaterialColor,
+  ),
   textTheme: const TextTheme(
     labelLarge: TextStyle(
       color: color1,
@@ -22,3 +31,17 @@
   cardTheme: CardTheme(
     color: color5,
   ),
+);
+
+final ThemeData darkTheme = ThemeData(
+  colorScheme: ColorScheme.fromSwatch(
+    primarySwatch: color1MaterialColor,
+    accentColor: color1MaterialColor,
+    backgroundColor: color6MaterialColor,
+  ),
+  textTheme: const TextTheme(
+    labelLarge: TextStyle(
+      color: color3,
+    ),
+  ),
+);
