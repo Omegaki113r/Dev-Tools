@@ -15,35 +15,46 @@ class ApplicationView extends StatelessWidget {
     return Scaffold(
       body: Row(
         children: [
-          SizedBox(
-            width: 200,
-            child: Column(
-              children: [
-                SidebarButton(
-                  "Type\nConverter",
-                  onPressed: () {
-                    print("pressed");
-                  },
-                ),
-                SidebarButton(
-                  "Type\nConverter",
-                  onPressed: () {
-                    print("pressed");
-                  },
-                ),
-                SidebarButton(
-                  "Type\nConverter",
-                  onPressed: () {
-                    print("pressed");
-                  },
-                ),
-                SidebarButton(
-                  "Type\nConverter",
-                  onPressed: () {
-                    print("pressed");
-                  },
-                ),
-              ],
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SizedBox(
+              width: 200,
+              child: Column(
+                children: [
+                  SidebarButton(
+                    "Type Converter",
+                    50,
+                    ButtonType.CONCAVE,
+                    onPressed: () {
+                      print("pressed");
+                    },
+                  ),
+                  SidebarButton(
+                    "Type\nConverter",
+                    50,
+                    ButtonType.FLAT,
+                    onPressed: () {
+                      print("pressed");
+                    },
+                  ),
+                  SidebarButton(
+                    "Type\nConverter",
+                    50,
+                    ButtonType.FLAT,
+                    onPressed: () {
+                      print("pressed");
+                    },
+                  ),
+                  SidebarButton(
+                    "Type\nConverter",
+                    50,
+                    ButtonType.FLAT,
+                    onPressed: () {
+                      print("pressed");
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
           Expanded(
