@@ -23,7 +23,7 @@ void main() async {
       minimumSize: Size(1280, 720),
       // titleBarStyle: TitleBarStyle.hidden,
       title: "Xtronic DevTools",
-      // backgroundColor: Colors.transparent,
+      backgroundColor: Colors.transparent,
       // center: true,
     );
     // await windowManager.setResizable(false);
