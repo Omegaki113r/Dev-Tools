@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:dev_tools/const/app_colors.dart';
 import 'package:dev_tools/const/app_themes.dart';
 import 'package:dev_tools/providers/app_provider.dart';
@@ -13,48 +15,77 @@ class ApplicationView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.transparent,
       body: Row(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: SizedBox(
-              width: 200,
-              child: Column(
-                children: [
-                  SidebarButton(
-                    "Type Converter",
-                    50,
-                    ButtonType.CONCAVE,
-                    onPressed: () {
-                      print("pressed");
-                    },
+          SizedBox(
+            width: 200,
+            child: Stack(
+              children: [
+                ClipRRect(
+                  // borderRadius: BorderRadius.circular(20),
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(
+                      sigmaX: 20,
+                      sigmaY: 20,
+                    ),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: color6.withOpacity(0.9),
+                        // borderRadius: BorderRadius.all(
+                        //   Radius.circular(20),
+                        // ),
+                        // border: Border.all(
+                        //   width: 1.5,
+                        //   color: Colors.white.withOpacity(0.2),
+                        // ),
+                      ),
+                    ),
                   ),
-                  SidebarButton(
-                    "Type\nConverter",
-                    50,
-                    ButtonType.FLAT,
-                    onPressed: () {
-                      print("pressed");
-                    },
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SizedBox(
+                    width: 200,
+                    child: Column(
+                      children: [
+                        SidebarButton(
+                          "Type Converter",
+                          50,
+                          ButtonType.CONCAVE,
+                          onPressed: () {
+                            print("pressed");
+                          },
+                        ),
+                        SidebarButton(
+                          "Type\nConverter",
+                          50,
+                          ButtonType.FLAT,
+                          onPressed: () {
+                            print("pressed");
+                          },
+                        ),
+                        SidebarButton(
+                          "Type\nConverter",
+                          50,
+                          ButtonType.FLAT,
+                          onPressed: () {
+                            print("pressed");
+                          },
+                        ),
+                        SidebarButton(
+                          "Type\nConverter",
+                          50,
+                          ButtonType.FLAT,
+                          onPressed: () {
+                            print("pressed");
+                          },
+                        ),
+                      ],
+                    ),
                   ),
-                  SidebarButton(
-                    "Type\nConverter",
-                    50,
-                    ButtonType.FLAT,
-                    onPressed: () {
-                      print("pressed");
-                    },
-                  ),
-                  SidebarButton(
-                    "Type\nConverter",
-                    50,
-                    ButtonType.FLAT,
-                    onPressed: () {
-                      print("pressed");
-                    },
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
           Expanded(
