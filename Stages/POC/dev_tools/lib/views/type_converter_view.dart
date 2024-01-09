@@ -40,10 +40,10 @@ class _TypeConverterViewState extends State<TypeConverterView> {
       },
     );
     return Container(
-      padding: EdgeInsets.all(1),
+      padding: const EdgeInsets.all(1),
       clipBehavior: Clip.hardEdge,
-      decoration: BoxDecoration(
-        color: color1,
+      decoration: const BoxDecoration(
+        // color: color1,
         boxShadow: [
           BoxShadow(
             offset: Offset(-10, 0),
@@ -60,7 +60,7 @@ class _TypeConverterViewState extends State<TypeConverterView> {
       ),
       child: Container(
         decoration: const BoxDecoration(
-          color: color6,
+          // color: color6,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(20),
             bottomLeft: Radius.circular(20),
