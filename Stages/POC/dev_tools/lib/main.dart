@@ -1,7 +1,13 @@
 import 'dart:io';
 
+import 'package:dev_tools/const/app_colors.dart';
+import 'package:dev_tools/const/app_constants.dart';
+import 'package:dev_tools/utils/app_route.dart';
+import 'package:dev_tools/views/type_converter_view.dart';
+import 'package:dev_tools/views/sidebar_view.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:provider/provider.dart';
 import 'package:window_manager/window_manager.dart';
@@ -17,8 +23,8 @@ void main() async {
     WidgetsFlutterBinding.ensureInitialized();
     await windowManager.ensureInitialized();
     WindowOptions windowOptions = const WindowOptions(
-      size: Size(1920, 1080),
-      minimumSize: Size(1280, 720),
+      size: Size(960, 720),
+      minimumSize: Size(960, 720),
       // titleBarStyle: TitleBarStyle.hidden,
       title: "Xtronic DevTools",
       backgroundColor: Colors.transparent,
@@ -27,7 +33,6 @@ void main() async {
     // await windowManager.setResizable(false);
     windowManager.waitUntilReadyToShow(windowOptions, () async {
       await windowManager.show();
-
       // await windowManager.setAsFrameless();
       // await windowManager.maximize();
       await windowManager.focus();
@@ -38,22 +43,33 @@ void main() async {
 
 class ProviderWidget extends StatelessWidget {
   const ProviderWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-        providers: [
-          ChangeNotifierProvider<AppProvider>(
-            create: (context) => AppProvider(),
-          ),
-          ChangeNotifierProvider<TypeConverterProvider>(
-            create: (context) => TypeConverterProvider(),
-          ),
-        ],
-        child: MaterialApp(
-          themeMode: ThemeMode.system,
-          theme: lightTheme,
-          darkTheme: darkTheme,
-          home: const ApplicationView(),
-        ));
+      providers: [
+        ChangeNotifierProvider<AppProvider>(
+          create: (context) => AppProvider(),
+        ),
+        ChangeNotifierProvider<TypeConverterProvider>(
+          create: (context) => TypeConverterProvider(),
+        ),
+      ],
+      child: const AppWidget(),
+    );
+  }
+}
+
+class AppWidget extends StatelessWidget {
+  const AppWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp.router(
+      routerConfig: AppRoute.router,
+      themeMode: ThemeMode.system,
+      theme: lightTheme,
+      darkTheme: darkTheme,
+    );
   }
 }

@@ -4,6 +4,13 @@ import 'package:flutter/material.dart';
 enum ChangedType { HEX, OCTAL, DECIMAL, BINARY }
 
 class TypeConverterProvider with ChangeNotifier {
+  final TextEditingController _hexEditingController = TextEditingController();
+  final TextEditingController _decimalEditingController =
+      TextEditingController();
+  final TextEditingController _binaryEditingController =
+      TextEditingController();
+  final TextEditingController _octalEditingController = TextEditingController();
+
   TypeConverterModel _typeConverterModel =
       TypeConverterModel("", "", "", "", "", "");
   TypeConverterModel typeConverterModel =
@@ -129,7 +136,7 @@ class TypeConverterProvider with ChangeNotifier {
             if (roundedUpTo > 16) {
               roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 16);
             }
-            if(roundedUpTo == 0){
+            if (roundedUpTo == 0) {
               roundedUpTo = 8;
             }
             print(roundedUpTo);
@@ -274,6 +281,25 @@ class TypeConverterProvider with ChangeNotifier {
     }
     // }
     typeConverterModel = _typeConverterModel;
+
+    _decimalEditingController.text = typeConverterModel.decimalText;
+    _decimalEditingController.selection =
+        TextSelection.collapsed(offset: typeConverterModel.decimalText.length);
+    _hexEditingController.text = typeConverterModel.hexText;
+    _hexEditingController.selection =
+        TextSelection.collapsed(offset: typeConverterModel.hexText.length);
+    _binaryEditingController.text = typeConverterModel.binaryText;
+    _binaryEditingController.selection =
+        TextSelection.collapsed(offset: typeConverterModel.binaryText.length);
+    _octalEditingController.text = typeConverterModel.octalText;
+    _octalEditingController.selection =
+        TextSelection.collapsed(offset: typeConverterModel.octalText.length);
+
     notifyListeners();
   }
+
+  TextEditingController get decimalController => _decimalEditingController;
+  TextEditingController get binaryController => _binaryEditingController;
+  TextEditingController get octalController => _octalEditingController;
+  TextEditingController get hexController => _hexEditingController;
 }

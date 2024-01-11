@@ -1,0 +1,5 @@
+const HOME = "/";
+const TYPE_CONVERTER = "/TYPE_CONVERTER";
+const DATA_STREAMER = "/DATA_STREAMER";
+
+enum ButtonType { FLAT, CONCAVE, CONVEX, EMBOSS }

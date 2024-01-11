@@ -8,11 +8,33 @@ final ThemeData lightTheme = ThemeData(
     backgroundColor: color6MaterialColor,
   ),
   textTheme: const TextTheme(
+    // displayLarge: TextStyle(color: Colors.amber),
+    // displayMedium: TextStyle(color: Colors.amber),
+    // displaySmall: TextStyle(color: Colors.amber),
+    // headlineLarge: TextStyle(color: Colors.amber),
+    // headlineMedium: TextStyle(color: Colors.amber),
+    // headlineSmall: TextStyle(color: Colors.amber),
+    // titleLarge: TextStyle(color: Colors.red),
+    titleMedium: TextStyle(
+      color: color1,
+      fontWeight: FontWeight.normal,
+    ),
+    // titleSmall: TextStyle(color: Colors.amber),
+    bodyLarge: TextStyle(color: color2),
+    // bodyMedium: TextStyle(color: Colors.amber),
+    // bodySmall: TextStyle(color: Colors.amber),
     labelLarge: TextStyle(
       color: color1,
       fontWeight: FontWeight.normal,
     ),
+    // labelMedium: TextStyle(color: Colors.amber),
+    // labelSmall: TextStyle(color: Colors.amber),
   ),
+  inputDecorationTheme: InputDecorationTheme(
+    fillColor: Colors.red,
+    labelStyle: TextStyle(color: Colors.amber),
+  ),
+  dividerTheme: DividerThemeData(color: color5, space: 20),
   textButtonTheme: TextButtonThemeData(
     style: ButtonStyle(
       overlayColor:
@@ -28,8 +50,8 @@ final ThemeData lightTheme = ThemeData(
       ),
     ),
   ),
-  cardTheme: CardTheme(
-    color: color5,
+  cardTheme: const CardTheme(
+    color: color6,
   ),
 );
 

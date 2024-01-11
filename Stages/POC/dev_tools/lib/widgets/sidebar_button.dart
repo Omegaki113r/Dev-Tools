@@ -1,18 +1,18 @@
 import 'package:dev_tools/const/app_colors.dart';
+import 'package:dev_tools/const/app_constants.dart';
 import 'package:extra_alignments/extra_alignments.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
 // import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
-enum ButtonType{FLAT,CONCAVE,CONVEX,EMBOSS}
 
 class SidebarButton extends StatelessWidget {
   final String label;
   final double height;
   final ButtonType buttonType;
   final Function onPressed;
-  const SidebarButton(this.label, this.height,this.buttonType,
+  const SidebarButton(this.label, this.height, this.buttonType,
       {super.key, required this.onPressed});
 
   @override
@@ -25,19 +25,19 @@ class SidebarButton extends StatelessWidget {
         right: 30.0,
       ),
       child: TextButton(
-        onPressed: () {
-          onPressed();
-        },
-        child: switch (buttonType) {
-          ButtonType.FLAT => FlatSidebarButton(label, height),
-          ButtonType.CONCAVE => ConcaveSidebarButton(label, height),
-          ButtonType.CONVEX => ConvexSidebarButton(label, height),
-          ButtonType.EMBOSS => EmbossSidebarButton(label, height),
-        }
-        // child: ConcaveSidebarButton(label, height),
-        // child: ConvexSidebarButton(label, height),
-        // child: EmbossSidebarButton(label, height),
-      ),
+          onPressed: () {
+            onPressed();
+          },
+          child: switch (buttonType) {
+            ButtonType.FLAT => FlatSidebarButton(label, height),
+            ButtonType.CONCAVE => ConcaveSidebarButton(label, height),
+            ButtonType.CONVEX => ConvexSidebarButton(label, height),
+            ButtonType.EMBOSS => EmbossSidebarButton(label, height),
+          }
+          // child: ConcaveSidebarButton(label, height),
+          // child: ConvexSidebarButton(label, height),
+          // child: EmbossSidebarButton(label, height),
+          ),
     );
   }
 }
