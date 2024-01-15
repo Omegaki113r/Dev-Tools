@@ -74,7 +74,6 @@ class TypeConverterProvider with ChangeNotifier {
             if (roundedUpTo == 0) {
               roundedUpTo = 8;
             }
-            print(roundedUpTo);
             _typeConverterModel.decimal2sComplimentText =
                 (parsed.toSigned(roundedUpTo) < BigInt.zero
                     ? parsed.toSigned(roundedUpTo).toString()
@@ -125,7 +124,8 @@ class TypeConverterProvider with ChangeNotifier {
           if (parsed != null) {
             _typeConverterModel.binaryText = parsed.toRadixString(2);
             _typeConverterModel.octalText = parsed.toRadixString(8);
-            _typeConverterModel.hexText = parsed.toRadixString(16);
+            _typeConverterModel.hexText =
+                parsed.toRadixString(16).toUpperCase();
             int roundedUpTo = TypeConverterModel.roundUp(parsed.bitLength, 8);
             if (roundedUpTo > 64) {
               roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 64);
@@ -139,7 +139,6 @@ class TypeConverterProvider with ChangeNotifier {
             if (roundedUpTo == 0) {
               roundedUpTo = 8;
             }
-            print(roundedUpTo);
             _typeConverterModel.decimal2sComplimentText =
                 (parsed.toSigned(roundedUpTo) < BigInt.zero
                     ? parsed.toSigned(roundedUpTo).toString()
@@ -190,7 +189,8 @@ class TypeConverterProvider with ChangeNotifier {
           if (parsed != null) {
             _typeConverterModel.octalText = parsed.toRadixString(8);
             _typeConverterModel.decimalText = parsed.toRadixString(10);
-            _typeConverterModel.hexText = parsed.toRadixString(16);
+            _typeConverterModel.hexText =
+                parsed.toRadixString(16).toUpperCase();
             int roundedUpTo = TypeConverterModel.roundUp(parsed.bitLength, 8);
             if (roundedUpTo > 64) {
               roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 64);
@@ -204,7 +204,6 @@ class TypeConverterProvider with ChangeNotifier {
             if (roundedUpTo == 0) {
               roundedUpTo = 8;
             }
-            print(roundedUpTo);
             _typeConverterModel.decimal2sComplimentText =
                 (parsed.toSigned(roundedUpTo) < BigInt.zero
                     ? parsed.toSigned(roundedUpTo).toString()
@@ -255,7 +254,8 @@ class TypeConverterProvider with ChangeNotifier {
           if (parsed != null) {
             _typeConverterModel.binaryText = parsed.toRadixString(2);
             _typeConverterModel.decimalText = parsed.toRadixString(10);
-            _typeConverterModel.hexText = parsed.toRadixString(16);
+            _typeConverterModel.hexText =
+                parsed.toRadixString(16).toUpperCase();
             int roundedUpTo = TypeConverterModel.roundUp(parsed.bitLength, 8);
             if (roundedUpTo > 64) {
               roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 64);
@@ -269,7 +269,6 @@ class TypeConverterProvider with ChangeNotifier {
             if (roundedUpTo == 0) {
               roundedUpTo = 8;
             }
-            print(roundedUpTo);
             _typeConverterModel.decimal2sComplimentText =
                 (parsed.toSigned(roundedUpTo) < BigInt.zero
                     ? parsed.toSigned(roundedUpTo).toString()
