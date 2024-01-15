@@ -16,6 +16,7 @@ class SoftButton extends StatefulWidget {
   final Function onPressed;
   EdgeInsetsGeometry? padding;
   ButtonState _buttonState = ButtonState.DEFAULT;
+  final Duration duration = Duration(seconds: 2);
   SoftButton(this.label, this.buttonType,
       {super.key,
       this.padding,
@@ -27,7 +28,9 @@ class SoftButton extends StatefulWidget {
   State<SoftButton> createState() => _SoftButtonState();
 }
 
-class _SoftButtonState extends State<SoftButton> {
+class _SoftButtonState extends State<SoftButton>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -36,9 +39,9 @@ class _SoftButtonState extends State<SoftButton> {
       child: GestureDetector(
         // onTap: () => onPressed(),
         onTapUp: (details) {
-          setState(() {
-            widget._buttonState = ButtonState.DEFAULT;
-          });
+          // setState(() {
+          //   widget._buttonState = ButtonState.DEFAULT;
+          // });
         },
         onTapDown: (details) {
           widget.onPressed();
@@ -69,6 +72,27 @@ class _SoftButtonState extends State<SoftButton> {
       ),
     );
   }
+
+  @override
+  void initState() {
+    _animationController = AnimationController(
+      vsync: this,
+      duration: widget.duration,
+    );
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void didUpdateWidget(covariant SoftButton oldWidget) {
+    _animationController.duration = widget.duration;
+    super.didUpdateWidget(oldWidget);
+  }
 }
 
 class FlatSoftButton extends StatelessWidget {
@@ -81,7 +105,11 @@ class FlatSoftButton extends StatelessWidget {
     return Container(
       width: double.infinity,
       decoration: const BoxDecoration(
-        color: color6,
+        // color: color6,
+        gradient: LinearGradient(colors: [
+          color6,
+          color6,
+        ], begin: Alignment.topLeft, end: Alignment.bottomRight),
         borderRadius: BorderRadius.all(Radius.circular(20)),
         boxShadow: [
           BoxShadow(
