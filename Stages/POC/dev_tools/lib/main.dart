@@ -52,8 +52,8 @@ class ProviderWidget extends StatelessWidget {
           create: (context) => AppProvider(),
         ),
         ChangeNotifierProvider<TypeConverterProvider>(
-          create: (context) => TypeConverterProvider(),
-        ),
+        ChangeNotifierProvider<DataStreamerProvider>(
+            create: (context) => DataStreamerProvider())
       ],
       child: const AppWidget(),
     );
