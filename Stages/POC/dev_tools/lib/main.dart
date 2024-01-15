@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dev_tools/const/app_colors.dart';
 import 'package:dev_tools/const/app_constants.dart';
+import 'package:dev_tools/providers/data_streamer_provider.dart';
 import 'package:dev_tools/utils/app_route.dart';
 import 'package:dev_tools/views/type_converter_view.dart';
 import 'package:dev_tools/views/sidebar_view.dart';
@@ -22,17 +23,18 @@ void main() async {
   } else if (Platform.isWindows || Platform.isMacOS || Platform.isLinux) {
     WidgetsFlutterBinding.ensureInitialized();
     await windowManager.ensureInitialized();
+
     WindowOptions windowOptions = const WindowOptions(
-      size: Size(960, 720),
-      minimumSize: Size(960, 720),
+      size: Size(1280, 720),
+      minimumSize: Size(1280, 720),
       // titleBarStyle: TitleBarStyle.hidden,
       title: "Xtronic DevTools",
       backgroundColor: Colors.transparent,
       // center: true,
     );
-    // await windowManager.setResizable(false);
     windowManager.waitUntilReadyToShow(windowOptions, () async {
       await windowManager.show();
+      // await windowManager.setResizable(false);
       // await windowManager.setAsFrameless();
       // await windowManager.maximize();
       await windowManager.focus();
@@ -48,10 +50,9 @@ class ProviderWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<AppProvider>(
-          create: (context) => AppProvider(),
-        ),
+        ChangeNotifierProvider<AppProvider>(create: (context) => AppProvider()),
         ChangeNotifierProvider<TypeConverterProvider>(
+            create: (context) => TypeConverterProvider()),
         ChangeNotifierProvider<DataStreamerProvider>(
             create: (context) => DataStreamerProvider())
       ],
