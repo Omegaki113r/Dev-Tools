@@ -1,7 +1,6 @@
 import 'package:dev_tools/const/app_constants.dart';
-import 'package:dev_tools/widgets/sidebar_button.dart';
 import 'package:dev_tools/widgets/soft_button.dart';
-import 'package:flutter/foundation.dart';
+import 'package:dev_tools/widgets/soft_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -26,28 +25,10 @@ class _SidebarState extends State<SidebarView> {
               color: widget.backgroundColor,
             ),
           ),
-          Column(
+          ListView(
             children: [
-              SidebarButton(
-                "Type Converter",
-                50,
-                ButtonType.FLAT,
-                onPressed: () {
-                  GoRouter.of(context).go(TYPE_CONVERTER);
-                },
-              ),
-              Divider(),
-              SidebarButton(
-                "Data Streamer",
-                50,
-                ButtonType.FLAT,
-                onPressed: () {
-                  GoRouter.of(context).go(DATA_STREAMER);
-                },
-              ),
-              Divider(),
               SoftButton(
-                "hey",
+                "Type Converter",
                 ButtonType.FLAT,
                 height: 60,
                 padding: const EdgeInsets.only(
@@ -57,9 +38,25 @@ class _SidebarState extends State<SidebarView> {
                   right: 30.0,
                 ),
                 onPressed: () {
-                  print("Hey");
+                  GoRouter.of(context).go(TYPE_CONVERTER);
                 },
               ),
+              SoftDivider(),
+              SoftButton(
+                "Data Streamer",
+                ButtonType.FLAT,
+                height: 60,
+                padding: const EdgeInsets.only(
+                  top: 20.0,
+                  bottom: 20.0,
+                  left: 20.0,
+                  right: 30.0,
+                ),
+                onPressed: () {
+                  GoRouter.of(context).go(DATA_STREAMER);
+                },
+              ),
+              SoftDivider(),
             ],
           ),
         ],
