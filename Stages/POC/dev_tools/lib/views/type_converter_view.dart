@@ -1,8 +1,10 @@
-import 'package:dev_tools/const/app_colors.dart';
-import 'package:dev_tools/models/type_converter_model.dart';
-import 'package:dev_tools/providers/app_provider.dart';
 import 'package:dev_tools/providers/type_converter_provider.dart';
+import 'package:dev_tools/widgets/soft_card.dart';
+import 'package:dev_tools/widgets/soft_divider.dart';
+import 'package:dev_tools/widgets/soft_text.dart';
+import 'package:dev_tools/widgets/soft_textfield.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
 class TypeConverterView extends StatefulWidget {
@@ -13,37 +15,8 @@ class TypeConverterView extends StatefulWidget {
 }
 
 class _TypeConverterViewState extends State<TypeConverterView> {
-  // final TextEditingController _hexEditingController = TextEditingController();
-  // final TextEditingController _decimalEditingController =
-  //     TextEditingController();
-  // final TextEditingController _binaryEditingController =
-  //     TextEditingController();
-  // final TextEditingController _octalEditingController = TextEditingController();
-
-  // void modelListener(BuildContext context) {
-  //   TypeConverterModel model =
-  //       context.read<TypeConverterProvider>().typeConverterModel;
-  //   _decimalEditingController.text = model.decimalText;
-  //   _decimalEditingController.selection =
-  //       TextSelection.collapsed(offset: model.decimalText.length);
-  //   _hexEditingController.text = model.hexText;
-  //   _hexEditingController.selection =
-  //       TextSelection.collapsed(offset: model.hexText.length);
-  //   _binaryEditingController.text = model.binaryText;
-  //   _binaryEditingController.selection =
-  //       TextSelection.collapsed(offset: model.binaryText.length);
-  //   _octalEditingController.text = model.octalText;
-  //   _octalEditingController.selection =
-  //       TextSelection.collapsed(offset: model.octalText.length);
-  // }
-
   @override
   Widget build(BuildContext context) {
-    // context.read<TypeConverterProvider>().addListener(
-    //   () {
-    //     modelListener(context);
-    //   },
-    // );
     return Container(
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.only(
@@ -52,16 +25,18 @@ class _TypeConverterViewState extends State<TypeConverterView> {
         ),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
+        padding: const EdgeInsets.all(20.0),
+        child: ListView(
+          // crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                Expanded(
-                  child: Card(
+            SoftCard(
+              child: Row(
+                children: [
+                  Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: TextField(
+                      padding: const EdgeInsets.all(30.0),
+                      child: SoftTextField(
+                        label: "Decimal",
                         controller: context
                             .read<TypeConverterProvider>()
                             .decimalController,
@@ -73,80 +48,69 @@ class _TypeConverterViewState extends State<TypeConverterView> {
                       ),
                     ),
                   ),
-                ),
-                Expanded(
-                  child: Card(
-                    // color: Colors.white54,
+                  Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(30.0),
                       child: Consumer<TypeConverterProvider>(
-                        builder: (context, value, child) {
-                          return Text(
-                              value.typeConverterModel.decimal2sComplimentText);
-                        },
-                      ),
+                          builder: (context, value, child) {
+                        return SoftText(
+                          value.typeConverterModel.decimal2sComplimentText,
+                          label: "Decimal 2's Compliment",
+                        );
+                      }),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-            Expanded(
-              child: Card(
-                // color: Colors.white54,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextField(
-                    controller:
-                        context.read<TypeConverterProvider>().binaryController,
-                    autocorrect: false,
-                    enableSuggestions: false,
-                    autofocus: false,
-                    onChanged: (value) {
-                      context
-                          .read<TypeConverterProvider>()
-                          .change_text(ChangedType.BINARY, value);
-                    },
-                  ),
+            SoftDivider(),
+            SoftCard(
+              child: Padding(
+                padding: EdgeInsets.all(30),
+                child: SoftTextField(
+                  label: "Binary",
+                  // width: 500,
+                  controller:
+                      context.read<TypeConverterProvider>().binaryController,
+                  onChanged: (value) {
+                    context
+                        .read<TypeConverterProvider>()
+                        .change_text(ChangedType.BINARY, value);
+                  },
                 ),
               ),
             ),
-            Expanded(
-              child: Card(
-                // color: Colors.white54,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextField(
-                    controller:
-                        context.read<TypeConverterProvider>().octalController,
-                    autocorrect: false,
-                    enableSuggestions: false,
-                    autofocus: false,
-                    onChanged: (value) {
-                      context
-                          .read<TypeConverterProvider>()
-                          .change_text(ChangedType.OCTAL, value);
-                    },
-                  ),
+            SoftDivider(),
+            SoftCard(
+              child: Padding(
+                padding: EdgeInsets.all(30),
+                child: SoftTextField(
+                  label: "Octal",
+                  // width: 500,
+                  controller:
+                      context.read<TypeConverterProvider>().octalController,
+                  onChanged: (value) {
+                    context
+                        .read<TypeConverterProvider>()
+                        .change_text(ChangedType.OCTAL, value);
+                  },
                 ),
               ),
             ),
-            Expanded(
-              child: Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextField(
-                    controller:
-                        context.read<TypeConverterProvider>().hexController,
-                    autocorrect: false,
-                    enableSuggestions: false,
-                    autofocus: false,
-                    keyboardType: TextInputType.text,
-                    onChanged: (value) {
-                      context
-                          .read<TypeConverterProvider>()
-                          .change_text(ChangedType.HEX, value);
-                    },
-                  ),
+            SoftDivider(),
+            SoftCard(
+              child: Padding(
+                padding: EdgeInsets.all(30),
+                child: SoftTextField(
+                  label: "Hex",
+                  // width: 500,
+                  controller:
+                      context.read<TypeConverterProvider>().hexController,
+                  onChanged: (value) {
+                    context
+                        .read<TypeConverterProvider>()
+                        .change_text(ChangedType.HEX, value);
+                  },
                 ),
               ),
             ),
@@ -154,15 +118,5 @@ class _TypeConverterViewState extends State<TypeConverterView> {
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    // _hexEditingController.dispose();
-    // _decimalEditingController.dispose();
-    // _binaryEditingController.dispose();
-    // context.read<TypeConverterProvider>().removeListener(modelListener);
-    super.dispose();
   }
 }
