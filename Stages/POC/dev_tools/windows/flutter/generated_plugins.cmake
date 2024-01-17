@@ -3,7 +3,6 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
-  flutter_ble_peripheral
   flutter_libserialport
   screen_retriever
   window_manager
