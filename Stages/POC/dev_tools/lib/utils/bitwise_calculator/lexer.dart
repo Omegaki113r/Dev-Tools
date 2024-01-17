@@ -11,7 +11,7 @@ class Lexer {
   void nextChar() {
     ++currentPosition;
     if (currentPosition >= source.length) {
-      currentCharacter = "\0";
+      currentCharacter = "";
     } else {
       currentCharacter = source[currentPosition];
     }
@@ -19,7 +19,7 @@ class Lexer {
 
   String peek() {
     if (currentPosition + 1 >= source.length) {
-      return "\0";
+      return "";
     }
     return source[currentPosition + 1];
   }
@@ -37,9 +37,11 @@ class Lexer {
   }
 
   Token? getToken() {
-    skipWhiteSpace();
+    // skipWhiteSpace();
     Token? token;
-    if (currentCharacter == "+") {
+    if (currentCharacter == " ") {
+      token = Token(currentCharacter, TokenType.SPACE);
+    } else if (currentCharacter == "+") {
       token = Token(currentCharacter, TokenType.ADD);
     } else if (currentCharacter == "-") {
       token = Token(currentCharacter, TokenType.SUB);
@@ -49,8 +51,6 @@ class Lexer {
       token = Token(currentCharacter, TokenType.DIV);
     } else if (currentCharacter == "\n") {
       token = Token(currentCharacter, TokenType.NEWLINE);
-    } else if (currentCharacter == "\0") {
-      token = Token(currentCharacter, TokenType.EOF);
     } else if (currentCharacter == "<") {
       if (peek() == "<") {
         String lastCharacter = currentCharacter;
@@ -69,22 +69,25 @@ class Lexer {
       token = Token(currentCharacter, TokenType.OR);
     } else if (currentCharacter == "^") {
       token = Token(currentCharacter, TokenType.XOR);
-    } else if (isDigit(currentCharacter, 0)) {
+    } else if (isDigit(currentCharacter, 0) ||
+        isValidCharacter(currentCharacter)) {
       int startPosition = currentPosition;
-      while (isDigit(peek(), 0)) {
+      while (isDigit(peek(), 0) || isValidCharacter(peek())) {
         nextChar();
       }
       if (peek() == ".") {
         nextChar();
-        if (!isDigit(peek(), 0)) {
+        if (!isDigit(peek(), 0) && !isValidCharacter(peek())) {
           abort("Illegal character in number");
         }
-        while (isDigit(peek(), 0)) {
+        while (isDigit(peek(), 0) || isValidCharacter(peek())) {
           nextChar();
         }
       }
       String tokenText = source.substring(startPosition, currentPosition + 1);
       token = Token(tokenText, TokenType.NUMBER);
+    } else if (currentCharacter == "") {
+      token = Token("", TokenType.EOF);
     } else {
       abort("Unknown token: " + currentCharacter);
     }
@@ -92,7 +95,26 @@ class Lexer {
     return token;
   }
 
-  bool isDigit(String s, int idx) => (s.codeUnitAt(idx) ^ 0x30) <= 9;
+  bool isDigit(String s, int idx) {
+    if (s.length == 0) {
+      return false;
+    }
+    return (s.codeUnitAt(idx) ^ 0x30) <= 9;
+  }
+
+  bool isValidCharacter(String s) =>
+      s == "F" ||
+      s == "f" ||
+      s == "E" ||
+      s == "e" ||
+      s == "D" ||
+      s == "d" ||
+      s == "C" ||
+      s == "c" ||
+      s == "B" ||
+      s == "b" ||
+      s == "A" ||
+      s == "a";
 }
 
 class Token {
