@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:dev_tools/const/app_strings.dart';
 import 'package:dev_tools/providers/data_streamer_provider.dart';
 import 'package:dev_tools/utils/app_route.dart';
-import 'package:dev_tools/utils/bitwise_calculator/lexer.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -15,14 +14,6 @@ import 'package:dev_tools/providers/app_provider.dart';
 import 'package:dev_tools/providers/type_converter_provider.dart';
 
 void main() async {
-  // String s = "1<<2";
-  // Lexer lex = Lexer(s);
-  // Token? token = lex.getToken();
-  // while (token!.token != TokenType.EOF) {
-  //   print(token.token);
-  //   token = lex.getToken();
-  // }
-
   if (kIsWeb) {
   } else if (Platform.isWindows || Platform.isMacOS || Platform.isLinux) {
     WidgetsFlutterBinding.ensureInitialized();
