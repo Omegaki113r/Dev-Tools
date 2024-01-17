@@ -1,14 +1,11 @@
 import 'dart:io';
 
-import 'package:dev_tools/const/app_colors.dart';
-import 'package:dev_tools/const/app_constants.dart';
+import 'package:dev_tools/const/app_strings.dart';
 import 'package:dev_tools/providers/data_streamer_provider.dart';
 import 'package:dev_tools/utils/app_route.dart';
-import 'package:dev_tools/views/type_converter_view.dart';
-import 'package:dev_tools/views/sidebar_view.dart';
+import 'package:dev_tools/utils/bitwise_calculator/lexer.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 import 'package:provider/provider.dart';
 import 'package:window_manager/window_manager.dart';
@@ -16,9 +13,16 @@ import 'package:window_manager/window_manager.dart';
 import 'package:dev_tools/const/app_themes.dart';
 import 'package:dev_tools/providers/app_provider.dart';
 import 'package:dev_tools/providers/type_converter_provider.dart';
-import 'package:dev_tools/views/application_view.dart';
 
 void main() async {
+  // String s = "1<<2";
+  // Lexer lex = Lexer(s);
+  // Token? token = lex.getToken();
+  // while (token!.token != TokenType.EOF) {
+  //   print(token.token);
+  //   token = lex.getToken();
+  // }
+
   if (kIsWeb) {
   } else if (Platform.isWindows || Platform.isMacOS || Platform.isLinux) {
     WidgetsFlutterBinding.ensureInitialized();
@@ -28,12 +32,13 @@ void main() async {
       size: Size(1280, 720),
       minimumSize: Size(1280, 720),
       // titleBarStyle: TitleBarStyle.hidden,
-      title: "Xtronic DevTools",
+      title: APP_NAME,
       backgroundColor: Colors.transparent,
       // center: true,
     );
     windowManager.waitUntilReadyToShow(windowOptions, () async {
       await windowManager.show();
+      await windowManager.setIcon("xtronic_home_logo.jpg");
       // await windowManager.setResizable(false);
       // await windowManager.setAsFrameless();
       // await windowManager.maximize();
