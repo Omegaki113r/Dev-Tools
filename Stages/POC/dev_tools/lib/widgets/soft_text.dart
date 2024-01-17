@@ -41,11 +41,15 @@ class SoftText extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(label ?? ""),
+            Text(
+              label ?? "",
+              maxLines: 1,
+            ),
             Gap(10),
             Text(
               text,
               style: Theme.of(context).textTheme.bodyLarge,
+              maxLines: 1,
             ),
           ],
         ),
