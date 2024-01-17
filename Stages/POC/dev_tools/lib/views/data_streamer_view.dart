@@ -1,4 +1,5 @@
 import 'package:dev_tools/const/app_constants.dart';
+import 'package:dev_tools/const/app_strings.dart';
 import 'package:dev_tools/widgets/soft_button.dart';
 import 'package:dev_tools/widgets/soft_dropdown.dart';
 import 'package:flutter/foundation.dart';
@@ -24,7 +25,7 @@ class DataStreamerView extends StatelessWidget {
             Row(
               children: [
                 SoftButton(
-                  "Connect",
+                  LBL_CONNECT,
                   ButtonType.FLAT,
                   width: 150,
                   height: 45,
@@ -33,7 +34,10 @@ class DataStreamerView extends StatelessWidget {
                   },
                 ),
                 Gap(20),
-                SoftDropDown(width: 185,height: 45,),
+                SoftDropDown(
+                  width: 185,
+                  height: 45,
+                ),
                 Spacer(),
               ],
             ),

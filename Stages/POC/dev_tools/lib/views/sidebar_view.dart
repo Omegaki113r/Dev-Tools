@@ -1,4 +1,5 @@
 import 'package:dev_tools/const/app_constants.dart';
+import 'package:dev_tools/const/app_strings.dart';
 import 'package:dev_tools/widgets/soft_button.dart';
 import 'package:dev_tools/widgets/soft_divider.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,7 @@ class _SidebarState extends State<SidebarView> {
           ListView(
             children: [
               SoftButton(
-                "Type Converter",
+                LBL_BITWISE_CONVERTER,
                 ButtonType.FLAT,
                 height: 60,
                 padding: const EdgeInsets.only(
@@ -43,7 +44,7 @@ class _SidebarState extends State<SidebarView> {
               ),
               SoftDivider(),
               SoftButton(
-                "Data Streamer",
+                LBL_DATA_STREAMER,
                 ButtonType.FLAT,
                 height: 60,
                 padding: const EdgeInsets.only(

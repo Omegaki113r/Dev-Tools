@@ -1,15 +1,30 @@
+import 'dart:ffi';
+
 import 'package:dev_tools/models/type_converter_model.dart';
+import 'package:dev_tools/utils/bitwise_calculator/lexer.dart';
 import 'package:flutter/material.dart';
 
 enum ChangedType { HEX, OCTAL, DECIMAL, BINARY }
 
+/*
+SHIFT_LEFT/RIGHT
+AND
+XOR
+OR
+*/
+
 class TypeConverterProvider with ChangeNotifier {
+  Lexer lexer = Lexer("");
   final TextEditingController _hexEditingController = TextEditingController();
   final TextEditingController _decimalEditingController =
       TextEditingController();
   final TextEditingController _binaryEditingController =
       TextEditingController();
   final TextEditingController _octalEditingController = TextEditingController();
+  String _decimalResult = "";
+  String _binaryResult = "";
+  String _octalResult = "";
+  String _hexResult = "";
 
   TypeConverterModel _typeConverterModel =
       TypeConverterModel("", "", "", "", "", "");
@@ -17,6 +32,13 @@ class TypeConverterProvider with ChangeNotifier {
       TypeConverterModel("", "", "", "", "", "");
   void change_text(ChangedType type, String text) {
     _typeConverterModel = TypeConverterModel("", "", "", "", "", "");
+
+    lexer = Lexer(text);
+    // Token? token = lexer.getToken();
+    // while (token != null && token.token != TokenType.EOF) {
+    //   print(token.token);
+    //   token = lexer.getToken();
+    // }
     switch (type) {
       case ChangedType.HEX:
         if (text.contains(" ")) {
@@ -84,6 +106,16 @@ class TypeConverterProvider with ChangeNotifier {
         break;
       case ChangedType.DECIMAL:
         if (text.contains(" ")) {
+          // Token? token = lexer.getToken();
+          // while (token != null &&
+          //     token.token != TokenType.EOF &&
+          //     token.token != TokenType.NEWLINE) {
+          //   if (token.token == TokenType.NUMBER) {
+          //   } else {
+              
+          //   }
+          // }
+
           List<BigInt> decimal_list = [];
           final splittedBySpace = text.split(" ");
           for (var splittedElement in splittedBySpace) {
@@ -120,33 +152,70 @@ class TypeConverterProvider with ChangeNotifier {
           }
           _typeConverterModel.decimalText = text;
         } else {
-          BigInt? parsed = BigInt.tryParse(text, radix: 10);
-          if (parsed != null) {
-            _typeConverterModel.binaryText = parsed.toRadixString(2);
-            _typeConverterModel.octalText = parsed.toRadixString(8);
-            _typeConverterModel.hexText =
-                parsed.toRadixString(16).toUpperCase();
-            int roundedUpTo = TypeConverterModel.roundUp(parsed.bitLength, 8);
-            if (roundedUpTo > 64) {
-              roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 64);
+          Token? token = lexer.getToken();
+          while (token != null &&
+              token.token != TokenType.EOF &&
+              token.token != TokenType.NEWLINE) {
+            // print("TokenType: ${token.token}\tTokenText: ${token.tokenText}");
+            if (token.token == TokenType.NUMBER) {
+              BigInt? parsed = BigInt.tryParse(token.tokenText, radix: 10);
+              if (parsed != null) {
+                _typeConverterModel.binaryText += parsed.toRadixString(2);
+                _typeConverterModel.octalText += parsed.toRadixString(8);
+                _typeConverterModel.hexText +=
+                    parsed.toRadixString(16).toUpperCase();
+                int roundedUpTo =
+                    TypeConverterModel.roundUp(parsed.bitLength, 8);
+                if (roundedUpTo > 64) {
+                  roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 64);
+                }
+                if (roundedUpTo > 32) {
+                  roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 32);
+                }
+                if (roundedUpTo > 16) {
+                  roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 16);
+                }
+                if (roundedUpTo == 0) {
+                  roundedUpTo = 8;
+                }
+                _typeConverterModel.decimal2sComplimentText +=
+                    (parsed.toSigned(roundedUpTo) < BigInt.zero
+                        ? parsed.toSigned(roundedUpTo).toString() + " "
+                        : "N/A ");
+              }
+            } else {
+              _typeConverterModel.binaryText += token.tokenText;
+              _typeConverterModel.octalText += token.tokenText;
+              _typeConverterModel.hexText += token.tokenText;
             }
-            if (roundedUpTo > 32) {
-              roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 32);
-            }
-            if (roundedUpTo > 16) {
-              roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 16);
-            }
-            if (roundedUpTo == 0) {
-              roundedUpTo = 8;
-            }
-            _typeConverterModel.decimal2sComplimentText =
-                (parsed.toSigned(roundedUpTo) < BigInt.zero
-                    ? parsed.toSigned(roundedUpTo).toString()
-                    : "N/A");
+            token = lexer.getToken();
           }
+          // BigInt? parsed = BigInt.tryParse(text, radix: 10);
+          // if (parsed != null) {
+          //   _typeConverterModel.binaryText = parsed.toRadixString(2);
+          //   _typeConverterModel.octalText = parsed.toRadixString(8);
+          //   _typeConverterModel.hexText =
+          //       parsed.toRadixString(16).toUpperCase();
+          //   int roundedUpTo = TypeConverterModel.roundUp(parsed.bitLength, 8);
+          //   if (roundedUpTo > 64) {
+          //     roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 64);
+          //   }
+          //   if (roundedUpTo > 32) {
+          //     roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 32);
+          //   }
+          //   if (roundedUpTo > 16) {
+          //     roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 16);
+          //   }
+          //   if (roundedUpTo == 0) {
+          //     roundedUpTo = 8;
+          //   }
+          //   _typeConverterModel.decimal2sComplimentText =
+          //       (parsed.toSigned(roundedUpTo) < BigInt.zero
+          //           ? parsed.toSigned(roundedUpTo).toString()
+          //           : "N/A");
+          // }
           _typeConverterModel.decimalText = text;
         }
-
         break;
       case ChangedType.BINARY:
         if (text.contains(" ")) {
@@ -208,8 +277,8 @@ class TypeConverterProvider with ChangeNotifier {
                 (parsed.toSigned(roundedUpTo) < BigInt.zero
                     ? parsed.toSigned(roundedUpTo).toString()
                     : "N/A");
-            _typeConverterModel.binaryText = text;
           }
+          _typeConverterModel.binaryText = text;
         }
         break;
       case ChangedType.OCTAL:
@@ -273,8 +342,8 @@ class TypeConverterProvider with ChangeNotifier {
                 (parsed.toSigned(roundedUpTo) < BigInt.zero
                     ? parsed.toSigned(roundedUpTo).toString()
                     : "N/A");
-            _typeConverterModel.octalText = text;
           }
+          _typeConverterModel.octalText = text;
         }
         break;
     }
@@ -301,4 +370,8 @@ class TypeConverterProvider with ChangeNotifier {
   TextEditingController get binaryController => _binaryEditingController;
   TextEditingController get octalController => _octalEditingController;
   TextEditingController get hexController => _hexEditingController;
+  String get decimalResult => _decimalResult;
+  String get binaryResult => _binaryResult;
+  String get octalResult => _octalResult;
+  String get hexResult => _hexResult;
 }
