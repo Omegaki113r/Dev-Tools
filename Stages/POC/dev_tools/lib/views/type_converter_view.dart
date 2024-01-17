@@ -51,7 +51,8 @@ class TypeConverterView extends StatelessWidget {
                         width: value.decimalResult.length > 0 ? 300 : 0,
                         child: Padding(
                           padding: const EdgeInsets.all(30.0),
-                          child: SoftText(value.decimalResult),
+                          child: SoftText(value.decimalResult,
+                              label: "Expression Result"),
                         ),
                       );
                     },
@@ -99,7 +100,10 @@ class TypeConverterView extends StatelessWidget {
                         width: value.binaryResult.length > 0 ? 300 : 0,
                         child: Padding(
                           padding: const EdgeInsets.all(30.0),
-                          child: SoftText(value.binaryResult),
+                          child: SoftText(
+                            value.binaryResult,
+                            label: "Expression Result",
+                          ),
                         ),
                       );
                     },
@@ -135,7 +139,10 @@ class TypeConverterView extends StatelessWidget {
                         width: value.octalResult.length > 0 ? 300 : 0,
                         child: Padding(
                           padding: const EdgeInsets.all(30.0),
-                          child: SoftText(value.octalResult),
+                          child: SoftText(
+                            value.octalResult,
+                            label: "Expression Result",
+                          ),
                         ),
                       );
                     },
@@ -170,7 +177,10 @@ class TypeConverterView extends StatelessWidget {
                         width: value.hexResult.length > 0 ? 300 : 0,
                         child: Padding(
                           padding: const EdgeInsets.all(30.0),
-                          child: SoftText(value.hexResult),
+                          child: SoftText(
+                            value.hexResult,
+                            label: "Expression Result",
+                          ),
                         ),
                       );
                     },
