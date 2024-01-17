@@ -58,6 +58,7 @@ dependencies:
   # flutter_bluetooth_serial:
   # desktop_window: ^0.4.0
   logging:
+  dart_eval:
 
 dev_dependencies:
   flutter_test:
