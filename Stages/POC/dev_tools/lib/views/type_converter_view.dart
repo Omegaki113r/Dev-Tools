@@ -25,6 +25,21 @@ class TypeConverterView extends StatelessWidget {
         child: ListView(
           // crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(vertical: 8.0),
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.center,
+            //     crossAxisAlignment: CrossAxisAlignment.center,
+            //     children: [
+            //       SoftText(
+            //         "Bitwise Calculator",
+            //         isTitleBox: true,
+            //       ),
+            //       Spacer(),
+            //     ],
+            //   ),
+            // ),
+            // SoftDivider(),
             SoftCard(
               child: Row(
                 children: [
