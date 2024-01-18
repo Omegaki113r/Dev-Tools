@@ -24,6 +24,7 @@ class TypeConverterProvider with ChangeNotifier {
   TypeConverterModel typeConverterModel =
       TypeConverterModel("", "", "", "", "", "");
   void change_text(ChangedType type, String text) {
+    var current_position = 0;
     _typeConverterModel = TypeConverterModel("", "", "", "", "", "");
     _decimalResult = "";
     _binaryResult = "";
@@ -32,6 +33,7 @@ class TypeConverterProvider with ChangeNotifier {
     Lexer lexer = Lexer(text);
     switch (type) {
       case ChangedType.HEX:
+        current_position = _hexEditingController.selection.base.offset;
         Token? token = lexer.getToken();
         while (token != null &&
             token.token != TokenType.EOF &&
@@ -70,6 +72,7 @@ class TypeConverterProvider with ChangeNotifier {
         _typeConverterModel.hexText = text;
         break;
       case ChangedType.DECIMAL:
+        current_position = _decimalEditingController.selection.base.offset;
         Token? token = lexer.getToken();
         while (token != null &&
             token.token != TokenType.EOF &&
@@ -109,6 +112,7 @@ class TypeConverterProvider with ChangeNotifier {
         _typeConverterModel.decimalText = text;
         break;
       case ChangedType.BINARY:
+        current_position = _binaryEditingController.selection.base.offset;
         Token? token = lexer.getToken();
         while (token != null &&
             token.token != TokenType.EOF &&
@@ -148,6 +152,7 @@ class TypeConverterProvider with ChangeNotifier {
         _typeConverterModel.binaryText = text;
         break;
       case ChangedType.OCTAL:
+        current_position = _octalEditingController.selection.base.offset;
         Token? token = lexer.getToken();
         while (token != null &&
             token.token != TokenType.EOF &&
@@ -210,18 +215,51 @@ class TypeConverterProvider with ChangeNotifier {
     }
 
     _decimalEditingController.text = typeConverterModel.decimalText;
-    _decimalEditingController.selection =
-        TextSelection.collapsed(offset: typeConverterModel.decimalText.length);
-    _hexEditingController.text = typeConverterModel.hexText;
-    _hexEditingController.selection =
-        TextSelection.collapsed(offset: typeConverterModel.hexText.length);
     _binaryEditingController.text = typeConverterModel.binaryText;
-    _binaryEditingController.selection =
-        TextSelection.collapsed(offset: typeConverterModel.binaryText.length);
     _octalEditingController.text = typeConverterModel.octalText;
-    _octalEditingController.selection =
-        TextSelection.collapsed(offset: typeConverterModel.octalText.length);
-
+    _hexEditingController.text = typeConverterModel.hexText;
+    switch (type) {
+      case ChangedType.DECIMAL:
+        _binaryEditingController.selection = TextSelection.collapsed(
+            offset: _binaryEditingController.text.length);
+        _octalEditingController.selection = TextSelection.collapsed(
+            offset: _octalEditingController.text.length);
+        _decimalEditingController.selection =
+            TextSelection.collapsed(offset: current_position);
+        _hexEditingController.selection =
+            TextSelection.collapsed(offset: _hexEditingController.text.length);
+        break;
+      case ChangedType.BINARY:
+        _binaryEditingController.selection =
+            TextSelection.collapsed(offset: current_position);
+        _octalEditingController.selection = TextSelection.collapsed(
+            offset: _octalEditingController.text.length);
+        _decimalEditingController.selection = TextSelection.collapsed(
+            offset: _decimalEditingController.text.length);
+        _hexEditingController.selection =
+            TextSelection.collapsed(offset: _hexEditingController.text.length);
+        break;
+      case ChangedType.OCTAL:
+        _binaryEditingController.selection = TextSelection.collapsed(
+            offset: _binaryEditingController.text.length);
+        _octalEditingController.selection =
+            TextSelection.collapsed(offset: current_position);
+        _decimalEditingController.selection = TextSelection.collapsed(
+            offset: _decimalEditingController.text.length);
+        _hexEditingController.selection =
+            TextSelection.collapsed(offset: _hexEditingController.text.length);
+        break;
+      case ChangedType.HEX:
+        _binaryEditingController.selection = TextSelection.collapsed(
+            offset: _binaryEditingController.text.length);
+        _octalEditingController.selection = TextSelection.collapsed(
+            offset: _octalEditingController.text.length);
+        _decimalEditingController.selection =
+            TextSelection.collapsed(offset: _decimalEditingController.text.length);
+        _hexEditingController.selection =
+            TextSelection.collapsed(offset: current_position);
+        break;
+    }
     notifyListeners();
   }
 
