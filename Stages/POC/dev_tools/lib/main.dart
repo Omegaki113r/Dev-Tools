@@ -32,7 +32,7 @@ void main() async {
     );
     windowManager.waitUntilReadyToShow(windowOptions, () async {
       await windowManager.show();
-      await windowManager.setIcon("xtronic_home_logo.jpg");
+      // await windowManager.setIcon("xtronic_home_logo.jpg");
       // await windowManager.setResizable(false);
       // await windowManager.setAsFrameless();
       // await windowManager.maximize();
