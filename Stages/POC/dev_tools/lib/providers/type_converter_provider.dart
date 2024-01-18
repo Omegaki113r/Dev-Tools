@@ -1,20 +1,13 @@
-import 'dart:ffi';
+// import 'dart:ffi';
 
+import 'package:dart_eval/dart_eval.dart';
 import 'package:dev_tools/models/type_converter_model.dart';
 import 'package:dev_tools/utils/bitwise_calculator/lexer.dart';
 import 'package:flutter/material.dart';
 
 enum ChangedType { HEX, OCTAL, DECIMAL, BINARY }
 
-/*
-SHIFT_LEFT/RIGHT
-AND
-XOR
-OR
-*/
-
 class TypeConverterProvider with ChangeNotifier {
-  Lexer lexer = Lexer("");
   final TextEditingController _hexEditingController = TextEditingController();
   final TextEditingController _decimalEditingController =
       TextEditingController();
@@ -32,323 +25,189 @@ class TypeConverterProvider with ChangeNotifier {
       TypeConverterModel("", "", "", "", "", "");
   void change_text(ChangedType type, String text) {
     _typeConverterModel = TypeConverterModel("", "", "", "", "", "");
-
-    lexer = Lexer(text);
-    // Token? token = lexer.getToken();
-    // while (token != null && token.token != TokenType.EOF) {
-    //   print(token.token);
-    //   token = lexer.getToken();
-    // }
+    _decimalResult = "";
+    _binaryResult = "";
+    _octalResult = "";
+    _hexResult = "";
+    Lexer lexer = Lexer(text);
     switch (type) {
       case ChangedType.HEX:
-        if (text.contains(" ")) {
-          List<BigInt> hex_list = [];
-          final splittedBySpace = text.split(" ");
-          for (var splittedElement in splittedBySpace) {
-            if (splittedElement.isNotEmpty) {
-              BigInt? parsed = BigInt.tryParse(splittedElement, radix: 16);
-              if (parsed != null) {
-                hex_list.add(parsed);
+        Token? token = lexer.getToken();
+        while (token != null &&
+            token.token != TokenType.EOF &&
+            token.token != TokenType.NEWLINE) {
+          if (token.token == TokenType.NUMBER) {
+            BigInt? parsed = BigInt.tryParse(token.tokenText, radix: 16);
+            if (parsed != null) {
+              _typeConverterModel.binaryText += parsed.toRadixString(2);
+              _typeConverterModel.octalText += parsed.toRadixString(8);
+              _typeConverterModel.decimalText += parsed.toRadixString(10);
+              int roundedUpTo = TypeConverterModel.roundUp(parsed.bitLength, 8);
+              if (roundedUpTo > 64) {
+                roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 64);
               }
+              if (roundedUpTo > 32) {
+                roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 32);
+              }
+              if (roundedUpTo > 16) {
+                roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 16);
+              }
+              if (roundedUpTo == 0) {
+                roundedUpTo = 8;
+              }
+              _typeConverterModel.decimal2sComplimentText +=
+                  (parsed.toSigned(roundedUpTo) < BigInt.zero
+                      ? parsed.toSigned(roundedUpTo).toString() + " "
+                      : "N/A ");
             }
+          } else {
+            _typeConverterModel.binaryText += token.tokenText;
+            _typeConverterModel.octalText += token.tokenText;
+            _typeConverterModel.decimalText += token.tokenText;
           }
-          for (var int_element in hex_list) {
-            _typeConverterModel.binaryText +=
-                (int_element.toRadixString(2) + " ");
-            _typeConverterModel.octalText +=
-                (int_element.toRadixString(8) + " ");
-            _typeConverterModel.decimalText +=
-                (int_element.toRadixString(10) + " ");
-            int roundedUpTo =
-                TypeConverterModel.roundUp(int_element.bitLength, 8);
-            if (roundedUpTo > 64) {
-              roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 64);
-            }
-            if (roundedUpTo > 32) {
-              roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 32);
-            }
-            if (roundedUpTo > 16) {
-              roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 16);
-            }
-            if (roundedUpTo == 0) {
-              roundedUpTo = 8;
-            }
-            _typeConverterModel.decimal2sComplimentText +=
-                ("${int_element.toSigned(roundedUpTo) < BigInt.zero ? int_element.toSigned(roundedUpTo).toString() : "N/A"} ");
-          }
-          _typeConverterModel.hexText = text;
-        } else {
-          BigInt? parsed = BigInt.tryParse(text, radix: 16);
-          if (parsed != null) {
-            _typeConverterModel.binaryText = parsed.toRadixString(2);
-            _typeConverterModel.octalText = parsed.toRadixString(8);
-            _typeConverterModel.decimalText = parsed.toRadixString(10);
-            int roundedUpTo = TypeConverterModel.roundUp(parsed.bitLength, 8);
-            if (roundedUpTo > 64) {
-              roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 64);
-            }
-            if (roundedUpTo > 32) {
-              roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 32);
-            }
-            if (roundedUpTo > 16) {
-              roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 16);
-            }
-            if (roundedUpTo == 0) {
-              roundedUpTo = 8;
-            }
-            _typeConverterModel.decimal2sComplimentText =
-                (parsed.toSigned(roundedUpTo) < BigInt.zero
-                    ? parsed.toSigned(roundedUpTo).toString()
-                    : "N/A");
-          }
-          _typeConverterModel.hexText = text;
+          token = lexer.getToken();
         }
+        _typeConverterModel.hexText = text;
         break;
       case ChangedType.DECIMAL:
-        if (text.contains(" ")) {
-          // Token? token = lexer.getToken();
-          // while (token != null &&
-          //     token.token != TokenType.EOF &&
-          //     token.token != TokenType.NEWLINE) {
-          //   if (token.token == TokenType.NUMBER) {
-          //   } else {
-              
-          //   }
-          // }
-
-          List<BigInt> decimal_list = [];
-          final splittedBySpace = text.split(" ");
-          for (var splittedElement in splittedBySpace) {
-            if (splittedElement.isNotEmpty) {
-              BigInt? parsed = BigInt.tryParse(splittedElement, radix: 10);
-              if (parsed != null) {
-                decimal_list.add(parsed);
+        Token? token = lexer.getToken();
+        while (token != null &&
+            token.token != TokenType.EOF &&
+            token.token != TokenType.NEWLINE) {
+          if (token.token == TokenType.NUMBER) {
+            BigInt? parsed = BigInt.tryParse(token.tokenText, radix: 10);
+            if (parsed != null) {
+              _typeConverterModel.binaryText += parsed.toRadixString(2);
+              _typeConverterModel.octalText += parsed.toRadixString(8);
+              _typeConverterModel.hexText +=
+                  parsed.toRadixString(16).toUpperCase();
+              int roundedUpTo = TypeConverterModel.roundUp(parsed.bitLength, 8);
+              if (roundedUpTo > 64) {
+                roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 64);
               }
-            }
-          }
-          for (var int_element in decimal_list) {
-            _typeConverterModel.binaryText +=
-                (int_element.toRadixString(2) + " ");
-            _typeConverterModel.octalText +=
-                (int_element.toRadixString(8) + " ");
-            _typeConverterModel.hexText +=
-                (int_element.toRadixString(16) + " ");
-            int roundedUpTo =
-                TypeConverterModel.roundUp(int_element.bitLength, 8);
-            if (roundedUpTo > 64) {
-              roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 64);
-            }
-            if (roundedUpTo > 32) {
-              roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 32);
-            }
-            if (roundedUpTo > 16) {
-              roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 16);
-            }
-            if (roundedUpTo == 0) {
-              roundedUpTo = 8;
-            }
-            _typeConverterModel.decimal2sComplimentText +=
-                ("${int_element.toSigned(roundedUpTo) < BigInt.zero ? int_element.toSigned(roundedUpTo).toString() : "N/A"} ");
-          }
-          _typeConverterModel.decimalText = text;
-        } else {
-          Token? token = lexer.getToken();
-          while (token != null &&
-              token.token != TokenType.EOF &&
-              token.token != TokenType.NEWLINE) {
-            // print("TokenType: ${token.token}\tTokenText: ${token.tokenText}");
-            if (token.token == TokenType.NUMBER) {
-              BigInt? parsed = BigInt.tryParse(token.tokenText, radix: 10);
-              if (parsed != null) {
-                _typeConverterModel.binaryText += parsed.toRadixString(2);
-                _typeConverterModel.octalText += parsed.toRadixString(8);
-                _typeConverterModel.hexText +=
-                    parsed.toRadixString(16).toUpperCase();
-                int roundedUpTo =
-                    TypeConverterModel.roundUp(parsed.bitLength, 8);
-                if (roundedUpTo > 64) {
-                  roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 64);
-                }
-                if (roundedUpTo > 32) {
-                  roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 32);
-                }
-                if (roundedUpTo > 16) {
-                  roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 16);
-                }
-                if (roundedUpTo == 0) {
-                  roundedUpTo = 8;
-                }
-                _typeConverterModel.decimal2sComplimentText +=
-                    (parsed.toSigned(roundedUpTo) < BigInt.zero
-                        ? parsed.toSigned(roundedUpTo).toString() + " "
-                        : "N/A ");
+              if (roundedUpTo > 32) {
+                roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 32);
               }
-            } else {
-              _typeConverterModel.binaryText += token.tokenText;
-              _typeConverterModel.octalText += token.tokenText;
-              _typeConverterModel.hexText += token.tokenText;
+              if (roundedUpTo > 16) {
+                roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 16);
+              }
+              if (roundedUpTo == 0) {
+                roundedUpTo = 8;
+              }
+              _typeConverterModel.decimal2sComplimentText +=
+                  (parsed.toSigned(roundedUpTo) < BigInt.zero
+                      ? parsed.toSigned(roundedUpTo).toString() + " "
+                      : "N/A ");
             }
-            token = lexer.getToken();
+          } else {
+            _typeConverterModel.binaryText += token.tokenText;
+            _typeConverterModel.octalText += token.tokenText;
+            _typeConverterModel.hexText += token.tokenText;
           }
-          // BigInt? parsed = BigInt.tryParse(text, radix: 10);
-          // if (parsed != null) {
-          //   _typeConverterModel.binaryText = parsed.toRadixString(2);
-          //   _typeConverterModel.octalText = parsed.toRadixString(8);
-          //   _typeConverterModel.hexText =
-          //       parsed.toRadixString(16).toUpperCase();
-          //   int roundedUpTo = TypeConverterModel.roundUp(parsed.bitLength, 8);
-          //   if (roundedUpTo > 64) {
-          //     roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 64);
-          //   }
-          //   if (roundedUpTo > 32) {
-          //     roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 32);
-          //   }
-          //   if (roundedUpTo > 16) {
-          //     roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 16);
-          //   }
-          //   if (roundedUpTo == 0) {
-          //     roundedUpTo = 8;
-          //   }
-          //   _typeConverterModel.decimal2sComplimentText =
-          //       (parsed.toSigned(roundedUpTo) < BigInt.zero
-          //           ? parsed.toSigned(roundedUpTo).toString()
-          //           : "N/A");
-          // }
-          _typeConverterModel.decimalText = text;
+          token = lexer.getToken();
         }
+        _typeConverterModel.decimalText = text;
         break;
       case ChangedType.BINARY:
-        if (text.contains(" ")) {
-          List<BigInt> binary_list = [];
-          final splittedBySpace = text.split(" ");
-          for (var splittedElement in splittedBySpace) {
-            if (splittedElement.isNotEmpty) {
-              BigInt? parsed = BigInt.tryParse(splittedElement, radix: 2);
-              if (parsed != null) {
-                binary_list.add(parsed);
+        Token? token = lexer.getToken();
+        while (token != null &&
+            token.token != TokenType.EOF &&
+            token.token != TokenType.NEWLINE) {
+          if (token.token == TokenType.NUMBER) {
+            BigInt? parsed = BigInt.tryParse(token.tokenText, radix: 2);
+            if (parsed != null) {
+              _typeConverterModel.octalText += parsed.toRadixString(8);
+              _typeConverterModel.decimalText += parsed.toRadixString(10);
+              _typeConverterModel.hexText +=
+                  parsed.toRadixString(16).toUpperCase();
+              int roundedUpTo = TypeConverterModel.roundUp(parsed.bitLength, 8);
+              if (roundedUpTo > 64) {
+                roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 64);
               }
+              if (roundedUpTo > 32) {
+                roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 32);
+              }
+              if (roundedUpTo > 16) {
+                roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 16);
+              }
+              if (roundedUpTo == 0) {
+                roundedUpTo = 8;
+              }
+              _typeConverterModel.decimal2sComplimentText =
+                  (parsed.toSigned(roundedUpTo) < BigInt.zero
+                      ? parsed.toSigned(roundedUpTo).toString() + " "
+                      : "N/A ");
             }
+          } else {
+            _typeConverterModel.decimalText += token.tokenText;
+            _typeConverterModel.octalText += token.tokenText;
+            _typeConverterModel.hexText += token.tokenText;
           }
-          for (var int_element in binary_list) {
-            _typeConverterModel.octalText +=
-                (int_element.toRadixString(8) + " ");
-            _typeConverterModel.decimalText += (int_element.toString() + " ");
-            _typeConverterModel.hexText +=
-                (int_element.toRadixString(16) + " ");
-            int roundedUpTo =
-                TypeConverterModel.roundUp(int_element.bitLength, 8);
-            if (roundedUpTo > 64) {
-              roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 64);
-            }
-            if (roundedUpTo > 32) {
-              roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 32);
-            }
-            if (roundedUpTo > 16) {
-              roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 16);
-            }
-            if (roundedUpTo == 0) {
-              roundedUpTo = 8;
-            }
-            _typeConverterModel.decimal2sComplimentText +=
-                ("${int_element.toSigned(roundedUpTo) < BigInt.zero ? int_element.toSigned(roundedUpTo).toString() : "N/A"} ");
-          }
-          _typeConverterModel.binaryText = text;
-        } else {
-          BigInt? parsed = BigInt.tryParse(text, radix: 2);
-          if (parsed != null) {
-            _typeConverterModel.octalText = parsed.toRadixString(8);
-            _typeConverterModel.decimalText = parsed.toRadixString(10);
-            _typeConverterModel.hexText =
-                parsed.toRadixString(16).toUpperCase();
-            int roundedUpTo = TypeConverterModel.roundUp(parsed.bitLength, 8);
-            if (roundedUpTo > 64) {
-              roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 64);
-            }
-            if (roundedUpTo > 32) {
-              roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 32);
-            }
-            if (roundedUpTo > 16) {
-              roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 16);
-            }
-            if (roundedUpTo == 0) {
-              roundedUpTo = 8;
-            }
-            _typeConverterModel.decimal2sComplimentText =
-                (parsed.toSigned(roundedUpTo) < BigInt.zero
-                    ? parsed.toSigned(roundedUpTo).toString()
-                    : "N/A");
-          }
-          _typeConverterModel.binaryText = text;
+          token = lexer.getToken();
         }
+        _typeConverterModel.binaryText = text;
         break;
       case ChangedType.OCTAL:
-        if (text.contains(" ")) {
-          List<BigInt> octal_list = [];
-          final splittedBySpace = text.split(" ");
-          for (var splittedElement in splittedBySpace) {
-            if (splittedElement.isNotEmpty) {
-              BigInt? parsed = BigInt.tryParse(splittedElement, radix: 8);
-              if (parsed != null) {
-                octal_list.add(parsed);
+        Token? token = lexer.getToken();
+        while (token != null &&
+            token.token != TokenType.EOF &&
+            token.token != TokenType.NEWLINE) {
+          if (token.token == TokenType.NUMBER) {
+            BigInt? parsed = BigInt.tryParse(token.tokenText, radix: 8);
+            if (parsed != null) {
+              _typeConverterModel.binaryText += parsed.toRadixString(2);
+              _typeConverterModel.decimalText += parsed.toRadixString(10);
+              _typeConverterModel.hexText +=
+                  parsed.toRadixString(16).toUpperCase();
+              int roundedUpTo = TypeConverterModel.roundUp(parsed.bitLength, 8);
+              if (roundedUpTo > 64) {
+                roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 64);
               }
+              if (roundedUpTo > 32) {
+                roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 32);
+              }
+              if (roundedUpTo > 16) {
+                roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 16);
+              }
+              if (roundedUpTo == 0) {
+                roundedUpTo = 8;
+              }
+              _typeConverterModel.decimal2sComplimentText =
+                  (parsed.toSigned(roundedUpTo) < BigInt.zero
+                      ? parsed.toSigned(roundedUpTo).toString() + " "
+                      : "N/A ");
             }
+          } else {
+            _typeConverterModel.decimalText += token.tokenText;
+            _typeConverterModel.binaryText += token.tokenText;
+            _typeConverterModel.hexText += token.tokenText;
           }
-          for (var int_element in octal_list) {
-            _typeConverterModel.binaryText +=
-                (int_element.toRadixString(2) + " ");
-            _typeConverterModel.decimalText +=
-                (int_element.toRadixString(10) + " ");
-            _typeConverterModel.hexText +=
-                (int_element.toRadixString(16) + " ");
-            int roundedUpTo =
-                TypeConverterModel.roundUp(int_element.bitLength, 8);
-            if (roundedUpTo > 64) {
-              roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 64);
-            }
-            if (roundedUpTo > 32) {
-              roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 32);
-            }
-            if (roundedUpTo > 16) {
-              roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 16);
-            }
-            if (roundedUpTo == 0) {
-              roundedUpTo = 8;
-            }
-            _typeConverterModel.decimal2sComplimentText +=
-                ("${int_element.toSigned(roundedUpTo) < BigInt.zero ? int_element.toSigned(roundedUpTo).toString() : "N/A"} ");
-          }
-          _typeConverterModel.octalText = text;
-        } else {
-          BigInt? parsed = BigInt.tryParse(text, radix: 8);
-          if (parsed != null) {
-            _typeConverterModel.binaryText = parsed.toRadixString(2);
-            _typeConverterModel.decimalText = parsed.toRadixString(10);
-            _typeConverterModel.hexText =
-                parsed.toRadixString(16).toUpperCase();
-            int roundedUpTo = TypeConverterModel.roundUp(parsed.bitLength, 8);
-            if (roundedUpTo > 64) {
-              roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 64);
-            }
-            if (roundedUpTo > 32) {
-              roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 32);
-            }
-            if (roundedUpTo > 16) {
-              roundedUpTo = TypeConverterModel.roundUp(roundedUpTo, 16);
-            }
-            if (roundedUpTo == 0) {
-              roundedUpTo = 8;
-            }
-            _typeConverterModel.decimal2sComplimentText =
-                (parsed.toSigned(roundedUpTo) < BigInt.zero
-                    ? parsed.toSigned(roundedUpTo).toString()
-                    : "N/A");
-          }
-          _typeConverterModel.octalText = text;
+          token = lexer.getToken();
         }
+        _typeConverterModel.octalText = text;
         break;
     }
-    // }
     typeConverterModel = _typeConverterModel;
+
+    List arr = typeConverterModel.decimalText.split(" ");
+    for (String element in arr) {
+      try {
+        BigInt evaluatedString = BigInt.from(eval(element));
+        if (evaluatedString.toRadixString(10) != element) {
+          _decimalResult += evaluatedString.toString() + " ";
+          _binaryResult += evaluatedString.toRadixString(2) + " ";
+          _octalResult += evaluatedString.toRadixString(8) + " ";
+          _hexResult += evaluatedString.toRadixString(16).toUpperCase() + " ";
+        }
+        print(decimalResult);
+      } catch (e) {
+        _decimalResult = "";
+        _binaryResult = "";
+        _octalResult = "";
+        _hexResult = "";
+        print(e);
+      }
+    }
 
     _decimalEditingController.text = typeConverterModel.decimalText;
     _decimalEditingController.selection =

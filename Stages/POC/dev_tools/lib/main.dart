@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:dev_tools/const/app_strings.dart';
 import 'package:dev_tools/providers/data_streamer_provider.dart';
@@ -13,7 +14,9 @@ import 'package:dev_tools/const/app_themes.dart';
 import 'package:dev_tools/providers/app_provider.dart';
 import 'package:dev_tools/providers/type_converter_provider.dart';
 
+Random random = Random();
 void main() async {
+
   if (kIsWeb) {
   } else if (Platform.isWindows || Platform.isMacOS || Platform.isLinux) {
     WidgetsFlutterBinding.ensureInitialized();

@@ -86,6 +86,10 @@ class Lexer {
       }
       String tokenText = source.substring(startPosition, currentPosition + 1);
       token = Token(tokenText, TokenType.NUMBER);
+    } else if (currentCharacter == "(") {
+      token = Token("(", TokenType.LEFT_PARAN);
+    } else if (currentCharacter == ")") {
+      token = Token(")", TokenType.RIGHT_PARAN);
     } else if (currentCharacter == "") {
       token = Token("", TokenType.EOF);
     } else {
@@ -137,4 +141,6 @@ enum TokenType {
   AND,
   OR,
   XOR,
+  LEFT_PARAN,
+  RIGHT_PARAN,
 }
