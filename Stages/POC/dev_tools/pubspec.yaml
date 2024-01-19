@@ -47,6 +47,7 @@ dependencies:
   #For peripheral [Windows, MacOS]
   # flutter_ble_peripheral:
   flutter_libserialport:
+  serial:
   # extra_alignments:
   # flextras:
   # flutter_animate:
@@ -57,7 +58,7 @@ dependencies:
   # flutter_shaders:
   # flutter_bluetooth_serial:
   # desktop_window: ^0.4.0
-  logging:
+  logger:
   dart_eval:
 
 dev_dependencies:

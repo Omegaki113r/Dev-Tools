@@ -6,7 +6,7 @@ class TypeConverterModel {
   String decimalText = "";
   String decimal2sComplimentText = "";
   String binaryText = "";
-    String octalText = "";
+  String octalText = "";
   TypeConverterModel(this.focusedText, this.hexText, this.decimalText,
       this.decimal2sComplimentText, this.binaryText, this.octalText);
 
