@@ -66,8 +66,11 @@ class TypeConverterView extends StatelessWidget {
                         width: value.decimalResult.length > 0 ? 300 : 0,
                         child: Padding(
                           padding: const EdgeInsets.all(30.0),
-                          child: SoftText(value.decimalResult,
-                              label: "Expression Result"),
+                          child: SoftText(
+                            value.decimalResult,
+                            label: "Expression Result",
+                            maxLines: 1,
+                          ),
                         ),
                       );
                     },
@@ -80,6 +83,7 @@ class TypeConverterView extends StatelessWidget {
                         return SoftText(
                           value.typeConverterModel.decimal2sComplimentText,
                           label: LBL_2S_COMPLIMENT,
+                          maxLines: 1,
                         );
                       }),
                     ),
@@ -118,6 +122,7 @@ class TypeConverterView extends StatelessWidget {
                           child: SoftText(
                             value.binaryResult,
                             label: "Expression Result",
+                            maxLines: 1,
                           ),
                         ),
                       );
@@ -157,6 +162,7 @@ class TypeConverterView extends StatelessWidget {
                           child: SoftText(
                             value.octalResult,
                             label: "Expression Result",
+                            maxLines: 1,
                           ),
                         ),
                       );
@@ -195,6 +201,7 @@ class TypeConverterView extends StatelessWidget {
                           child: SoftText(
                             value.hexResult,
                             label: "Expression Result",
+                            maxLines: 1,
                           ),
                         ),
                       );
