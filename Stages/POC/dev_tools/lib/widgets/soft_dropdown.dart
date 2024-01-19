@@ -4,20 +4,34 @@ import 'package:flutter/material.dart';
 class SoftDropDown extends StatefulWidget {
   final double? width;
   final double? height;
-  const SoftDropDown({super.key, this.height, this.width});
+  final List<dynamic> itemList;
+  final Function? onChanged;
+  const SoftDropDown(
+      {super.key,
+      this.height,
+      this.width,
+      required this.itemList,
+      this.onChanged});
 
   @override
   State<SoftDropDown> createState() => _SoftDropDownState();
 }
 
 class _SoftDropDownState extends State<SoftDropDown> {
+  dynamic _selectedValue;
   @override
   Widget build(BuildContext context) {
+    if (widget.itemList.isNotEmpty) {
+      _selectedValue = widget.itemList.first;
+      if (widget.onChanged != null && _selectedValue != null) {
+        widget.onChanged!(_selectedValue);
+      }
+    }
+
     return Container(
       width: widget.width,
       height: widget.height,
       decoration: const BoxDecoration(
-        // color: color6,
         gradient: LinearGradient(colors: [
           Color(0xFF0F0B2F),
           Color(0xFF2C2754),
@@ -38,47 +52,32 @@ class _SoftDropDownState extends State<SoftDropDown> {
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30.0),
-        child: DropdownButton<String>(
-            value: "NO COM",
-            isExpanded: true,
-            underline: Container(),
-            items: [
-              DropdownMenuItem(
-                child: Container(
-                  width: double.infinity,
-                  child: Text(
-                    "NO COM",
-                    textAlign: TextAlign.end,
+        child: widget.itemList.isEmpty
+            ? Center(child: Text("No COM Port"))
+            : DropdownButton<String>(
+                value: _selectedValue,
+                isExpanded: true,
+                underline: Container(),
+                items: List.generate(
+                  widget.itemList.length,
+                  (index) => DropdownMenuItem(
+                    value: widget.itemList[index],
+                    child: Text(widget.itemList[index]),
                   ),
                 ),
-                value: "NO COM",
+                onChanged: ((value) {
+                  setState(
+                    () {
+                      if (value != null) {
+                        _selectedValue = value;
+                      }
+                    },
+                  );
+                  if (widget.onChanged != null && value != null) {
+                    widget.onChanged!(value);
+                  }
+                }),
               ),
-              DropdownMenuItem(
-                child: Container(
-                  width: double.infinity,
-                  child: Text(
-                    "1",
-                    textAlign: TextAlign.end,
-                  ),
-                ),
-                value: "1",
-              ),
-              DropdownMenuItem(
-                child: Text("2"),
-                value: "2",
-              ),
-              DropdownMenuItem(
-                child: Text("3"),
-                value: "3",
-              ),
-              DropdownMenuItem(
-                child: Text("4"),
-                value: "4",
-              ),
-            ],
-            onChanged: ((value) {
-              print(value);
-            })),
       ),
     );
   }
