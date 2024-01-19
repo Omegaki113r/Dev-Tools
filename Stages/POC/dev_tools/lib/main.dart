@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:math';
 
 import 'package:dev_tools/const/app_strings.dart';
 import 'package:dev_tools/providers/data_streamer_provider.dart';
@@ -14,7 +13,7 @@ import 'package:dev_tools/const/app_themes.dart';
 import 'package:dev_tools/providers/app_provider.dart';
 import 'package:dev_tools/providers/type_converter_provider.dart';
 
-Random random = Random();
+
 void main() async {
 
   if (kIsWeb) {
@@ -23,20 +22,20 @@ void main() async {
     await windowManager.ensureInitialized();
 
     WindowOptions windowOptions = const WindowOptions(
-      size: Size(1280, 720),
-      minimumSize: Size(1280, 720),
+      size: Size(1280, 1000),
+      minimumSize: Size(1280, 1000),
       // titleBarStyle: TitleBarStyle.hidden,
       title: APP_NAME,
       backgroundColor: Colors.transparent,
       // center: true,
     );
     windowManager.waitUntilReadyToShow(windowOptions, () async {
-      await windowManager.show();
+      // await windowManager.show();
       // await windowManager.setIcon("xtronic_home_logo.jpg");
       // await windowManager.setResizable(false);
       // await windowManager.setAsFrameless();
       // await windowManager.maximize();
-      await windowManager.focus();
+      // await windowManager.focus();
     });
   }
   runApp(const ProviderWidget());
