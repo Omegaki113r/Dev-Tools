@@ -9,48 +9,94 @@ class SoftText extends StatelessWidget {
   final String text;
   final double? height;
   final double? width;
-  bool isTitleBox = false;
+  int? maxLines;
+  bool isTitleBox;
+  bool isFlatTitleBox;
+  final TextStyle? labelStyle;
   SoftText(this.text,
       {super.key,
       this.label,
       this.height,
       this.width,
-      this.isTitleBox = false});
+      this.isTitleBox = false,
+      this.isFlatTitleBox = false,
+      this.labelStyle,
+      this.maxLines});
+
+  SoftText.title(this.text,
+      {super.key,
+      this.label,
+      this.height,
+      this.width,
+      this.labelStyle,
+      this.maxLines})
+      : isTitleBox = true,
+        isFlatTitleBox = false;
+
+  SoftText.titleFlat(this.text,
+      {super.key,
+      this.label,
+      this.height,
+      this.width,
+      this.labelStyle,
+      this.maxLines})
+      : isTitleBox = true,
+        isFlatTitleBox = true;
 
   @override
   Widget build(BuildContext context) {
     if (isTitleBox) {
-      return Container(
-        width: width,
-        height: height,
-        decoration: const BoxDecoration(
-          color: color6,
-          borderRadius: BorderRadius.all(Radius.circular(20)),
-          boxShadow: [
-            BoxShadow(
-              offset: Offset(-10, -10),
-              blurRadius: 20,
-              spreadRadius: -10,
-              color: Color(0xFF312C5E),
-              inset: true,
-            ),
-            BoxShadow(
-              offset: Offset(10, 10),
-              blurRadius: 20,
-              spreadRadius: -10,
-              color: Color(0xFF050227),
-              inset: true,
-            ),
-          ],
-        ),
-        child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-          child: Text(
-            text,
-            style: Theme.of(context).textTheme.bodyLarge,
+      if (isFlatTitleBox) {
+        return Container(
+          width: width,
+          height: height,
+          decoration: const BoxDecoration(
+            color: color6,
+            borderRadius: BorderRadius.all(Radius.circular(20)),
           ),
-        ),
-      );
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+            child: Text(
+              text,
+              textAlign: TextAlign.center,
+              style: labelStyle,
+            ),
+          ),
+        );
+      } else {
+        return Container(
+          width: width,
+          height: height,
+          decoration: const BoxDecoration(
+            color: color6,
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+            boxShadow: [
+              BoxShadow(
+                offset: Offset(-10, -10),
+                blurRadius: 20,
+                spreadRadius: -10,
+                color: Color(0xFF312C5E),
+                inset: true,
+              ),
+              BoxShadow(
+                offset: Offset(10, 10),
+                blurRadius: 20,
+                spreadRadius: -10,
+                color: Color(0xFF050227),
+                inset: true,
+              ),
+            ],
+          ),
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+            child: Text(
+              text,
+              textAlign: TextAlign.center,
+              style: labelStyle,
+            ),
+          ),
+        );
+      }
     } else {
       return Container(
         width: width,
@@ -85,10 +131,10 @@ class SoftText extends StatelessWidget {
                 maxLines: 1,
               ),
               Gap(10),
-              Text(
+              SelectableText(
                 text,
                 style: Theme.of(context).textTheme.bodyLarge,
-                maxLines: 1,
+                maxLines: maxLines,
               ),
             ],
           ),
