@@ -43,7 +43,7 @@ class AppRoute {
   static final _shellNavigatorKey = GlobalKey<NavigatorState>();
   static final GoRouter _router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: TYPE_CONVERTER,
+    initialLocation: DATA_STREAMER,
     routes: [
       ShellRoute(
         navigatorKey: _shellNavigatorKey,
