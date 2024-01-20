@@ -13,9 +13,7 @@ import 'package:dev_tools/const/app_themes.dart';
 import 'package:dev_tools/providers/app_provider.dart';
 import 'package:dev_tools/providers/type_converter_provider.dart';
 
-
 void main() async {
-
   if (kIsWeb) {
   } else if (Platform.isWindows || Platform.isMacOS || Platform.isLinux) {
     WidgetsFlutterBinding.ensureInitialized();
