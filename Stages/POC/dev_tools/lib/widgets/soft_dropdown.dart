@@ -1,3 +1,4 @@
+import 'package:dev_tools/const/app_colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -21,13 +22,12 @@ class _SoftDropDownState extends State<SoftDropDown> {
   dynamic _selectedValue;
   @override
   Widget build(BuildContext context) {
-    if (widget.itemList.isNotEmpty) {
+    if (widget.itemList.isNotEmpty && _selectedValue != widget.itemList.first) {
       _selectedValue = widget.itemList.first;
       if (widget.onChanged != null && _selectedValue != null) {
         widget.onChanged!(_selectedValue);
       }
     }
-
     return Container(
       width: widget.width,
       height: widget.height,
@@ -55,6 +55,7 @@ class _SoftDropDownState extends State<SoftDropDown> {
         child: widget.itemList.isEmpty
             ? Center(child: Text("No COM Port"))
             : DropdownButton<String>(
+                iconEnabledColor: color2,
                 value: _selectedValue,
                 isExpanded: true,
                 underline: Container(),
