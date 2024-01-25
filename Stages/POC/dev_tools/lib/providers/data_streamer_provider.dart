@@ -16,6 +16,10 @@ class DataStreamerProvider with ChangeNotifier {
   DataStreamerProvider() {
     Timer.periodic(Duration(seconds: 1), (timer) {
       List<String> portNameList = SerialPort.availablePorts;
+      if (portNameList.isEmpty) {
+        portList.clear();
+        notifyListeners();
+      }
       for (String portName in portNameList) {
         if (!portList.keys.contains(portName)) {
           portList[portName] = null;
