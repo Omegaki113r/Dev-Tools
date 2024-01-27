@@ -27,14 +27,14 @@ void main() async {
       backgroundColor: Colors.transparent,
       // center: true,
     );
-    windowManager.waitUntilReadyToShow(windowOptions, () async {
-      // await windowManager.show();
-      // await windowManager.setIcon("xtronic_home_logo.jpg");
-      // await windowManager.setResizable(false);
-      // await windowManager.setAsFrameless();
-      // await windowManager.maximize();
-      // await windowManager.focus();
-    });
+    // windowManager.waitUntilReadyToShow(windowOptions, () async {
+    // await windowManager.show();
+    // await windowManager.setIcon("xtronic_home_logo.jpg");
+    // await windowManager.setResizable(false);
+    // await windowManager.setAsFrameless();
+    // await windowManager.maximize();
+    // await windowManager.focus();
+    // });
   }
   runApp(const ProviderWidget());
 }

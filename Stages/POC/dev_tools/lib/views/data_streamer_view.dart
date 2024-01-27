@@ -22,15 +22,14 @@ class DataStreamerView extends StatefulWidget {
 }
 
 class _DataStreamerViewState extends State<DataStreamerView> {
-  StreamerType _currentStreamer = StreamerType.SERIAL;
-  late ScrollController _scrollController;
+  StreamerType currentStreamer = StreamerType.SERIAL;
+  final ScrollController scrollController = ScrollController();
 
   @override
   void initState() {
-    _scrollController = ScrollController();
     // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
     //   print(timeStamp);
-    //   _scrollController.animateTo(_scrollController.position.maxScrollExtent,
+    //   scrollController.animateTo(scrollController.position.maxScrollExtent,
     //       duration: Duration(milliseconds: 500), curve: Curves.linear);
     // });
     super.initState();
@@ -38,7 +37,7 @@ class _DataStreamerViewState extends State<DataStreamerView> {
 
   @override
   void dispose() {
-    _scrollController.dispose();
+    scrollController.dispose();
     super.dispose();
   }
 
@@ -57,13 +56,13 @@ class _DataStreamerViewState extends State<DataStreamerView> {
               setState(() {
                 switch (value) {
                   case 0:
-                    _currentStreamer = StreamerType.SERIAL;
+                    currentStreamer = StreamerType.SERIAL;
                     break;
                   case 1:
-                    _currentStreamer = StreamerType.WEBSOCKET;
+                    currentStreamer = StreamerType.WEBSOCKET;
                     break;
                   case 2:
-                    _currentStreamer = StreamerType.MQTT;
+                    currentStreamer = StreamerType.MQTT;
                     break;
                 }
               });
@@ -73,7 +72,7 @@ class _DataStreamerViewState extends State<DataStreamerView> {
                 height: 75,
                 child: AnimatedSwitcher(
                   duration: Duration(milliseconds: 500),
-                  child: _currentStreamer == StreamerType.SERIAL
+                  child: currentStreamer == StreamerType.SERIAL
                       ? SoftText.titleFlat(
                           "Serial",
                           key: UniqueKey(),
@@ -98,7 +97,7 @@ class _DataStreamerViewState extends State<DataStreamerView> {
                 height: 75,
                 child: AnimatedSwitcher(
                   duration: Duration(milliseconds: 500),
-                  child: _currentStreamer == StreamerType.WEBSOCKET
+                  child: currentStreamer == StreamerType.WEBSOCKET
                       ? SoftText.titleFlat(
                           "Web Socket",
                           key: ValueKey(1),
@@ -123,7 +122,7 @@ class _DataStreamerViewState extends State<DataStreamerView> {
                 height: 75,
                 child: AnimatedSwitcher(
                   duration: Duration(milliseconds: 500),
-                  child: _currentStreamer == StreamerType.MQTT
+                  child: currentStreamer == StreamerType.MQTT
                       ? SoftText.titleFlat(
                           "MQTT",
                           key: ValueKey(1),
@@ -221,7 +220,7 @@ class _DataStreamerViewState extends State<DataStreamerView> {
                   ],
                 ),
                 child: SingleChildScrollView(
-                  controller: _scrollController,
+                  controller: scrollController,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
                       vertical: 15.0,
@@ -229,12 +228,13 @@ class _DataStreamerViewState extends State<DataStreamerView> {
                     ),
                     child: Consumer<DataStreamerProvider>(
                         builder: (context, provider, child) {
-                      // _scrollController.animateTo(
-                      //     provider.serialData.length < 5
-                      //         ? _scrollController.position.maxScrollExtent
-                      //         : 0,
-                      //     duration: const Duration(milliseconds: 50),
-                      // curve: Curves.bounceIn);
+                      try {
+                        double max_extent =
+                            scrollController.positions.last.extentTotal;
+                        scrollController.animateTo(max_extent,
+                            duration: const Duration(milliseconds: 20),
+                            curve: Curves.linear);
+                      } catch (e) {}
                       return SelectableText(
                         provider.serialData,
                         style: Theme.of(context).textTheme.bodyLarge,
