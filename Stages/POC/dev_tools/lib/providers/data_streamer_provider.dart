@@ -31,14 +31,14 @@ class DataStreamerProvider with ChangeNotifier {
 
   void serialPortConnect() {
     if (_selectedPort != null && !_selectedPort!.isOpen) {
-      SerialPortConfig config = _selectedPort!.config;
-      config.baudRate = 115200;
-      config.bits = 8;
-      config.parity = 0;
-      config.stopBits = 1;
-      _selectedPort!.config = config;
       bool openState = _selectedPort!.openReadWrite();
       if (openState) {
+        SerialPortConfig config = _selectedPort!.config;
+        config.baudRate = 115200;
+        config.bits = 8;
+        config.parity = 0;
+        config.stopBits = 1;
+        _selectedPort!.config = config;
         try {
           _serialPortReader = SerialPortReader(_selectedPort!);
           _incomingDataStream = _serialPortReader!.stream.asyncMap((data) {
