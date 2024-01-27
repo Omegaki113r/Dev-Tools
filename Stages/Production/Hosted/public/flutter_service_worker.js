@@ -8,8 +8,8 @@ const RESOURCES = {"assets/AssetManifest.bin": "9eb3db16324be5fd5c93e713f880d9c1
 "assets/AssetManifest.json": "9f2376b9952e1f65bce02fe557e866ad",
 "assets/assets/images/xtronic_home_logo.jpg": "30f9ed51566ec8c457826cbd1b55a849",
 "assets/FontManifest.json": "dc3d03800ccca4601324923c0b1d6d57",
-"assets/fonts/MaterialIcons-Regular.otf": "32fce58e2acb9c420eab0fe7b828b761",
-"assets/NOTICES": "1a03ceb70e1b7425062c6f89bf5cc1ca",
+"assets/fonts/MaterialIcons-Regular.otf": "c1eeb45bf28589986f581361fff116f0",
+"assets/NOTICES": "6366ceab3919977a5e939ae87a67a8be",
 "assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "89ed8f4e49bcdfc0b5bfc9b24591e347",
 "assets/packages/window_manager/images/ic_chrome_close.png": "75f4b8ab3608a05461a31fc18d6b47c2",
 "assets/packages/window_manager/images/ic_chrome_maximize.png": "af7499d7657c8b69d23b85156b60298c",
@@ -30,9 +30,9 @@ const RESOURCES = {"assets/AssetManifest.bin": "9eb3db16324be5fd5c93e713f880d9c1
 "icons/Icon-512.png": "9085c1f34ca9fe73b666b842426b3009",
 "icons/Icon-maskable-192.png": "0f4b7bd29d9cb86373a79192ac759edd",
 "icons/Icon-maskable-512.png": "9085c1f34ca9fe73b666b842426b3009",
-"index.html": "af26b819f423210d29b5f453c25a5ff7",
-"/": "af26b819f423210d29b5f453c25a5ff7",
-"main.dart.js": "e6ffc3e107b804edd6523f084d8dcf6f",
+"index.html": "5334b1afd1419d4c8e4100e3dd0f6f93",
+"/": "5334b1afd1419d4c8e4100e3dd0f6f93",
+"main.dart.js": "e885f861e80d4721b87479e84cc1f36b",
 "manifest.json": "b8cfb969719bf4e64304a6ef0c17378e",
 "version.json": "2218fa07cba934b625f3ca2e8d9d634f"};
 // The application shell files that are downloaded before a service worker can
