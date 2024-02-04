@@ -1,12 +1,15 @@
-
 import 'package:dev_tools/interfaces/Iserial.dart';
 import 'package:serial/serial.dart';
 
 SerialInterface getSerialAdapter() => WebSerialInterface();
 
 class WebSerialInterface implements SerialInterface {
+  // Map<String, SerialPort?> portList = {};
+  // SerialPort? _selectedPort;
   WebSerialInterface() {
     print("WebSerial Initialized");
+    // window.navigator.serial.requestPort().then((port) => _selectedPort = port);
+    // _selectedPort!.readable.reader.read().asStream()
   }
 
   @override
@@ -16,18 +19,22 @@ class WebSerialInterface implements SerialInterface {
   }
 
   @override
-  SerialPort? getPort(String portName) {
-    SerialPort? port;
-    return port;
+  dynamic getPort(String portName) {
+    // window.navigator.serial.requestPort().then((port) => _selectedPort = port);
+    return null;
   }
-  
+
+  @override
+  dynamic getSelectedPort() {
+    return null;
+  }
+
   @override
   bool close() {
     return false;
   }
-  
-  @override
-  SerialPort? getSelectedPort() {
-    return null;
-  }
+
+  String get name => throw UnimplementedError("name getter not implemented");
+
+  bool get isOpen => throw UnimplementedError("isOpen getter not implemented");
 }

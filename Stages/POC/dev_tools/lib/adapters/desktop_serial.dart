@@ -1,35 +1,40 @@
 import 'package:dev_tools/interfaces/Iserial.dart';
-import 'package:flutter_libserialport/flutter_libserialport.dart';
 
 SerialInterface getSerialInterface() => DesktopSerialInterface();
 
 class DesktopSerialInterface implements SerialInterface {
-  Map<String, SerialPort?> portList = {};
-  SerialPort? _selectedPort;
+  // Map<String, SerialPort?> portList = {};
+  // SerialPort? _selectedPort;
+  // SerialPortReader? _serialPortReader;
+  // Stream? _incomingDataStream;
+  // String serialData = "";
+
   DesktopSerialInterface() {
     print("DesktopSerial Initialized");
   }
 
   @override
   List<String> getAvailablePorts() {
-    return SerialPort.availablePorts;
+    List<String> serialNameList = [];
+    return serialNameList;
   }
 
   @override
-  SerialPort? getPort(String portName) {
-    return SerialPort(portName);
+  dynamic getPort(String portName) {
+    return null;
   }
 
   @override
-  SerialPort? getSelectedPort() {
-    return _selectedPort;
+  dynamic getSelectedPort() {
+    return null;
   }
 
   @override
   bool close() {
-    return _selectedPort == null ? false : _selectedPort!.close();
+    return false;
   }
 
-  String? get name => _selectedPort?.name;
-  bool get isOpen => _selectedPort?.isOpen ?? false;
+  String get name => throw UnimplementedError("name getter not implemented");
+
+  bool get isOpen => throw UnimplementedError("isOpen getter not implemented");
 }
