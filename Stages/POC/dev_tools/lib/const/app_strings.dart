@@ -11,3 +11,4 @@ const String LBL_OCTAL = "Octal";
 const String LBL_HEX = "Hex";
 
 const String LBL_DATA_STREAMER = "Data Streamer";
+const String LBL_AUTOSCROLL = "AutoScroll";
