@@ -55,6 +55,9 @@ final ThemeData lightTheme = ThemeData(
   cardTheme: const CardTheme(
     color: color6,
   ),
+  dropdownMenuTheme: DropdownMenuThemeData(
+    textStyle: TextStyle(fontSize: 12),
+  ),
 );
 
 final ThemeData darkTheme = ThemeData(
@@ -67,5 +70,8 @@ final ThemeData darkTheme = ThemeData(
     labelLarge: TextStyle(
       color: color3,
     ),
+  ),
+  dropdownMenuTheme: DropdownMenuThemeData(
+    textStyle: TextStyle(fontSize: 12),
   ),
 );

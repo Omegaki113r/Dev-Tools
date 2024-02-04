@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:dev_tools/const/app_strings.dart';
-import 'package:dev_tools/providers/data_streamer_provider.dart';
+import 'package:dev_tools/providers/data_streamer/streamer_provider.dart';
 import 'package:dev_tools/utils/app_route.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -20,21 +20,21 @@ void main() async {
     await windowManager.ensureInitialized();
 
     WindowOptions windowOptions = const WindowOptions(
-      size: Size(1280, 1000),
-      minimumSize: Size(1280, 1000),
+      size: Size(1480, 720),
+      minimumSize: Size(1480, 720),
       // titleBarStyle: TitleBarStyle.hidden,
       title: APP_NAME,
       backgroundColor: Colors.transparent,
       // center: true,
     );
-    // windowManager.waitUntilReadyToShow(windowOptions, () async {
-    // await windowManager.show();
-    // await windowManager.setIcon("xtronic_home_logo.jpg");
-    // await windowManager.setResizable(false);
-    // await windowManager.setAsFrameless();
-    // await windowManager.maximize();
-    // await windowManager.focus();
-    // });
+    windowManager.waitUntilReadyToShow(windowOptions, () async {
+      await windowManager.show();
+      // await windowManager.setIcon("xtronic_home_logo.jpg");
+      // await windowManager.setResizable(false);
+      // await windowManager.setAsFrameless();
+      // await windowManager.maximize();
+      // await windowManager.focus();
+    });
   }
   runApp(const ProviderWidget());
 }
@@ -49,8 +49,8 @@ class ProviderWidget extends StatelessWidget {
         ChangeNotifierProvider<AppProvider>(create: (context) => AppProvider()),
         ChangeNotifierProvider<TypeConverterProvider>(
             create: (context) => TypeConverterProvider()),
-        ChangeNotifierProvider<DataStreamerProvider>(
-            create: (context) => DataStreamerProvider())
+        ChangeNotifierProvider<StreamerProvider>(
+            create: (context) => StreamerProvider())
       ],
       child: const AppWidget(),
     );
