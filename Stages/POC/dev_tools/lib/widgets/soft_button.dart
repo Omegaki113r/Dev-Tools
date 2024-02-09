@@ -113,13 +113,13 @@ class FlatSoftButton extends StatelessWidget {
         borderRadius: BorderRadius.all(Radius.circular(20)),
         boxShadow: [
           BoxShadow(
-            offset: Offset(-10, -10),
-            blurRadius: 20,
+            offset: Offset(-5, -5),
+            blurRadius: 10,
             color: Color(0xFF312C5E),
           ),
           BoxShadow(
-            offset: Offset(10, 10),
-            blurRadius: 20,
+            offset: Offset(5, 5),
+            blurRadius: 10,
             color: Color(0xFF050227),
           ),
         ],
