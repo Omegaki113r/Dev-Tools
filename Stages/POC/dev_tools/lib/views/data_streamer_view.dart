@@ -1,7 +1,10 @@
 import 'package:dev_tools/const/app_colors.dart';
 import 'package:dev_tools/const/app_constants.dart';
 import 'package:dev_tools/const/app_strings.dart';
+import 'package:dev_tools/providers/data_streamer/mqtt_streamer_provider.dart';
+import 'package:dev_tools/providers/data_streamer/serial_streamer_provider.dart';
 import 'package:dev_tools/providers/data_streamer/streamer_provider.dart';
+import 'package:dev_tools/providers/data_streamer/websocket_provider.dart';
 import 'package:dev_tools/widgets/soft_button.dart';
 import 'package:dev_tools/widgets/soft_checkbox.dart';
 import 'package:dev_tools/widgets/soft_dropdown_button.dart';
@@ -23,18 +26,11 @@ class DataStreamerView extends StatefulWidget {
 
 class _DataStreamerViewState extends State<DataStreamerView> {
   StreamerType currentStreamer = StreamerType.SERIAL;
-  ScrollController scrollController = ScrollController();
-
-  @override
-  void dispose() {
-    scrollController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      animationDuration: Duration(milliseconds: 500),
+      animationDuration: const Duration(milliseconds: 500),
       length: 3,
       child: Column(
         children: [
@@ -135,240 +131,334 @@ class _DataStreamerViewState extends State<DataStreamerView> {
               ),
             ],
           ),
-          SizedBox(
-            height: 125,
+          Expanded(
             child: TabBarView(
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Consumer<StreamerProvider>(
-                          builder: (context, provider, child) {
-                        return SoftButton(
-                          provider.port == null
-                              ? LBL_CONNECT
-                              : provider.port!.isOpen
-                                  ? LBL_DISCONNECT
-                                  : LBL_CONNECT,
-                          ButtonType.FLAT,
-                          width: 150,
-                          height: 45,
-                          onPressed: () {
-                            if (provider.port!.isOpen) {
-                              provider.serialPortDisconnect();
-                            } else {
-                              provider.serialPortConnect();
-                            }
-                          },
-                        );
-                      }),
-                      const Gap(20),
-                      Consumer<StreamerProvider>(
-                          builder: (context, provider, child) {
-                        return SoftDropDownButton(
-                          "No COM Port",
-                          "Port",
-                          width: 170,
-                          height: 45,
-                          selectedValue: provider.port,
-                          itemList: provider.portList.entries
-                              .map((e) => DropdownMenuItem(
-                                    value: e.value,
+                ChangeNotifierProvider(
+                  create: (context) => SerialStreamerProvider(),
+                  child: SerialTabView(),
+                ),
+                ChangeNotifierProvider(
+                  create: (context) => WebSocketStreamerProvider(),
+                  child: WebSocketTabView(),
+                ),
+                ChangeNotifierProvider(
+                  create: (context) => MQTTStreamerProvider(),
+                  child: MQTTTabView(),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class SerialTabView extends StatelessWidget {
+  const SerialTabView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Column(
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Consumer<SerialStreamerProvider>(
+                  builder: (context, provider, child) {
+                return SoftButton(
+                  provider.port == null
+                      ? LBL_CONNECT
+                      : provider.port!.isOpen
+                          ? LBL_DISCONNECT
+                          : LBL_CONNECT,
+                  ButtonType.FLAT,
+                  width: 150,
+                  height: 45,
+                  onPressed: () {
+                    if (provider.port!.isOpen) {
+                      provider.serialPortDisconnect();
+                    } else {
+                      provider.serialPortConnect();
+                    }
+                  },
+                );
+              }),
+              const Gap(20),
+              Consumer<SerialStreamerProvider>(
+                builder: (context, provider, child) {
+                  return SoftDropDownButton.flat(
+                    "No COM Port",
+                    "Port",
+                    width: 150,
+                    height: 45,
+                    selectedValue: provider.port,
+                    itemList: provider.portList.entries
+                        .map(
+                          (e) => DropdownMenuItem(
+                            value: e.value,
+                            child: Row(
+                              children: [
+                                const Spacer(),
+                                Expanded(
+                                  child: Text(
+                                    e.key,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        )
+                        .toList(),
+                    onChanged: (value) {
+                      provider.selectedSerialPortChanged(value);
+                    },
+                    labelTextStyle: const TextStyle(
+                      fontSize: 12.0,
+                    ),
+                    itemStyle: const TextStyle(
+                      fontSize: 12.0,
+                      color: color1,
+                    ),
+                  );
+                },
+              ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        const Gap(40),
+                        Consumer<SerialStreamerProvider>(
+                            builder: (context, provider, child) {
+                          return SoftDropDownButton.flat(
+                            "",
+                            "Baud",
+                            selectedValue: provider.selectedBaudRate,
+                            itemList: baudList
+                                .map(
+                                  (e) => DropdownMenuItem(
+                                    value: e,
                                     child: Row(
                                       children: [
                                         const Spacer(),
                                         Expanded(
                                             child: Text(
-                                          e.key,
+                                          e,
+                                        )),
+                                      ],
+                                    ),
+                                  ),
+                                )
+                                .toList(),
+                            width: 150,
+                            height: 45,
+                            onChanged: (value) {
+                              print(value);
+                              provider.selectedBaudRateChanged(value);
+                            },
+                            labelTextStyle: const TextStyle(
+                              fontSize: 12.0,
+                            ),
+                            itemStyle: const TextStyle(
+                              fontSize: 12.0,
+                              color: color1,
+                            ),
+                          );
+                        }),
+                        const Gap(20),
+                        Consumer<SerialStreamerProvider>(
+                            builder: (context, provider, child) {
+                          return SoftDropDownButton.flat(
+                            "",
+                            "Data bits",
+                            selectedValue: provider.selectedDataBits,
+                            itemList: dataBits
+                                .map(
+                                  (e) => DropdownMenuItem(
+                                    value: e,
+                                    child: Row(
+                                      children: [
+                                        const Spacer(),
+                                        Expanded(
+                                            child: Text(
+                                          e,
                                           textAlign: TextAlign.center,
                                         )),
                                       ],
                                     ),
-                                  ))
-                              .toList(),
-                          onChanged: (value) {
-                            provider.selectedSerialPortChanged(value);
-                          },
-                          labelTextStyle: const TextStyle(
-                            fontSize: 12.0,
-                          ),
-                          itemStyle: const TextStyle(
-                            fontSize: 12.0,
-                            color: color1,
-                          ),
-                        );
-                      }),
-                      const Gap(40),
-                      Consumer<StreamerProvider>(
-                          builder: (context, provider, child) {
-                        return SoftDropDownButton(
-                          "",
-                          "Baud",
-                          selectedValue: provider.selectedBaudRate,
-                          itemList: provider.baudList
-                              .map(
-                                (e) => DropdownMenuItem(
-                                  value: e,
-                                  child: Row(
-                                    children: [
-                                      const Spacer(),
-                                      Expanded(
-                                          child: Text(
-                                        e,
-                                        textAlign: TextAlign.center,
-                                      )),
-                                    ],
                                   ),
-                                ),
-                              )
-                              .toList(),
-                          width: 160,
-                          height: 45,
-                          onChanged: (value) {
-                            print(value);
-                            provider.selectedBaudRateChanged(value);
-                          },
-                          labelTextStyle: const TextStyle(
-                            fontSize: 12.0,
-                          ),
-                          itemStyle: const TextStyle(
-                            fontSize: 12.0,
-                            color: color1,
-                          ),
-                        );
-                      }),
-                      const Gap(40),
-                      Consumer<StreamerProvider>(
-                          builder: (context, provider, child) {
-                        return SoftDropDownButton(
-                          "",
-                          "Data bits",
-                          selectedValue: provider.selectedDataBits,
-                          itemList: provider.dataBits
-                              .map(
-                                (e) => DropdownMenuItem(
-                                  value: e,
-                                  child: Row(
-                                    children: [
-                                      const Spacer(),
-                                      Expanded(
-                                          child: Text(
-                                        e,
-                                        textAlign: TextAlign.center,
-                                      )),
-                                    ],
-                                  ),
-                                ),
-                              )
-                              .toList(),
-                          width: 160,
-                          height: 45,
-                          onChanged: (value) {
-                            print(value);
-                            provider.selectedDataBitsChanged(value);
-                          },
-                          labelTextStyle: const TextStyle(
-                            fontSize: 12.0,
-                          ),
-                          itemStyle: const TextStyle(
-                            fontSize: 12.0,
-                            color: color1,
-                          ),
-                        );
-                      }),
-                      const Gap(40),
-                      Consumer<StreamerProvider>(
-                          builder: (context, provider, child) {
-                        return SoftDropDownButton(
-                          "",
-                          "Stop bits",
-                          selectedValue: provider.selectedStopBits,
-                          itemList: provider.stopBits
-                              .map(
-                                (e) => DropdownMenuItem(
-                                  value: e,
-                                  child: Row(
-                                    children: [
-                                      const Spacer(),
-                                      Expanded(
-                                          child: Text(
-                                        e,
-                                        textAlign: TextAlign.center,
-                                      )),
-                                    ],
-                                  ),
-                                ),
-                              )
-                              .toList(),
-                          width: 160,
-                          height: 45,
-                          onChanged: (value) {
-                            print(value);
-                            provider.selectedStopBitsChanged(value);
-                          },
-                          labelTextStyle: const TextStyle(
-                            fontSize: 12.0,
-                          ),
-                          itemStyle: const TextStyle(
-                            fontSize: 12.0,
-                            color: color1,
-                          ),
-                        );
-                      }),
-                      const Gap(40),
-                      Consumer<StreamerProvider>(
-                          builder: (context, provider, child) {
-                        return SoftDropDownButton(
-                          "",
-                          "Parity",
-                          selectedValue: provider.selectedParity,
-                          itemList: provider.parity
-                              .map(
-                                (e) => DropdownMenuItem(
-                                  value: e,
-                                  child: Row(
-                                    children: [
-                                      const Spacer(),
-                                      Expanded(
-                                        child: Text(
+                                )
+                                .toList(),
+                            width: 150,
+                            height: 45,
+                            onChanged: (value) {
+                              print(value);
+                              provider.selectedDataBitsChanged(value);
+                            },
+                            labelTextStyle: const TextStyle(
+                              fontSize: 12.0,
+                            ),
+                            itemStyle: const TextStyle(
+                              fontSize: 12.0,
+                              color: color1,
+                            ),
+                          );
+                        }),
+                        const Gap(20),
+                        Consumer<SerialStreamerProvider>(
+                            builder: (context, provider, child) {
+                          return SoftDropDownButton.flat(
+                            "",
+                            "Stop bits",
+                            selectedValue: provider.selectedStopBits,
+                            itemList: stopBits
+                                .map(
+                                  (e) => DropdownMenuItem(
+                                    value: e,
+                                    child: Row(
+                                      children: [
+                                        const Spacer(),
+                                        Expanded(
+                                            child: Text(
                                           e,
                                           textAlign: TextAlign.center,
-                                        ),
-                                      ),
-                                    ],
+                                        )),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              )
-                              .toList(),
-                          width: 160,
-                          height: 45,
-                          onChanged: (value) {
-                            print(value);
-                            provider.selectedParityChanged(value);
-                          },
-                          labelTextStyle: const TextStyle(
-                            fontSize: 12.0,
+                                )
+                                .toList(),
+                            width: 150,
+                            height: 45,
+                            onChanged: (value) {
+                              print(value);
+                              provider.selectedStopBitsChanged(value);
+                            },
+                            labelTextStyle: const TextStyle(
+                              fontSize: 12.0,
+                            ),
+                            itemStyle: const TextStyle(
+                              fontSize: 12.0,
+                              color: color1,
+                            ),
+                          );
+                        }),
+                        const Gap(20),
+                        Consumer<SerialStreamerProvider>(
+                            builder: (context, provider, child) {
+                          return SoftDropDownButton.flat(
+                            "",
+                            "Parity",
+                            selectedValue: provider.selectedParity,
+                            itemList: parity
+                                .map(
+                                  (e) => DropdownMenuItem(
+                                    value: e,
+                                    child: Row(
+                                      children: [
+                                        const Spacer(),
+                                        Expanded(
+                                          child: Text(
+                                            e,
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                )
+                                .toList(),
+                            width: 150,
+                            height: 45,
+                            onChanged: (value) {
+                              print(value);
+                              provider.selectedParityChanged(value);
+                            },
+                            labelTextStyle: const TextStyle(
+                              fontSize: 12.0,
+                            ),
+                            itemStyle: const TextStyle(
+                              fontSize: 12.0,
+                              color: color1,
+                            ),
+                          );
+                        }),
+                        const Spacer(),
+                      ],
+                    ),
+                    const Gap(15),
+                    Consumer<SerialStreamerProvider>(
+                        builder: (context, provider, child) {
+                      return SoftCheckbox(
+                        "CTS Flow Control",
+                        onChanged: (checked) =>
+                            provider.ctsFlowControl = checked,
+                        value: provider.ctsFlowControl,
+                        labelStyle: TextStyle(fontSize: 12.0),
+                      );
+                    }),
+                    Consumer<SerialStreamerProvider>(
+                        builder: (context, provider, child) {
+                      return Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SoftCheckbox(
+                            "ASCII",
+                            onChanged: (checked) =>
+                                provider.ascii = checked ?? true,
+                            value: provider.ascii,
+                            labelStyle: TextStyle(fontSize: 12.0),
                           ),
-                          itemStyle: const TextStyle(
-                            fontSize: 12.0,
-                            color: color1,
+                          SoftCheckbox(
+                            "Bin",
+                            onChanged: (checked) =>
+                                provider.binary = checked ?? false,
+                            value: provider.binary,
+                            labelStyle: TextStyle(fontSize: 12.0),
                           ),
-                        );
-                      }),
-                      const Spacer(),
-                    ],
-                  ),
+                          SoftCheckbox(
+                            "Decimal",
+                            onChanged: (checked) =>
+                                provider.decimal = checked ?? false,
+                            value: provider.decimal,
+                            labelStyle: TextStyle(fontSize: 12.0),
+                          ),
+                          SoftCheckbox(
+                            "Hex",
+                            onChanged: (checked) =>
+                                provider.hex = checked ?? false,
+                            value: provider.hex,
+                            labelStyle: TextStyle(fontSize: 12.0),
+                          ),
+                          Spacer(),
+                          Consumer<SerialStreamerProvider>(
+                              builder: (context, provider, child) {
+                            return SoftCheckbox(LBL_AUTOSCROLL,
+                                onChanged: (checked) =>
+                                    provider.autoScroll = checked ?? false,
+                                value: provider.autoScroll);
+                          }),
+                        ],
+                      );
+                    }),
+                  ],
                 ),
-                Icon(Icons.directions_transit),
-                Icon(Icons.directions_bike),
-              ],
-            ),
+              ),
+            ],
           ),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.all(15.0),
+              padding: const EdgeInsets.only(
+                left: 15.0,
+                right: 15,
+                bottom: 15,
+              ),
               child: Container(
                 width: double.infinity,
                 decoration: const BoxDecoration(
@@ -391,25 +481,23 @@ class _DataStreamerViewState extends State<DataStreamerView> {
                     ),
                   ],
                 ),
-                child: Consumer<StreamerProvider>(
+                child: Consumer<SerialStreamerProvider>(
                     builder: (context, provider, child) {
                   return ListView.builder(
-                      controller: scrollController,
-                      itemCount: provider.ascii_list.length,
+                      controller: provider.scrollController,
+                      // itemCount: provider.ascii_list.length,
+                      itemCount: provider.dataList.length,
                       itemBuilder: (context, position) {
                         if (provider.autoScroll) {
-                          scrollController.jumpTo(
-                              scrollController.position.maxScrollExtent);
+                          provider.scrollController.jumpTo(provider
+                              .scrollController.position.maxScrollExtent);
                         }
                         return Padding(
                           padding: const EdgeInsets.symmetric(
                             vertical: 0.0,
                             horizontal: 40.0,
                           ),
-                          child: Text(
-                              context
-                                  .read<StreamerProvider>()
-                                  .ascii_list[position],
+                          child: Text(provider.dataList[position],
                               style: Theme.of(context).textTheme.bodyLarge),
                         );
                       });
@@ -417,18 +505,30 @@ class _DataStreamerViewState extends State<DataStreamerView> {
               ),
             ),
           ),
-          Align(
-            alignment: Alignment.centerRight,
-            child:
-                Consumer<StreamerProvider>(builder: (context, provider, child) {
-              return SoftCheckbox(LBL_AUTOSCROLL,
-                  onChanged: (checked) =>
-                      provider.autoScroll = checked ?? false,
-                  value: provider.autoScroll);
-            }),
-          ),
         ],
       ),
+    );
+  }
+}
+
+class WebSocketTabView extends StatelessWidget {
+  const WebSocketTabView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text("Web Socket"),
+    );
+  }
+}
+
+class MQTTTabView extends StatelessWidget {
+  const MQTTTabView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text("MQTT"),
     );
   }
 }
