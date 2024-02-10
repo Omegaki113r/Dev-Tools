@@ -1,17 +1,16 @@
 import 'dart:io';
-
-import 'package:dev_tools/const/app_strings.dart';
-import 'package:dev_tools/providers/data_streamer/streamer_provider.dart';
-import 'package:dev_tools/utils/app_route.dart';
+import 'package:dev_tools/core/const/app_strings.dart';
+import 'package:dev_tools/core/provider/app_provider.dart';
+import 'package:dev_tools/config/routes/app_route.dart';
+import 'package:dev_tools/features/data_streamer/presentation/provider/streamer_provider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 import 'package:window_manager/window_manager.dart';
 
-import 'package:dev_tools/const/app_themes.dart';
-import 'package:dev_tools/providers/app_provider.dart';
-import 'package:dev_tools/providers/type_converter_provider.dart';
+import 'package:dev_tools/config/themes/app_themes.dart';
+import 'package:dev_tools/features/bitwise_calculator/presentation/provider/type_converter_provider.dart';
 
 void main() async {
   if (kIsWeb) {
@@ -23,7 +22,7 @@ void main() async {
       size: Size(1480, 720),
       minimumSize: Size(1480, 720),
       // titleBarStyle: TitleBarStyle.hidden,
-      title: APP_NAME,
+      title: appName,
       backgroundColor: Colors.transparent,
       // center: true,
     );

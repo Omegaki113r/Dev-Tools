@@ -62,6 +62,7 @@ dependencies:
   logger:
   dart_eval:
   realm:
+  get_it:
 
 dev_dependencies:
   flutter_test:
