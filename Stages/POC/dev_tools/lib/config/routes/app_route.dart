@@ -1,4 +1,4 @@
-import 'package:dev_tools/core/const/app_constants.dart';
+import 'package:dev_tools/core/constants/app_constants.dart';
 import 'package:dev_tools/core/pages/application_view.dart';
 import 'package:dev_tools/features/bitwise_calculator/presentation/pages/bitwise_calculator_view.dart';
 import 'package:dev_tools/features/data_streamer/presentation/pages/data_streamer_view.dart';
@@ -17,13 +17,6 @@ CustomTransitionPage buildPageWithDefaultTransition<T>({
     transitionDuration: const Duration(milliseconds: 300),
     reverseTransitionDuration: const Duration(milliseconds: 300),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      // return SlideTransition(
-      //   position: Tween<Offset>(
-      //     begin: const Offset(1, 0),
-      //     end: Offset.zero,
-      //   ).animate(animation),
-      //   child: child,
-      // );
       return FadeTransition(
         opacity: animation,
         child: SlideTransition(
@@ -43,8 +36,8 @@ class AppRoute {
   static final _shellNavigatorKey = GlobalKey<NavigatorState>();
   static final GoRouter _router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: dataStreamerRoute,
-    // initialLocation: bitwiseCalculatorRoute,
+    // initialLocation: dataStreamerRoute,
+    initialLocation: bitwiseCalculatorRoute,
     routes: [
       ShellRoute(
         navigatorKey: _shellNavigatorKey,

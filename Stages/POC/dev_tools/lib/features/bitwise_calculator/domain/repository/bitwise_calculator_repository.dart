@@ -1,5 +1,5 @@
-import 'package:dev_tools/features/bitwise_calculator/domain/entities/bitwise_calculator_entity.dart';
+// import 'package:dev_tools/features/bitwise_calculator/domain/entities/bitwise_converter_entity.dart';
 
-abstract class BitwiseCalculatorRepository {
-  BitwiseCalculatorEntity getBitwiseCalculator();
-}
+// abstract class BitwiseCalculatorRepository {
+//   BitwiseConverterEntity getBitwiseResolution();
+// }

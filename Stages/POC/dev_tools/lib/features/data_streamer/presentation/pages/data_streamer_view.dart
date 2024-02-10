@@ -1,6 +1,6 @@
-import 'package:dev_tools/core/const/app_colors.dart';
-import 'package:dev_tools/core/const/app_constants.dart';
-import 'package:dev_tools/core/const/app_strings.dart';
+import 'package:dev_tools/core/constants/app_colors.dart';
+import 'package:dev_tools/core/constants/app_constants.dart';
+import 'package:dev_tools/core/constants/app_strings.dart';
 import 'package:dev_tools/core/widgets/soft_button.dart';
 import 'package:dev_tools/core/widgets/soft_checkbox.dart';
 import 'package:dev_tools/core/widgets/soft_dropdown_button.dart';
@@ -109,7 +109,7 @@ class _DataStreamerViewState extends State<DataStreamerView> {
                   duration: const Duration(milliseconds: 500),
                   child: currentStreamer == StreamerType.mqtt
                       ? SoftText.titleFlat(
-                          "mqtt",
+                          "MQTT",
                           key: const ValueKey(1),
                           width: double.infinity,
                           labelStyle: Theme.of(context)
@@ -118,7 +118,7 @@ class _DataStreamerViewState extends State<DataStreamerView> {
                               ?.copyWith(color: color2),
                         )
                       : SoftText.title(
-                          "mqtt",
+                          "MQTT",
                           key: const ValueKey(2),
                           width: double.infinity,
                           labelStyle: Theme.of(context)
@@ -524,7 +524,7 @@ class WebSocketTabView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Center(
-      child: Text("Web Socket"),
+      child: Text(lblWebSocket),
     );
   }
 }
@@ -535,7 +535,7 @@ class MQTTTabView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Center(
-      child: Text("mqtt"),
+      child: Text(lblMQTT),
     );
   }
 }

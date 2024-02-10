@@ -1,5 +1,5 @@
-import 'package:dev_tools/core/const/app_constants.dart';
-import 'package:dev_tools/core/const/app_strings.dart';
+import 'package:dev_tools/core/constants/app_constants.dart';
+import 'package:dev_tools/core/constants/app_strings.dart';
 import 'package:dev_tools/core/widgets/soft_button.dart';
 import 'package:dev_tools/core/widgets/soft_divider.dart';
 import 'package:flutter/material.dart';

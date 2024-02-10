@@ -1,5 +1,5 @@
-import 'package:dev_tools/core/const/app_colors.dart';
-import 'package:dev_tools/core/const/app_constants.dart';
+import 'package:dev_tools/core/constants/app_colors.dart';
+import 'package:dev_tools/core/constants/app_constants.dart';
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
 
