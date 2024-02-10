@@ -1,7 +1,7 @@
 // import 'dart:ffi';
 
 import 'package:dart_eval/dart_eval.dart';
-import 'package:dev_tools/features/bitwise_calculator/data/models/bitwise_calculator_model.dart';
+import 'package:dev_tools/features/bitwise_calculator/domain/entities/bitwise_calculator_entity.dart';
 import 'package:dev_tools/core/utils/bitwise_calculator/lexer.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
