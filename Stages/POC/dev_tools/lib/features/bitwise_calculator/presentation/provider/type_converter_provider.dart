@@ -1,8 +1,7 @@
-// import 'dart:ffi';
-
 import 'package:dart_eval/dart_eval.dart';
 import 'package:dev_tools/features/bitwise_calculator/domain/entities/bitwise_calculator_entity.dart';
 import 'package:dev_tools/core/utils/bitwise_calculator/lexer.dart';
+import 'package:dev_tools/core/utils/bitwise_calculator/functions.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -20,13 +19,13 @@ class TypeConverterProvider with ChangeNotifier {
   String _octalResult = "";
   String _hexResult = "";
 
-  BitwiseCalculatorModel _typeConverterModel =
-      BitwiseCalculatorModel("", "", "", "", "", "");
-  BitwiseCalculatorModel typeConverterModel =
-      BitwiseCalculatorModel("", "", "", "", "", "");
+  BitwiseCalculatorEntity _typeConverterModel =
+      BitwiseCalculatorEntity("", "", "", "", "", "");
+  BitwiseCalculatorEntity typeConverterModel =
+      BitwiseCalculatorEntity("", "", "", "", "", "");
   void changeText(ChangedType type, String text) {
     var currentPosition = 0;
-    _typeConverterModel = BitwiseCalculatorModel("", "", "", "", "", "");
+    _typeConverterModel = BitwiseCalculatorEntity("", "", "", "", "", "");
     _decimalResult = "";
     _binaryResult = "";
     _octalResult = "";
@@ -45,16 +44,15 @@ class TypeConverterProvider with ChangeNotifier {
               _typeConverterModel.binaryText += parsed.toRadixString(2);
               _typeConverterModel.octalText += parsed.toRadixString(8);
               _typeConverterModel.decimalText += parsed.toRadixString(10);
-              int roundedUpTo =
-                  BitwiseCalculatorModel.roundUp(parsed.bitLength, 8);
+              int roundedUpTo = roundUp(parsed.bitLength, 8);
               if (roundedUpTo > 64) {
-                roundedUpTo = BitwiseCalculatorModel.roundUp(roundedUpTo, 64);
+                roundedUpTo = roundUp(roundedUpTo, 64);
               }
               if (roundedUpTo > 32) {
-                roundedUpTo = BitwiseCalculatorModel.roundUp(roundedUpTo, 32);
+                roundedUpTo = roundUp(roundedUpTo, 32);
               }
               if (roundedUpTo > 16) {
-                roundedUpTo = BitwiseCalculatorModel.roundUp(roundedUpTo, 16);
+                roundedUpTo = roundUp(roundedUpTo, 16);
               }
               if (roundedUpTo == 0) {
                 roundedUpTo = 8;
@@ -86,16 +84,15 @@ class TypeConverterProvider with ChangeNotifier {
               _typeConverterModel.octalText += parsed.toRadixString(8);
               _typeConverterModel.hexText +=
                   parsed.toRadixString(16).toUpperCase();
-              int roundedUpTo =
-                  BitwiseCalculatorModel.roundUp(parsed.bitLength, 8);
+              int roundedUpTo = roundUp(parsed.bitLength, 8);
               if (roundedUpTo > 64) {
-                roundedUpTo = BitwiseCalculatorModel.roundUp(roundedUpTo, 64);
+                roundedUpTo = roundUp(roundedUpTo, 64);
               }
               if (roundedUpTo > 32) {
-                roundedUpTo = BitwiseCalculatorModel.roundUp(roundedUpTo, 32);
+                roundedUpTo = roundUp(roundedUpTo, 32);
               }
               if (roundedUpTo > 16) {
-                roundedUpTo = BitwiseCalculatorModel.roundUp(roundedUpTo, 16);
+                roundedUpTo = roundUp(roundedUpTo, 16);
               }
               if (roundedUpTo == 0) {
                 roundedUpTo = 8;
@@ -127,16 +124,15 @@ class TypeConverterProvider with ChangeNotifier {
               _typeConverterModel.decimalText += parsed.toRadixString(10);
               _typeConverterModel.hexText +=
                   parsed.toRadixString(16).toUpperCase();
-              int roundedUpTo =
-                  BitwiseCalculatorModel.roundUp(parsed.bitLength, 8);
+              int roundedUpTo = roundUp(parsed.bitLength, 8);
               if (roundedUpTo > 64) {
-                roundedUpTo = BitwiseCalculatorModel.roundUp(roundedUpTo, 64);
+                roundedUpTo = roundUp(roundedUpTo, 64);
               }
               if (roundedUpTo > 32) {
-                roundedUpTo = BitwiseCalculatorModel.roundUp(roundedUpTo, 32);
+                roundedUpTo = roundUp(roundedUpTo, 32);
               }
               if (roundedUpTo > 16) {
-                roundedUpTo = BitwiseCalculatorModel.roundUp(roundedUpTo, 16);
+                roundedUpTo = roundUp(roundedUpTo, 16);
               }
               if (roundedUpTo == 0) {
                 roundedUpTo = 8;
@@ -168,16 +164,15 @@ class TypeConverterProvider with ChangeNotifier {
               _typeConverterModel.decimalText += parsed.toRadixString(10);
               _typeConverterModel.hexText +=
                   parsed.toRadixString(16).toUpperCase();
-              int roundedUpTo =
-                  BitwiseCalculatorModel.roundUp(parsed.bitLength, 8);
+              int roundedUpTo = roundUp(parsed.bitLength, 8);
               if (roundedUpTo > 64) {
-                roundedUpTo = BitwiseCalculatorModel.roundUp(roundedUpTo, 64);
+                roundedUpTo = roundUp(roundedUpTo, 64);
               }
               if (roundedUpTo > 32) {
-                roundedUpTo = BitwiseCalculatorModel.roundUp(roundedUpTo, 32);
+                roundedUpTo = roundUp(roundedUpTo, 32);
               }
               if (roundedUpTo > 16) {
-                roundedUpTo = BitwiseCalculatorModel.roundUp(roundedUpTo, 16);
+                roundedUpTo = roundUp(roundedUpTo, 16);
               }
               if (roundedUpTo == 0) {
                 roundedUpTo = 8;
