@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 import 'package:window_manager/window_manager.dart';
 
 import 'package:dev_tools/config/themes/app_themes.dart';
-import 'package:dev_tools/features/bitwise_calculator/presentation/provider/type_converter_provider.dart';
+import 'package:dev_tools/features/bitwise_calculator/presentation/provider/bitwise_calculator_provider.dart';
 
 void main() async {
   if (kIsWeb) {

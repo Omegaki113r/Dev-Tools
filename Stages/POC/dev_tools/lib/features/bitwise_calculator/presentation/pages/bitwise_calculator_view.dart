@@ -1,6 +1,6 @@
 import 'package:dev_tools/core/const/app_strings.dart';
 import 'package:dev_tools/core/widgets/soft_text.dart';
-import 'package:dev_tools/features/bitwise_calculator/presentation/provider/type_converter_provider.dart';
+import 'package:dev_tools/features/bitwise_calculator/presentation/provider/bitwise_calculator_provider.dart';
 import 'package:dev_tools/core/widgets/soft_card.dart';
 import 'package:dev_tools/core/widgets/soft_divider.dart';
 import 'package:dev_tools/core/widgets/soft_textfield.dart';
