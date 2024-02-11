@@ -1,6 +1,7 @@
+import 'package:dev_tools/core/constants/app_constants.dart';
 import 'package:flutter/material.dart';
 
-enum SelectedView { bitwiseCalculator, streamer }
+
 
 class AppProvider with ChangeNotifier {
   SelectedView selectedView = SelectedView.bitwiseCalculator;
