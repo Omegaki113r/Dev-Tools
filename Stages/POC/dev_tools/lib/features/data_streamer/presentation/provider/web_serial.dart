@@ -1,39 +1,22 @@
 import 'package:dev_tools/features/data_streamer/presentation/provider/serial_interface.dart';
 import 'package:flutter/foundation.dart';
+import 'package:serial/serial.dart';
 
-SerialInterface getSerialAdapter() => WebSerialInterface();
+SerialInterface getSerialInterface() => WebSerialInterface();
 
 class WebSerialInterface implements SerialInterface {
-  // Map<String, SerialPort?> portList = {};
-  // SerialPort? _selectedPort;
+  SerialPort? _selectedPort;
+  ReadableStream? _serialPortReader;
+
   WebSerialInterface() {
     if (kDebugMode) {
       print("WebSerial Initialized");
     }
-    // window.navigator.serial.requestPort().then((port) => _selectedPort = port);
-    // _selectedPort!.readable.reader.read().asStream()
   }
 
-  @override
-  List<String> getAvailablePorts() {
-    List<String> serialNameList = [];
-    return serialNameList;
-  }
-
-  @override
-  dynamic getPort(String portName) {
-    // window.navigator.serial.requestPort().then((port) => _selectedPort = port);
-    return null;
-  }
-
-  @override
-  dynamic getSelectedPort() {
-    return null;
-  }
-
-  @override
-  bool close() {
-    return false;
+    @override
+  void dispose() {
+    throw UnimplementedError("dispose not implemented");
   }
 
   @override
@@ -41,4 +24,13 @@ class WebSerialInterface implements SerialInterface {
 
   @override
   bool get isOpen => throw UnimplementedError("isOpen getter not implemented");
+
+  @override
+  get port => _selectedPort;
+
+  @override
+  get reader => _serialPortReader;
+
+  @override
+  List<String> get portList => [];
 }

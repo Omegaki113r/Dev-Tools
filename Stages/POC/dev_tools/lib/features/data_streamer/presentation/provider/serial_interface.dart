@@ -4,10 +4,10 @@ import 'package:dev_tools/features/data_streamer/presentation/provider/serial_st
 
 abstract class SerialInterface {
   factory SerialInterface() => getSerialInterface();
-  dynamic getPort(String portName);
-  dynamic getSelectedPort();
-  List<String> getAvailablePorts();
-  bool close();
+  void dispose();
   String get name;
   bool get isOpen;
+  get reader;
+  get port;
+  get portList;
 }

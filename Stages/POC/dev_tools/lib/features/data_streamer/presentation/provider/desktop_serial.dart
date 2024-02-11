@@ -1,14 +1,12 @@
 import 'package:dev_tools/features/data_streamer/presentation/provider/serial_interface.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_libserialport/flutter_libserialport.dart';
 
 SerialInterface getSerialInterface() => DesktopSerialInterface();
 
 class DesktopSerialInterface implements SerialInterface {
-  // Map<String, SerialPort?> portList = {};
-  // SerialPort? _selectedPort;
-  // SerialPortReader? _serialPortReader;
-  // Stream? _incomingDataStream;
-  // String serialData = "";
+  SerialPort? _selectedPort;
+  SerialPortReader? _serialPortReader;
 
   DesktopSerialInterface() {
     if (kDebugMode) {
@@ -17,24 +15,8 @@ class DesktopSerialInterface implements SerialInterface {
   }
 
   @override
-  List<String> getAvailablePorts() {
-    List<String> serialNameList = [];
-    return serialNameList;
-  }
-
-  @override
-  dynamic getPort(String portName) {
-    return null;
-  }
-
-  @override
-  dynamic getSelectedPort() {
-    return null;
-  }
-
-  @override
-  bool close() {
-    return false;
+  void dispose() {
+    throw UnimplementedError("dispose not implemented");
   }
 
   @override
@@ -42,4 +24,13 @@ class DesktopSerialInterface implements SerialInterface {
 
   @override
   bool get isOpen => throw UnimplementedError("isOpen getter not implemented");
+
+  @override
+  get port => _selectedPort;
+
+  @override
+  get reader => _serialPortReader;
+
+  @override
+  List<String> get portList => SerialPort.availablePorts;
 }
