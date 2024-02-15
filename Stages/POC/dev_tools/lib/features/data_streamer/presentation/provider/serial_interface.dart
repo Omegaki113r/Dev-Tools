@@ -5,9 +5,14 @@ import 'package:dev_tools/features/data_streamer/presentation/provider/serial_st
 abstract class SerialInterface {
   factory SerialInterface() => getSerialInterface();
   void dispose();
+  bool fetchPortList();
+  bool connect();
+  bool disconnect();
   String get name;
   bool get isOpen;
-  get reader;
+  Stream? get reader;
   get port;
+  set port(dynamic port);
+  get portNameList;
   get portList;
 }
