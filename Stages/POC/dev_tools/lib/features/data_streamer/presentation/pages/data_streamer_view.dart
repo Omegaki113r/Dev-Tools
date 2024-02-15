@@ -1,6 +1,7 @@
 import 'package:dev_tools/core/constants/app_colors.dart';
 import 'package:dev_tools/core/constants/app_constants.dart';
 import 'package:dev_tools/core/constants/app_strings.dart';
+import 'package:dev_tools/core/services/data_streamer/serial_service.dart';
 import 'package:dev_tools/core/widgets/soft_tab.dart';
 import 'package:dev_tools/features/data_streamer/presentation/provider/mqtt_streamer_provider.dart';
 import 'package:dev_tools/features/data_streamer/presentation/provider/serial_streamer_provider.dart';
@@ -9,6 +10,7 @@ import 'package:dev_tools/features/data_streamer/presentation/widgets/mqtt_tabvi
 import 'package:dev_tools/features/data_streamer/presentation/widgets/serial_tabview.dart';
 import 'package:dev_tools/features/data_streamer/presentation/widgets/websocket_tabview.dart';
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
+import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
 class DataStreamerView extends StatefulWidget {
@@ -69,7 +71,9 @@ class _DataStreamerViewState extends State<DataStreamerView> {
             child: TabBarView(
               children: [
                 ChangeNotifierProvider(
-                  create: (context) => SerialStreamerProvider(),
+                  create: (context) => SerialStreamerProvider(
+                    GetIt.instance.get<SerialService>(),
+                  ),
                   child: const SerialTabView(),
                 ),
                 ChangeNotifierProvider(

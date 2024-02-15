@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'dart:typed_data';
 
 import 'package:dev_tools/features/data_streamer/domain/entities/serial_data_entitiy.dart';
