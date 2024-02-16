@@ -64,4 +64,20 @@ class SerialService {
   bool disconnect() {
     return _serialInterface.disconnect();
   }
+
+  void setBaudrate(int newBaudrate) {
+    _serialInterface.setBaudrate(newBaudrate);
+  }
+
+  void setDatabits(int newBaudrate) {
+    _serialInterface.setDatabits(newBaudrate);
+  }
+
+  void setStopbits(int newBaudrate) {
+    _serialInterface.setStopbits(newBaudrate);
+  }
+
+  void setParity(int newBaudrate) {
+    _serialInterface.setParity(newBaudrate);
+  }
 }
