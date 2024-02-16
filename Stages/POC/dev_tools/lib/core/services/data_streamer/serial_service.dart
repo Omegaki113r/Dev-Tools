@@ -1,4 +1,4 @@
-import 'package:dev_tools/features/data_streamer/presentation/provider/serial_interface.dart';
+import 'package:dev_tools/core/services/data_streamer/serial/serial_interface.dart';
 
 const Map<String, int> baudList = {
   "300": 300,

@@ -365,21 +365,25 @@ class SerialStreamerProvider<T> with ChangeNotifier {
 
   void selectedBaudRateChanged(value) {
     _selectedBaudrate = value;
+    _serialService.setBaudrate(int.parse(value));
     notifyListeners();
   }
 
   void selectedDataBitsChanged(value) {
     _selectedDataBits = value;
+    _serialService.setDatabits(int.parse(value));
     notifyListeners();
   }
 
   void selectedStopBitsChanged(value) {
     _selectedStopBits = value;
+    _serialService.setStopbits(int.parse(value));
     notifyListeners();
   }
 
   void selectedParityChanged(value) {
     _selectedParity = value;
+    // _serialService.setDatabits(int.parse(value));
     notifyListeners();
   }
 
