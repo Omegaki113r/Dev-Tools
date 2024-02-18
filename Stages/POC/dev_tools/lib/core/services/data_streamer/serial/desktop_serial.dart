@@ -147,37 +147,37 @@ class DesktopSerialInterface implements SerialInterface {
   Map<String, SerialPort?> get portList => _portList;
 
   @override
-  void setBaudrate(int newBaudrate) {
+  void setBaudrate(String newBaudrate) {
     if (_selectedPort != null) {
       SerialPortConfig config = _selectedPort!.config;
-      config.baudRate = newBaudrate;
+      config.baudRate = baudList[newBaudrate]!;
       _selectedPort!.config = config;
     }
   }
 
   @override
-  void setStopbits(int newStopbits) {
+  void setStopbits(String newStopbits) {
     if (_selectedPort != null) {
       SerialPortConfig config = _selectedPort!.config;
-      config.stopBits = newStopbits;
+      config.stopBits = stopBits[newStopbits]!;
       _selectedPort!.config = config;
     }
   }
 
   @override
-  void setDatabits(int newBits) {
+  void setDatabits(String newBits) {
     if (_selectedPort != null) {
       SerialPortConfig config = _selectedPort!.config;
-      config.bits = newBits;
+      config.bits = dataBits[newBits]!;
       _selectedPort!.config = config;
     }
   }
 
   @override
-  void setParity(int newParity) {
+  void setParity(String newParity) {
     if (_selectedPort != null) {
       SerialPortConfig config = _selectedPort!.config;
-      config.parity = newParity;
+      config.parity = parity[newParity]!;
       _selectedPort!.config = config;
     }
   }
