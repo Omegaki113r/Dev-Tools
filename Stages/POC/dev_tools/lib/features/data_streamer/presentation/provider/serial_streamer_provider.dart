@@ -105,25 +105,25 @@ class SerialStreamerProvider<T> with ChangeNotifier {
 
   void selectedBaudRateChanged(value) {
     _selectedBaudrate = value;
-    _serialService.setBaudrate(int.parse(value));
+    _serialService.setBaudrate(value);
     notifyListeners();
   }
 
   void selectedDataBitsChanged(value) {
     _selectedDataBits = value;
-    _serialService.setDatabits(int.parse(value));
+    _serialService.setDatabits(value);
     notifyListeners();
   }
 
   void selectedStopBitsChanged(value) {
     _selectedStopBits = value;
-    _serialService.setStopbits(int.parse(value));
+    _serialService.setStopbits(value);
     notifyListeners();
   }
 
   void selectedParityChanged(value) {
     _selectedParity = value;
-    // _serialService.setDatabits(int.parse(value));
+    _serialService.setParity(value);
     notifyListeners();
   }
 
@@ -135,6 +135,7 @@ class SerialStreamerProvider<T> with ChangeNotifier {
   String? get selectedParity => _selectedParity;
 
   bool get autoScroll => _autoScroll;
+
   set autoScroll(bool value) {
     _autoScroll = value;
     notifyListeners();
@@ -159,6 +160,7 @@ class SerialStreamerProvider<T> with ChangeNotifier {
   }
 
   bool get decimal => _decimal;
+
   set decimal(bool value) {
     _decimal = value;
     notifyListeners();

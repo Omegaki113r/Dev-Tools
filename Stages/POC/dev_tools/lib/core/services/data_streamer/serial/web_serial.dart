@@ -1,6 +1,7 @@
 import 'package:dev_tools/core/services/data_streamer/serial/serial_interface.dart';
 import 'package:flutter/foundation.dart';
 import 'package:serial/serial.dart';
+
 Map<String, int> baudList = {
   "300": 300,
   "600": 600,
@@ -94,19 +95,19 @@ class WebSerialInterface implements SerialInterface {
       throw UnimplementedError("get portList not implemented");
 
   @override
-  void setBaudrate(int newBaudrate) =>
+  void setBaudrate(String newBaudrate) =>
       throw UnimplementedError("setBaudrate not implemented");
 
   @override
-  void setDatabits(int newBits) =>
+  void setDatabits(String newBits) =>
       throw UnimplementedError("setBits not implemented");
 
   @override
-  void setParity(int newParity) =>
+  void setParity(String newParity) =>
       throw UnimplementedError("setParity not implemented");
 
   @override
-  void setStopbits(int newStopbits) =>
+  void setStopbits(String newStopbits) =>
       throw UnimplementedError("setStopbits not implemented");
   @override
   List<String> get baudrateList =>

@@ -8,10 +8,10 @@ abstract class SerialInterface {
   bool fetchPortList();
   bool connect();
   bool disconnect();
-  void setBaudrate(int newBaudrate);
-  void setDatabits(int newDatabits);
-  void setStopbits(int newStopbits);
-  void setParity(int newParity);
+  void setBaudrate(String newBaudrate);
+  void setDatabits(String newDatabits);
+  void setStopbits(String newStopbits);
+  void setParity(String newParity);
   String get name;
   bool get isOpen;
   Stream? get reader;

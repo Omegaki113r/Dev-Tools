@@ -1,5 +1,4 @@
 import 'package:dev_tools/core/services/data_streamer/serial/serial_interface.dart';
-import 'package:dev_tools/core/services/data_streamer/serial_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_libserialport/flutter_libserialport.dart';
 
