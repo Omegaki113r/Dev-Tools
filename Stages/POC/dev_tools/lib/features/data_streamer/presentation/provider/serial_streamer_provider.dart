@@ -169,4 +169,9 @@ class SerialStreamerProvider<T> with ChangeNotifier {
     _hex = value;
     notifyListeners();
   }
+
+  List<String> get baudrateList => _serialService.baudrateList;
+  List<String> get dataBitList => _serialService.dataBitList;
+  List<String> get stopBitList => _serialService.stopBitList;
+  List<String> get parityList => _serialService.parityList;
 }

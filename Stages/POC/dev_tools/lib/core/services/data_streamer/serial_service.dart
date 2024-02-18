@@ -80,4 +80,8 @@ class SerialService {
   void setParity(int newBaudrate) {
     _serialInterface.setParity(newBaudrate);
   }
+  List<String> get baudrateList => _serialInterface.baudrateList;
+  List<String> get dataBitList => _serialInterface.dataBitList;
+  List<String> get stopBitList => _serialInterface.stopBitList;
+  List<String> get parityList => _serialInterface.parityList;
 }

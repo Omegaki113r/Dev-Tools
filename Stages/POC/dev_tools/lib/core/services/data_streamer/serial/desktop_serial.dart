@@ -181,4 +181,13 @@ class DesktopSerialInterface implements SerialInterface {
       _selectedPort!.config = config;
     }
   }
+
+  @override
+  List<String> get baudrateList => baudList.keys.toList();
+  @override
+  List<String> get dataBitList => dataBits.keys.toList();
+  @override
+  List<String> get stopBitList => stopBits.keys.toList();
+  @override
+  List<String> get parityList => parity.keys.toList();
 }

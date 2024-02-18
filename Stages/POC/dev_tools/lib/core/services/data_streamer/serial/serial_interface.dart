@@ -19,4 +19,8 @@ abstract class SerialInterface {
   set port(dynamic port);
   get portNameList;
   get portList;
+  List<String> get baudrateList;
+  List<String> get dataBitList;
+  List<String> get stopBitList;
+  List<String> get parityList;
 }

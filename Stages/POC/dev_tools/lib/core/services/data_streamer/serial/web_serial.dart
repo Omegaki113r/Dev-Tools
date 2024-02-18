@@ -108,4 +108,16 @@ class WebSerialInterface implements SerialInterface {
   @override
   void setStopbits(int newStopbits) =>
       throw UnimplementedError("setStopbits not implemented");
+  @override
+  List<String> get baudrateList =>
+      throw UnimplementedError("baudrateList not implemented");
+  @override
+  List<String> get dataBitList =>
+      throw UnimplementedError("dataBitList not implemented");
+  @override
+  List<String> get stopBitList =>
+      throw UnimplementedError("stopBitList not implemented");
+  @override
+  List<String> get parityList =>
+      throw UnimplementedError("parityList not implemented");
 }
