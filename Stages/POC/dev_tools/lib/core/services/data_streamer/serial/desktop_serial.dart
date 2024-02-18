@@ -3,6 +3,43 @@ import 'package:dev_tools/core/services/data_streamer/serial_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_libserialport/flutter_libserialport.dart';
 
+Map<String, int> baudList = {
+  "300": 300,
+  "600": 600,
+  "1200": 1200,
+  "2400": 2400,
+  "4800": 4800,
+  "9600": 9600,
+  "14400": 14400,
+  "19200": 19200,
+  "28800": 28800,
+  "38400": 38400,
+  "56000": 56000,
+  "57600": 57600,
+  "115200": 115200,
+  "128000": 128000,
+  "256000": 256000,
+};
+
+const Map<String, int> parity = {
+  "None": SerialPortParity.none,
+  "Odd": SerialPortParity.odd,
+  "Even": SerialPortParity.even,
+  "Mark": SerialPortParity.mark,
+  "Space": SerialPortParity.space,
+};
+
+const Map<String, int> dataBits = {
+  "5": 5,
+  "6": 6,
+  "7": 7,
+  "8": 8,
+};
+const Map<String, int> stopBits = {
+  "1": 1,
+  "2": 2,
+};
+
 SerialInterface getSerialInterface() => DesktopSerialInterface();
 
 class DesktopSerialInterface implements SerialInterface {

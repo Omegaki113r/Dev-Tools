@@ -1,6 +1,38 @@
 import 'package:dev_tools/core/services/data_streamer/serial/serial_interface.dart';
 import 'package:flutter/foundation.dart';
 import 'package:serial/serial.dart';
+Map<String, int> baudList = {
+  "300": 300,
+  "600": 600,
+  "1200": 1200,
+  "2400": 2400,
+  "4800": 4800,
+  "9600": 9600,
+  "14400": 14400,
+  "19200": 19200,
+  "28800": 28800,
+  "38400": 38400,
+  "56000": 56000,
+  "57600": 57600,
+  "115200": 115200,
+  "128000": 128000,
+  "256000": 256000,
+};
+
+const Map<String, Parity> parity = {
+  "None": Parity.none,
+  "Odd": Parity.odd,
+  "Even": Parity.even,
+};
+
+const Map<String, DataBits> dataBits = {
+  "7": DataBits.seven,
+  "8": DataBits.eight,
+};
+const Map<String, StopBits> stopBits = {
+  "1": StopBits.one,
+  "2": StopBits.two,
+};
 
 SerialInterface getSerialInterface() => WebSerialInterface();
 
