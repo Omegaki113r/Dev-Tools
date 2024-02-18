@@ -1,7 +1,6 @@
 import 'package:dev_tools/core/constants/app_colors.dart';
 import 'package:dev_tools/core/constants/app_constants.dart';
 import 'package:dev_tools/core/constants/app_strings.dart';
-import 'package:dev_tools/core/services/data_streamer/serial_service.dart';
 import 'package:dev_tools/core/widgets/soft_button.dart';
 import 'package:dev_tools/core/widgets/soft_checkbox.dart';
 import 'package:dev_tools/core/widgets/soft_dropdown_button.dart';
@@ -100,7 +99,7 @@ class SerialTabView extends StatelessWidget {
                             "",
                             "Baud",
                             selectedValue: provider.selectedBaudRate,
-                            itemList: baudList.keys
+                            itemList: provider.baudrateList
                                 .map(
                                   (e) => DropdownMenuItem(
                                     value: e,
@@ -140,7 +139,7 @@ class SerialTabView extends StatelessWidget {
                             "",
                             "Data bits",
                             selectedValue: provider.selectedDataBits,
-                            itemList: dataBits.keys
+                            itemList: provider.dataBitList
                                 .map(
                                   (e) => DropdownMenuItem(
                                     value: e,
@@ -181,7 +180,7 @@ class SerialTabView extends StatelessWidget {
                             "",
                             "Stop bits",
                             selectedValue: provider.selectedStopBits,
-                            itemList: stopBits.keys
+                            itemList: provider.stopBitList
                                 .map(
                                   (e) => DropdownMenuItem(
                                     value: e,
@@ -222,7 +221,7 @@ class SerialTabView extends StatelessWidget {
                             "",
                             "Parity",
                             selectedValue: provider.selectedParity,
-                            itemList: parity
+                            itemList: provider.parityList
                                 .map(
                                   (e) => DropdownMenuItem(
                                     value: e,
