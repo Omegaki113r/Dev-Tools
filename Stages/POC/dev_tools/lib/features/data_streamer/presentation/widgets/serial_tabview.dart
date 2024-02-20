@@ -11,8 +11,21 @@ import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
-class SerialTabView extends StatelessWidget {
+class SerialTabView extends StatefulWidget {
   const SerialTabView({super.key});
+
+  @override
+  State<SerialTabView> createState() => _SerialTabViewState();
+}
+
+class _SerialTabViewState extends State<SerialTabView> {
+  final ScrollController scrollController = ScrollController();
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
