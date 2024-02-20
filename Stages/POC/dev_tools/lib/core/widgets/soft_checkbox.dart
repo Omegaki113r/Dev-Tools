@@ -18,27 +18,21 @@ class SoftCheckbox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-      // child: GestureDetector(
-      //   onTap: () => onChanged!(!value),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Checkbox(
-            value: value,
-            onChanged: onChanged,
-            splashRadius: 0,
-            side: BorderSide(color: const Color(0xFFFFFFFF).withOpacity(0.08)),
-          ),
-          const Gap(10),
-          Text(
-            label,
-            style: labelStyle,
-          ),
-        ],
-      ),
-      // ),
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Checkbox(
+          value: value,
+          onChanged: onChanged,
+          splashRadius: 0,
+          side: BorderSide(color: const Color(0xFFFFFFFF).withOpacity(0.08)),
+        ),
+        const Gap(10),
+        Text(
+          label,
+          style: labelStyle,
+        ),
+      ],
     );
   }
 }
