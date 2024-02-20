@@ -33,78 +33,86 @@ class _SerialTabViewState extends State<SerialTabView> {
       padding: const EdgeInsets.all(20.0),
       child: Column(
         children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Consumer<SerialStreamerProvider>(
-                  builder: (context, provider, child) {
-                return SoftButton(
-                  provider.port == null
-                      ? lblConnect
-                      : provider.port!.isOpen
-                          ? lblDisconnect
-                          : lblConnect,
-                  ButtonType.flat,
-                  width: 150,
-                  height: 45,
-                  onPressed: () {
-                    if (provider.port == null) {
-                      return;
-                    }
-                    if (provider.port!.isOpen) {
-                      provider.serialPortDisconnect();
-                    } else {
-                      provider.serialPortConnect();
-                    }
-                  },
-                );
-              }),
-              const Gap(20),
-              Consumer<SerialStreamerProvider>(
-                builder: (context, provider, child) {
-                  return SoftDropDownButton.flat(
-                    "No COM Port",
-                    "Port",
-                    width: 150,
-                    height: 45,
-                    selectedValue: provider.port,
-                    itemList: provider.portList.entries
-                        .map(
-                          (e) => DropdownMenuItem(
-                            value: e.value,
-                            child: Row(
-                              children: [
-                                const Spacer(),
-                                Expanded(
-                                  child: Text(
-                                    e.key,
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        )
-                        .toList(),
-                    onChanged: (value) {
-                      provider.selectedSerialPortChanged(value);
-                    },
-                    labelTextStyle: const TextStyle(
-                      fontSize: 12.0,
-                    ),
-                    itemStyle: const TextStyle(
-                      fontSize: 12.0,
-                      color: color1,
-                    ),
-                  );
-                },
-              ),
-              Expanded(
+          Scrollbar(
+            thumbVisibility: true,
+            trackVisibility: true,
+            thickness: 5,
+            controller: scrollController,
+            child: SingleChildScrollView(
+              controller: scrollController,
+              scrollDirection: Axis.horizontal,
+              clipBehavior: Clip.none,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 0, bottom: 10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
+                        Consumer<SerialStreamerProvider>(
+                            builder: (context, provider, child) {
+                          return SoftButton(
+                            provider.port == null
+                                ? lblConnect
+                                : provider.port!.isOpen
+                                    ? lblDisconnect
+                                    : lblConnect,
+                            ButtonType.flat,
+                            width: 150,
+                            height: 45,
+                            onPressed: () {
+                              if (provider.port == null) {
+                                return;
+                              }
+                              if (provider.port!.isOpen) {
+                                provider.serialPortDisconnect();
+                              } else {
+                                provider.serialPortConnect();
+                              }
+                            },
+                          );
+                        }),
+                        const Gap(20),
+                        Consumer<SerialStreamerProvider>(
+                          builder: (context, provider, child) {
+                            return SoftDropDownButton.flat(
+                              "No COM Port",
+                              "Port",
+                              width: 150,
+                              height: 45,
+                              selectedValue: provider.port,
+                              itemList: provider.portList.entries
+                                  .map(
+                                    (e) => DropdownMenuItem(
+                                      value: e.value,
+                                      child: Row(
+                                        children: [
+                                          const Spacer(),
+                                          Expanded(
+                                            child: Text(
+                                              e.key,
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  )
+                                  .toList(),
+                              onChanged: (value) {
+                                provider.selectedSerialPortChanged(value);
+                              },
+                              labelTextStyle: const TextStyle(
+                                fontSize: 12.0,
+                              ),
+                              itemStyle: const TextStyle(
+                                fontSize: 12.0,
+                                color: color1,
+                              ),
+                            );
+                          },
+                        ),
                         const Gap(40),
                         Consumer<SerialStreamerProvider>(
                             builder: (context, provider, child) {
@@ -269,68 +277,90 @@ class _SerialTabViewState extends State<SerialTabView> {
                             ),
                           );
                         }),
-                        const Spacer(),
                       ],
                     ),
-                    const Gap(15),
                     Consumer<SerialStreamerProvider>(
-                        builder: (context, provider, child) {
-                      return SoftCheckbox(
-                        "CTS Flow Control",
-                        onChanged: (checked) =>
-                            provider.ctsFlowControl = checked,
-                        value: provider.ctsFlowControl,
-                        labelStyle: const TextStyle(fontSize: 12.0),
-                      );
-                    }),
+                      builder: (context, provider, child) {
+                        return Padding(
+                          padding: const EdgeInsets.only(
+                              top: 8.0, right: 20, bottom: 5),
+                          child: SoftCheckbox(
+                            "CTS Flow Control",
+                            onChanged: (checked) =>
+                                provider.ctsFlowControl = checked,
+                            value: provider.ctsFlowControl,
+                            labelStyle: const TextStyle(fontSize: 12.0),
+                          ),
+                        );
+                      },
+                    ),
                     Consumer<SerialStreamerProvider>(
                         builder: (context, provider, child) {
                       return Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SoftCheckbox(
-                            "ASCII",
-                            onChanged: (checked) =>
-                                provider.ascii = checked ?? true,
-                            value: provider.ascii,
-                            labelStyle: const TextStyle(fontSize: 12.0),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                top: 8.0, right: 20, bottom: 5),
+                            child: SoftCheckbox(
+                              "ASCII",
+                              onChanged: (checked) =>
+                                  provider.ascii = checked ?? true,
+                              value: provider.ascii,
+                              labelStyle: const TextStyle(fontSize: 12.0),
+                            ),
                           ),
-                          SoftCheckbox(
-                            "Bin",
-                            onChanged: (checked) =>
-                                provider.binary = checked ?? false,
-                            value: provider.binary,
-                            labelStyle: const TextStyle(fontSize: 12.0),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                top: 8.0, right: 20, bottom: 5),
+                            child: SoftCheckbox(
+                              "Bin",
+                              onChanged: (checked) =>
+                                  provider.binary = checked ?? false,
+                              value: provider.binary,
+                              labelStyle: const TextStyle(fontSize: 12.0),
+                            ),
                           ),
-                          SoftCheckbox(
-                            "Decimal",
-                            onChanged: (checked) =>
-                                provider.decimal = checked ?? false,
-                            value: provider.decimal,
-                            labelStyle: const TextStyle(fontSize: 12.0),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                top: 8.0, right: 20, bottom: 5),
+                            child: SoftCheckbox(
+                              "Decimal",
+                              onChanged: (checked) =>
+                                  provider.decimal = checked ?? false,
+                              value: provider.decimal,
+                              labelStyle: const TextStyle(fontSize: 12.0),
+                            ),
                           ),
-                          SoftCheckbox(
-                            "Hex",
-                            onChanged: (checked) =>
-                                provider.hex = checked ?? false,
-                            value: provider.hex,
-                            labelStyle: const TextStyle(fontSize: 12.0),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                top: 8.0, right: 20, bottom: 5),
+                            child: SoftCheckbox(
+                              "Hex",
+                              onChanged: (checked) =>
+                                  provider.hex = checked ?? false,
+                              value: provider.hex,
+                              labelStyle: const TextStyle(fontSize: 12.0),
+                            ),
                           ),
-                          const Spacer(),
-                          Consumer<SerialStreamerProvider>(
-                              builder: (context, provider, child) {
-                            return SoftCheckbox(lblAutoScroll,
-                                onChanged: (checked) =>
-                                    provider.autoScroll = checked ?? false,
-                                value: provider.autoScroll);
-                          }),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                top: 8.0, right: 20, bottom: 5),
+                            child: SoftCheckbox(
+                              lblAutoScroll,
+                              onChanged: (checked) =>
+                                  provider.autoScroll = checked ?? false,
+                              value: provider.autoScroll,
+                              labelStyle: const TextStyle(fontSize: 12.0),
+                            ),
+                          ),
                         ],
                       );
                     }),
                   ],
                 ),
               ),
-            ],
+            ),
           ),
           Expanded(
             child: Padding(
