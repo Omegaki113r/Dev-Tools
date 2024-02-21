@@ -14,7 +14,19 @@ class SerialConvert {
       decimal += "${_decimal(element)} ";
       hex += "${_hex(element)} ";
     }
-    return SerialDataEntity(ascii, binary, decimal, hex);
+  Stream<StreamDataEntity> convertCharacter(Uint8List incomingBytes) async* {
+    String ascii = "";
+    String binary = "";
+    String decimal = "";
+    String hex = "";
+    for (var element in incomingBytes) {
+      ascii = _ascii(element);
+      binary = _binary(element);
+      decimal = _decimal(element);
+      hex = _hex(element);
+      yield StreamDataEntity(ascii, binary, decimal, hex);
+    }
+    yield const StreamDataEntity("", "", "", "");
   }
 
   String _ascii(byte) {
