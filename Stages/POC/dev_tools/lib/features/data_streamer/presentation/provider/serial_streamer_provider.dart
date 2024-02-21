@@ -1,27 +1,19 @@
 import 'dart:async';
 import 'package:dev_tools/core/services/data_streamer/serial_service.dart';
-import 'package:dev_tools/features/data_streamer/domain/entities/serial_data_entitiy.dart';
+import 'package:dev_tools/features/data_streamer/domain/entities/stream_data_entitiy.dart';
 import 'package:dev_tools/features/data_streamer/domain/usecases/serial_convert_usecase.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class SerialStreamerProvider<T> with ChangeNotifier {
-  // SerialPortReader? _serialPortReader;
-  // Stream? _incomingDataStream;
   List<String> serialData = [];
 
-  // SerialPort? _selectedPort;
   String? _selectedBaudrate = "115200";
   String? _selectedDataBits = "8";
   String? _selectedStopBits = "1";
   String? _selectedParity = "None";
-  // Map<String, T> portList = {};
 
-  List<String> asciiList = [];
-  List<String> hexList = [];
-  List<String> decimalList = [];
-  List<String> binaryList = [];
-  List<String> dataList = [];
+  List<StreamDataEntity> charDataList = [];
   ScrollController scrollController = ScrollController();
 
   bool _autoScroll = true;
@@ -68,28 +60,10 @@ class SerialStreamerProvider<T> with ChangeNotifier {
   }
 
   void _serialDataReceivedHandler(Uint8List incomingBytes) {
-    SerialDataEntity entity = _convertUsecase.convert(incomingBytes);
-    asciiList.add(entity.ascii);
-    binaryList.add(entity.binary);
-    decimalList.add(entity.decimal);
-    hexList.add(entity.hex);
-
-    dataList.clear();
-    for (var i = 0; i < asciiList.length; i++) {
-      if (_ascii) {
-        dataList.add(asciiList[i]);
-      }
-      if (_binary) {
-        dataList.add(binaryList[i]);
-      }
-      if (_decimal) {
-        dataList.add(decimalList[i]);
-      }
-      if (_hex) {
-        dataList.add(hexList[i]);
-      }
-    }
-    notifyListeners();
+    _convertUsecase.convertCharacter(incomingBytes).listen((event) {
+      charDataList.add(event);
+      notifyListeners();
+    });
   }
 
   void serialPortDisconnect() {
