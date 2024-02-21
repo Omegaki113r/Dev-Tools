@@ -1,9 +1,9 @@
 import 'dart:typed_data';
 
-import 'package:dev_tools/features/data_streamer/domain/entities/serial_data_entitiy.dart';
+import 'package:dev_tools/features/data_streamer/domain/entities/stream_data_entitiy.dart';
 
 class SerialConvert {
-  SerialDataEntity convert(Uint8List incomingBytes) {
+  StreamDataEntity convert(Uint8List incomingBytes) {
     String ascii = "";
     String binary = "";
     String decimal = "";
@@ -14,6 +14,9 @@ class SerialConvert {
       decimal += "${_decimal(element)} ";
       hex += "${_hex(element)} ";
     }
+    return StreamDataEntity(ascii, binary, decimal, hex);
+  }
+
   Stream<StreamDataEntity> convertCharacter(Uint8List incomingBytes) async* {
     String ascii = "";
     String binary = "";
@@ -30,7 +33,7 @@ class SerialConvert {
   }
 
   String _ascii(byte) {
-    return String.fromCharCode(byte);
+    return String.fromCharCode(byte).replaceAll('\n', '');
   }
 
   String _binary(byte) {

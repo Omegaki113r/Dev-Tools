@@ -5,6 +5,7 @@ import 'package:dev_tools/core/widgets/soft_button.dart';
 import 'package:dev_tools/core/widgets/soft_checkbox.dart';
 import 'package:dev_tools/core/widgets/soft_dropdown_button.dart';
 import 'package:dev_tools/features/data_streamer/presentation/provider/serial_streamer_provider.dart';
+import 'package:dev_tools/features/data_streamer/presentation/widgets/stream_data_cell.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
@@ -32,6 +33,7 @@ class _SerialTabViewState extends State<SerialTabView> {
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Scrollbar(
             thumbVisibility: true,
@@ -393,24 +395,26 @@ class _SerialTabViewState extends State<SerialTabView> {
                 ),
                 child: Consumer<SerialStreamerProvider>(
                     builder: (context, provider, child) {
-                  return ListView.builder(
-                      controller: provider.scrollController,
-                      // itemCount: provider.asciiList.length,
-                      itemCount: provider.dataList.length,
-                      itemBuilder: (context, position) {
-                        if (provider.autoScroll) {
-                          provider.scrollController.jumpTo(provider
-                              .scrollController.position.maxScrollExtent);
-                        }
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 0.0,
-                            horizontal: 40.0,
-                          ),
-                          child: Text(provider.dataList[position],
-                              style: Theme.of(context).textTheme.bodyLarge),
-                        );
-                      });
+                  return LayoutBuilder(builder: (context, boxConstraint) {
+                    return GridView.builder(
+                        controller: provider.scrollController,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: boxConstraint.biggest.width ~/ 100,
+                        ),
+                        itemCount: provider.charDataList.length,
+                        itemBuilder: (context, index) {
+                          if (provider.autoScroll) {
+                            provider.scrollController.jumpTo(provider
+                                .scrollController.position.maxScrollExtent);
+                          }
+                          return StreamDataCell(
+                            ascii: provider.charDataList[index].ascii,
+                            binary: provider.charDataList[index].binary,
+                            decimal: provider.charDataList[index].decimal,
+                            hex: provider.charDataList[index].hex,
+                          );
+                        });
+                  });
                 }),
               ),
             ),
