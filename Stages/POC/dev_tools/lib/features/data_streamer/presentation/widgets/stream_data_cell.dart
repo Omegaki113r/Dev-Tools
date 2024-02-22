@@ -24,9 +24,9 @@ class StreamDataCell extends StatelessWidget {
             textAlign: TextAlign.end,
           ),
           Text(
-            binary ?? "",
+            hex ?? "",
             style: const TextStyle(
-              color: Colors.yellow,
+              color: Colors.amber,
             ),
           ),
           Text(
@@ -36,9 +36,9 @@ class StreamDataCell extends StatelessWidget {
             ),
           ),
           Text(
-            hex ?? "",
+            binary ?? "",
             style: const TextStyle(
-              color: Colors.amber,
+              color: Colors.yellow,
             ),
           ),
         ],
