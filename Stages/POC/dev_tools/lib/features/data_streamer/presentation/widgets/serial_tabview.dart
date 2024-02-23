@@ -397,9 +397,12 @@ class _SerialTabViewState extends State<SerialTabView> {
                     builder: (context, provider, child) {
                   return LayoutBuilder(builder: (context, boxConstraint) {
                     return GridView.builder(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
                         controller: provider.scrollController,
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: boxConstraint.biggest.width ~/ 100,
+                          crossAxisCount: boxConstraint.biggest.width ~/ 125,
+                          mainAxisSpacing: 20,
+                          crossAxisSpacing: 20,
                         ),
                         itemCount: provider.charDataList.length,
                         itemBuilder: (context, index) {
