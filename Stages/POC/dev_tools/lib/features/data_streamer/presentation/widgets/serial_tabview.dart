@@ -400,11 +400,13 @@ class _SerialTabViewState extends State<SerialTabView> {
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         controller: provider.scrollController,
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: boxConstraint.biggest.width ~/ 125,
-                          mainAxisSpacing: 20,
-                          crossAxisSpacing: 20,
+                          crossAxisCount: boxConstraint.maxWidth ~/ 150,
+                          mainAxisExtent: 150,
+                          mainAxisSpacing: 10,
+                          crossAxisSpacing: 10,
                         ),
                         itemCount: provider.charDataList.length,
+                        shrinkWrap: true,
                         itemBuilder: (context, index) {
                           if (provider.autoScroll) {
                             provider.scrollController.jumpTo(provider
