@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:dev_tools/core/services/data_streamer/serial_service.dart';
 import 'package:dev_tools/features/data_streamer/domain/entities/stream_data_entitiy.dart';
 import 'package:dev_tools/features/data_streamer/domain/usecases/serial_convert_usecase.dart';
+import 'package:drag_select_grid_view/drag_select_grid_view.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -15,6 +16,7 @@ class SerialStreamerProvider<T> with ChangeNotifier {
 
   List<StreamDataEntity> charDataList = [];
   ScrollController scrollController = ScrollController();
+  DragSelectGridViewController controller = DragSelectGridViewController();
 
   bool _autoScroll = true;
   bool _ctsFlowControl = false;
@@ -35,12 +37,19 @@ class SerialStreamerProvider<T> with ChangeNotifier {
         _serialSearchTimerCallback,
       );
     }
+    controller.addListener(listener);
+  }
+
+  void listener() {
+    print(controller.value);
+    notifyListeners();
   }
 
   @override
   void dispose() {
     _serialSearchTimer.cancel();
     _serialService.dispose();
+    controller.removeListener(listener);
     super.dispose();
   }
 
