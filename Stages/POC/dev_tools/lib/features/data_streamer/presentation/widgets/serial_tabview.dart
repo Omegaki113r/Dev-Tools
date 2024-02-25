@@ -6,6 +6,7 @@ import 'package:dev_tools/core/widgets/soft_checkbox.dart';
 import 'package:dev_tools/core/widgets/soft_dropdown_button.dart';
 import 'package:dev_tools/features/data_streamer/presentation/provider/serial_streamer_provider.dart';
 import 'package:dev_tools/features/data_streamer/presentation/widgets/stream_data_cell.dart';
+import 'package:drag_select_grid_view/drag_select_grid_view.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
@@ -396,29 +397,38 @@ class _SerialTabViewState extends State<SerialTabView> {
                 child: Consumer<SerialStreamerProvider>(
                     builder: (context, provider, child) {
                   return LayoutBuilder(builder: (context, boxConstraint) {
-                    return GridView.builder(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        controller: provider.scrollController,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: boxConstraint.maxWidth ~/ 150,
-                          mainAxisExtent: 150,
-                          mainAxisSpacing: 10,
-                          crossAxisSpacing: 10,
-                        ),
-                        itemCount: provider.charDataList.length,
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) {
-                          if (provider.autoScroll) {
-                            provider.scrollController.jumpTo(provider
-                                .scrollController.position.maxScrollExtent);
-                          }
-                          return StreamDataCell(
-                            ascii: provider.charDataList[index].ascii,
-                            binary: provider.charDataList[index].binary,
-                            decimal: provider.charDataList[index].decimal,
-                            hex: provider.charDataList[index].hex,
-                          );
-                        });
+                    return DragSelectGridView(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      scrollController: provider.scrollController,
+                      gridController: provider.controller,
+                      itemCount: provider.charDataList.length,
+                      shrinkWrap: true,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: boxConstraint.maxWidth ~/ 150,
+                        mainAxisExtent: 150,
+                        mainAxisSpacing: 10,
+                        crossAxisSpacing: 10,
+                      ),
+                      itemBuilder: (context, index, selected) {
+                        if (provider.autoScroll) {
+                          provider.scrollController.jumpTo(provider
+                              .scrollController.position.maxScrollExtent);
+                        }
+                        return selected
+                            ? StreamDataCell.Flat(
+                                ascii: provider.charDataList[index].ascii,
+                                binary: provider.charDataList[index].binary,
+                                decimal: provider.charDataList[index].decimal,
+                                hex: provider.charDataList[index].hex,
+                              )
+                            : StreamDataCell(
+                                ascii: provider.charDataList[index].ascii,
+                                binary: provider.charDataList[index].binary,
+                                decimal: provider.charDataList[index].decimal,
+                                hex: provider.charDataList[index].hex,
+                              );
+                      },
+                    );
                   });
                 }),
               ),
