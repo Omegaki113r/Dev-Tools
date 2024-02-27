@@ -40,6 +40,8 @@ class SoftTab<T> extends StatelessWidget {
                     .textTheme
                     .bodyLarge
                     ?.copyWith(color: color2),
+                contentPadding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
               )
             : SoftText.title(
                 text,
@@ -49,6 +51,8 @@ class SoftTab<T> extends StatelessWidget {
                     .textTheme
                     .bodyLarge
                     ?.copyWith(color: color1),
+                contentPadding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
               ),
       ),
     );

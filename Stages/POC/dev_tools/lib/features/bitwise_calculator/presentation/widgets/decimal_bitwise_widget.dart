@@ -56,7 +56,10 @@ class DecimalBitwise extends StatelessWidget {
                   child: SoftText(
                     value.decimalResult,
                     label: lblExpressionResult,
+                    textStyle: Theme.of(context).textTheme.bodyLarge,
                     maxLines: 1,
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 20),
                   ),
                 ),
               );
@@ -70,7 +73,10 @@ class DecimalBitwise extends StatelessWidget {
                 return SoftText(
                   value.typeConverterModel.decimal2sCompliment,
                   label: lbl2sCompliment,
+                  textStyle: Theme.of(context).textTheme.bodyLarge,
                   maxLines: 1,
+                  contentPadding:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                 );
               }),
             ),

@@ -56,7 +56,10 @@ class OctalBitwise extends StatelessWidget {
                   child: SoftText(
                     value.octalResult,
                     label: lblExpressionResult,
+                    textStyle: Theme.of(context).textTheme.bodyLarge,
                     maxLines: 1,
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 20),
                   ),
                 ),
               );
