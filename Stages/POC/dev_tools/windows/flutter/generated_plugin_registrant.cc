@@ -7,6 +7,7 @@
 #include "generated_plugin_registrant.h"
 
 #include <flutter_libserialport/flutter_libserialport_plugin.h>
+#include <local_notifier/local_notifier_plugin.h>
 #include <realm/realm_plugin.h>
 #include <screen_retriever/screen_retriever_plugin.h>
 #include <window_manager/window_manager_plugin.h>
@@ -14,6 +15,8 @@
 void RegisterPlugins(flutter::PluginRegistry* registry) {
   FlutterLibserialportPluginRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("FlutterLibserialportPlugin"));
+  LocalNotifierPluginRegisterWithRegistrar(
+      registry->GetRegistrarForPlugin("LocalNotifierPlugin"));
   RealmPluginRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("RealmPlugin"));
   ScreenRetrieverPluginRegisterWithRegistrar(
