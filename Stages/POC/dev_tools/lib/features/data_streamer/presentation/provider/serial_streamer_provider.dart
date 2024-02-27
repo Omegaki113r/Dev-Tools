@@ -30,6 +30,8 @@ class SerialStreamerProvider<T> with ChangeNotifier {
   String? _selectedStopBits = "1";
   String? _selectedParity = "None";
 
+  int _rxData = 0;
+  int _txData = 0;
   List<StreamDataEntity> charDataList = [];
   ScrollController scrollController = ScrollController();
   DragSelectGridViewController controller = DragSelectGridViewController();
@@ -85,6 +87,7 @@ class SerialStreamerProvider<T> with ChangeNotifier {
   }
 
   void _serialDataReceivedHandler(Uint8List incomingBytes) {
+    _rxData += incomingBytes.length;
     _convertUsecase.convertCharacter(incomingBytes).listen((event) {
       charDataList.add(event);
       notifyListeners();
@@ -123,6 +126,16 @@ class SerialStreamerProvider<T> with ChangeNotifier {
   void selectedParityChanged(value) {
     _selectedParity = value;
     _serialService.setParity(value);
+    notifyListeners();
+  }
+
+  void resetRXCounter() {
+    _rxData = 0;
+    notifyListeners();
+  }
+
+  void resetTXCounter() {
+    _txData = 0;
     notifyListeners();
   }
 
@@ -175,4 +188,6 @@ class SerialStreamerProvider<T> with ChangeNotifier {
   List<String> get dataBitList => _serialService.dataBitList;
   List<String> get stopBitList => _serialService.stopBitList;
   List<String> get parityList => _serialService.parityList;
+  int get rxData => _rxData;
+  int get txData => _txData;
 }

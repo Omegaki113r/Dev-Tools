@@ -446,6 +446,51 @@ class _SerialTabViewState extends State<SerialTabView> {
               ),
             ),
           ),
+          Consumer<SerialStreamerProvider>(builder: (context, provider, child) {
+            return Row(
+              children: [
+                SoftText(
+                  "${provider.rxData}",
+                  label: "RX",
+                  width: 150,
+                  height: 50,
+                  labelStyle: const TextStyle(fontSize: 12),
+                  textStyle: Theme.of(context)
+                      .textTheme
+                      .bodyLarge
+                      ?.copyWith(fontSize: 14),
+                  textAlign: TextAlign.end,
+                  contentPadding:
+                      const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                ),
+                const Gap(25),
+                SoftButton("Reset", ButtonType.emboss, width: 100, height: 50,
+                    onPressed: () {
+                  provider.resetRXCounter();
+                }),
+                const Gap(50),
+                SoftText(
+                  "${provider.txData}",
+                  label: "TX",
+                  width: 150,
+                  height: 50,
+                  labelStyle: const TextStyle(fontSize: 12),
+                  textStyle: Theme.of(context)
+                      .textTheme
+                      .bodyLarge
+                      ?.copyWith(fontSize: 14),
+                  textAlign: TextAlign.end,
+                  contentPadding:
+                      const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                ),
+                const Gap(25),
+                SoftButton("Reset", ButtonType.emboss, width: 100, height: 50,
+                    onPressed: () {
+                  provider.resetTXCounter();
+                }),
+              ],
+            );
+          }),
         ],
       ),
     );
