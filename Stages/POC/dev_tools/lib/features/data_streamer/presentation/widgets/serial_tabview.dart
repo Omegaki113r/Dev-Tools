@@ -4,7 +4,7 @@
  * File Created: Sunday, 11th February 2024 11:00:45 pm
  * Author: Omegaki113r (omegaki113r@gmail.com)
  * -----
- * Last Modified: Tuesday, 27th February 2024 8:52:53 pm
+ * Last Modified: Tuesday, 27th February 2024 9:32:24 pm
  * Modified By: Omegaki113r (omegaki113r@gmail.com>)
  * -----
  * Copyright 2024 - 2024 0m3g4ki113r, Xtronic
@@ -16,6 +16,7 @@ import 'package:dev_tools/core/constants/app_strings.dart';
 import 'package:dev_tools/core/widgets/soft_button.dart';
 import 'package:dev_tools/core/widgets/soft_checkbox.dart';
 import 'package:dev_tools/core/widgets/soft_dropdown_button.dart';
+import 'package:dev_tools/core/widgets/soft_text.dart';
 import 'package:dev_tools/features/data_streamer/presentation/provider/serial_streamer_provider.dart';
 import 'package:dev_tools/features/data_streamer/presentation/widgets/stream_data_cell.dart';
 import 'package:drag_select_grid_view/drag_select_grid_view.dart';
@@ -329,10 +330,10 @@ class _SerialTabViewState extends State<SerialTabView> {
                             padding: const EdgeInsets.only(
                                 top: 8.0, right: 20, bottom: 5),
                             child: SoftCheckbox(
-                              "Bin",
+                              "Hex",
                               onChanged: (checked) =>
-                                  provider.binary = checked ?? false,
-                              value: provider.binary,
+                                  provider.hex = checked ?? false,
+                              value: provider.hex,
                               labelStyle: const TextStyle(fontSize: 12.0),
                             ),
                           ),
@@ -351,10 +352,10 @@ class _SerialTabViewState extends State<SerialTabView> {
                             padding: const EdgeInsets.only(
                                 top: 8.0, right: 20, bottom: 5),
                             child: SoftCheckbox(
-                              "Hex",
+                              "Bin",
                               onChanged: (checked) =>
-                                  provider.hex = checked ?? false,
-                              value: provider.hex,
+                                  provider.binary = checked ?? false,
+                              value: provider.binary,
                               labelStyle: const TextStyle(fontSize: 12.0),
                             ),
                           ),
@@ -407,42 +408,65 @@ class _SerialTabViewState extends State<SerialTabView> {
                   ],
                 ),
                 child: Consumer<SerialStreamerProvider>(
-                    builder: (context, provider, child) {
-                  return LayoutBuilder(builder: (context, boxConstraint) {
-                    return DragSelectGridView(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      scrollController: provider.scrollController,
-                      gridController: provider.controller,
-                      itemCount: provider.charDataList.length,
-                      shrinkWrap: true,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: boxConstraint.maxWidth ~/ 150,
-                        mainAxisExtent: 150,
-                        mainAxisSpacing: 10,
-                        crossAxisSpacing: 10,
-                      ),
-                      itemBuilder: (context, index, selected) {
-                        if (provider.autoScroll) {
-                          provider.scrollController.jumpTo(provider
-                              .scrollController.position.maxScrollExtent);
-                        }
-                        return selected
-                            ? StreamDataCell.Flat(
-                                ascii: provider.charDataList[index].ascii,
-                                binary: provider.charDataList[index].binary,
-                                decimal: provider.charDataList[index].decimal,
-                                hex: provider.charDataList[index].hex,
-                              )
-                            : StreamDataCell(
-                                ascii: provider.charDataList[index].ascii,
-                                binary: provider.charDataList[index].binary,
-                                decimal: provider.charDataList[index].decimal,
-                                hex: provider.charDataList[index].hex,
-                              );
+                  builder: (context, provider, child) {
+                    return LayoutBuilder(
+                      builder: (context, boxConstraint) {
+                        return DragSelectGridView(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          scrollController: provider.scrollController,
+                          gridController: provider.controller,
+                          itemCount: provider.charDataList.length,
+                          shrinkWrap: true,
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: boxConstraint.maxWidth ~/ 100,
+                            mainAxisExtent: (provider.ascii ? 40 : 0) +
+                                (provider.binary ? 40 : 0) +
+                                (provider.hex ? 40 : 0) +
+                                (provider.decimal ? 40 : 0),
+                            mainAxisSpacing: 10,
+                            crossAxisSpacing: 10,
+                          ),
+                          itemBuilder: (context, index, selected) {
+                            if (provider.autoScroll) {
+                              provider.scrollController.jumpTo(provider
+                                  .scrollController.position.maxScrollExtent);
+                            }
+                            return selected
+                                ? StreamDataCell.flat(
+                                    ascii: provider.ascii
+                                        ? provider.charDataList[index].ascii
+                                        : null,
+                                    binary: provider.binary
+                                        ? provider.charDataList[index].binary
+                                        : null,
+                                    decimal: provider.decimal
+                                        ? provider.charDataList[index].decimal
+                                        : null,
+                                    hex: provider.hex
+                                        ? provider.charDataList[index].hex
+                                        : null,
+                                  )
+                                : StreamDataCell(
+                                    ascii: provider.ascii
+                                        ? provider.charDataList[index].ascii
+                                        : null,
+                                    binary: provider.binary
+                                        ? provider.charDataList[index].binary
+                                        : null,
+                                    decimal: provider.decimal
+                                        ? provider.charDataList[index].decimal
+                                        : null,
+                                    hex: provider.hex
+                                        ? provider.charDataList[index].hex
+                                        : null,
+                                  );
+                          },
+                        );
                       },
                     );
-                  });
-                }),
+                  },
+                ),
               ),
             ),
           ),

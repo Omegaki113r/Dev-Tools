@@ -59,7 +59,9 @@ class SerialStreamerProvider<T> with ChangeNotifier {
   }
 
   void listener() {
-    print(controller.value);
+    if (kDebugMode) {
+      print(controller.value);
+    }
     notifyListeners();
   }
 
@@ -90,6 +92,7 @@ class SerialStreamerProvider<T> with ChangeNotifier {
     _rxData += incomingBytes.length;
     _convertUsecase.convertCharacter(incomingBytes).listen((event) {
       charDataList.add(event);
+
       notifyListeners();
     });
   }
