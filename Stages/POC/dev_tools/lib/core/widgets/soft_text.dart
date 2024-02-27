@@ -17,7 +17,6 @@
 import 'package:dev_tools/core/constants/app_colors.dart';
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
-import 'package:gap/gap.dart';
 
 class SoftText extends StatelessWidget {
   final String? label;
@@ -28,34 +27,50 @@ class SoftText extends StatelessWidget {
   final bool isTitleBox;
   final bool isFlatTitleBox;
   final TextStyle? labelStyle;
-  const SoftText(this.text,
-      {super.key,
-      this.label,
-      this.height,
-      this.width,
-      this.isTitleBox = false,
-      this.isFlatTitleBox = false,
-      this.labelStyle,
-      this.maxLines});
+  final TextStyle? textStyle;
+  final TextAlign? textAlign;
+  final EdgeInsetsGeometry? contentPadding;
+  const SoftText(
+    this.text, {
+    super.key,
+    this.label,
+    this.height,
+    this.width,
+    this.isTitleBox = false,
+    this.isFlatTitleBox = false,
+    this.labelStyle,
+    this.textStyle,
+    this.maxLines,
+    this.textAlign,
+    this.contentPadding,
+  });
 
-  const SoftText.title(this.text,
-      {super.key,
-      this.label,
-      this.height,
-      this.width,
-      this.labelStyle,
-      this.maxLines})
-      : isTitleBox = true,
+  const SoftText.title(
+    this.text, {
+    super.key,
+    this.label,
+    this.height,
+    this.width,
+    this.labelStyle,
+    this.textStyle,
+    this.maxLines,
+    this.textAlign,
+    this.contentPadding,
+  })  : isTitleBox = true,
         isFlatTitleBox = false;
 
-  const SoftText.titleFlat(this.text,
-      {super.key,
-      this.label,
-      this.height,
-      this.width,
-      this.labelStyle,
-      this.maxLines})
-      : isTitleBox = true,
+  const SoftText.titleFlat(
+    this.text, {
+    super.key,
+    this.label,
+    this.height,
+    this.width,
+    this.labelStyle,
+    this.textStyle,
+    this.maxLines,
+    this.textAlign,
+    this.contentPadding,
+  })  : isTitleBox = true,
         isFlatTitleBox = true;
 
   @override
@@ -70,7 +85,7 @@ class SoftText extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(20)),
           ),
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+            padding: contentPadding ?? const EdgeInsets.all(0),
             child: Text(
               text,
               textAlign: TextAlign.center,
@@ -103,7 +118,7 @@ class SoftText extends StatelessWidget {
             ],
           ),
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+            padding: contentPadding ?? const EdgeInsets.all(0),
             child: Text(
               text,
               textAlign: TextAlign.center,
@@ -137,19 +152,20 @@ class SoftText extends StatelessWidget {
           ],
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+          padding: contentPadding ?? const EdgeInsets.all(0),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
                 label ?? "",
                 maxLines: 1,
+                style: labelStyle,
               ),
-              const Gap(10),
               SelectableText(
                 text,
-                style: Theme.of(context).textTheme.bodyLarge,
+                style: textStyle,
                 maxLines: maxLines,
+                textAlign: textAlign,
               ),
             ],
           ),
