@@ -64,6 +64,7 @@ dependencies:
   dart_eval:
   realm:
   get_it:
+  local_notifier: 
 
 dev_dependencies:
   flutter_test:
