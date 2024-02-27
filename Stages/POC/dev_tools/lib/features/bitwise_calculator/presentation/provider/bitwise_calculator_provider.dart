@@ -1,3 +1,19 @@
+/*
+ * Project: Xtronic Dev Tools
+ * File Name: bitwise_calculator_provider.dart
+ * File Created: Wednesday, 3rd January 2024 10:03:08 pm
+ * Author: Omegaki113r (omegaki113r@gmail.com)
+ * -----
+ * Last Modified: Tuesday, 27th February 2024 9:31:14 pm
+ * Modified By: Omegaki113r (omegaki113r@gmail.com>)
+ * -----
+ * Copyright 2024 - 2024 0m3g4ki113r, Xtronic
+ * -----
+ * HISTORY:
+ * Date      	By	Comments
+ * ----------	---	---------------------------------------------------------
+ */
+
 import 'package:dev_tools/features/bitwise_calculator/domain/entities/bitwise_converter_entity.dart';
 import 'package:dev_tools/features/bitwise_calculator/domain/entities/bitwise_solver_entity.dart';
 import 'package:dev_tools/features/bitwise_calculator/domain/usecases/bitwise_convert_usecase.dart';

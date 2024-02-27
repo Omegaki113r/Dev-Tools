@@ -1,3 +1,15 @@
+/*
+ * Project: Xtronic Dev Tools
+ * File Name: stream_data_cell.dart
+ * File Created: Wednesday, 21st February 2024 6:35:17 pm
+ * Author: Omegaki113r (omegaki113r@gmail.com)
+ * -----
+ * Last Modified: Monday, 26th February 2024 5:49:25 pm
+ * Modified By: Omegaki113r (omegaki113r@gmail.com>)
+ * -----
+ * Copyright 2024 - 2024 0m3g4ki113r, Xtronic
+ */
+
 import 'package:dev_tools/core/constants/app_colors.dart';
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';

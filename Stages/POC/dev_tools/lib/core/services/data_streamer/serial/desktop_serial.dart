@@ -1,3 +1,19 @@
+/*
+ * Project: Xtronic Dev Tools
+ * File Name: desktop_serial.dart
+ * File Created: Saturday, 17th February 2024 4:01:18 am
+ * Author: Omegaki113r (omegaki113r@gmail.com)
+ * -----
+ * Last Modified: Tuesday, 27th February 2024 9:29:49 pm
+ * Modified By: Omegaki113r (omegaki113r@gmail.com>)
+ * -----
+ * Copyright 2024 - 2024 0m3g4ki113r, Xtronic
+ * -----
+ * HISTORY:
+ * Date      	By	Comments
+ * ----------	---	---------------------------------------------------------
+ */
+
 import 'package:dev_tools/core/services/data_streamer/serial/serial_interface.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_libserialport/flutter_libserialport.dart';

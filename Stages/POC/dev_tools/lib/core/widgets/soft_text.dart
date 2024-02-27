@@ -1,3 +1,19 @@
+/*
+ * Project: Xtronic Dev Tools
+ * File Name: soft_text.dart
+ * File Created: Friday, 12th January 2024 3:55:16 pm
+ * Author: Omegaki113r (omegaki113r@gmail.com)
+ * -----
+ * Last Modified: Tuesday, 27th February 2024 9:32:18 pm
+ * Modified By: Omegaki113r (omegaki113r@gmail.com>)
+ * -----
+ * Copyright 2024 - 2024 0m3g4ki113r, Xtronic
+ * -----
+ * HISTORY:
+ * Date      	By	Comments
+ * ----------	---	---------------------------------------------------------
+ */
+
 import 'package:dev_tools/core/constants/app_colors.dart';
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';

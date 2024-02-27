@@ -1,3 +1,19 @@
+/*
+ * Project: Xtronic Dev Tools
+ * File Name: serial_convert_usecase.dart
+ * File Created: Friday, 16th February 2024 12:40:44 am
+ * Author: Omegaki113r (omegaki113r@gmail.com)
+ * -----
+ * Last Modified: Tuesday, 27th February 2024 9:31:40 pm
+ * Modified By: Omegaki113r (omegaki113r@gmail.com>)
+ * -----
+ * Copyright 2024 - 2024 0m3g4ki113r, Xtronic
+ * -----
+ * HISTORY:
+ * Date      	By	Comments
+ * ----------	---	---------------------------------------------------------
+ */
+
 import 'dart:typed_data';
 
 import 'package:dev_tools/features/data_streamer/domain/entities/stream_data_entitiy.dart';

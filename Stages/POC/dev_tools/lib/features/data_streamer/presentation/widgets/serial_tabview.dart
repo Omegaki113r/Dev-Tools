@@ -1,3 +1,15 @@
+/*
+ * Project: Xtronic Dev Tools
+ * File Name: serial_tabview.dart
+ * File Created: Sunday, 11th February 2024 11:00:45 pm
+ * Author: Omegaki113r (omegaki113r@gmail.com)
+ * -----
+ * Last Modified: Tuesday, 27th February 2024 8:52:53 pm
+ * Modified By: Omegaki113r (omegaki113r@gmail.com>)
+ * -----
+ * Copyright 2024 - 2024 0m3g4ki113r, Xtronic
+ */
+
 import 'package:dev_tools/core/constants/app_colors.dart';
 import 'package:dev_tools/core/constants/app_constants.dart';
 import 'package:dev_tools/core/constants/app_strings.dart';

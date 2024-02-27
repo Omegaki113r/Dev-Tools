@@ -1,3 +1,19 @@
+/*
+ * Project: Xtronic Dev Tools
+ * File Name: app_strings.dart
+ * File Created: Monday, 15th January 2024 4:49:05 pm
+ * Author: Omegaki113r (omegaki113r@gmail.com)
+ * -----
+ * Last Modified: Tuesday, 27th February 2024 9:29:31 pm
+ * Modified By: Omegaki113r (omegaki113r@gmail.com>)
+ * -----
+ * Copyright 2024 - 2024 0m3g4ki113r, Xtronic
+ * -----
+ * HISTORY:
+ * Date      	By	Comments
+ * ----------	---	---------------------------------------------------------
+ */
+
 const String appName = "Xtronic DevTools";
 
 const String lblConnect = "Connect";

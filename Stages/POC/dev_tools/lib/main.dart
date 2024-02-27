@@ -1,3 +1,15 @@
+/*
+ * Project: Xtronic Dev Tools
+ * File Name: main.dart
+ * File Created: Tuesday, 26th December 2023 2:12:03 pm
+ * Author: Omegaki113r (omegaki113r@gmail.com)
+ * -----
+ * Last Modified: Monday, 26th February 2024 4:43:53 pm
+ * Modified By: Omegaki113r (omegaki113r@gmail.com>)
+ * -----
+ * Copyright 2024 - 2024 0m3g4ki113r, Xtronic
+ */
+
 import 'package:dev_tools/core/constants/app_strings.dart';
 import 'package:dev_tools/core/provider/app_provider.dart';
 import 'package:dev_tools/config/routes/app_route.dart';

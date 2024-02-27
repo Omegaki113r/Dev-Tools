@@ -1,3 +1,19 @@
+/*
+ * Project: Xtronic Dev Tools
+ * File Name: bitwise_convert_usecase.dart
+ * File Created: Saturday, 10th February 2024 11:07:05 pm
+ * Author: Omegaki113r (omegaki113r@gmail.com)
+ * -----
+ * Last Modified: Tuesday, 27th February 2024 9:31:03 pm
+ * Modified By: Omegaki113r (omegaki113r@gmail.com>)
+ * -----
+ * Copyright 2024 - 2024 0m3g4ki113r, Xtronic
+ * -----
+ * HISTORY:
+ * Date      	By	Comments
+ * ----------	---	---------------------------------------------------------
+ */
+
 import 'package:dev_tools/core/utils/bitwise_calculator/functions.dart';
 import 'package:dev_tools/core/utils/bitwise_calculator/lexer.dart';
 import 'package:dev_tools/features/bitwise_calculator/domain/entities/bitwise_converter_entity.dart';
