@@ -153,6 +153,18 @@ class SerialStreamerProvider<T> with ChangeNotifier {
     notifyListeners();
   }
 
+  void resetRXData() {
+    _rxData = 0;
+    rxDataList.clear();
+    notifyListeners();
+  }
+
+  void resetTXData() {
+    _txData = 0;
+    txDataList.clear();
+    notifyListeners();
+  }
+
   T get port => _serialService.port;
   Map<String, dynamic> get portList => _serialService.portList;
   String? get selectedBaudRate => _selectedBaudrate;
