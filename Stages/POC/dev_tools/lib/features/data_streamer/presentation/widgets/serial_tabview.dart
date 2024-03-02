@@ -370,7 +370,15 @@ class _SerialTabViewState extends State<SerialTabView> {
                               labelStyle: const TextStyle(fontSize: 12.0),
                             ),
                           ),
-                        ],
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 8.0, right: 20, bottom: 5),
+                              child: SoftButton(
+                                  "Clear Received", ButtonType.emboss,
+                                  width: 150, height: 50, onPressed: () {
+                                provider.resetRXData();
+                              }),
+                            ),
                       );
                     }),
                   ],
@@ -512,6 +520,11 @@ class _SerialTabViewState extends State<SerialTabView> {
                     onPressed: () {
                   provider.resetTXCounter();
                 }),
+                const Gap(25),
+                SoftButton("Clear Transmitted", ButtonType.emboss,
+                    width: 150, height: 50, onPressed: () {
+                  provider.resetTXData();
+                })
               ],
             );
           }),
