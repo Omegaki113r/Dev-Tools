@@ -4,7 +4,7 @@
  * File Created: Sunday, 11th February 2024 11:00:45 pm
  * Author: Omegaki113r (omegaki113r@gmail.com)
  * -----
- * Last Modified: Tuesday, 27th February 2024 9:32:24 pm
+ * Last Modified: Sunday, 3rd March 2024 3:40:37 am
  * Modified By: Omegaki113r (omegaki113r@gmail.com>)
  * -----
  * Copyright 2024 - 2024 0m3g4ki113r, Xtronic
@@ -19,6 +19,7 @@ import 'package:dev_tools/core/widgets/soft_dropdown_button.dart';
 import 'package:dev_tools/core/widgets/soft_text.dart';
 import 'package:dev_tools/features/data_streamer/presentation/provider/serial_streamer_provider.dart';
 import 'package:dev_tools/features/data_streamer/presentation/widgets/stream_data_cell.dart';
+import 'package:dev_tools/features/data_streamer/presentation/widgets/stream_data_view.dart';
 import 'package:drag_select_grid_view/drag_select_grid_view.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
@@ -311,65 +312,91 @@ class _SerialTabViewState extends State<SerialTabView> {
                       },
                     ),
                     Consumer<SerialStreamerProvider>(
-                        builder: (context, provider, child) {
-                      return Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: 8.0, right: 20, bottom: 5),
-                            child: SoftCheckbox(
-                              "ASCII",
-                              onChanged: (checked) =>
-                                  provider.ascii = checked ?? true,
-                              value: provider.ascii,
-                              labelStyle: const TextStyle(fontSize: 12.0),
+                      builder: (context, provider, child) {
+                        return Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 8.0, right: 20, bottom: 5),
+                              child: SoftCheckbox(
+                                "ASCII",
+                                onChanged: (checked) =>
+                                    provider.ascii = checked ?? true,
+                                value: provider.ascii,
+                                labelStyle: const TextStyle(fontSize: 12.0),
+                              ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: 8.0, right: 20, bottom: 5),
-                            child: SoftCheckbox(
-                              "Hex",
-                              onChanged: (checked) =>
-                                  provider.hex = checked ?? false,
-                              value: provider.hex,
-                              labelStyle: const TextStyle(fontSize: 12.0),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 8.0, right: 20, bottom: 5),
+                              child: SoftCheckbox(
+                                "Hex",
+                                onChanged: (checked) =>
+                                    provider.hex = checked ?? false,
+                                value: provider.hex,
+                                labelStyle: const TextStyle(fontSize: 12.0),
+                              ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: 8.0, right: 20, bottom: 5),
-                            child: SoftCheckbox(
-                              "Decimal",
-                              onChanged: (checked) =>
-                                  provider.decimal = checked ?? false,
-                              value: provider.decimal,
-                              labelStyle: const TextStyle(fontSize: 12.0),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 8.0, right: 20, bottom: 5),
+                              child: SoftCheckbox(
+                                "Decimal",
+                                onChanged: (checked) =>
+                                    provider.decimal = checked ?? false,
+                                value: provider.decimal,
+                                labelStyle: const TextStyle(fontSize: 12.0),
+                              ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: 8.0, right: 20, bottom: 5),
-                            child: SoftCheckbox(
-                              "Bin",
-                              onChanged: (checked) =>
-                                  provider.binary = checked ?? false,
-                              value: provider.binary,
-                              labelStyle: const TextStyle(fontSize: 12.0),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 8.0, right: 20, bottom: 5),
+                              child: SoftCheckbox(
+                                "Bin",
+                                onChanged: (checked) =>
+                                    provider.binary = checked ?? false,
+                                value: provider.binary,
+                                labelStyle: const TextStyle(fontSize: 12.0),
+                              ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: 8.0, right: 20, bottom: 5),
-                            child: SoftCheckbox(
-                              lblAutoScroll,
-                              onChanged: (checked) =>
-                                  provider.autoScroll = checked ?? false,
-                              value: provider.autoScroll,
-                              labelStyle: const TextStyle(fontSize: 12.0),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 8.0, right: 20, bottom: 5),
+                              child: SoftCheckbox(
+                                lblAutoScroll,
+                                onChanged: (checked) =>
+                                    provider.autoScroll = checked ?? false,
+                                value: provider.autoScroll,
+                                labelStyle: const TextStyle(fontSize: 12.0),
+                              ),
                             ),
-                          ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 8.0, right: 20, bottom: 5),
+                              child: SoftText(
+                                "${provider.rxData}",
+                                label: "RX",
+                                width: 150,
+                                height: 50,
+                                labelStyle: const TextStyle(fontSize: 12),
+                                textStyle: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge
+                                    ?.copyWith(fontSize: 14),
+                                textAlign: TextAlign.end,
+                                contentPadding: const EdgeInsets.symmetric(
+                                    vertical: 5, horizontal: 20),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 8.0, right: 20, bottom: 5),
+                              child: SoftButton("Reset", ButtonType.emboss,
+                                  width: 100, height: 50, onPressed: () {
+                                provider.resetRXCounter();
+                              }),
+                            ),
                             Padding(
                               padding: const EdgeInsets.only(
                                   top: 8.0, right: 20, bottom: 5),
@@ -379,103 +406,112 @@ class _SerialTabViewState extends State<SerialTabView> {
                                 provider.resetRXData();
                               }),
                             ),
-                      );
-                    }),
+                          ],
+                        );
+                      },
+                    ),
                   ],
                 ),
               ),
             ),
           ),
+          const Gap(10),
           Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(
-                left: 15.0,
-                right: 15,
-                bottom: 15,
-              ),
-              child: Container(
-                width: double.infinity,
-                decoration: const BoxDecoration(
-                  color: color6,
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
-                  boxShadow: [
-                    BoxShadow(
-                      offset: Offset(-10, -10),
-                      blurRadius: 20,
-                      spreadRadius: -10,
-                      color: Color(0xFF312C5E),
-                      inset: true,
+            child: Column(
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      left: 15.0,
+                      right: 15,
+                      bottom: 15,
                     ),
-                    BoxShadow(
-                      offset: Offset(10, 10),
-                      blurRadius: 20,
-                      spreadRadius: -10,
-                      color: Color(0xFF050227),
-                      inset: true,
-                    ),
-                  ],
-                ),
-                child: Consumer<SerialStreamerProvider>(
-                  builder: (context, provider, child) {
-                    return LayoutBuilder(
-                      builder: (context, boxConstraint) {
-                        return DragSelectGridView(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          scrollController: provider.scrollController,
-                          gridController: provider.controller,
-                          itemCount: provider.charDataList.length,
-                          shrinkWrap: true,
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: boxConstraint.maxWidth ~/ 100,
-                            mainAxisExtent: (provider.ascii ? 40 : 0) +
-                                (provider.binary ? 40 : 0) +
-                                (provider.hex ? 40 : 0) +
-                                (provider.decimal ? 40 : 0),
-                            mainAxisSpacing: 10,
-                            crossAxisSpacing: 10,
+                    child: Container(
+                      width: double.infinity,
+                      decoration: const BoxDecoration(
+                        color: color6,
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                        boxShadow: [
+                          BoxShadow(
+                            offset: Offset(-10, -10),
+                            blurRadius: 20,
+                            spreadRadius: -10,
+                            color: Color(0xFF312C5E),
+                            inset: true,
                           ),
-                          itemBuilder: (context, index, selected) {
-                            if (provider.autoScroll) {
-                              provider.scrollController.jumpTo(provider
-                                  .scrollController.position.maxScrollExtent);
-                            }
-                            return selected
-                                ? StreamDataCell.flat(
-                                    ascii: provider.ascii
-                                        ? provider.charDataList[index].ascii
-                                        : null,
-                                    binary: provider.binary
-                                        ? provider.charDataList[index].binary
-                                        : null,
-                                    decimal: provider.decimal
-                                        ? provider.charDataList[index].decimal
-                                        : null,
-                                    hex: provider.hex
-                                        ? provider.charDataList[index].hex
-                                        : null,
-                                  )
-                                : StreamDataCell(
-                                    ascii: provider.ascii
-                                        ? provider.charDataList[index].ascii
-                                        : null,
-                                    binary: provider.binary
-                                        ? provider.charDataList[index].binary
-                                        : null,
-                                    decimal: provider.decimal
-                                        ? provider.charDataList[index].decimal
-                                        : null,
-                                    hex: provider.hex
-                                        ? provider.charDataList[index].hex
-                                        : null,
-                                  );
-                          },
-                        );
-                      },
-                    );
-                  },
+                          BoxShadow(
+                            offset: Offset(10, 10),
+                            blurRadius: 20,
+                            spreadRadius: -10,
+                            color: Color(0xFF050227),
+                            inset: true,
+                          ),
+                        ],
+                      ),
+                      child: Consumer<SerialStreamerProvider>(
+                        builder: (context, provider, child) {
+                          return StreamDataView(
+                            scrollController: provider.rxScrollController,
+                            gridController: provider.rxController,
+                            dataList: provider.rxDataList,
+                            ascii: provider.ascii,
+                            binary: provider.binary,
+                            hex: provider.hex,
+                            decimal: provider.decimal,
+                            autoScroll: provider.autoScroll,
+                          );
+                        },
+                      ),
+                    ),
+                  ),
                 ),
-              ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      left: 15.0,
+                      right: 15,
+                      bottom: 15,
+                    ),
+                    child: Container(
+                      width: double.infinity,
+                      decoration: const BoxDecoration(
+                        color: color6,
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                        boxShadow: [
+                          BoxShadow(
+                            offset: Offset(-10, -10),
+                            blurRadius: 20,
+                            spreadRadius: -10,
+                            color: Color(0xFF312C5E),
+                            inset: true,
+                          ),
+                          BoxShadow(
+                            offset: Offset(10, 10),
+                            blurRadius: 20,
+                            spreadRadius: -10,
+                            color: Color(0xFF050227),
+                            inset: true,
+                          ),
+                        ],
+                      ),
+                      child: Consumer<SerialStreamerProvider>(
+                          builder: (context, provider, child) {
+                        return StreamDataView(
+                          scrollController: provider.txScrollController,
+                          gridController: provider.txController,
+                          dataList: provider.txDataList,
+                          ascii: provider.ascii,
+                          binary: provider.binary,
+                          hex: provider.hex,
+                          decimal: provider.decimal,
+                          autoScroll: false,
+                        );
+                      }),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
           Consumer<SerialStreamerProvider>(builder: (context, provider, child) {
