@@ -32,9 +32,12 @@ class SerialStreamerProvider<T> with ChangeNotifier {
 
   int _rxData = 0;
   int _txData = 0;
-  List<StreamDataEntity> charDataList = [];
-  ScrollController scrollController = ScrollController();
-  DragSelectGridViewController controller = DragSelectGridViewController();
+  List<StreamDataEntity> rxDataList = [];
+  List<StreamDataEntity> txDataList = [];
+  ScrollController rxScrollController = ScrollController();
+  DragSelectGridViewController rxController = DragSelectGridViewController();
+  ScrollController txScrollController = ScrollController();
+  DragSelectGridViewController txController = DragSelectGridViewController();
 
   bool _autoScroll = true;
   bool _ctsFlowControl = false;
@@ -55,12 +58,20 @@ class SerialStreamerProvider<T> with ChangeNotifier {
         _serialSearchTimerCallback,
       );
     }
-    controller.addListener(listener);
+    rxController.addListener(rxListener);
+    txController.addListener(txListener);
   }
 
-  void listener() {
+  void rxListener() {
     if (kDebugMode) {
-      print(controller.value);
+      print(rxController.value);
+    }
+    notifyListeners();
+  }
+
+  void txListener() {
+    if (kDebugMode) {
+      print(txController.value);
     }
     notifyListeners();
   }
@@ -69,7 +80,8 @@ class SerialStreamerProvider<T> with ChangeNotifier {
   void dispose() {
     _serialSearchTimer.cancel();
     _serialService.dispose();
-    controller.removeListener(listener);
+    rxController.removeListener(rxListener);
+    txController.removeListener(txListener);
     super.dispose();
   }
 
@@ -91,8 +103,7 @@ class SerialStreamerProvider<T> with ChangeNotifier {
   void _serialDataReceivedHandler(Uint8List incomingBytes) {
     _rxData += incomingBytes.length;
     _convertUsecase.convertCharacter(incomingBytes).listen((event) {
-      charDataList.add(event);
-
+      rxDataList.add(event);
       notifyListeners();
     });
   }
