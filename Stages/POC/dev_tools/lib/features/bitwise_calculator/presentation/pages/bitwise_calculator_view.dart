@@ -19,6 +19,7 @@ import 'package:dev_tools/features/bitwise_calculator/presentation/widgets/binar
 import 'package:dev_tools/features/bitwise_calculator/presentation/widgets/decimal_bitwise_widget.dart';
 import 'package:dev_tools/features/bitwise_calculator/presentation/widgets/hex_bitwise_widget.dart';
 import 'package:dev_tools/features/bitwise_calculator/presentation/widgets/octal_bitwise_widget.dart';
+import 'package:dev_tools/features/bitwise_calculator/presentation/widgets/ascii_bitwise_widget.dart';
 import 'package:flutter/material.dart';
 
 class TypeConverterView extends StatelessWidget {
@@ -44,6 +45,8 @@ class TypeConverterView extends StatelessWidget {
             OctalBitwise(),
             SoftDivider(),
             HexBitwise(),
+            SoftDivider(),
+            ASCIIBitwise(),
           ],
         ),
       ),
