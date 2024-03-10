@@ -20,7 +20,7 @@ import 'package:dev_tools/features/bitwise_calculator/domain/usecases/bitwise_co
 import 'package:dev_tools/features/bitwise_calculator/domain/usecases/bitwise_evaluate_usecase.dart';
 import 'package:flutter/material.dart';
 
-enum ChangedType { hex, octal, decimal, binary }
+enum ChangedType { hex, octal, decimal, binary, ascii }
 
 class BitwiseCalculatorProvider with ChangeNotifier {
   final TextEditingController _hexEditingController = TextEditingController();
@@ -29,6 +29,7 @@ class BitwiseCalculatorProvider with ChangeNotifier {
   final TextEditingController _binaryEditingController =
       TextEditingController();
   final TextEditingController _octalEditingController = TextEditingController();
+  final TextEditingController _asciiEditingController = TextEditingController();
 
   BitwiseConverterEntity _typeConverterModel = BitwiseConverterEntity.empty();
   BitwiseSolverEntity _bitwiseSolverEntity = BitwiseSolverEntity.empty();
@@ -57,15 +58,20 @@ class BitwiseCalculatorProvider with ChangeNotifier {
         currentPosition = _octalEditingController.selection.base.offset;
         _typeConverterModel = _bitwiseConvert.convertFromOctal(text);
         break;
+      case ChangedType.ascii:
+        currentPosition = _asciiEditingController.selection.base.offset;
+        _typeConverterModel = _bitwiseConvert.convertFromAscii(text);
+        break;
     }
 
     _bitwiseSolverEntity =
-        _bitwiseEvaluate.evaluate(_typeConverterModel.decimal);
+        _bitwiseEvaluate.evaluate(_typeConverterModel.decimal.trimRight());
 
     _decimalEditingController.text = _typeConverterModel.decimal;
     _binaryEditingController.text = _typeConverterModel.binary;
     _octalEditingController.text = _typeConverterModel.octal;
     _hexEditingController.text = _typeConverterModel.hex;
+    _asciiEditingController.text = _typeConverterModel.ascii;
     switch (type) {
       case ChangedType.decimal:
         _binaryEditingController.selection = TextSelection.collapsed(
@@ -76,6 +82,8 @@ class BitwiseCalculatorProvider with ChangeNotifier {
             TextSelection.collapsed(offset: currentPosition);
         _hexEditingController.selection =
             TextSelection.collapsed(offset: _hexEditingController.text.length);
+        _asciiEditingController.selection = TextSelection.collapsed(
+            offset: _asciiEditingController.text.length);
         break;
       case ChangedType.binary:
         _binaryEditingController.selection =
@@ -86,6 +94,8 @@ class BitwiseCalculatorProvider with ChangeNotifier {
             offset: _decimalEditingController.text.length);
         _hexEditingController.selection =
             TextSelection.collapsed(offset: _hexEditingController.text.length);
+        _asciiEditingController.selection = TextSelection.collapsed(
+            offset: _asciiEditingController.text.length);
         break;
       case ChangedType.octal:
         _binaryEditingController.selection = TextSelection.collapsed(
@@ -96,6 +106,8 @@ class BitwiseCalculatorProvider with ChangeNotifier {
             offset: _decimalEditingController.text.length);
         _hexEditingController.selection =
             TextSelection.collapsed(offset: _hexEditingController.text.length);
+        _asciiEditingController.selection = TextSelection.collapsed(
+            offset: _asciiEditingController.text.length);
         break;
       case ChangedType.hex:
         _binaryEditingController.selection = TextSelection.collapsed(
@@ -106,6 +118,20 @@ class BitwiseCalculatorProvider with ChangeNotifier {
             offset: _decimalEditingController.text.length);
         _hexEditingController.selection =
             TextSelection.collapsed(offset: currentPosition);
+        _asciiEditingController.selection = TextSelection.collapsed(
+            offset: _asciiEditingController.text.length);
+        break;
+      case ChangedType.ascii:
+        _binaryEditingController.selection = TextSelection.collapsed(
+            offset: _binaryEditingController.text.length);
+        _octalEditingController.selection = TextSelection.collapsed(
+            offset: _octalEditingController.text.length);
+        _decimalEditingController.selection = TextSelection.collapsed(
+            offset: _decimalEditingController.text.length);
+        _hexEditingController.selection =
+            TextSelection.collapsed(offset: _hexEditingController.text.length);
+        _asciiEditingController.selection =
+            TextSelection.collapsed(offset: currentPosition);
         break;
     }
     notifyListeners();
@@ -115,6 +141,7 @@ class BitwiseCalculatorProvider with ChangeNotifier {
   TextEditingController get binaryController => _binaryEditingController;
   TextEditingController get octalController => _octalEditingController;
   TextEditingController get hexController => _hexEditingController;
+  TextEditingController get asciiController => _asciiEditingController;
   String get decimalResult => _bitwiseSolverEntity.decimal;
   String get binaryResult => _bitwiseSolverEntity.binary;
   String get octalResult => _bitwiseSolverEntity.octal;

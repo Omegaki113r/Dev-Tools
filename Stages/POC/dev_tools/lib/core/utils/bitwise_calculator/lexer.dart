@@ -152,6 +152,7 @@ enum TokenType {
   newline,
   space,
   number,
+  asciiString,
   add,
   sub,
   mul,

@@ -23,6 +23,7 @@ class BitwiseCalculatorModel extends BitwiseConverterEntity {
     String decimal2sComplimentText,
     String binaryText,
     String octalText,
-  ) : super(hexText, decimalText, decimal2sComplimentText,
-            binaryText, octalText);
+    String ascii,
+  ) : super(hexText, decimalText, decimal2sComplimentText, binaryText,
+            octalText, ascii);
 }

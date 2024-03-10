@@ -1,3 +1,13 @@
 {
-  "C_Cpp.intelliSenseEngine": "default"
+  "C_Cpp.intelliSenseEngine": "default",
+  "psi-header.variables": [
+    [
+      "projectname",
+      "Xtronic Dev Tools"
+    ],
+    [
+      "projectCreationYear",
+      "2024"
+    ]
+  ],
 }

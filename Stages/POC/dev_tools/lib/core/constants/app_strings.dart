@@ -25,6 +25,7 @@ const String lbl2sCompliment = "Decimal 2's Compliment";
 const String lblBinary = "Binary";
 const String lblOctal = "Octal";
 const String lblHex = "Hex";
+const String lblAscii = "ASCII";
 const String lblExpressionResult = "Expression Result";
 
 const String lblDataStreamer = "Data Streamer";

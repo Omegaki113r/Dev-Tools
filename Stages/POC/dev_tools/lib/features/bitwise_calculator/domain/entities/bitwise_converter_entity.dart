@@ -20,18 +20,15 @@ class BitwiseConverterEntity {
   final String decimal2sCompliment;
   final String binary;
   final String octal;
-  BitwiseConverterEntity(
-    this.hex,
-    this.decimal,
-    this.decimal2sCompliment,
-    this.binary,
-    this.octal,
-  );
+  final String ascii;
+  BitwiseConverterEntity(this.hex, this.decimal, this.decimal2sCompliment,
+      this.binary, this.octal, this.ascii);
 
   BitwiseConverterEntity.empty()
       : hex = "",
         decimal = "",
         decimal2sCompliment = "",
         binary = "",
-        octal = "";
+        octal = "",
+        ascii = "";
 }

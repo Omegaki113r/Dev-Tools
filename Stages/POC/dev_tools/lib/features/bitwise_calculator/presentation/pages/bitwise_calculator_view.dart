@@ -37,6 +37,7 @@ class TypeConverterView extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(20.0),
         child: ListView(
+          clipBehavior: Clip.none,
           children: const [
             DecimalBitwise(),
             SoftDivider(),
