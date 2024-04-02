@@ -43,9 +43,9 @@ dependencies:
   #Linux BLE
   bluez:
   #MacOS BLE
-  flutter_blue_plus:
+  # flutter_blue_plus:
   #Windows BLE
-  win_ble:
+  # win_ble:
   #For peripheral [Windows, MacOS]
   # flutter_ble_peripheral:
   flutter_libserialport:
@@ -66,6 +66,7 @@ dependencies:
   get_it:
   local_notifier: 
   string_validator:
+  audioplayers:
 
 dev_dependencies:
   flutter_test:

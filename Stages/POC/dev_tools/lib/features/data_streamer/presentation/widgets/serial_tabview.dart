@@ -17,6 +17,7 @@ import 'package:dev_tools/core/widgets/soft_button.dart';
 import 'package:dev_tools/core/widgets/soft_checkbox.dart';
 import 'package:dev_tools/core/widgets/soft_dropdown_button.dart';
 import 'package:dev_tools/core/widgets/soft_text.dart';
+import 'package:dev_tools/core/widgets/soft_textfield.dart';
 import 'package:dev_tools/features/data_streamer/presentation/provider/serial_streamer_provider.dart';
 import 'package:dev_tools/features/data_streamer/presentation/widgets/stream_data_cell.dart';
 import 'package:dev_tools/features/data_streamer/presentation/widgets/stream_data_view.dart';
@@ -36,7 +37,7 @@ class SerialTabView extends StatefulWidget {
 
 class _SerialTabViewState extends State<SerialTabView> {
   final ScrollController scrollController = ScrollController();
-
+  final TextEditingController txController = TextEditingController();
   @override
   void dispose() {
     scrollController.dispose();
@@ -371,24 +372,7 @@ class _SerialTabViewState extends State<SerialTabView> {
                                 labelStyle: const TextStyle(fontSize: 12.0),
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 8.0, right: 20, bottom: 5),
-                              child: SoftText(
-                                "${provider.rxData}",
-                                label: "RX",
-                                width: 150,
-                                height: 50,
-                                labelStyle: const TextStyle(fontSize: 12),
-                                textStyle: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge
-                                    ?.copyWith(fontSize: 14),
-                                textAlign: TextAlign.end,
-                                contentPadding: const EdgeInsets.symmetric(
-                                    vertical: 5, horizontal: 20),
-                              ),
-                            ),
+                            const Gap(40),
                             Padding(
                               padding: const EdgeInsets.only(
                                   top: 8.0, right: 20, bottom: 5),
@@ -517,6 +501,20 @@ class _SerialTabViewState extends State<SerialTabView> {
           Consumer<SerialStreamerProvider>(builder: (context, provider, child) {
             return Row(
               children: [
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 15.0,
+                  ),
+                  child: SoftTextField(
+                    label: "TX",
+                    width: 200,
+                    controller: txController,
+                    onChanged: (value) {
+                      print(value);
+                    },
+                  ),
+                ),
+                const Gap(25),
                 SoftText(
                   "${provider.rxData}",
                   label: "RX",

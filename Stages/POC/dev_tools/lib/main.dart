@@ -4,7 +4,7 @@
  * File Created: Tuesday, 26th December 2023 2:12:03 pm
  * Author: Omegaki113r (omegaki113r@gmail.com)
  * -----
- * Last Modified: Sunday, 10th March 2024 10:21:54 pm
+ * Last Modified: Monday, 25th March 2024 5:20:19 pm
  * Modified By: Omegaki113r (omegaki113r@gmail.com)
  * -----
  * Copyright 2024 - 2024 0m3g4ki113r, Xtronic
@@ -37,7 +37,7 @@ void main() async {
     await windowManager.ensureInitialized();
     WindowOptions windowOptions = const WindowOptions(
       size: Size(1380, 720),
-      minimumSize: Size(1280, 720),
+      minimumSize: Size(1380, 720),
       title: appName,
       backgroundColor: Colors.transparent,
     );

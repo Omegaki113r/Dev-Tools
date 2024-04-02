@@ -1,18 +1,20 @@
-///
-/// Project: Xtronic Dev Tools
-/// File Name: ascii_bitwise_widget.dart
-/// File Created: Sunday, 10th March 2024 8:17:57 pm
-/// Author: Omegaki113r (omegaki113r@gmail.com)
-/// -----
-/// Last Modified: Sunday, 10th March 2024 8:21:04 pm
-/// Modified By: Omegaki113r (omegaki113r@gmail.com)
-/// -----
-/// Copyright 2024 - 2024 0m3g4ki113r, Xtronic
-/// -----
-/// HISTORY:
-/// Date      	By	Comments
-/// ----------	---	---------------------------------------------------------
-///
+/* 
+ * Project: Xtronic Dev Tools
+ * File Name: ascii_bitwise_widget.dart
+ * File Created: Sunday, 10th March 2024 8:17:57 pm
+ * Author: Omegaki113r (omegaki113r@gmail.com)
+ * -----
+ * Last Modified: Monday, 25th March 2024 5:50:14 pm
+ * Modified By: Omegaki113r (omegaki113r@gmail.com)
+ * -----
+ * Copyright 2024 - 2024 0m3g4ki113r, Xtronic
+ * -----
+ * HISTORY:
+ * Date      	By	Comments
+ * ----------	---	---------------------------------------------------------
+ */
+
+
 
 import 'package:dev_tools/core/constants/app_strings.dart';
 import 'package:dev_tools/core/widgets/soft_card.dart';
