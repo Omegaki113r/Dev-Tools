@@ -108,6 +108,16 @@ class SerialStreamerProvider<T> with ChangeNotifier {
     });
   }
 
+  void serialDataTransmitHandler(String transmittableString) {
+    _txData += transmittableString.length;
+    _convertUsecase
+        .convertCharacter(transmittableString.codeUnits)
+        .listen((event) {
+      txDataList.add(event);
+      notifyListeners();
+    });
+  }
+
   void serialPortDisconnect() {
     if (_serialService.disconnect()) {
       notifyListeners();

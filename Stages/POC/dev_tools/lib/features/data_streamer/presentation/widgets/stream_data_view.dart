@@ -17,7 +17,6 @@ import 'package:dev_tools/features/data_streamer/presentation/widgets/stream_dat
 import 'package:drag_select_grid_view/drag_select_grid_view.dart';
 import 'package:flutter/material.dart';
 
-
 class StreamDataView extends StatelessWidget {
   final ScrollController scrollController;
   final DragSelectGridViewController gridController;
@@ -43,40 +42,52 @@ class StreamDataView extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, boxConstraint) {
-        return DragSelectGridView(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          scrollController: scrollController,
-          gridController: gridController,
-          itemCount: dataList.length,
-          shrinkWrap: true,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: boxConstraint.maxWidth ~/ 100,
-            mainAxisExtent: (ascii ? 40 : 0) +
-                (binary ? 40 : 0) +
-                (hex ? 40 : 0) +
-                (decimal ? 40 : 0),
-            mainAxisSpacing: 10,
-            crossAxisSpacing: 10,
+        int x = (ascii ? 35 : 0) +
+            (binary ? 35 : 0) +
+            (hex ? 35 : 0) +
+            (decimal ? 35 : 0);
+        x = x == 0 ? 1 : x;
+        print("width ${boxConstraint.maxWidth ~/ x}");
+        return Container(
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(color: Colors.white.withAlpha(50))),
+          child: DragSelectGridView(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            scrollController: scrollController,
+            gridController: gridController,
+            itemCount: dataList.length,
+            shrinkWrap: true,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: boxConstraint.maxWidth ~/ x,
+              mainAxisExtent: (ascii ? 40 : 0) +
+                  (binary ? 40 : 0) +
+                  (hex ? 40 : 0) +
+                  (decimal ? 40 : 0),
+              mainAxisSpacing: 10,
+              crossAxisSpacing: 10,
+            ),
+            itemBuilder: (context, index, selected) {
+              if (autoScroll) {
+                scrollController
+                    .jumpTo(scrollController.position.maxScrollExtent);
+              }
+              return selected
+                  ? StreamDataCell.flat(
+                      ascii: ascii ? dataList[index].ascii : null,
+                      binary: binary ? dataList[index].binary : null,
+                      decimal: decimal ? dataList[index].decimal : null,
+                      hex: hex ? dataList[index].hex : null,
+                    )
+                  : StreamDataCell(
+                      ascii: ascii ? dataList[index].ascii : null,
+                      binary: binary ? dataList[index].binary : null,
+                      decimal: decimal ? dataList[index].decimal : null,
+                      hex: hex ? dataList[index].hex : null,
+                    );
+            },
           ),
-          itemBuilder: (context, index, selected) {
-            if (autoScroll) {
-              scrollController
-                  .jumpTo(scrollController.position.maxScrollExtent);
-            }
-            return selected
-                ? StreamDataCell.flat(
-                    ascii: ascii ? dataList[index].ascii : null,
-                    binary: binary ? dataList[index].binary : null,
-                    decimal: decimal ? dataList[index].decimal : null,
-                    hex: hex ? dataList[index].hex : null,
-                  )
-                : StreamDataCell(
-                    ascii: ascii ? dataList[index].ascii : null,
-                    binary: binary ? dataList[index].binary : null,
-                    decimal: decimal ? dataList[index].decimal : null,
-                    hex: hex ? dataList[index].hex : null,
-                  );
-          },
         );
       },
     );

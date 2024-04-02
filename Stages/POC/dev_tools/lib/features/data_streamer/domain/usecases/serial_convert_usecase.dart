@@ -33,7 +33,7 @@ class SerialConvert {
     return StreamDataEntity(ascii, binary, decimal, hex);
   }
 
-  Stream<StreamDataEntity> convertCharacter(Uint8List incomingBytes) async* {
+  Stream<StreamDataEntity> convertCharacter(List<int> incomingBytes) async* {
     String ascii = "";
     String binary = "";
     String decimal = "";

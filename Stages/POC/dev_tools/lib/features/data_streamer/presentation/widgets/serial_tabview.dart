@@ -498,22 +498,25 @@ class _SerialTabViewState extends State<SerialTabView> {
               ],
             ),
           ),
+          const Gap(10),
+          Padding(
+            padding: const EdgeInsets.only(
+              left: 15.0,
+            ),
+            child: SoftTextField(
+              label: "TX",
+              width: double.infinity,
+              controller: txController,
+              onSubmitted: (value) {
+                context
+                    .read<SerialStreamerProvider>()
+                    .serialDataTransmitHandler(value);
+              },
+            ),
+          ),
           Consumer<SerialStreamerProvider>(builder: (context, provider, child) {
             return Row(
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 15.0,
-                  ),
-                  child: SoftTextField(
-                    label: "TX",
-                    width: 200,
-                    controller: txController,
-                    onChanged: (value) {
-                      print(value);
-                    },
-                  ),
-                ),
                 const Gap(25),
                 SoftText(
                   "${provider.rxData}",

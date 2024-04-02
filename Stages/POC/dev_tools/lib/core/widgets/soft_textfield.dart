@@ -19,27 +19,36 @@ import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
 import 'package:gap/gap.dart';
 
-class SoftTextField extends StatelessWidget {
+class SoftTextField extends StatefulWidget {
   final TextEditingController controller;
-  final Function onChanged;
+  final Function(String)? onChanged;
+  final Function(String)? onSubmitted;
   final double? width;
   final double? height;
   final String? label;
   final bool? readOnly;
-  const SoftTextField(
-      {super.key,
-      this.height,
-      this.width,
-      this.label,
-      this.readOnly,
-      required this.controller,
-      required this.onChanged});
+  const SoftTextField({
+    super.key,
+    this.height,
+    this.width,
+    this.label,
+    this.readOnly,
+    required this.controller,
+    this.onChanged,
+    this.onSubmitted,
+  });
 
+  @override
+  State<SoftTextField> createState() => _SoftTextFieldState();
+}
+
+class _SoftTextFieldState extends State<SoftTextField> {
+  FocusNode focusNode = FocusNode();
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: width,
-      height: height,
+      width: widget.width,
+      height: widget.height,
       decoration: const BoxDecoration(
         color: color6,
         borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -65,17 +74,23 @@ class SoftTextField extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(label ?? ""),
-           const Gap(10),
+            Text(widget.label ?? ""),
+            const Gap(10),
             TextField(
-              decoration: const InputDecoration(
-                isDense: true,
-                // contentPadding: EdgeInsets.all(0),
-              ),
-              readOnly: readOnly ?? false,
-              controller: controller,
-              onChanged: (value) => onChanged(value),
-            ),
+                decoration: const InputDecoration(
+                  isDense: true,
+                  // contentPadding: EdgeInsets.all(0),
+                ),
+                focusNode: focusNode,
+                onSubmitted: (String value) {
+                  if (widget.onSubmitted != null) widget.onSubmitted!(value);
+                  focusNode.requestFocus();
+                },
+                readOnly: widget.readOnly ?? false,
+                controller: widget.controller,
+                onChanged: (String value) {
+                  if (widget.onChanged != null) widget.onChanged!(value);
+                }),
           ],
         ),
       ),

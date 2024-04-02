@@ -35,21 +35,18 @@ class StreamDataCell extends StatelessWidget {
         ? Container(
             padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              // crossAxisAlignment: CrossAxisAlignment.end,
+              // mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 const Gap(4),
                 Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Text(
-                      ascii ?? "",
-                      style: const TextStyle(
-                        color: Colors.red,
-                        fontSize: 12.0,
-                      ),
-                      textAlign: TextAlign.end,
+                  child: Text(
+                    ascii ?? "",
+                    style: const TextStyle(
+                      color: Colors.red,
+                      fontSize: 12.0,
                     ),
+                    textAlign: TextAlign.end,
                   ),
                 ),
                 if (hex != null) ...[
@@ -57,16 +54,13 @@ class StreamDataCell extends StatelessWidget {
                     indent: 30,
                   ),
                   Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: Text(
-                        hex ?? "",
-                        style: const TextStyle(
-                          color: Colors.amber,
-                          fontSize: 12.0,
-                        ),
-                        textAlign: TextAlign.end,
+                    child: Text(
+                      hex ?? "",
+                      style: const TextStyle(
+                        color: Colors.amber,
+                        fontSize: 12.0,
                       ),
+                      textAlign: TextAlign.end,
                     ),
                   ),
                 ],
@@ -74,32 +68,26 @@ class StreamDataCell extends StatelessWidget {
                   indent: 30,
                 ),
                 Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Text(
-                      decimal ?? "",
-                      style: const TextStyle(
-                        color: Colors.blue,
-                        fontSize: 12.0,
-                      ),
-                      textAlign: TextAlign.end,
+                  child: Text(
+                    decimal ?? "",
+                    style: const TextStyle(
+                      color: Colors.blue,
+                      fontSize: 12.0,
                     ),
+                    textAlign: TextAlign.end,
                   ),
                 ),
                 const Divider(
                   indent: 30,
                 ),
                 Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Text(
-                      binary ?? "",
-                      style: const TextStyle(
-                        color: Colors.yellow,
-                        fontSize: 12.0,
-                      ),
-                      textAlign: TextAlign.end,
+                  child: Text(
+                    binary ?? "",
+                    style: const TextStyle(
+                      color: Colors.yellow,
+                      fontSize: 12.0,
                     ),
+                    textAlign: TextAlign.end,
                   ),
                 ),
                 const Gap(4),
@@ -107,7 +95,6 @@ class StreamDataCell extends StatelessWidget {
             ),
           )
         : Container(
-            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
             decoration: const BoxDecoration(
               gradient: LinearGradient(colors: [
                 color6,
@@ -128,71 +115,59 @@ class StreamDataCell extends StatelessWidget {
               ],
             ),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
+              // crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Gap(4),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Text(
-                    ascii ?? "",
+                // const Gap(4),
+                Text(
+                  ascii ?? "",
+                  style: const TextStyle(
+                    color: Colors.red,
+                    fontSize: 12.0,
+                  ),
+                  textAlign: TextAlign.end,
+                ),
+                if (hex != null) ...[
+                  // const Divider(
+                  //   indent: 30,
+                  // ),
+                  Text(
+                    hex ?? "",
                     style: const TextStyle(
-                      color: Colors.red,
+                      color: Colors.amber,
                       fontSize: 12.0,
                     ),
                     textAlign: TextAlign.end,
                   ),
-                ),
-                if (hex != null) ...[
-                  const Divider(
-                    indent: 30,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Text(
-                      hex ?? "",
-                      style: const TextStyle(
-                        color: Colors.amber,
-                        fontSize: 12.0,
-                      ),
-                      textAlign: TextAlign.end,
-                    ),
-                  ),
                 ],
                 if (decimal != null) ...[
-                  const Divider(
-                    indent: 30,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Text(
-                      decimal ?? "",
-                      style: const TextStyle(
-                        color: Colors.blue,
-                        fontSize: 12.0,
-                      ),
-                      textAlign: TextAlign.end,
+                  // const Divider(
+                  //   indent: 30,
+                  // ),
+                  Text(
+                    decimal ?? "",
+                    style: const TextStyle(
+                      color: Colors.blue,
+                      fontSize: 12.0,
                     ),
+                    textAlign: TextAlign.end,
                   ),
                 ],
                 if (binary != null) ...[
-                  const Divider(
-                    indent: 30,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Text(
-                      binary ?? "",
-                      style: const TextStyle(
-                        color: Colors.yellow,
-                        fontSize: 12.0,
-                      ),
-                      textAlign: TextAlign.end,
+                  // const Divider(
+                  //   indent: 30,
+                  // ),
+                  Text(
+                    binary ?? "",
+                    style: const TextStyle(
+                      color: Colors.yellow,
+                      fontSize: 12.0,
                     ),
+                    textAlign: TextAlign.end,
                   ),
                 ],
-                const Gap(4),
+                // const Gap(4),
               ],
             ),
           );
