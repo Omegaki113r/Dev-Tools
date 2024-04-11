@@ -511,6 +511,7 @@ class _SerialTabViewState extends State<SerialTabView> {
                 context
                     .read<SerialStreamerProvider>()
                     .serialDataTransmitHandler(value);
+                txController.text = "";
               },
             ),
           ),
