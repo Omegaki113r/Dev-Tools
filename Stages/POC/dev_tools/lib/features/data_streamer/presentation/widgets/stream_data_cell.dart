@@ -11,6 +11,7 @@
  */
 
 import 'package:dev_tools/core/constants/app_colors.dart';
+import 'package:dev_tools/core/constants/app_constants.dart';
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
 import 'package:gap/gap.dart';
@@ -44,48 +45,48 @@ class StreamDataCell extends StatelessWidget {
                     ascii ?? "",
                     style: const TextStyle(
                       color: Colors.red,
-                      fontSize: 12.0,
+                      fontSize: streamCellFontSize,
                     ),
                     textAlign: TextAlign.end,
                   ),
                 ),
                 if (hex != null) ...[
                   const Divider(
-                    indent: 30,
+                    indent: 10,
                   ),
                   Expanded(
                     child: Text(
                       hex ?? "",
                       style: const TextStyle(
                         color: Colors.amber,
-                        fontSize: 12.0,
+                        fontSize: streamCellFontSize,
                       ),
                       textAlign: TextAlign.end,
                     ),
                   ),
                 ],
                 const Divider(
-                  indent: 30,
+                  indent: 10,
                 ),
                 Expanded(
                   child: Text(
                     decimal ?? "",
                     style: const TextStyle(
                       color: Colors.blue,
-                      fontSize: 12.0,
+                      fontSize: streamCellFontSize,
                     ),
                     textAlign: TextAlign.end,
                   ),
                 ),
                 const Divider(
-                  indent: 30,
+                  indent: 10,
                 ),
                 Expanded(
                   child: Text(
                     binary ?? "",
                     style: const TextStyle(
                       color: Colors.yellow,
-                      fontSize: 12.0,
+                      fontSize: streamCellFontSize,
                     ),
                     textAlign: TextAlign.end,
                   ),
@@ -124,7 +125,7 @@ class StreamDataCell extends StatelessWidget {
                   ascii ?? "",
                   style: const TextStyle(
                     color: Colors.red,
-                    fontSize: 12.0,
+                    fontSize: streamCellFontSize,
                   ),
                   textAlign: TextAlign.end,
                 ),
@@ -136,7 +137,7 @@ class StreamDataCell extends StatelessWidget {
                     hex ?? "",
                     style: const TextStyle(
                       color: Colors.amber,
-                      fontSize: 12.0,
+                      fontSize: streamCellFontSize,
                     ),
                     textAlign: TextAlign.end,
                   ),
@@ -149,7 +150,7 @@ class StreamDataCell extends StatelessWidget {
                     decimal ?? "",
                     style: const TextStyle(
                       color: Colors.blue,
-                      fontSize: 12.0,
+                      fontSize: streamCellFontSize,
                     ),
                     textAlign: TextAlign.end,
                   ),
@@ -162,7 +163,7 @@ class StreamDataCell extends StatelessWidget {
                     binary ?? "",
                     style: const TextStyle(
                       color: Colors.yellow,
-                      fontSize: 12.0,
+                      fontSize: streamCellFontSize,
                     ),
                     textAlign: TextAlign.end,
                   ),

@@ -18,6 +18,8 @@ const home = "/";
 const bitwiseCalculatorRoute = "/TYPE_CONVERTER";
 const dataStreamerRoute = "/DATA_STREAMER";
 
+const streamCellFontSize = 12.0;
+
 enum ButtonType { flat, concave, convex, emboss }
 
 enum SelectedView { bitwiseCalculator, streamer }
