@@ -197,12 +197,18 @@ class SerialStreamerProvider<T> with ChangeNotifier {
 
   bool get ascii => _ascii;
   set ascii(bool value) {
+    if (!_binary && !_decimal && !_hex && !value) {
+      return;
+    }
     _ascii = value;
     notifyListeners();
   }
 
   bool get binary => _binary;
   set binary(bool value) {
+    if (!_ascii && !_decimal && !_hex && !value) {
+      return;
+    }
     _binary = value;
     notifyListeners();
   }
@@ -210,12 +216,18 @@ class SerialStreamerProvider<T> with ChangeNotifier {
   bool get decimal => _decimal;
 
   set decimal(bool value) {
+    if (!_binary && !_ascii && !_hex && !value) {
+      return;
+    }
     _decimal = value;
     notifyListeners();
   }
 
   bool get hex => _hex;
   set hex(bool value) {
+    if (!_binary && !_decimal && !_ascii && !value) {
+      return;
+    }
     _hex = value;
     notifyListeners();
   }
