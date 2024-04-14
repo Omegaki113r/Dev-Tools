@@ -21,12 +21,14 @@ class SoftCard extends StatelessWidget {
   final double? height;
   final double? width;
   final double? cornerRadius;
+  final BoxBorder? border;
   const SoftCard(
       {super.key,
       required this.child,
       this.height,
       this.width,
-      this.cornerRadius});
+      this.cornerRadius,
+      this.border});
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +36,7 @@ class SoftCard extends StatelessWidget {
       height: height,
       width: width,
       decoration: BoxDecoration(
+        border: border,
         gradient: const LinearGradient(colors: [
           Color(0xFF2C2754),
           Color(0xFF0F0B2F),

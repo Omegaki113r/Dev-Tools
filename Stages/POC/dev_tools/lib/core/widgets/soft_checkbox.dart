@@ -35,7 +35,6 @@ class SoftCheckbox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisSize: MainAxisSize.min,
       children: [
         Checkbox(
           value: value,
@@ -43,10 +42,11 @@ class SoftCheckbox extends StatelessWidget {
           splashRadius: 0,
           side: BorderSide(color: const Color(0xFFFFFFFF).withOpacity(0.08)),
         ),
-        const Gap(10),
-        Text(
-          label,
-          style: labelStyle,
+        Center(
+          child: Text(
+            label,
+            style: labelStyle,
+          ),
         ),
       ],
     );
