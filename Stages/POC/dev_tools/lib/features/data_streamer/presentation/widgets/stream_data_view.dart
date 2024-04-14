@@ -42,17 +42,16 @@ class StreamDataView extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, boxConstraint) {
-        int x = (ascii ? 35 : 0) +
+        int divisableWidth = (ascii ? 35 : 0) +
             (binary ? 35 : 0) +
             (hex ? 35 : 0) +
             (decimal ? 35 : 0);
-        x = x == 0 ? 1 : x;
-        print("width ${boxConstraint.maxWidth ~/ x}");
+        divisableWidth = divisableWidth == 0 ? 1 : divisableWidth;
         return Container(
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: Colors.white.withAlpha(50))),
+              border: Border.all(color: Colors.white.withOpacity(0.1))),
           child: DragSelectGridView(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             scrollController: scrollController,
@@ -60,7 +59,7 @@ class StreamDataView extends StatelessWidget {
             itemCount: dataList.length,
             shrinkWrap: true,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: boxConstraint.maxWidth ~/ x,
+              crossAxisCount: boxConstraint.maxWidth ~/ divisableWidth,
               mainAxisExtent: (ascii ? 40 : 0) +
                   (binary ? 40 : 0) +
                   (hex ? 40 : 0) +
