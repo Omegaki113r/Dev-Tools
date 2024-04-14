@@ -278,10 +278,10 @@ class BitwiseConvert {
                 ? "${BigInt.from(charList[0]).toSigned(roundedUpTo)} "
                 : "N/A ");
       } else {
-        binaryText += "${character} ";
-        octalText += "${character} ";
-        decimalText += "${character} ";
-        hexText += "${character} ";
+        binaryText += "$character ";
+        octalText += "$character ";
+        decimalText += "$character ";
+        hexText += "$character ";
       }
     }
 

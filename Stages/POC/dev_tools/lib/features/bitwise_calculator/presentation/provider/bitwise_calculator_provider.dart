@@ -31,6 +31,11 @@ class BitwiseCalculatorProvider with ChangeNotifier {
   final TextEditingController _octalEditingController = TextEditingController();
   final TextEditingController _asciiEditingController = TextEditingController();
 
+  bool _isDecimalVisible = true;
+  bool _isBinaryVisible = false;
+  bool _isOctalVisible = false;
+  bool _isHexVisible = true;
+  bool _isAsciiVisible = false;
   BitwiseConverterEntity _typeConverterModel = BitwiseConverterEntity.empty();
   BitwiseSolverEntity _bitwiseSolverEntity = BitwiseSolverEntity.empty();
 
@@ -148,4 +153,69 @@ class BitwiseCalculatorProvider with ChangeNotifier {
   String get hexResult => _bitwiseSolverEntity.hex;
 
   BitwiseConverterEntity get typeConverterModel => _typeConverterModel;
+
+  bool get isDecimalVisible => _isDecimalVisible;
+  set isDecimalVisible(bool newValue) {
+    if (!_isBinaryVisible &&
+        !isOctalVisible &&
+        !isHexVisible &&
+        !isAsciiVisible &&
+        !newValue) {
+      return;
+    }
+    _isDecimalVisible = newValue;
+    notifyListeners();
+  }
+
+  bool get isBinaryVisible => _isBinaryVisible;
+  set isBinaryVisible(bool newValue) {
+    if (!_isDecimalVisible &&
+        !isOctalVisible &&
+        !isHexVisible &&
+        !isAsciiVisible &&
+        !newValue) {
+      return;
+    }
+    _isBinaryVisible = newValue;
+    notifyListeners();
+  }
+
+  bool get isOctalVisible => _isOctalVisible;
+  set isOctalVisible(bool newValue) {
+    if (!_isBinaryVisible &&
+        !_isDecimalVisible &&
+        !isHexVisible &&
+        !isAsciiVisible &&
+        !newValue) {
+      return;
+    }
+    _isOctalVisible = newValue;
+    notifyListeners();
+  }
+
+  bool get isHexVisible => _isHexVisible;
+  set isHexVisible(bool newValue) {
+    if (!_isBinaryVisible &&
+        !isOctalVisible &&
+        !_isDecimalVisible &&
+        !isAsciiVisible &&
+        !newValue) {
+      return;
+    }
+    _isHexVisible = newValue;
+    notifyListeners();
+  }
+
+  bool get isAsciiVisible => _isAsciiVisible;
+  set isAsciiVisible(bool newValue) {
+    if (!_isBinaryVisible &&
+        !isOctalVisible &&
+        !isHexVisible &&
+        !_isDecimalVisible &&
+        !newValue) {
+      return;
+    }
+    _isAsciiVisible = newValue;
+    notifyListeners();
+  }
 }
