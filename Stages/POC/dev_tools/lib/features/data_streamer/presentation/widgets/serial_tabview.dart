@@ -343,14 +343,6 @@ class _SerialTabViewState extends State<SerialTabView> {
                 Stack(
                   clipBehavior: Clip.none,
                   children: [
-                    Positioned(
-                      top: -10.0,
-                      left: 30.0,
-                      child: Container(
-                        color: color6,
-                        child: Text("Transmitted"),
-                      ),
-                    ),
                     Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
@@ -499,20 +491,20 @@ class _SerialTabViewState extends State<SerialTabView> {
                         ),
                       ),
                     ),
+                    Positioned(
+                      top: -10.0,
+                      left: 30.0,
+                      child: Container(
+                        color: color6,
+                        child: Text("Transmitted Data"),
+                      ),
+                    ),
                   ],
                 ),
                 const Gap(40),
                 Stack(
                   clipBehavior: Clip.none,
                   children: [
-                    Positioned(
-                      top: -10.0,
-                      left: 30.0,
-                      child: Container(
-                        color: color6,
-                        child: Text("Received"),
-                      ),
-                    ),
                     Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
@@ -659,6 +651,14 @@ class _SerialTabViewState extends State<SerialTabView> {
                             );
                           },
                         ),
+                      ),
+                    ),
+                    Positioned(
+                      top: -10.0,
+                      left: 30.0,
+                      child: Container(
+                        color: color6,
+                        child: Text("Received Data"),
                       ),
                     ),
                   ],
