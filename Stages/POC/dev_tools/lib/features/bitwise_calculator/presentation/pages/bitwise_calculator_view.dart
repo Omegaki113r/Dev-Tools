@@ -14,6 +14,7 @@
  * ----------	---	---------------------------------------------------------
  */
 
+import 'package:dev_tools/core/constants/app_strings.dart';
 import 'package:dev_tools/core/widgets/soft_card.dart';
 import 'package:dev_tools/core/widgets/soft_checkbox.dart';
 import 'package:dev_tools/core/widgets/soft_divider.dart';
@@ -54,7 +55,7 @@ class TypeConverterView extends StatelessWidget {
                 child: Row(
                   children: [
                     SoftCheckbox(
-                      "Decimal",
+                      lblDecimal,
                       onChanged: (checked) => context
                           .read<BitwiseCalculatorProvider>()
                           .isDecimalVisible = checked ?? false,
@@ -65,7 +66,7 @@ class TypeConverterView extends StatelessWidget {
                     ),
                     const Gap(20),
                     SoftCheckbox(
-                      "Binary",
+                      lblBinary,
                       onChanged: (checked) => context
                           .read<BitwiseCalculatorProvider>()
                           .isBinaryVisible = checked ?? false,
@@ -76,7 +77,7 @@ class TypeConverterView extends StatelessWidget {
                     ),
                     const Gap(20),
                     SoftCheckbox(
-                      "Octal",
+                      lblOctal,
                       onChanged: (checked) => context
                           .read<BitwiseCalculatorProvider>()
                           .isOctalVisible = checked ?? false,
@@ -87,7 +88,7 @@ class TypeConverterView extends StatelessWidget {
                     ),
                     const Gap(20),
                     SoftCheckbox(
-                      "Hex",
+                      lblHex,
                       onChanged: (checked) => context
                           .read<BitwiseCalculatorProvider>()
                           .isHexVisible = checked ?? false,
@@ -98,7 +99,7 @@ class TypeConverterView extends StatelessWidget {
                     ),
                     const Gap(20),
                     SoftCheckbox(
-                      "Ascii",
+                      lblAscii,
                       onChanged: (checked) => context
                           .read<BitwiseCalculatorProvider>()
                           .isAsciiVisible = checked ?? false,

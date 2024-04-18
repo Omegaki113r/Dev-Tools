@@ -15,11 +15,11 @@
  */
 
 import 'dart:convert';
-import 'dart:typed_data';
 
 import 'package:dev_tools/core/utils/bitwise_calculator/functions.dart';
 import 'package:dev_tools/core/utils/bitwise_calculator/lexer.dart';
 import 'package:dev_tools/features/bitwise_calculator/domain/entities/bitwise_converter_entity.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:string_validator/string_validator.dart';
 
@@ -254,7 +254,9 @@ class BitwiseConvert {
     for (var character in text.characters) {
       if (isAlphanumeric(character)) {
         Uint8List charList = asciiEncoder.convert(character);
-        print(charList);
+        if (kDebugMode) {
+          print(charList);
+        }
         binaryText += "${charList[0].toRadixString(2)} ";
         octalText += "${charList[0].toRadixString(8)} ";
         decimalText += "${charList[0].toRadixString(10)} ";
