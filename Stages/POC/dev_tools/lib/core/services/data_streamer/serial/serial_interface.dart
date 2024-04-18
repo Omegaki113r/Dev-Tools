@@ -39,4 +39,5 @@ abstract class SerialInterface {
   List<String> get dataBitList;
   List<String> get stopBitList;
   List<String> get parityList;
+  List<String> get txOnEnterList;
 }

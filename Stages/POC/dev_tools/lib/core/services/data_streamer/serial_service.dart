@@ -65,4 +65,5 @@ class SerialService {
   List<String> get dataBitList => _serialInterface.dataBitList;
   List<String> get stopBitList => _serialInterface.stopBitList;
   List<String> get parityList => _serialInterface.parityList;
+  List<String> get txOnEnterList => _serialInterface.txOnEnterList;
 }

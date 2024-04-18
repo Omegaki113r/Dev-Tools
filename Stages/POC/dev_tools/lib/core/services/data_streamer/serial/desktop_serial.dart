@@ -18,6 +18,16 @@ import 'package:dev_tools/core/services/data_streamer/serial/serial_interface.da
 import 'package:flutter/foundation.dart';
 import 'package:flutter_libserialport/flutter_libserialport.dart';
 
+Map<String, int> txEnterList = {
+  "None": 0,
+  "CR": 600,
+  "LF": 1200,
+  "CR-LF": 2400,
+  "Space": 4800,
+  "STX/ETX": 9600,
+  "Null": 14400,
+};
+
 Map<String, int> baudList = {
   "300": 300,
   "600": 600,
@@ -205,4 +215,6 @@ class DesktopSerialInterface implements SerialInterface {
   List<String> get stopBitList => stopBits.keys.toList();
   @override
   List<String> get parityList => parity.keys.toList();
+  @override
+  List<String> get txOnEnterList => txEnterList.keys.toList();
 }

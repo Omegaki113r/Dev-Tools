@@ -29,6 +29,7 @@ class SerialStreamerProvider<T> with ChangeNotifier {
   String? _selectedDataBits = "8";
   String? _selectedStopBits = "1";
   String? _selectedParity = "None";
+  String? _selectedtxOnEnter = "None";
 
   int _rxData = 0;
   int _txData = 0;
@@ -153,6 +154,12 @@ class SerialStreamerProvider<T> with ChangeNotifier {
     notifyListeners();
   }
 
+  void selectedTXonEnterChanged(value) {
+    _selectedtxOnEnter = value;
+    // _serialService.setParity(value);
+    notifyListeners();
+  }
+
   void resetRXCounter() {
     _rxData = 0;
     notifyListeners();
@@ -181,6 +188,7 @@ class SerialStreamerProvider<T> with ChangeNotifier {
   String? get selectedDataBits => _selectedDataBits;
   String? get selectedStopBits => _selectedStopBits;
   String? get selectedParity => _selectedParity;
+  String? get selectedtxOnEnter => _selectedtxOnEnter;
 
   bool get autoScroll => _autoScroll;
 
@@ -236,6 +244,7 @@ class SerialStreamerProvider<T> with ChangeNotifier {
   List<String> get dataBitList => _serialService.dataBitList;
   List<String> get stopBitList => _serialService.stopBitList;
   List<String> get parityList => _serialService.parityList;
+  List<String> get txOnEnterList => _serialService.txOnEnterList;
   int get rxData => _rxData;
   int get txData => _txData;
 }

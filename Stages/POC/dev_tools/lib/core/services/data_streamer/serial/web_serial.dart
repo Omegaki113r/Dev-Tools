@@ -18,6 +18,16 @@ import 'package:dev_tools/core/services/data_streamer/serial/serial_interface.da
 import 'package:flutter/foundation.dart';
 import 'package:serial/serial.dart';
 
+Map<String, int> txEnterList = {
+  "None": 0,
+  "CR": 600,
+  "LF": 1200,
+  "CR-LF": 2400,
+  "Space": 4800,
+  "STX/ETX": 9600,
+  "Null": 14400,
+};
+
 Map<String, int> baudList = {
   "300": 300,
   "600": 600,
@@ -137,4 +147,7 @@ class WebSerialInterface implements SerialInterface {
   @override
   List<String> get parityList =>
       throw UnimplementedError("parityList not implemented");
+  @override
+  List<String> get txOnEnterList =>
+      throw UnimplementedError("txOnEnterList not implemented");
 }
