@@ -29,22 +29,24 @@ class OctalBitwise extends StatelessWidget {
   Widget build(BuildContext context) {
     return SoftCard(
       cornerRadius: 20,
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(
+      child: LayoutBuilder(builder: (context, boxConstraints) {
+        return Wrap(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(30),
-              child: SoftTextField(
-                label: lblOctal,
-                controller:
-                    context.read<BitwiseCalculatorProvider>().octalController,
-                width: 200,
-                onChanged: (value) {
-                  context
-                      .read<BitwiseCalculatorProvider>()
-                      .changeText(ChangedType.octal, value);
-                },
+            ConstrainedBox(
+              constraints:
+                  BoxConstraints(maxWidth: boxConstraints.maxWidth * 0.5),
+              child: Padding(
+                padding: const EdgeInsets.all(30),
+                child: SoftTextField(
+                  label: lblOctal,
+                  controller:
+                      context.read<BitwiseCalculatorProvider>().octalController,
+                  onChanged: (value) {
+                    context
+                        .read<BitwiseCalculatorProvider>()
+                        .changeText(ChangedType.octal, value);
+                  },
+                ),
               ),
             ),
             Consumer<BitwiseCalculatorProvider>(
@@ -67,8 +69,8 @@ class OctalBitwise extends StatelessWidget {
               },
             ),
           ],
-        ),
-      ),
+        );
+      }),
     );
   }
 }

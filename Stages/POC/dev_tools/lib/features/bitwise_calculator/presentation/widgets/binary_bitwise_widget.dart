@@ -29,22 +29,25 @@ class BinaryBitwise extends StatelessWidget {
   Widget build(BuildContext context) {
     return SoftCard(
       cornerRadius: 20,
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(
+      child: LayoutBuilder(builder: (context, boxConstraints) {
+        return Wrap(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(30),
-              child: SoftTextField(
-                label: lblBinary,
-                controller:
-                    context.read<BitwiseCalculatorProvider>().binaryController,
-                width: 200,
-                onChanged: (value) {
-                  context
+            ConstrainedBox(
+              constraints:
+                  BoxConstraints(maxWidth: boxConstraints.maxWidth * 0.5),
+              child: Padding(
+                padding: const EdgeInsets.all(30),
+                child: SoftTextField(
+                  label: lblBinary,
+                  controller: context
                       .read<BitwiseCalculatorProvider>()
-                      .changeText(ChangedType.binary, value);
-                },
+                      .binaryController,
+                  onChanged: (value) {
+                    context
+                        .read<BitwiseCalculatorProvider>()
+                        .changeText(ChangedType.binary, value);
+                  },
+                ),
               ),
             ),
             Consumer<BitwiseCalculatorProvider>(
@@ -67,8 +70,8 @@ class BinaryBitwise extends StatelessWidget {
               },
             ),
           ],
-        ),
-      ),
+        );
+      }),
     );
   }
 }

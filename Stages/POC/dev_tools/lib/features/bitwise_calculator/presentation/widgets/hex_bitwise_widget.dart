@@ -29,22 +29,24 @@ class HexBitwise extends StatelessWidget {
   Widget build(BuildContext context) {
     return SoftCard(
       cornerRadius: 20,
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(
+      child: LayoutBuilder(builder: (context, boxConstraints) {
+        return Wrap(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(30),
-              child: SoftTextField(
-                label: lblHex,
-                controller:
-                    context.read<BitwiseCalculatorProvider>().hexController,
-                width: 200,
-                onChanged: (value) {
-                  context
-                      .read<BitwiseCalculatorProvider>()
-                      .changeText(ChangedType.hex, value);
-                },
+            ConstrainedBox(
+              constraints:
+                  BoxConstraints(maxWidth: boxConstraints.maxWidth * 0.5),
+              child: Padding(
+                padding: const EdgeInsets.all(30),
+                child: SoftTextField(
+                  label: lblHex,
+                  controller:
+                      context.read<BitwiseCalculatorProvider>().hexController,
+                  onChanged: (value) {
+                    context
+                        .read<BitwiseCalculatorProvider>()
+                        .changeText(ChangedType.hex, value);
+                  },
+                ),
               ),
             ),
             Consumer<BitwiseCalculatorProvider>(
@@ -67,8 +69,8 @@ class HexBitwise extends StatelessWidget {
               },
             ),
           ],
-        ),
-      ),
+        );
+      }),
     );
   }
 }

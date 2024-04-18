@@ -29,22 +29,25 @@ class DecimalBitwise extends StatelessWidget {
   Widget build(BuildContext context) {
     return SoftCard(
       cornerRadius: 20,
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(
+      child: LayoutBuilder(builder: (context, boxConstraints) {
+        return Wrap(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(30),
-              child: SoftTextField(
-                label: lblDecimal,
-                controller:
-                    context.read<BitwiseCalculatorProvider>().decimalController,
-                width: 200,
-                onChanged: (value) {
-                  context
+            ConstrainedBox(
+              constraints:
+                  BoxConstraints(maxWidth: boxConstraints.maxWidth * 0.5),
+              child: Padding(
+                padding: const EdgeInsets.all(30),
+                child: SoftTextField(
+                  label: lblDecimal,
+                  controller: context
                       .read<BitwiseCalculatorProvider>()
-                      .changeText(ChangedType.decimal, value);
-                },
+                      .decimalController,
+                  onChanged: (value) {
+                    context
+                        .read<BitwiseCalculatorProvider>()
+                        .changeText(ChangedType.decimal, value);
+                  },
+                ),
               ),
             ),
             Consumer<BitwiseCalculatorProvider>(
@@ -70,7 +73,9 @@ class DecimalBitwise extends StatelessWidget {
                 builder: (context, value, child) {
               return AnimatedContainer(
                 duration: const Duration(milliseconds: 1000),
-                width: value.decimalController.text.isNotEmpty ? 300 : 0,
+                width: value.typeConverterModel.decimal2sCompliment.isNotEmpty
+                    ? 300
+                    : 0,
                 child: Padding(
                     padding: const EdgeInsets.all(30),
                     child: SoftText(
@@ -80,13 +85,12 @@ class DecimalBitwise extends StatelessWidget {
                       maxLines: 1,
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 10, horizontal: 20),
-                      width: 200,
                     )),
               );
             }),
           ],
-        ),
-      ),
+        );
+      }),
     );
   }
 }
