@@ -47,12 +47,14 @@ class TypeConverterView extends StatelessWidget {
           children: [
             const SoftDivider(),
             SoftCard(
+              height: 100,
               cornerRadius: 20,
               border: Border.all(color: Colors.white.withOpacity(0.1)),
               child: Padding(
                 padding: const EdgeInsets.symmetric(
                     horizontal: 30.0, vertical: 20.0),
-                child: Row(
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
                   children: [
                     SoftCheckbox(
                       lblDecimal,
@@ -64,7 +66,7 @@ class TypeConverterView extends StatelessWidget {
                           .isDecimalVisible,
                       labelStyle: const TextStyle(fontSize: 12.0),
                     ),
-                    const Gap(20),
+                    const Gap(15),
                     SoftCheckbox(
                       lblBinary,
                       onChanged: (checked) => context
@@ -75,7 +77,7 @@ class TypeConverterView extends StatelessWidget {
                           .isBinaryVisible,
                       labelStyle: const TextStyle(fontSize: 12.0),
                     ),
-                    const Gap(20),
+                    const Gap(15),
                     SoftCheckbox(
                       lblOctal,
                       onChanged: (checked) => context
@@ -86,7 +88,7 @@ class TypeConverterView extends StatelessWidget {
                           .isOctalVisible,
                       labelStyle: const TextStyle(fontSize: 12.0),
                     ),
-                    const Gap(20),
+                    const Gap(15),
                     SoftCheckbox(
                       lblHex,
                       onChanged: (checked) => context
@@ -97,7 +99,7 @@ class TypeConverterView extends StatelessWidget {
                           .isHexVisible,
                       labelStyle: const TextStyle(fontSize: 12.0),
                     ),
-                    const Gap(20),
+                    const Gap(15),
                     SoftCheckbox(
                       lblAscii,
                       onChanged: (checked) => context

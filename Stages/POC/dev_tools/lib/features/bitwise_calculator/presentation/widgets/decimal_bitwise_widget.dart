@@ -29,15 +29,17 @@ class DecimalBitwise extends StatelessWidget {
   Widget build(BuildContext context) {
     return SoftCard(
       cornerRadius: 20,
-      child: Row(
-        children: [
-          Expanded(
-            child: Padding(
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: [
+            Padding(
               padding: const EdgeInsets.all(30),
               child: SoftTextField(
                 label: lblDecimal,
                 controller:
                     context.read<BitwiseCalculatorProvider>().decimalController,
+                width: 200,
                 onChanged: (value) {
                   context
                       .read<BitwiseCalculatorProvider>()
@@ -45,43 +47,45 @@ class DecimalBitwise extends StatelessWidget {
                 },
               ),
             ),
-          ),
-          Consumer<BitwiseCalculatorProvider>(
-            builder: (context, value, child) {
+            Consumer<BitwiseCalculatorProvider>(
+              builder: (context, value, child) {
+                return AnimatedContainer(
+                  duration: const Duration(milliseconds: 1000),
+                  width: value.decimalResult.isNotEmpty ? 300 : 0,
+                  child: Padding(
+                    padding: const EdgeInsets.all(30.0),
+                    child: SoftText(
+                      value.decimalResult,
+                      label: lblExpressionResult,
+                      textStyle: Theme.of(context).textTheme.bodyLarge,
+                      maxLines: 1,
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 20),
+                    ),
+                  ),
+                );
+              },
+            ),
+            Consumer<BitwiseCalculatorProvider>(
+                builder: (context, value, child) {
               return AnimatedContainer(
                 duration: const Duration(milliseconds: 1000),
-                width: value.decimalResult.isNotEmpty ? 300 : 0,
+                width: value.decimalController.text.isNotEmpty ? 300 : 0,
                 child: Padding(
-                  padding: const EdgeInsets.all(30.0),
-                  child: SoftText(
-                    value.decimalResult,
-                    label: lblExpressionResult,
-                    textStyle: Theme.of(context).textTheme.bodyLarge,
-                    maxLines: 1,
-                    contentPadding: const EdgeInsets.symmetric(
-                        vertical: 10, horizontal: 20),
-                  ),
-                ),
+                    padding: const EdgeInsets.all(30),
+                    child: SoftText(
+                      value.typeConverterModel.decimal2sCompliment,
+                      label: lbl2sCompliment,
+                      textStyle: Theme.of(context).textTheme.bodyLarge,
+                      maxLines: 1,
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 20),
+                      width: 200,
+                    )),
               );
-            },
-          ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(30),
-              child: Consumer<BitwiseCalculatorProvider>(
-                  builder: (context, value, child) {
-                return SoftText(
-                  value.typeConverterModel.decimal2sCompliment,
-                  label: lbl2sCompliment,
-                  textStyle: Theme.of(context).textTheme.bodyLarge,
-                  maxLines: 1,
-                  contentPadding:
-                      const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                );
-              }),
-            ),
-          ),
-        ],
+            }),
+          ],
+        ),
       ),
     );
   }

@@ -120,7 +120,7 @@ class FlatSoftButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 30),
       decoration: const BoxDecoration(
         // color: color6,
         gradient: LinearGradient(colors: [

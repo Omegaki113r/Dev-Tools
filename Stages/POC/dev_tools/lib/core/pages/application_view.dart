@@ -17,6 +17,7 @@
 import 'package:dev_tools/core/constants/app_colors.dart';
 import 'package:dev_tools/core/pages/main_view.dart';
 import 'package:dev_tools/core/pages/sidebar_view.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class ApplicationView extends StatelessWidget {
@@ -25,18 +26,30 @@ class ApplicationView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Row(
-        children: [
-          SidebarView(
-            250,
-            color6.withOpacity(0.9),
-          ),
-          MainView(
-            child: child,
-          ),
-        ],
-      ),
-    );
+    if (kIsWeb) {
+      return Scaffold(
+        body: Column(
+          children: [
+            MainView(
+              child: child,
+            ),
+            SidebarView(Axis.horizontal, color6.withOpacity(0.9),
+                width: double.infinity, height: 100),
+          ],
+        ),
+      );
+    } else {
+      return Scaffold(
+        body: Row(
+          children: [
+            SidebarView(Axis.vertical, color6.withOpacity(0.9),
+                width: 250, height: double.infinity),
+            MainView(
+              child: child,
+            ),
+          ],
+        ),
+      );
+    }
   }
 }

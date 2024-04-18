@@ -23,8 +23,16 @@ import 'package:go_router/go_router.dart';
 
 class SidebarView extends StatefulWidget {
   final double width;
+  final double height;
   final Color backgroundColor;
-  const SidebarView(this.width, this.backgroundColor, {super.key});
+  final Axis axis;
+  const SidebarView(
+    this.axis,
+    this.backgroundColor, {
+    super.key,
+    required this.width,
+    required this.height,
+  });
 
   @override
   State<SidebarView> createState() => _SidebarState();
@@ -35,6 +43,7 @@ class _SidebarState extends State<SidebarView> {
   Widget build(BuildContext context) {
     return SizedBox(
       width: widget.width,
+      height: widget.height,
       child: Stack(
         children: [
           Container(
@@ -42,40 +51,78 @@ class _SidebarState extends State<SidebarView> {
               color: widget.backgroundColor,
             ),
           ),
-          ListView(
-            children: [
-              SoftButton(
-                lblBitwiseCalculator,
-                ButtonType.flat,
-                height: 60,
-                padding: const EdgeInsets.only(
-                  top: 20.0,
-                  bottom: 20.0,
-                  left: 20.0,
-                  right: 30.0,
+          if (widget.axis == Axis.horizontal) ...[
+            ListView(
+              scrollDirection: Axis.horizontal,
+              children: [
+                SoftButton(
+                  lblBitwiseCalculator,
+                  ButtonType.flat,
+                  height: 60,
+                  padding: const EdgeInsets.only(
+                    top: 20.0,
+                    bottom: 20.0,
+                    left: 20.0,
+                    right: 30.0,
+                  ),
+                  onPressed: () {
+                    GoRouter.of(context).go(bitwiseCalculatorRoute);
+                  },
                 ),
-                onPressed: () {
-                  GoRouter.of(context).go(bitwiseCalculatorRoute);
-                },
-              ),
-              const SoftDivider(),
-              SoftButton(
-                lblDataStreamer,
-                ButtonType.flat,
-                height: 60,
-                padding: const EdgeInsets.only(
-                  top: 20.0,
-                  bottom: 20.0,
-                  left: 20.0,
-                  right: 30.0,
+                const SoftDivider(),
+                SoftButton(
+                  lblDataStreamer,
+                  ButtonType.flat,
+                  height: 60,
+                  padding: const EdgeInsets.only(
+                    top: 20.0,
+                    bottom: 20.0,
+                    left: 20.0,
+                    right: 30.0,
+                  ),
+                  onPressed: () {
+                    GoRouter.of(context).go(dataStreamerRoute);
+                  },
                 ),
-                onPressed: () {
-                  GoRouter.of(context).go(dataStreamerRoute);
-                },
-              ),
-              const SoftDivider(),
-            ],
-          ),
+                const SoftDivider(),
+              ],
+            ),
+          ] else ...[
+            Column(
+              children: [
+                SoftButton(
+                  lblBitwiseCalculator,
+                  ButtonType.flat,
+                  height: 60,
+                  padding: const EdgeInsets.only(
+                    top: 20.0,
+                    bottom: 20.0,
+                    left: 20.0,
+                    right: 30.0,
+                  ),
+                  onPressed: () {
+                    GoRouter.of(context).go(bitwiseCalculatorRoute);
+                  },
+                ),
+                const SoftDivider(),
+                SoftButton(
+                  lblDataStreamer,
+                  ButtonType.flat,
+                  height: 60,
+                  padding: const EdgeInsets.only(
+                    top: 20.0,
+                    bottom: 20.0,
+                    left: 20.0,
+                    right: 30.0,
+                  ),
+                  onPressed: () {
+                    GoRouter.of(context).go(dataStreamerRoute);
+                  },
+                ),
+                const SoftDivider(),
+              ],
+            )
+          ]
         ],
       ),
     );

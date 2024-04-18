@@ -4,7 +4,7 @@
  * File Created: Sunday, 10th March 2024 8:17:57 pm
  * Author: Omegaki113r (omegaki113r@gmail.com)
  * -----
- * Last Modified: Monday, 25th March 2024 5:50:14 pm
+ * Last Modified: Thursday, 18th April 2024 5:06:29 pm
  * Modified By: Omegaki113r (omegaki113r@gmail.com)
  * -----
  * Copyright 2024 - 2024 0m3g4ki113r, Xtronic
@@ -13,8 +13,6 @@
  * Date      	By	Comments
  * ----------	---	---------------------------------------------------------
  */
-
-
 
 import 'package:dev_tools/core/constants/app_strings.dart';
 import 'package:dev_tools/core/widgets/soft_card.dart';
@@ -30,15 +28,17 @@ class ASCIIBitwise extends StatelessWidget {
   Widget build(BuildContext context) {
     return SoftCard(
       cornerRadius: 20,
-      child: Row(
-        children: [
-          Expanded(
-            child: Padding(
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: [
+            Padding(
               padding: const EdgeInsets.all(30),
               child: SoftTextField(
                 label: lblAscii,
                 controller:
                     context.read<BitwiseCalculatorProvider>().asciiController,
+                width: 200,
                 onChanged: (value) {
                   context
                       .read<BitwiseCalculatorProvider>()
@@ -46,8 +46,8 @@ class ASCIIBitwise extends StatelessWidget {
                 },
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
