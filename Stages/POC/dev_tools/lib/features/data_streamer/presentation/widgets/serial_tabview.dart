@@ -111,13 +111,14 @@ class _SerialTabViewState extends State<SerialTabView> {
                                     .map(
                                       (e) => DropdownMenuItem(
                                         value: e.value,
+                                        // child: Text(e.key),
                                         child: Row(
                                           children: [
                                             const Spacer(),
                                             Expanded(
                                               child: Text(
                                                 e.key,
-                                                textAlign: TextAlign.center,
+                                                textAlign: TextAlign.end,
                                               ),
                                             ),
                                           ],
@@ -149,13 +150,16 @@ class _SerialTabViewState extends State<SerialTabView> {
                                   .map(
                                     (e) => DropdownMenuItem(
                                       value: e,
+                                      // child: Text(e),
                                       child: Row(
                                         children: [
                                           const Spacer(),
                                           Expanded(
-                                              child: Text(
-                                            e,
-                                          )),
+                                            child: Text(
+                                              e,
+                                              textAlign: TextAlign.end,
+                                            ),
+                                          ),
                                         ],
                                       ),
                                     ),
@@ -189,13 +193,14 @@ class _SerialTabViewState extends State<SerialTabView> {
                                   .map(
                                     (e) => DropdownMenuItem(
                                       value: e,
+                                      // child: Text(e),
                                       child: Row(
                                         children: [
                                           const Spacer(),
                                           Expanded(
                                               child: Text(
                                             e,
-                                            textAlign: TextAlign.center,
+                                            textAlign: TextAlign.end,
                                           )),
                                         ],
                                       ),
@@ -230,13 +235,14 @@ class _SerialTabViewState extends State<SerialTabView> {
                                   .map(
                                     (e) => DropdownMenuItem(
                                       value: e,
+                                      // child: Text(e),
                                       child: Row(
                                         children: [
                                           const Spacer(),
                                           Expanded(
                                               child: Text(
                                             e,
-                                            textAlign: TextAlign.center,
+                                            textAlign: TextAlign.end,
                                           )),
                                         ],
                                       ),
@@ -271,13 +277,14 @@ class _SerialTabViewState extends State<SerialTabView> {
                                   .map(
                                     (e) => DropdownMenuItem(
                                       value: e,
+                                      // child: Text(e),
                                       child: Row(
                                         children: [
                                           const Spacer(),
                                           Expanded(
                                             child: Text(
                                               e,
-                                              textAlign: TextAlign.center,
+                                              textAlign: TextAlign.end,
                                             ),
                                           ),
                                         ],
@@ -479,13 +486,14 @@ class _SerialTabViewState extends State<SerialTabView> {
                                                   Expanded(
                                                       child: Text(
                                                     e,
+                                                    textAlign: TextAlign.end,
                                                   )),
                                                 ],
                                               ),
                                             ),
                                           )
                                           .toList(),
-                                      width: 250,
+                                      width: 200,
                                       height: 45,
                                       onChanged: (value) {
                                         // provider.selectedBaudRateChanged(value);
