@@ -14,11 +14,13 @@
  * ----------	---	---------------------------------------------------------
  */
 
+import 'package:dev_tools/core/constants/app_colors.dart';
 import 'package:dev_tools/core/constants/app_constants.dart';
 import 'package:dev_tools/core/constants/app_strings.dart';
 import 'package:dev_tools/core/widgets/soft_button.dart';
 import 'package:dev_tools/core/widgets/soft_divider.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
 class SidebarView extends StatefulWidget {
@@ -59,6 +61,7 @@ class _SidebarState extends State<SidebarView> {
                   lblBitwiseCalculator,
                   ButtonType.flat,
                   height: 60,
+                  width: 150,
                   padding: const EdgeInsets.only(
                     top: 20.0,
                     bottom: 20.0,
@@ -74,6 +77,7 @@ class _SidebarState extends State<SidebarView> {
                   lblDataStreamer,
                   ButtonType.flat,
                   height: 60,
+                  width: 150,
                   padding: const EdgeInsets.only(
                     top: 20.0,
                     bottom: 20.0,
@@ -84,7 +88,51 @@ class _SidebarState extends State<SidebarView> {
                     GoRouter.of(context).go(dataStreamerRoute);
                   },
                 ),
-                const SoftDivider(),
+                SoftButton(
+                  "About",
+                  ButtonType.flat,
+                  height: 60,
+                  width: 150,
+                  padding: const EdgeInsets.only(
+                    top: 20.0,
+                    bottom: 20.0,
+                    left: 20.0,
+                    right: 30.0,
+                  ),
+                  onPressed: () {
+                    // GoRouter.of(context).go(dataStreamerRoute);
+                    showDialog<void>(
+                      context: context,
+                      barrierDismissible: false, // user must tap button!
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('About'),
+                          content: const Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                "Developed By: 0m3g4ki113r",
+                              ),
+                              Gap(10),
+                              Text(
+                                "Version: 0.0.1-alpha",
+                              ),
+                            ],
+                          ),
+                          actions: <Widget>[
+                            TextButton(
+                              child: const Text('OK'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                ),
               ],
             ),
           ] else ...[
@@ -120,6 +168,35 @@ class _SidebarState extends State<SidebarView> {
                   },
                 ),
                 const SoftDivider(),
+                const Spacer(),
+                const Divider(
+                  color: color1,
+                  indent: 20,
+                ),
+                const SizedBox(
+                  width: double.infinity,
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      top: 20.0,
+                      bottom: 20.0,
+                      left: 20.0,
+                      right: 30.0,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Text(
+                          "Developed By: 0m3g4ki113r",
+                        ),
+                        Gap(10),
+                        Text(
+                          "Version: 0.0.1-alpha",
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ],
             )
           ]
