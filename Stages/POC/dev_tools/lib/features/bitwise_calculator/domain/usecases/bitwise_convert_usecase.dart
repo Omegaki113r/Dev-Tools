@@ -69,7 +69,9 @@ class BitwiseConvert {
         binaryText += token.tokenText;
         octalText += token.tokenText;
         hexText += token.tokenText;
+        if (token.tokenText != " ") {
         asciiText += token.tokenText;
+        }
       }
       token = lexer.getToken();
     }
@@ -123,7 +125,9 @@ class BitwiseConvert {
         decimalText += token.tokenText;
         octalText += token.tokenText;
         hexText += token.tokenText;
+        if (token.tokenText != " ") {
         asciiText += token.tokenText;
+        }
       }
       token = lexer.getToken();
     }
@@ -177,7 +181,9 @@ class BitwiseConvert {
         decimalText += token.tokenText;
         binaryText += token.tokenText;
         hexText += token.tokenText;
+        if (token.tokenText != " ") {
         asciiText += token.tokenText;
+        }
       }
       token = lexer.getToken();
     }
@@ -232,7 +238,9 @@ class BitwiseConvert {
         binaryText += token.tokenText;
         octalText += token.tokenText;
         decimalText += token.tokenText;
+        if (token.tokenText != " ") {
         asciiText += token.tokenText;
+        }
       }
       token = lexer.getToken();
     }
