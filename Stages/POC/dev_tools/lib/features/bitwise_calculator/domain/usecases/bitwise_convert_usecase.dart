@@ -252,7 +252,7 @@ class BitwiseConvert {
     AsciiEncoder asciiEncoder = const AsciiEncoder();
 
     for (var character in text.characters) {
-      if (isAlphanumeric(character)) {
+      // if (isAlphanumeric(character)) {
         Uint8List charList = asciiEncoder.convert(character);
         if (kDebugMode) {
           print(charList);
@@ -279,12 +279,12 @@ class BitwiseConvert {
             (BigInt.from(charList[0]).toSigned(roundedUpTo) < BigInt.zero
                 ? "${BigInt.from(charList[0]).toSigned(roundedUpTo)} "
                 : "N/A ");
-      } else {
-        binaryText += "$character ";
-        octalText += "$character ";
-        decimalText += "$character ";
-        hexText += "$character ";
-      }
+      // } else {
+      //   binaryText += "$character ";
+      //   octalText += "$character ";
+      //   decimalText += "$character ";
+      //   hexText += "$character ";
+      // }
     }
 
     // Lexer lexer = Lexer(text);
