@@ -4,7 +4,7 @@
  * File Created: Tuesday, 26th December 2023 2:12:03 pm
  * Author: Omegaki113r (omegaki113r@gmail.com)
  * -----
- * Last Modified: Monday, 25th March 2024 5:20:19 pm
+ * Last Modified: Saturday, 20th April 2024 5:42:51 pm
  * Modified By: Omegaki113r (omegaki113r@gmail.com)
  * -----
  * Copyright 2024 - 2024 0m3g4ki113r, Xtronic
@@ -31,7 +31,6 @@ import 'package:dev_tools/features/bitwise_calculator/presentation/provider/bitw
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initializeServices();
-
   if (kIsWeb) {
   } else {
     await windowManager.ensureInitialized();

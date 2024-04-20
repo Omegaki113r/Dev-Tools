@@ -70,7 +70,7 @@ class BitwiseConvert {
         octalText += token.tokenText;
         hexText += token.tokenText;
         if (token.tokenText != " ") {
-        asciiText += token.tokenText;
+          asciiText += token.tokenText;
         }
       }
       token = lexer.getToken();
@@ -126,7 +126,7 @@ class BitwiseConvert {
         octalText += token.tokenText;
         hexText += token.tokenText;
         if (token.tokenText != " ") {
-        asciiText += token.tokenText;
+          asciiText += token.tokenText;
         }
       }
       token = lexer.getToken();
@@ -182,7 +182,7 @@ class BitwiseConvert {
         binaryText += token.tokenText;
         hexText += token.tokenText;
         if (token.tokenText != " ") {
-        asciiText += token.tokenText;
+          asciiText += token.tokenText;
         }
       }
       token = lexer.getToken();
@@ -239,7 +239,7 @@ class BitwiseConvert {
         octalText += token.tokenText;
         decimalText += token.tokenText;
         if (token.tokenText != " ") {
-        asciiText += token.tokenText;
+          asciiText += token.tokenText;
         }
       }
       token = lexer.getToken();
@@ -261,32 +261,32 @@ class BitwiseConvert {
 
     for (var character in text.characters) {
       // if (isAlphanumeric(character)) {
-        Uint8List charList = asciiEncoder.convert(character);
-        if (kDebugMode) {
-          print(charList);
-        }
-        binaryText += "${charList[0].toRadixString(2)} ";
-        octalText += "${charList[0].toRadixString(8)} ";
-        decimalText += "${charList[0].toRadixString(10)} ";
-        hexText += "${charList[0].toRadixString(16)} ";
+      Uint8List charList = asciiEncoder.convert(character);
+      if (kDebugMode) {
+        print(charList);
+      }
+      binaryText += "${charList[0].toRadixString(2)} ";
+      octalText += "${charList[0].toRadixString(8)} ";
+      decimalText += "${charList[0].toRadixString(10)} ";
+      hexText += "${charList[0].toRadixString(16)} ";
 
-        int roundedUpTo = roundUp(charList[0].bitLength, 8);
-        if (roundedUpTo > 64) {
-          roundedUpTo = roundUp(roundedUpTo, 64);
-        }
-        if (roundedUpTo > 32) {
-          roundedUpTo = roundUp(roundedUpTo, 32);
-        }
-        if (roundedUpTo > 16) {
-          roundedUpTo = roundUp(roundedUpTo, 16);
-        }
-        if (roundedUpTo == 0) {
-          roundedUpTo = 8;
-        }
-        decimal2sComplimentText +=
-            (BigInt.from(charList[0]).toSigned(roundedUpTo) < BigInt.zero
-                ? "${BigInt.from(charList[0]).toSigned(roundedUpTo)} "
-                : "N/A ");
+      int roundedUpTo = roundUp(charList[0].bitLength, 8);
+      if (roundedUpTo > 64) {
+        roundedUpTo = roundUp(roundedUpTo, 64);
+      }
+      if (roundedUpTo > 32) {
+        roundedUpTo = roundUp(roundedUpTo, 32);
+      }
+      if (roundedUpTo > 16) {
+        roundedUpTo = roundUp(roundedUpTo, 16);
+      }
+      if (roundedUpTo == 0) {
+        roundedUpTo = 8;
+      }
+      decimal2sComplimentText +=
+          (BigInt.from(charList[0]).toSigned(roundedUpTo) < BigInt.zero
+              ? "${BigInt.from(charList[0]).toSigned(roundedUpTo)} "
+              : "N/A ");
       // } else {
       //   binaryText += "$character ";
       //   octalText += "$character ";
