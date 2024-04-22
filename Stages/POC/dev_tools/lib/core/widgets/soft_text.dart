@@ -154,7 +154,7 @@ class SoftText extends StatelessWidget {
         child: Padding(
           padding: contentPadding ?? const EdgeInsets.all(0),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 label ?? "",
