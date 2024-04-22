@@ -43,7 +43,7 @@ class ApplicationView extends StatelessWidget {
         body: Row(
           children: [
             SidebarView(Axis.vertical, color6.withOpacity(0.9),
-                width: 250, height: double.infinity),
+                width: 200, height: double.infinity),
             MainView(
               child: child,
             ),
