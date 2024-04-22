@@ -30,11 +30,11 @@ class DecimalBitwise extends StatelessWidget {
     return SoftCard(
       cornerRadius: 20,
       child: LayoutBuilder(builder: (context, boxConstraints) {
-        return Wrap(
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ConstrainedBox(
-              constraints:
-                  BoxConstraints(maxWidth: boxConstraints.maxWidth * 0.5),
+            Expanded(
               child: Padding(
                 padding: const EdgeInsets.all(30),
                 child: SoftTextField(
@@ -50,11 +50,50 @@ class DecimalBitwise extends StatelessWidget {
                 ),
               ),
             ),
+            // ConstrainedBox(
+            //   constraints:
+            //       BoxConstraints(maxWidth: boxConstraints.maxWidth * 0.5),
+            //   child: Padding(
+            //     padding: const EdgeInsets.all(30),
+            //     child: SoftTextField(
+            //       label: lblDecimal,
+            //       controller: context
+            //           .read<BitwiseCalculatorProvider>()
+            //           .decimalController,
+            //       onChanged: (value) {
+            //         context
+            //             .read<BitwiseCalculatorProvider>()
+            //             .changeText(ChangedType.decimal, value);
+            //       },
+            //     ),
+            //   ),
+            // ),
+            // Consumer<BitwiseCalculatorProvider>(
+            //     builder: (context, value, child) {
+            //   return AnimatedContainer(
+            //     duration: const Duration(milliseconds: 1000),
+            //     width: value.decimalResult.isNotEmpty
+            //         ? boxConstraints.maxWidth * 0.3
+            //         : 0,
+            //     child: Padding(
+            //         padding: const EdgeInsets.all(30),
+            //         child: SoftText(
+            //           value.typeConverterModel.decimal2sCompliment,
+            //           label: lbl2sCompliment,
+            //           textStyle: Theme.of(context).textTheme.bodyLarge,
+            //           maxLines: 1,
+            //           contentPadding: const EdgeInsets.symmetric(
+            //               vertical: 10, horizontal: 20),
+            //         )),
+            //   );
+            // }),
             Consumer<BitwiseCalculatorProvider>(
               builder: (context, value, child) {
                 return AnimatedContainer(
                   duration: const Duration(milliseconds: 1000),
-                  width: value.decimalResult.isNotEmpty ? 300 : 0,
+                  width: value.decimalResult.isNotEmpty
+                      ? boxConstraints.maxWidth * 0.5
+                      : 0,
                   child: Padding(
                     padding: const EdgeInsets.all(30.0),
                     child: SoftText(
@@ -69,25 +108,6 @@ class DecimalBitwise extends StatelessWidget {
                 );
               },
             ),
-            Consumer<BitwiseCalculatorProvider>(
-                builder: (context, value, child) {
-              return AnimatedContainer(
-                duration: const Duration(milliseconds: 1000),
-                width: value.typeConverterModel.decimal2sCompliment.isNotEmpty
-                    ? 300
-                    : 0,
-                child: Padding(
-                    padding: const EdgeInsets.all(30),
-                    child: SoftText(
-                      value.typeConverterModel.decimal2sCompliment,
-                      label: lbl2sCompliment,
-                      textStyle: Theme.of(context).textTheme.bodyLarge,
-                      maxLines: 1,
-                      contentPadding: const EdgeInsets.symmetric(
-                          vertical: 10, horizontal: 20),
-                    )),
-              );
-            }),
           ],
         );
       }),

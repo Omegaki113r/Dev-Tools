@@ -30,11 +30,9 @@ class BinaryBitwise extends StatelessWidget {
     return SoftCard(
       cornerRadius: 20,
       child: LayoutBuilder(builder: (context, boxConstraints) {
-        return Wrap(
+        return Row(
           children: [
-            ConstrainedBox(
-              constraints:
-                  BoxConstraints(maxWidth: boxConstraints.maxWidth * 0.5),
+            Expanded(
               child: Padding(
                 padding: const EdgeInsets.all(30),
                 child: SoftTextField(
@@ -54,7 +52,9 @@ class BinaryBitwise extends StatelessWidget {
               builder: (context, value, child) {
                 return AnimatedContainer(
                   duration: const Duration(milliseconds: 1000),
-                  width: value.binaryResult.isNotEmpty ? 300 : 0,
+                  width: value.binaryResult.isNotEmpty
+                      ? boxConstraints.maxWidth * 0.5
+                      : 0,
                   child: Padding(
                     padding: const EdgeInsets.all(30.0),
                     child: SoftText(
