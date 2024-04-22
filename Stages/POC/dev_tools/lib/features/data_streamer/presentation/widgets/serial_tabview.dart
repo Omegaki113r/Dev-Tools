@@ -44,6 +44,11 @@ class _SerialTabViewState extends State<SerialTabView> {
 
   @override
   Widget build(BuildContext context) {
+    if (kIsWeb) {
+      return const Center(
+        child: Text(lblSerial),
+      );
+    }
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: Column(
