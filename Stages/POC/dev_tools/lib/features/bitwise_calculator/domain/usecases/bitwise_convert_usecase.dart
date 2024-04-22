@@ -21,7 +21,6 @@ import 'package:dev_tools/core/utils/bitwise_calculator/lexer.dart';
 import 'package:dev_tools/features/bitwise_calculator/domain/entities/bitwise_converter_entity.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:string_validator/string_validator.dart';
 
 class BitwiseConvert {
   BitwiseConverterEntity convertFromDecimal(String text) {

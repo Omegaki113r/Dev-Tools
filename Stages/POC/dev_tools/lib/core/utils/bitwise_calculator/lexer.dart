@@ -26,6 +26,7 @@ class Lexer {
     source += "\n";
     nextChar();
   }
+
   void nextChar() {
     ++currentPosition;
     if (currentPosition >= source.length) {
