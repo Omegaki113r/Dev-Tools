@@ -16,6 +16,7 @@
 
 import 'dart:convert';
 
+import 'package:b/b.dart';
 import 'package:dev_tools/core/utils/bitwise_calculator/functions.dart';
 import 'package:dev_tools/core/utils/bitwise_calculator/lexer.dart';
 import 'package:dev_tools/features/bitwise_calculator/domain/entities/bitwise_converter_entity.dart';
@@ -64,6 +65,20 @@ class BitwiseConvert {
               ? "${parsed.toSigned(roundedUpTo)} "
               : "N/A ");
         }
+      } else if (token.token == TokenType.floatNumber) {
+        ByteData data = ByteData(8);
+        data.setFloat64(0, double.tryParse(token.tokenText)!);
+        BaseConversion binaryConversion =
+            BaseConversion(from: base10, to: base2);
+        BaseConversion octalConversion =
+            BaseConversion(from: base10, to: base8);
+        BaseConversion hexConversion = BaseConversion(from: base10, to: base16);
+        binaryText += binaryConversion(token.tokenText);
+        hexText += hexConversion(token.tokenText).toUpperCase();
+        octalText += octalConversion(token.tokenText);
+        print(binaryConversion(token.tokenText));
+        print(octalConversion(token.tokenText));
+        print(hexConversion(token.tokenText));
       } else {
         binaryText += token.tokenText;
         octalText += token.tokenText;

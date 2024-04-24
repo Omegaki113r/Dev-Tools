@@ -27,12 +27,15 @@ class BitwiseEvaluate {
     List arr = text.split(" ");
     for (String element in arr) {
       try {
-        BigInt evaluatedString = BigInt.from(eval(element));
-        if (evaluatedString.toRadixString(10) != element) {
-          decimalResult += "$evaluatedString ";
-          binaryResult += "${evaluatedString.toRadixString(2)} ";
-          octalResult += "${evaluatedString.toRadixString(8)} ";
-          hexResult += "${evaluatedString.toRadixString(16).toUpperCase()} ";
+        if (text.contains(".")) {
+        } else {
+          BigInt evaluatedString = BigInt.from(eval(element));
+          if (evaluatedString.toRadixString(10) != element) {
+            decimalResult += "$evaluatedString ";
+            binaryResult += "${evaluatedString.toRadixString(2)} ";
+            octalResult += "${evaluatedString.toRadixString(8)} ";
+            hexResult += "${evaluatedString.toRadixString(16).toUpperCase()} ";
+          }
         }
       } catch (e) {
         decimalResult = "";

@@ -106,7 +106,8 @@ class Lexer {
         }
       }
       String tokenText = source.substring(startPosition, currentPosition + 1);
-      token = Token(tokenText, TokenType.number);
+      token = Token(tokenText,
+          tokenText.contains(".") ? TokenType.floatNumber : TokenType.number);
     } else if (currentCharacter == "(") {
       token = Token("(", TokenType.leftParan);
     } else if (currentCharacter == ")") {
@@ -152,6 +153,7 @@ enum TokenType {
   eof,
   newline,
   space,
+  floatNumber,
   number,
   asciiString,
   add,
