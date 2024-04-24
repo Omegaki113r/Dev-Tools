@@ -24,16 +24,16 @@ import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
 class SidebarView extends StatefulWidget {
-  final double width;
-  final double height;
+  final double? width;
+  final double? height;
   final Color backgroundColor;
   final Axis axis;
   const SidebarView(
     this.axis,
     this.backgroundColor, {
     super.key,
-    required this.width,
-    required this.height,
+    this.width,
+    this.height,
   });
 
   @override
@@ -187,11 +187,25 @@ class _SidebarState extends State<SidebarView> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Text(
-                          "Developed By: 0m3g4ki113r",
+                          "Developed By:",
+                        ),
+                        SizedBox(
+                          width: double.infinity,
+                          child: Text(
+                            "0m3g4ki113r",
+                            textAlign: TextAlign.center,
+                          ),
                         ),
                         Gap(10),
                         Text(
-                          "Version: 0.0.1-alpha",
+                          "Version:",
+                        ),
+                        SizedBox(
+                          width: double.infinity,
+                          child: Text(
+                            "0.0.1-alpha",
+                            textAlign: TextAlign.center,
+                          ),
                         ),
                       ],
                     ),
