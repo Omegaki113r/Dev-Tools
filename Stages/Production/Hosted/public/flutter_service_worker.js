@@ -8,7 +8,7 @@ const RESOURCES = {"assets/AssetManifest.bin": "7d3a5bfe20df5df6a7e99eeb33cc0515
 "assets/AssetManifest.json": "d4bc8f7fbcf210fd24dd2c367923e093",
 "assets/assets/images/xtronic_home_logo.jpg": "30f9ed51566ec8c457826cbd1b55a849",
 "assets/FontManifest.json": "dc3d03800ccca4601324923c0b1d6d57",
-"assets/fonts/MaterialIcons-Regular.otf": "32fce58e2acb9c420eab0fe7b828b761",
+"assets/fonts/MaterialIcons-Regular.otf": "9169948c3cb73616cb04e1a2cbeeba10",
 "assets/NOTICES": "903f3b006c8b07639f476612316f6990",
 "assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "89ed8f4e49bcdfc0b5bfc9b24591e347",
 "assets/packages/window_manager/images/ic_chrome_close.png": "75f4b8ab3608a05461a31fc18d6b47c2",
@@ -29,9 +29,9 @@ const RESOURCES = {"assets/AssetManifest.bin": "7d3a5bfe20df5df6a7e99eeb33cc0515
 "icons/Icon-512.png": "9085c1f34ca9fe73b666b842426b3009",
 "icons/Icon-maskable-192.png": "0f4b7bd29d9cb86373a79192ac759edd",
 "icons/Icon-maskable-512.png": "9085c1f34ca9fe73b666b842426b3009",
-"index.html": "299cfef80e89b0b7d09b5844574d34e9",
-"/": "299cfef80e89b0b7d09b5844574d34e9",
-"main.dart.js": "339f5d05a7ed422efa971187b4d07158",
+"index.html": "7c7f557aedf830d8a4fd5b670caf5c2a",
+"/": "7c7f557aedf830d8a4fd5b670caf5c2a",
+"main.dart.js": "4076d4f977ae999e1a3dec5657b73be5",
 "manifest.json": "b8cfb969719bf4e64304a6ef0c17378e",
 "version.json": "2218fa07cba934b625f3ca2e8d9d634f"};
 // The application shell files that are downloaded before a service worker can
