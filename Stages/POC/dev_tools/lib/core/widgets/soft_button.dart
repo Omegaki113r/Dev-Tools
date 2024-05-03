@@ -26,15 +26,17 @@ enum ButtonState {
 
 class SoftButton extends StatefulWidget {
   final String label;
+  final ButtonType buttonType;
+  final Widget? child;
   final double? height;
   final double? width;
-  final ButtonType buttonType;
   final Function onPressed;
   final EdgeInsetsGeometry? padding;
   final ButtonState _buttonState;
   final Duration duration = const Duration(seconds: 2);
   const SoftButton(this.label, this.buttonType,
       {super.key,
+      this.child,
       this.padding,
       this.height,
       this.width,
@@ -82,7 +84,10 @@ class _SoftButtonState extends State<SoftButton>
           //       : ConvexSoftButton(widget.label),
           // ),
           child: switch (widget._buttonState) {
-            ButtonState.defaultState => FlatSoftButton(widget.label),
+            ButtonState.defaultState => FlatSoftButton(
+                widget.label,
+                child: widget.child,
+              ),
             ButtonState.pressedState => ConvexSoftButton(widget.label),
           },
         ),
@@ -114,8 +119,9 @@ class _SoftButtonState extends State<SoftButton>
 
 class FlatSoftButton extends StatelessWidget {
   final String label;
+  final Widget? child;
   // final double height;
-  const FlatSoftButton(this.label, {super.key});
+  const FlatSoftButton(this.label, {super.key, this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -142,11 +148,12 @@ class FlatSoftButton extends StatelessWidget {
         ],
       ),
       child: Center(
-        child: Text(
-          label,
-          textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.labelLarge,
-        ),
+        child: child ??
+            Text(
+              label,
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.labelLarge,
+            ),
       ),
     );
   }

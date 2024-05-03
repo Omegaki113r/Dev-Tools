@@ -64,6 +64,9 @@ const Map<String, StopBits> stopBits = {
 SerialInterface getSerialInterface() => WebSerialInterface();
 
 class WebSerialInterface implements SerialInterface {
+  final Map<String, SerialPort?> _portList = {};
+  SerialPort? _selectedPort;
+
   WebSerialInterface() {
     if (kDebugMode) {
       print("WebSerial Initialized");
@@ -102,7 +105,7 @@ class WebSerialInterface implements SerialInterface {
   bool get isOpen => throw UnimplementedError("isOpen getter not implemented");
 
   @override
-  get port => throw UnimplementedError("port getter not implemented");
+  get port => _selectedPort;
 
   @override
   set port(port) {
@@ -117,8 +120,7 @@ class WebSerialInterface implements SerialInterface {
       throw UnimplementedError("get portNameList not implemented");
 
   @override
-  Map<String, SerialPort?> get portList =>
-      throw UnimplementedError("get portList not implemented");
+  Map<String, SerialPort?> get portList => _portList;
 
   @override
   void setBaudrate(String newBaudrate) =>
@@ -136,18 +138,13 @@ class WebSerialInterface implements SerialInterface {
   void setStopbits(String newStopbits) =>
       throw UnimplementedError("setStopbits not implemented");
   @override
-  List<String> get baudrateList =>
-      throw UnimplementedError("baudrateList not implemented");
+  List<String> get baudrateList => baudList.keys.toList();
   @override
-  List<String> get dataBitList =>
-      throw UnimplementedError("dataBitList not implemented");
+  List<String> get dataBitList => dataBits.keys.toList();
   @override
-  List<String> get stopBitList =>
-      throw UnimplementedError("stopBitList not implemented");
+  List<String> get stopBitList => stopBits.keys.toList();
   @override
-  List<String> get parityList =>
-      throw UnimplementedError("parityList not implemented");
+  List<String> get parityList => parity.keys.toList();
   @override
-  List<String> get txOnEnterList =>
-      throw UnimplementedError("txOnEnterList not implemented");
+  List<String> get txOnEnterList => txEnterList.keys.toList();
 }

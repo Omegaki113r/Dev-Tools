@@ -44,11 +44,11 @@ class _SerialTabViewState extends State<SerialTabView> {
 
   @override
   Widget build(BuildContext context) {
-    if (kIsWeb) {
-      return const Center(
-        child: Text(lblSerial),
-      );
-    }
+    // if (kIsWeb) {
+    //   return const Center(
+    //     child: Text(lblSerial),
+    //   );
+    // }
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: Column(
@@ -78,6 +78,8 @@ class _SerialTabViewState extends State<SerialTabView> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
+                        // shrinkWrap: true,
+                        // scrollDirection: Axis.horizontal,
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Consumer<SerialStreamerProvider>(
@@ -103,6 +105,33 @@ class _SerialTabViewState extends State<SerialTabView> {
                               },
                             );
                           }),
+                          if (kIsWeb) ...[
+                            const Gap(20),
+                            Consumer<SerialStreamerProvider>(
+                              builder: (context, provider, child) {
+                                return SoftButton(
+                                  "",
+                                  ButtonType.flat,
+                                  width: 150,
+                                  height: 45,
+                                  onPressed: () {
+                                    if (provider.port == null) {
+                                      return;
+                                    }
+                                    if (provider.port!.isOpen) {
+                                      provider.serialPortDisconnect();
+                                    } else {
+                                      provider.serialPortConnect();
+                                    }
+                                  },
+                                  child: const Icon(
+                                    Icons.refresh,
+                                    color: color1,
+                                  ),
+                                );
+                              },
+                            ),
+                          ],
                           const Gap(20),
                           Consumer<SerialStreamerProvider>(
                             builder: (context, provider, child) {
