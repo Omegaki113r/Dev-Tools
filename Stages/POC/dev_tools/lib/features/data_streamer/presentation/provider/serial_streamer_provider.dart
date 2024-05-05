@@ -25,11 +25,11 @@ import 'package:flutter/material.dart';
 class SerialStreamerProvider<T> with ChangeNotifier {
   List<String> serialData = [];
 
-  String? _selectedBaudrate = "115200";
-  String? _selectedDataBits = "8";
-  String? _selectedStopBits = "1";
-  String? _selectedParity = "None";
-  String? _selectedtxOnEnter = "None";
+  String _selectedBaudrate = "115200";
+  String _selectedDataBits = "8";
+  String _selectedStopBits = "1";
+  String _selectedParity = "None";
+  String _selectedtxOnEnter = "None";
 
   int _rxData = 0;
   int _txData = 0;
@@ -94,6 +94,10 @@ class SerialStreamerProvider<T> with ChangeNotifier {
 
   void serialPortConnect() {
     if (_serialService.connect()) {
+      _serialService.setBaudrate(_selectedBaudrate);
+      _serialService.setDatabits(_selectedDataBits);
+      _serialService.setParity(_selectedParity);
+      _serialService.setStopbits(_selectedStopBits);
       _serialService.reader?.listen((data) {
         _serialDataReceivedHandler(data);
       });
@@ -238,6 +242,13 @@ class SerialStreamerProvider<T> with ChangeNotifier {
     }
     _hex = value;
     notifyListeners();
+  }
+
+  bool isOpen() {
+    if (!kIsWeb) {
+      return _serialService.port.isOpen;
+    }
+    return false;
   }
 
   List<String> get baudrateList => _serialService.baudrateList;

@@ -44,26 +44,11 @@ class _SerialTabViewState extends State<SerialTabView> {
 
   @override
   Widget build(BuildContext context) {
-    // if (kIsWeb) {
-    //   return const Center(
-    //     child: Text(lblSerial),
-    //   );
-    // }
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Scrollbar(
-          //   thumbVisibility: true,
-          //   trackVisibility: true,
-          //   thickness: 5,
-          //   controller: scrollController,
-          //   child: SingleChildScrollView(
-          //     controller: scrollController,
-          //     scrollDirection: Axis.horizontal,
-          //     clipBehavior: Clip.none,
-          // child:
           Stack(
             clipBehavior: Clip.none,
             children: [
@@ -90,92 +75,103 @@ class _SerialTabViewState extends State<SerialTabView> {
                               return SoftButton(
                                 provider.port == null
                                     ? lblConnect
-                                    : provider.port!.isOpen
+                                    : provider.isOpen()
                                         ? lblDisconnect
                                         : lblConnect,
                                 ButtonType.flat,
                                 width: 150,
                                 height: 45,
                                 onPressed: () {
-                                  if (provider.port == null) {
-                                    return;
-                                  }
-                                  if (provider.port!.isOpen) {
-                                    provider.serialPortDisconnect();
+                                  if (!kIsWeb) {
+                                    if (provider.port == null) {
+                                      return;
+                                    }
+                                    if (provider.port!.isOpen) {
+                                      provider.serialPortDisconnect();
+                                    } else {
+                                      provider.serialPortConnect();
+                                    }
                                   } else {
-                                    provider.serialPortConnect();
+                                    // provider.serialPortConnect();
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return const AlertDialog(
+                                            title: Text("NOT SUPPORTED YET!"),
+                                            content: Padding(
+                                              padding: EdgeInsets.all(30.0),
+                                              child: Text(
+                                                  "Web API for Serial Communication SUCKS!!!.. I am not happy with the results. Therefore this feature flagged as UNFINISHED!!.. "),
+                                            ),
+                                          );
+                                        });
                                   }
                                 },
                               );
                             }),
-                            if (kIsWeb) ...[
-                              const Gap(20),
+                            // if (kIsWeb) ...[
+                            //   const Gap(20),
+                            //   Consumer<SerialStreamerProvider>(
+                            //     builder: (context, provider, child) {
+                            //       return SoftButton(
+                            //         "",
+                            //         ButtonType.flat,
+                            //         width: 150,
+                            //         height: 45,
+                            //         onPressed: () {
+                            //           provider.serialPortRefresh();
+                            //         },
+                            //         child: const Icon(
+                            //           Icons.refresh,
+                            //           color: color1,
+                            //         ),
+                            //       );
+                            //     },
+                            //   ),
+                            // ],
+                            const Gap(20),
+                            if (!kIsWeb) ...[
                               Consumer<SerialStreamerProvider>(
                                 builder: (context, provider, child) {
-                                  return SoftButton(
-                                    "",
-                                    ButtonType.flat,
+                                  return SoftDropDownButton.flat(
+                                    "No COM Port",
+                                    "Port",
                                     width: 150,
                                     height: 45,
-                                    onPressed: () {
-                                      if (provider.port == null) {
-                                        return;
-                                      }
-                                      if (provider.port!.isOpen) {
-                                        provider.serialPortDisconnect();
-                                      } else {
-                                        provider.serialPortConnect();
-                                      }
+                                    selectedValue: provider.port,
+                                    itemList: provider.portList.entries
+                                        .map(
+                                          (e) => DropdownMenuItem(
+                                            value: e.value,
+                                            // child: Text(e.key),
+                                            child: Row(
+                                              children: [
+                                                const Spacer(),
+                                                Expanded(
+                                                  child: Text(
+                                                    e.key,
+                                                    textAlign: TextAlign.end,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        )
+                                        .toList(),
+                                    onChanged: (value) {
+                                      provider.selectedSerialPortChanged(value);
                                     },
-                                    child: const Icon(
-                                      Icons.refresh,
+                                    labelTextStyle: const TextStyle(
+                                      fontSize: 12.0,
+                                    ),
+                                    itemStyle: const TextStyle(
+                                      fontSize: 12.0,
                                       color: color1,
                                     ),
                                   );
                                 },
                               ),
                             ],
-                            const Gap(20),
-                            Consumer<SerialStreamerProvider>(
-                              builder: (context, provider, child) {
-                                return SoftDropDownButton.flat(
-                                  "No COM Port",
-                                  "Port",
-                                  width: 150,
-                                  height: 45,
-                                  selectedValue: provider.port,
-                                  itemList: provider.portList.entries
-                                      .map(
-                                        (e) => DropdownMenuItem(
-                                          value: e.value,
-                                          // child: Text(e.key),
-                                          child: Row(
-                                            children: [
-                                              const Spacer(),
-                                              Expanded(
-                                                child: Text(
-                                                  e.key,
-                                                  textAlign: TextAlign.end,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      )
-                                      .toList(),
-                                  onChanged: (value) {
-                                    provider.selectedSerialPortChanged(value);
-                                  },
-                                  labelTextStyle: const TextStyle(
-                                    fontSize: 12.0,
-                                  ),
-                                  itemStyle: const TextStyle(
-                                    fontSize: 12.0,
-                                    color: color1,
-                                  ),
-                                );
-                              },
-                            ),
                             const Gap(40),
                             Consumer<SerialStreamerProvider>(
                                 builder: (context, provider, child) {

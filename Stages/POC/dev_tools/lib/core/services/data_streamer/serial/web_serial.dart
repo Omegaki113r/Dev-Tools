@@ -14,18 +14,22 @@
  * ----------	---	---------------------------------------------------------
  */
 
+import 'dart:html';
+
 import 'package:dev_tools/core/services/data_streamer/serial/serial_interface.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:serial/serial.dart';
+import 'package:usb_device/usb_device.dart';
 
 Map<String, int> txEnterList = {
   "None": 0,
-  "CR": 600,
-  "LF": 1200,
-  "CR-LF": 2400,
-  "Space": 4800,
-  "STX/ETX": 9600,
-  "Null": 14400,
+  "CR": 1,
+  "LF": 2,
+  "CR-LF": 3,
+  "Space": 4,
+  "STX/ETX": 5,
+  "Null": 6,
 };
 
 Map<String, int> baudList = {
@@ -67,6 +71,11 @@ class WebSerialInterface implements SerialInterface {
   final Map<String, SerialPort?> _portList = {};
   SerialPort? _selectedPort;
 
+  int _baudrate = 115200;
+  Parity _parity = Parity.none;
+  DataBits _dataBits = DataBits.eight;
+  StopBits _stopBits = StopBits.one;
+
   WebSerialInterface() {
     if (kDebugMode) {
       print("WebSerial Initialized");
@@ -86,7 +95,18 @@ class WebSerialInterface implements SerialInterface {
 
   @override
   bool connect() {
-    throw UnimplementedError("connect not implemented");
+    // SerialPort port = await window.navigator.serial.requestPort();
+    // if (port != null) {
+    //   _selectedPort = port;
+    //   _selectedPort?.open(
+    //       baudRate: _baudrate,
+    //       dataBits: _dataBits,
+    //       stopBits: _stopBits,
+    //       parity: _parity);
+    //   return true;
+    // }
+    // return false;
+    return false;
   }
 
   @override
@@ -113,7 +133,7 @@ class WebSerialInterface implements SerialInterface {
   }
 
   @override
-  Stream? get reader => throw UnimplementedError("get reader not implemented");
+  Stream? get reader => _selectedPort!.readable.reader.read().asStream().cast();
 
   @override
   List<String> get portNameList =>
@@ -123,20 +143,57 @@ class WebSerialInterface implements SerialInterface {
   Map<String, SerialPort?> get portList => _portList;
 
   @override
-  void setBaudrate(String newBaudrate) =>
-      throw UnimplementedError("setBaudrate not implemented");
+  void setBaudrate(String newBaudrate) {
+    _baudrate = baudList[newBaudrate]!;
+    if (_selectedPort != null) {
+      _selectedPort?.close();
+      _selectedPort?.open(
+          baudRate: _baudrate,
+          dataBits: _dataBits,
+          stopBits: _stopBits,
+          parity: _parity);
+    }
+  }
 
   @override
-  void setDatabits(String newBits) =>
-      throw UnimplementedError("setBits not implemented");
+  void setDatabits(String newBits) {
+    _dataBits = dataBits[newBits]!;
+    if (_selectedPort != null) {
+      _selectedPort?.close();
+      _selectedPort?.open(
+          baudRate: _baudrate,
+          dataBits: _dataBits,
+          stopBits: _stopBits,
+          parity: _parity);
+    }
+  }
 
   @override
-  void setParity(String newParity) =>
-      throw UnimplementedError("setParity not implemented");
+  void setParity(String newParity) {
+    _parity = parity[newParity]!;
+    if (_selectedPort != null) {
+      _selectedPort?.close();
+      _selectedPort?.open(
+          baudRate: _baudrate,
+          dataBits: _dataBits,
+          stopBits: _stopBits,
+          parity: _parity);
+    }
+  }
 
   @override
-  void setStopbits(String newStopbits) =>
-      throw UnimplementedError("setStopbits not implemented");
+  void setStopbits(String newStopbits) {
+    _stopBits = stopBits[newStopbits]!;
+    if (_selectedPort != null) {
+      _selectedPort?.close();
+      _selectedPort?.open(
+          baudRate: _baudrate,
+          dataBits: _dataBits,
+          stopBits: _stopBits,
+          parity: _parity);
+    }
+  }
+
   @override
   List<String> get baudrateList => baudList.keys.toList();
   @override
