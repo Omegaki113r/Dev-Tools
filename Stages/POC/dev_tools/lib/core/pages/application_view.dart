@@ -31,6 +31,7 @@ class ApplicationView extends StatelessWidget {
           return Column(
             children: [
               MainView(
+                borderBottom: true,
                 child: child,
               ),
               SidebarView(Axis.horizontal, color6.withOpacity(0.9),
@@ -49,6 +50,7 @@ class ApplicationView extends StatelessWidget {
               ),
             ),
             MainView(
+              borderBottom: false,
               child: child,
             ),
           ],
