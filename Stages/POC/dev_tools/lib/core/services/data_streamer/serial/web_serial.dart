@@ -14,13 +14,9 @@
  * ----------	---	---------------------------------------------------------
  */
 
-import 'dart:html';
-
 import 'package:dev_tools/core/services/data_streamer/serial/serial_interface.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:serial/serial.dart';
-import 'package:usb_device/usb_device.dart';
 
 Map<String, int> txEnterList = {
   "None": 0,

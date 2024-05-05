@@ -14,6 +14,7 @@
  * ----------	---	---------------------------------------------------------
  */
 
+import 'package:dev_tools/core/constants/app_colors.dart';
 import 'package:dev_tools/core/constants/app_strings.dart';
 import 'package:dev_tools/core/widgets/soft_card.dart';
 import 'package:dev_tools/core/widgets/soft_checkbox.dart';
@@ -28,8 +29,21 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
-class TypeConverterView extends StatelessWidget {
+class TypeConverterView extends StatefulWidget {
   const TypeConverterView({super.key});
+
+  @override
+  State<TypeConverterView> createState() => _TypeConverterViewState();
+}
+
+class _TypeConverterViewState extends State<TypeConverterView> {
+  final List<Widget> items = [
+    const DecimalBitwise(),
+    const BinaryBitwise(),
+    const OctalBitwise(),
+    const HexBitwise(),
+    const ASCIIBitwise(),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -44,37 +58,192 @@ class TypeConverterView extends StatelessWidget {
         padding: const EdgeInsets.all(20.0),
         child: Stack(
           children: [
-            ListView(
-              clipBehavior: Clip.none,
+            Column(
               children: [
-                const Gap(140),
-                if (context
-                    .watch<BitwiseCalculatorProvider>()
-                    .isDecimalVisible) ...[
-                  const DecimalBitwise(),
-                  const SoftDivider(),
-                ],
-                if (context
-                    .watch<BitwiseCalculatorProvider>()
-                    .isBinaryVisible) ...[
-                  const BinaryBitwise(),
-                  const SoftDivider(),
-                ],
-                if (context
-                    .watch<BitwiseCalculatorProvider>()
-                    .isOctalVisible) ...[
-                  const OctalBitwise(),
-                  const SoftDivider(),
-                ],
-                if (context
-                    .watch<BitwiseCalculatorProvider>()
-                    .isHexVisible) ...[
-                  const HexBitwise(),
-                  const SoftDivider(),
-                ],
-                if (context
-                    .watch<BitwiseCalculatorProvider>()
-                    .isAsciiVisible) ...[const ASCIIBitwise()],
+                const Gap(
+                  140,
+                ),
+                Expanded(
+                  child: ReorderableListView(
+                    buildDefaultDragHandles: false,
+                    onReorder: (oldIndex, newIndex) {
+                      setState(() {
+                        if (oldIndex < newIndex) {
+                          newIndex -= 1;
+                        }
+                        final Widget item = items.removeAt(oldIndex);
+                        items.insert(newIndex, item);
+                      });
+                    },
+                    clipBehavior: Clip.none,
+                    children: [
+                      for (final item in items)
+                        if (item.runtimeType == DecimalBitwise &&
+                            context
+                                .watch<BitwiseCalculatorProvider>()
+                                .isDecimalVisible) ...[
+                          Stack(
+                            key: UniqueKey(),
+                            children: [
+                              item,
+                              ReorderableDelayedDragStartListener(
+                                key: UniqueKey(),
+                                index: items.indexOf(item),
+                                child: const Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Icon(
+                                    Icons.highlight_alt_outlined,
+                                    color: color1,
+                                    size: 15,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
+                        ] else if (item.runtimeType == BinaryBitwise &&
+                            context
+                                .watch<BitwiseCalculatorProvider>()
+                                .isBinaryVisible) ...[
+                          Stack(
+                            key: UniqueKey(),
+                            children: [
+                              item,
+                              ReorderableDelayedDragStartListener(
+                                key: UniqueKey(),
+                                index: items.indexOf(item),
+                                child: const Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Icon(
+                                    Icons.highlight_alt_outlined,
+                                    color: color1,
+                                    size: 15,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
+                        ] else if (item.runtimeType == OctalBitwise &&
+                            context
+                                .watch<BitwiseCalculatorProvider>()
+                                .isOctalVisible) ...[
+                          Stack(
+                            key: UniqueKey(),
+                            children: [
+                              item,
+                              ReorderableDelayedDragStartListener(
+                                key: UniqueKey(),
+                                index: items.indexOf(item),
+                                child: const Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Icon(
+                                    Icons.highlight_alt_outlined,
+                                    color: color1,
+                                    size: 15,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
+                        ] else if (item.runtimeType == HexBitwise &&
+                            context
+                                .watch<BitwiseCalculatorProvider>()
+                                .isHexVisible) ...[
+                          Stack(
+                            key: UniqueKey(),
+                            children: [
+                              item,
+                              ReorderableDelayedDragStartListener(
+                                key: UniqueKey(),
+                                index: items.indexOf(item),
+                                child: const Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Icon(
+                                    Icons.highlight_alt_outlined,
+                                    color: color1,
+                                    size: 15,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
+                        ] else if (item.runtimeType == ASCIIBitwise &&
+                            context
+                                .watch<BitwiseCalculatorProvider>()
+                                .isAsciiVisible) ...[
+                          Stack(
+                            key: UniqueKey(),
+                            children: [
+                              item,
+                              ReorderableDelayedDragStartListener(
+                                key: UniqueKey(),
+                                index: items.indexOf(item),
+                                child: const Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Icon(
+                                    Icons.highlight_alt_outlined,
+                                    color: color1,
+                                    size: 15,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
+                    ],
+                    // children: [
+                    //   if (context
+                    //       .watch<BitwiseCalculatorProvider>()
+                    //       .isDecimalVisible) ...[
+                    //     DecimalBitwise(
+                    //       key: UniqueKey(),
+                    //     ),
+                    //     SoftDivider(
+                    //       key: UniqueKey(),
+                    //     ),
+                    //   ],
+                    //   if (context
+                    //       .watch<BitwiseCalculatorProvider>()
+                    //       .isBinaryVisible) ...[
+                    //     BinaryBitwise(
+                    //       key: UniqueKey(),
+                    //     ),
+                    //     SoftDivider(
+                    //       key: UniqueKey(),
+                    //     ),
+                    //   ],
+                    //   if (context
+                    //       .watch<BitwiseCalculatorProvider>()
+                    //       .isOctalVisible) ...[
+                    //     OctalBitwise(
+                    //       key: UniqueKey(),
+                    //     ),
+                    //     SoftDivider(
+                    //       key: UniqueKey(),
+                    //     ),
+                    //   ],
+                    //   if (context
+                    //       .watch<BitwiseCalculatorProvider>()
+                    //       .isHexVisible) ...[
+                    //     HexBitwise(
+                    //       key: UniqueKey(),
+                    //     ),
+                    //     SoftDivider(
+                    //       key: UniqueKey(),
+                    //     ),
+                    //   ],
+                    //   if (context
+                    //       .watch<BitwiseCalculatorProvider>()
+                    //       .isAsciiVisible) ...[
+                    //     ASCIIBitwise(
+                    //       key: UniqueKey(),
+                    //     ),
+                    //     SoftDivider(
+                    //       key: UniqueKey(),
+                    //     ),
+                    //   ],
+                    // ],
+                  ),
+                ),
               ],
             ),
             SoftCard(

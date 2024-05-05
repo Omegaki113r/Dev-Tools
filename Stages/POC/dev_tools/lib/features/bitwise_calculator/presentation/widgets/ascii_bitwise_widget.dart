@@ -4,7 +4,7 @@
  * File Created: Sunday, 10th March 2024 8:17:57 pm
  * Author: Omegaki113r (omegaki113r@gmail.com)
  * -----
- * Last Modified: Friday, 19th April 2024 1:37:58 am
+ * Last Modified: Sunday, 5th May 2024 11:47:04 am
  * Modified By: Omegaki113r (omegaki113r@gmail.com)
  * -----
  * Copyright 2024 - 2024 0m3g4ki113r, Xtronic
@@ -28,17 +28,21 @@ class ASCIIBitwise extends StatelessWidget {
   Widget build(BuildContext context) {
     return SoftCard(
       cornerRadius: 20,
-      child: Padding(
-        padding: const EdgeInsets.all(30),
-        child: SoftTextField(
-          label: lblAscii,
-          controller: context.read<BitwiseCalculatorProvider>().asciiController,
-          width: 200,
-          onChanged: (value) {
-            context
-                .read<BitwiseCalculatorProvider>()
-                .changeText(ChangedType.ascii, value);
-          },
+      child: SizedBox(
+        width: double.infinity,
+        child: Padding(
+          padding: const EdgeInsets.all(30),
+          child: SoftTextField(
+            label: lblAscii,
+            controller:
+                context.read<BitwiseCalculatorProvider>().asciiController,
+            width: 200,
+            onChanged: (value) {
+              context
+                  .read<BitwiseCalculatorProvider>()
+                  .changeText(ChangedType.ascii, value);
+            },
+          ),
         ),
       ),
     );
