@@ -44,37 +44,43 @@ class TypeConverterView extends StatelessWidget {
         padding: const EdgeInsets.all(20.0),
         child: Stack(
           children: [
-            ListView(
-              clipBehavior: Clip.none,
+            Column(
               children: [
                 const Gap(140),
-                if (context
-                    .watch<BitwiseCalculatorProvider>()
-                    .isDecimalVisible) ...[
-                  const DecimalBitwise(),
-                  const SoftDivider(),
-                ],
-                if (context
-                    .watch<BitwiseCalculatorProvider>()
-                    .isBinaryVisible) ...[
-                  const BinaryBitwise(),
-                  const SoftDivider(),
-                ],
-                if (context
-                    .watch<BitwiseCalculatorProvider>()
-                    .isOctalVisible) ...[
-                  const OctalBitwise(),
-                  const SoftDivider(),
-                ],
-                if (context
-                    .watch<BitwiseCalculatorProvider>()
-                    .isHexVisible) ...[
-                  const HexBitwise(),
-                  const SoftDivider(),
-                ],
-                if (context
-                    .watch<BitwiseCalculatorProvider>()
-                    .isAsciiVisible) ...[const ASCIIBitwise()],
+                Expanded(
+                  child: ListView(
+                    clipBehavior: Clip.none,
+                    children: [
+                      if (context
+                          .watch<BitwiseCalculatorProvider>()
+                          .isDecimalVisible) ...[
+                        const DecimalBitwise(),
+                        const SoftDivider(),
+                      ],
+                      if (context
+                          .watch<BitwiseCalculatorProvider>()
+                          .isBinaryVisible) ...[
+                        const BinaryBitwise(),
+                        const SoftDivider(),
+                      ],
+                      if (context
+                          .watch<BitwiseCalculatorProvider>()
+                          .isOctalVisible) ...[
+                        const OctalBitwise(),
+                        const SoftDivider(),
+                      ],
+                      if (context
+                          .watch<BitwiseCalculatorProvider>()
+                          .isHexVisible) ...[
+                        const HexBitwise(),
+                        const SoftDivider(),
+                      ],
+                      if (context
+                          .watch<BitwiseCalculatorProvider>()
+                          .isAsciiVisible) ...[const ASCIIBitwise()],
+                    ],
+                  ),
+                ),
               ],
             ),
             SoftCard(
