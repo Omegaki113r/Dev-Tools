@@ -112,11 +112,11 @@ class _SidebarState extends State<SidebarView> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Text(
-                                "Developed By: 0m3g4ki113r",
+                                developerPrefix + developer,
                               ),
                               Gap(10),
                               Text(
-                                "Version: 0.0.1-alpha",
+                                versionPrefix + version,
                               ),
                             ],
                           ),
@@ -187,23 +187,23 @@ class _SidebarState extends State<SidebarView> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Text(
-                          "Developed By:",
+                          developerPrefix,
                         ),
                         SizedBox(
                           width: double.infinity,
                           child: Text(
-                            "0m3g4ki113r",
+                            developer,
                             textAlign: TextAlign.center,
                           ),
                         ),
                         Gap(10),
                         Text(
-                          "Version:",
+                          versionPrefix,
                         ),
                         SizedBox(
                           width: double.infinity,
                           child: Text(
-                            "0.0.1-alpha",
+                            version,
                             textAlign: TextAlign.center,
                           ),
                         ),
