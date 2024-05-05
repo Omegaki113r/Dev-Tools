@@ -69,6 +69,7 @@ dependencies:
   audioplayers:
   # added for saving configs like last used converter types
   shared_preferences: ^2.2.3
+  usb_device:
 
 dev_dependencies:
   flutter_test:
