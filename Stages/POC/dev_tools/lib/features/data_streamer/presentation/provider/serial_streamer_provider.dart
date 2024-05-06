@@ -237,7 +237,7 @@ class SerialStreamerProvider<T> with ChangeNotifier {
 
   bool get txAutoScroll => _txAutoScroll;
   set txAutoScroll(bool value) {
-    txAutoScroll = value;
+    _txAutoScroll = value;
     notifyListeners();
   }
 
@@ -285,7 +285,7 @@ class SerialStreamerProvider<T> with ChangeNotifier {
 
   bool get rxAutoScroll => _rxAutoScroll;
   set rxAutoScroll(bool value) {
-    rxAutoScroll = value;
+    _rxAutoScroll = value;
     notifyListeners();
   }
 
