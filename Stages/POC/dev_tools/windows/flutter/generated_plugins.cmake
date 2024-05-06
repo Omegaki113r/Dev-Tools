@@ -3,7 +3,9 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+  audioplayers_windows
   flutter_libserialport
+  local_notifier
   realm
   screen_retriever
   window_manager

@@ -1,3 +1,13 @@
 {
-    "cmake.sourceDirectory": "E:/codebases/xtronic/Dev-Tools/Stages/POC/dev_tools/linux"
+    "cmake.sourceDirectory": "E:/codebases/xtronic/Dev-Tools/Stages/POC/dev_tools/linux",
+    "psi-header.variables": [
+        [
+            "projectname",
+            "Xtronic Dev Tools"
+        ],
+        [
+            "projectCreationYear",
+            "2024"
+        ]
+    ],
 }
