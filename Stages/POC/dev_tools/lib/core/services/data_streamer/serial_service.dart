@@ -15,6 +15,7 @@
  */
 
 import 'package:dev_tools/core/services/data_streamer/serial/serial_interface.dart';
+import 'package:flutter/foundation.dart';
 
 class SerialService {
   final SerialInterface _serialInterface = SerialInterface();
@@ -65,5 +66,6 @@ class SerialService {
   List<String> get dataBitList => _serialInterface.dataBitList;
   List<String> get stopBitList => _serialInterface.stopBitList;
   List<String> get parityList => _serialInterface.parityList;
-  List<String> get txOnEnterList => _serialInterface.txOnEnterList;
+
+  void write(Uint8List bytesToWrite) => _serialInterface.write(bytesToWrite);
 }

@@ -172,6 +172,9 @@ class DesktopSerialInterface implements SerialInterface {
   Map<String, SerialPort?> get portList => _portList;
 
   @override
+  write(Uint8List bytesToWrite) => _selectedPort?.write(bytesToWrite);
+
+  @override
   void setBaudrate(String newBaudrate) {
     if (_selectedPort != null) {
       SerialPortConfig config = _selectedPort!.config;

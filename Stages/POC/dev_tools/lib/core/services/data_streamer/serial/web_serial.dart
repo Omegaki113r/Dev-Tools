@@ -136,6 +136,10 @@ class WebSerialInterface implements SerialInterface {
   Stream? get reader => _selectedPort!.readable.reader.read().asStream().cast();
 
   @override
+  write(Uint8List bytesToWrite) =>
+      throw UnimplementedError("write not implemented");
+
+  @override
   List<String> get portNameList =>
       throw UnimplementedError("get portNameList not implemented");
 
