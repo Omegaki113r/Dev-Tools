@@ -3,7 +3,10 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+  audioplayers_linux
   flutter_libserialport
+  local_notifier
+  realm
   screen_retriever
   window_manager
 )

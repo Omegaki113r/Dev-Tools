@@ -1,75 +1,75 @@
-import 'dart:io';
-import 'dart:math';
+/* 
+ * Project: Xtronic Dev Tools
+ * File Name: main.dart
+ * File Created: Tuesday, 26th December 2023 2:12:03 pm
+ * Author: Omegaki113r (omegaki113r@gmail.com)
+ * -----
+ * Last Modified: Wednesday, 24th April 2024 4:25:09 pm
+ * Modified By: Omegaki113r (omegaki113r@gmail.com)
+ * -----
+ * Copyright 2024 - 2024 0m3g4ki113r, Xtronic
+ * -----
+ * HISTORY:
+ * Date      	By	Comments
+ * ----------	---	---------------------------------------------------------
+ */
 
-import 'package:dev_tools/const/app_strings.dart';
-import 'package:dev_tools/providers/data_streamer_provider.dart';
-import 'package:dev_tools/utils/app_route.dart';
+import 'package:dev_tools/core/constants/app_strings.dart';
+import 'package:dev_tools/core/provider/app_provider.dart';
+import 'package:dev_tools/config/routes/app_route.dart';
+import 'package:dev_tools/features/bitwise_calculator/domain/usecases/bitwise_convert_usecase.dart';
+import 'package:dev_tools/features/bitwise_calculator/domain/usecases/bitwise_evaluate_usecase.dart';
+import 'package:dev_tools/features/data_streamer/presentation/provider/streamer_provider.dart';
+import 'package:dev_tools/service_locator.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
 import 'package:provider/provider.dart';
 import 'package:window_manager/window_manager.dart';
+import 'package:dev_tools/config/themes/app_themes.dart';
+import 'package:dev_tools/features/bitwise_calculator/presentation/provider/bitwise_calculator_provider.dart';
 
-import 'package:dev_tools/const/app_themes.dart';
-import 'package:dev_tools/providers/app_provider.dart';
-import 'package:dev_tools/providers/type_converter_provider.dart';
-
-Random random = Random();
 void main() async {
-
-  if (kIsWeb) {
-  } else if (Platform.isWindows || Platform.isMacOS || Platform.isLinux) {
-    WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
+  await initializeServices();
+  if (!kIsWeb) {
     await windowManager.ensureInitialized();
-
     WindowOptions windowOptions = const WindowOptions(
-      size: Size(1280, 720),
-      minimumSize: Size(1280, 720),
-      // titleBarStyle: TitleBarStyle.hidden,
-      title: APP_NAME,
+      size: Size(1380, 720),
+      minimumSize: Size(1380, 720),
+      title: appName,
       backgroundColor: Colors.transparent,
-      // center: true,
     );
     windowManager.waitUntilReadyToShow(windowOptions, () async {
       await windowManager.show();
-      // await windowManager.setIcon("xtronic_home_logo.jpg");
-      // await windowManager.setResizable(false);
-      // await windowManager.setAsFrameless();
-      // await windowManager.maximize();
-      await windowManager.focus();
     });
   }
-  runApp(const ProviderWidget());
+  runApp(const App());
 }
 
-class ProviderWidget extends StatelessWidget {
-  const ProviderWidget({super.key});
+class App extends StatelessWidget {
+  const App({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<AppProvider>(create: (context) => AppProvider()),
-        ChangeNotifierProvider<TypeConverterProvider>(
-            create: (context) => TypeConverterProvider()),
-        ChangeNotifierProvider<DataStreamerProvider>(
-            create: (context) => DataStreamerProvider())
+        ChangeNotifierProvider<AppProvider>(
+          create: (context) => AppProvider(),
+        ),
+        ChangeNotifierProvider<BitwiseCalculatorProvider>(
+          create: (context) =>
+              BitwiseCalculatorProvider(BitwiseConvert(), BitwiseEvaluate()),
+        ),
+        ChangeNotifierProvider<StreamerProvider>(
+          create: (context) => StreamerProvider(),
+        )
       ],
-      child: const AppWidget(),
-    );
-  }
-}
-
-class AppWidget extends StatelessWidget {
-  const AppWidget({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp.router(
-      routerConfig: AppRoute.router,
-      themeMode: ThemeMode.system,
-      theme: lightTheme,
-      darkTheme: darkTheme,
+      child: MaterialApp.router(
+        routerConfig: AppRoute.router,
+        themeMode: ThemeMode.system,
+        theme: lightTheme,
+        darkTheme: darkTheme,
+      ),
     );
   }
 }
