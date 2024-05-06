@@ -186,38 +186,34 @@ class DesktopSerialInterface implements SerialInterface {
 
   @override
   void setBaudrate(String newBaudrate) {
-    if (_selectedPort != null) {
-      SerialPortConfig config = _selectedPort!.config;
-      config.baudRate = baudList[newBaudrate]!;
-      _selectedPort!.config = config;
-    }
+    if (_selectedPort == null || !_selectedPort!.isOpen) return;
+    SerialPortConfig config = _selectedPort!.config;
+    config.baudRate = baudList[newBaudrate]!;
+    _selectedPort!.config = config;
   }
 
   @override
   void setStopbits(String newStopbits) {
-    if (_selectedPort != null) {
-      SerialPortConfig config = _selectedPort!.config;
-      config.stopBits = stopBits[newStopbits]!;
-      _selectedPort!.config = config;
-    }
+    if (_selectedPort == null || !_selectedPort!.isOpen) return;
+    SerialPortConfig config = _selectedPort!.config;
+    config.stopBits = stopBits[newStopbits]!;
+    _selectedPort!.config = config;
   }
 
   @override
   void setDatabits(String newBits) {
-    if (_selectedPort != null) {
-      SerialPortConfig config = _selectedPort!.config;
-      config.bits = dataBits[newBits]!;
-      _selectedPort!.config = config;
-    }
+    if (_selectedPort == null || !_selectedPort!.isOpen) return;
+    SerialPortConfig config = _selectedPort!.config;
+    config.bits = dataBits[newBits]!;
+    _selectedPort!.config = config;
   }
 
   @override
   void setParity(String newParity) {
-    if (_selectedPort != null) {
-      SerialPortConfig config = _selectedPort!.config;
-      config.parity = parity[newParity]!;
-      _selectedPort!.config = config;
-    }
+    if (_selectedPort == null || !_selectedPort!.isOpen) return;
+    SerialPortConfig config = _selectedPort!.config;
+    config.parity = parity[newParity]!;
+    _selectedPort!.config = config;
   }
 
   @override
