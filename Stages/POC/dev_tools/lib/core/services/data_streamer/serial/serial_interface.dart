@@ -23,7 +23,7 @@ abstract class SerialInterface {
   factory SerialInterface() => getSerialInterface();
   void dispose();
   bool fetchPortList();
-  bool connect();
+  bool connect(String selectedBaudrate, String selectedDataBits, String selectedParity, String selectedStopBits, bool ctsFlowControl);
   bool disconnect();
   void setBaudrate(String newBaudrate);
   void setDatabits(String newDatabits);

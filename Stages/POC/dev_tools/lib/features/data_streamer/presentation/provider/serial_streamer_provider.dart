@@ -121,11 +121,8 @@ class SerialStreamerProvider<T> with ChangeNotifier {
   }
 
   void serialPortConnect() {
-    if (_serialService.connect()) {
-      _serialService.setBaudrate(_selectedBaudrate);
-      _serialService.setDatabits(_selectedDataBits);
-      _serialService.setParity(_selectedParity);
-      _serialService.setStopbits(_selectedStopBits);
+    if (_serialService.connect(_selectedBaudrate, _selectedDataBits,
+        _selectedParity, _selectedStopBits, _ctsFlowControl)) {
       _serialService.reader?.listen((data) {
         _serialDataReceivedHandler(data);
       });

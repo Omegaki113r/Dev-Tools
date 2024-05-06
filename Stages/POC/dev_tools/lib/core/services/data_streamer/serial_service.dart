@@ -38,8 +38,10 @@ class SerialService {
     return _serialInterface.fetchPortList();
   }
 
-  bool connect() {
-    return _serialInterface.connect();
+  bool connect(String selectedBaudrate, String selectedDataBits,
+      String selectedParity, String selectedStopBits, bool ctsFlowControl) {
+    return _serialInterface.connect(selectedBaudrate, selectedDataBits,
+        selectedParity, selectedStopBits, ctsFlowControl);
   }
 
   bool disconnect() {

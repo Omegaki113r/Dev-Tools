@@ -96,7 +96,8 @@ class DesktopSerialInterface implements SerialInterface {
   }
 
   @override
-  bool connect() {
+  bool connect(String selectedBaudrate, String selectedDataBits,
+      String selectedParity, String selectedStopBits, bool ctsFlowControl) {
     bool openState = false;
     if (_selectedPort != null && !_selectedPort!.isOpen) {
       openState = _selectedPort!.openReadWrite();
@@ -104,11 +105,15 @@ class DesktopSerialInterface implements SerialInterface {
         print("Open State: $openState");
       }
       if (openState) {
-        SerialPortConfig config = _selectedPort!.config;
-        config.baudRate = 115200;
-        config.bits = 8;
-        config.parity = 0;
-        config.stopBits = 1;
+        SerialPortConfig config = SerialPortConfig();
+        // SerialPortConfig config = _selectedPort!.config;
+        config.baudRate = baudList[selectedBaudrate]!;
+        config.bits = dataBits[selectedDataBits]!;
+        config.parity = parity[selectedParity]!;
+        config.stopBits = stopBits[selectedStopBits]!;
+        config.setFlowControl(ctsFlowControl
+            ? SerialPortFlowControl.rtsCts
+            : SerialPortFlowControl.none);
         _selectedPort!.config = config;
         // try {
         if (_serialPortReader != null) {

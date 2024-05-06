@@ -84,7 +84,8 @@ class WebSerialInterface implements SerialInterface {
   }
 
   @override
-  bool connect() {
+  bool connect(String selectedBaudrate, String selectedDataBits,
+      String selectedParity, String selectedStopBits, bool ctsFlowControl) {
     // SerialPort port = await window.navigator.serial.requestPort();
     // if (port != null) {
     //   _selectedPort = port;
