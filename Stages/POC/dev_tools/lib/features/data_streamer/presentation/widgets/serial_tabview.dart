@@ -429,9 +429,9 @@ class _SerialTabViewState extends State<SerialTabView> {
                                             top: 8.0, right: 20, bottom: 5),
                                         child: SoftCheckbox(
                                           lblAscii,
-                                          onChanged: (checked) =>
-                                              provider.ascii = checked ?? true,
-                                          value: provider.ascii,
+                                          onChanged: (checked) => provider
+                                              .txAscii = checked ?? true,
+                                          value: provider.txAscii,
                                           labelStyle:
                                               const TextStyle(fontSize: 12.0),
                                         ),
@@ -442,8 +442,8 @@ class _SerialTabViewState extends State<SerialTabView> {
                                         child: SoftCheckbox(
                                           lblHex,
                                           onChanged: (checked) =>
-                                              provider.hex = checked ?? false,
-                                          value: provider.hex,
+                                              provider.txHex = checked ?? false,
+                                          value: provider.txHex,
                                           labelStyle:
                                               const TextStyle(fontSize: 12.0),
                                         ),
@@ -454,8 +454,8 @@ class _SerialTabViewState extends State<SerialTabView> {
                                         child: SoftCheckbox(
                                           lblDecimal,
                                           onChanged: (checked) => provider
-                                              .decimal = checked ?? false,
-                                          value: provider.decimal,
+                                              .txDecimal = checked ?? false,
+                                          value: provider.txDecimal,
                                           labelStyle:
                                               const TextStyle(fontSize: 12.0),
                                         ),
@@ -466,8 +466,8 @@ class _SerialTabViewState extends State<SerialTabView> {
                                         child: SoftCheckbox(
                                           lblBinary,
                                           onChanged: (checked) => provider
-                                              .binary = checked ?? false,
-                                          value: provider.binary,
+                                              .txBinary = checked ?? false,
+                                          value: provider.txBinary,
                                           labelStyle:
                                               const TextStyle(fontSize: 12.0),
                                         ),
@@ -478,8 +478,8 @@ class _SerialTabViewState extends State<SerialTabView> {
                                         child: SoftCheckbox(
                                           lblAutoScroll,
                                           onChanged: (checked) => provider
-                                              .autoScroll = checked ?? false,
-                                          value: provider.autoScroll,
+                                              .txAutoScroll = checked ?? false,
+                                          value: provider.txAutoScroll,
                                           labelStyle:
                                               const TextStyle(fontSize: 12.0),
                                         ),
@@ -582,11 +582,11 @@ class _SerialTabViewState extends State<SerialTabView> {
                                           provider.txScrollController,
                                       gridController: provider.txController,
                                       dataList: provider.txDataList,
-                                      ascii: provider.ascii,
-                                      binary: provider.binary,
-                                      hex: provider.hex,
-                                      decimal: provider.decimal,
-                                      autoScroll: false,
+                                      ascii: provider.txAscii,
+                                      binary: provider.txBinary,
+                                      hex: provider.txHex,
+                                      decimal: provider.txDecimal,
+                                      autoScroll: provider.txAutoScroll,
                                     );
                                   }),
                                 ),
@@ -635,9 +635,9 @@ class _SerialTabViewState extends State<SerialTabView> {
                                             top: 8.0, right: 20, bottom: 5),
                                         child: SoftCheckbox(
                                           lblAscii,
-                                          onChanged: (checked) =>
-                                              provider.ascii = checked ?? true,
-                                          value: provider.ascii,
+                                          onChanged: (checked) => provider
+                                              .rxAscii = checked ?? true,
+                                          value: provider.rxAscii,
                                           labelStyle:
                                               const TextStyle(fontSize: 12.0),
                                         ),
@@ -648,8 +648,8 @@ class _SerialTabViewState extends State<SerialTabView> {
                                         child: SoftCheckbox(
                                           lblHex,
                                           onChanged: (checked) =>
-                                              provider.hex = checked ?? false,
-                                          value: provider.hex,
+                                              provider.rxHex = checked ?? false,
+                                          value: provider.rxHex,
                                           labelStyle:
                                               const TextStyle(fontSize: 12.0),
                                         ),
@@ -660,8 +660,8 @@ class _SerialTabViewState extends State<SerialTabView> {
                                         child: SoftCheckbox(
                                           lblDecimal,
                                           onChanged: (checked) => provider
-                                              .decimal = checked ?? false,
-                                          value: provider.decimal,
+                                              .rxDecimal = checked ?? false,
+                                          value: provider.rxDecimal,
                                           labelStyle:
                                               const TextStyle(fontSize: 12.0),
                                         ),
@@ -672,8 +672,8 @@ class _SerialTabViewState extends State<SerialTabView> {
                                         child: SoftCheckbox(
                                           lblBinary,
                                           onChanged: (checked) => provider
-                                              .binary = checked ?? false,
-                                          value: provider.binary,
+                                              .rxBinary = checked ?? false,
+                                          value: provider.rxBinary,
                                           labelStyle:
                                               const TextStyle(fontSize: 12.0),
                                         ),
@@ -684,8 +684,8 @@ class _SerialTabViewState extends State<SerialTabView> {
                                         child: SoftCheckbox(
                                           lblAutoScroll,
                                           onChanged: (checked) => provider
-                                              .autoScroll = checked ?? false,
-                                          value: provider.autoScroll,
+                                              .rxAutoScroll = checked ?? false,
+                                          value: provider.rxAutoScroll,
                                           labelStyle:
                                               const TextStyle(fontSize: 12.0),
                                         ),
@@ -752,11 +752,11 @@ class _SerialTabViewState extends State<SerialTabView> {
                                           provider.rxScrollController,
                                       gridController: provider.rxController,
                                       dataList: provider.rxDataList,
-                                      ascii: provider.ascii,
-                                      binary: provider.binary,
-                                      hex: provider.hex,
-                                      decimal: provider.decimal,
-                                      autoScroll: false,
+                                      ascii: provider.rxAscii,
+                                      binary: provider.rxBinary,
+                                      hex: provider.rxHex,
+                                      decimal: provider.rxDecimal,
+                                      autoScroll: provider.rxAutoScroll,
                                     );
                                   }),
                                 ),

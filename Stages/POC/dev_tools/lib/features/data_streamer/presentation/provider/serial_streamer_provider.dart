@@ -40,12 +40,18 @@ class SerialStreamerProvider<T> with ChangeNotifier {
   ScrollController txScrollController = ScrollController();
   DragSelectGridViewController txController = DragSelectGridViewController();
 
-  bool _autoScroll = true;
+  bool _txAutoScroll = true;
   bool _ctsFlowControl = false;
-  bool _ascii = true;
-  bool _binary = false;
-  bool _decimal = false;
-  bool _hex = false;
+  bool _txAscii = true;
+  bool _txBinary = false;
+  bool _txDecimal = false;
+  bool _txHex = false;
+
+  bool _rxAutoScroll = true;
+  bool _rxAscii = true;
+  bool _rxBinary = false;
+  bool _rxDecimal = false;
+  bool _rxHex = false;
 
   late Timer _serialSearchTimer;
 
@@ -194,10 +200,9 @@ class SerialStreamerProvider<T> with ChangeNotifier {
   String? get selectedParity => _selectedParity;
   String? get selectedtxOnEnter => _selectedtxOnEnter;
 
-  bool get autoScroll => _autoScroll;
-
-  set autoScroll(bool value) {
-    _autoScroll = value;
+  bool get txAutoScroll => _txAutoScroll;
+  set txAutoScroll(bool value) {
+    txAutoScroll = value;
     notifyListeners();
   }
 
@@ -207,40 +212,81 @@ class SerialStreamerProvider<T> with ChangeNotifier {
     notifyListeners();
   }
 
-  bool get ascii => _ascii;
-  set ascii(bool value) {
-    if (!_binary && !_decimal && !_hex && !value) {
+  bool get txAscii => _txAscii;
+  set txAscii(bool value) {
+    if (!_txBinary && !_txDecimal && !_txHex && !value) {
       return;
     }
-    _ascii = value;
+    _txAscii = value;
     notifyListeners();
   }
 
-  bool get binary => _binary;
-  set binary(bool value) {
-    if (!_ascii && !_decimal && !_hex && !value) {
+  bool get txBinary => _txBinary;
+  set txBinary(bool value) {
+    if (!_txAscii && !_txDecimal && !_txHex && !value) {
       return;
     }
-    _binary = value;
+    _txBinary = value;
     notifyListeners();
   }
 
-  bool get decimal => _decimal;
-
-  set decimal(bool value) {
-    if (!_binary && !_ascii && !_hex && !value) {
+  bool get txDecimal => _txDecimal;
+  set txDecimal(bool value) {
+    if (!_txBinary && !_txAscii && !_txHex && !value) {
       return;
     }
-    _decimal = value;
+    _txDecimal = value;
     notifyListeners();
   }
 
-  bool get hex => _hex;
-  set hex(bool value) {
-    if (!_binary && !_decimal && !_ascii && !value) {
+  bool get txHex => _txHex;
+  set txHex(bool value) {
+    if (!_txBinary && !_txDecimal && !_txAscii && !value) {
       return;
     }
-    _hex = value;
+    _txHex = value;
+    notifyListeners();
+  }
+
+  bool get rxAutoScroll => _rxAutoScroll;
+  set rxAutoScroll(bool value) {
+    rxAutoScroll = value;
+    notifyListeners();
+  }
+
+  bool get rxAscii => _rxAscii;
+  set rxAscii(bool value) {
+    if (!_rxBinary && !_rxDecimal && !_rxHex && !value) {
+      return;
+    }
+    _rxAscii = value;
+    notifyListeners();
+  }
+
+  bool get rxBinary => _rxBinary;
+  set rxBinary(bool value) {
+    if (!_rxAscii && !_rxDecimal && !_rxHex && !value) {
+      return;
+    }
+    _rxBinary = value;
+    notifyListeners();
+  }
+
+  bool get rxDecimal => _rxDecimal;
+  set rxDecimal(bool value) {
+    if (!_rxBinary && !_rxAscii && !_rxHex && !value) {
+      return;
+    }
+    _rxDecimal = value;
+    notifyListeners();
+  }
+
+  bool get rxHex => _rxHex;
+  set rxHex(bool value) {
+    if (!_rxBinary && !_rxDecimal && !_rxAscii && !value) {
+      return;
+    }
+    _rxHex = value;
     notifyListeners();
   }
 
