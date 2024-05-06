@@ -45,7 +45,6 @@ class SerialConvert {
       hex = _hex(element);
       yield StreamDataEntity(ascii, binary, decimal, hex);
     }
-    yield const StreamDataEntity("", "", "", "");
   }
 
   String _ascii(byte) {
