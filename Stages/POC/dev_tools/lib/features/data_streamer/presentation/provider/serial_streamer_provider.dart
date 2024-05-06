@@ -22,6 +22,28 @@ import 'package:drag_select_grid_view/drag_select_grid_view.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+enum TxOnEnter { none, cr, lf, crlf, space, stxetx, nul }
+
+Map<TxOnEnter, List<int>> txEnterList = {
+  TxOnEnter.none: [],
+  TxOnEnter.cr: [13],
+  TxOnEnter.lf: [10],
+  TxOnEnter.crlf: [13, 10],
+  TxOnEnter.space: [32],
+  TxOnEnter.stxetx: [2, 3],
+  TxOnEnter.nul: [0],
+};
+
+Map<TxOnEnter, String> txEnterStringList = {
+  TxOnEnter.none: "None",
+  TxOnEnter.cr: "CR",
+  TxOnEnter.lf: "LF",
+  TxOnEnter.crlf: "CR/LF",
+  TxOnEnter.space: "Space",
+  TxOnEnter.stxetx: "STX/ETX",
+  TxOnEnter.nul: "NULL",
+};
+
 class SerialStreamerProvider<T> with ChangeNotifier {
   List<String> serialData = [];
 
@@ -29,7 +51,7 @@ class SerialStreamerProvider<T> with ChangeNotifier {
   String _selectedDataBits = "8";
   String _selectedStopBits = "1";
   String _selectedParity = "None";
-  String _selectedtxOnEnter = "None";
+  TxOnEnter _selectedtxOnEnter = TxOnEnter.none;
 
   int _rxData = 0;
   int _txData = 0;
@@ -127,6 +149,20 @@ class SerialStreamerProvider<T> with ChangeNotifier {
       txDataList.add(event);
       notifyListeners();
     });
+    List<int> dataToWrite = transmittableString.codeUnits.toList();
+    switch (_selectedtxOnEnter) {
+      case TxOnEnter.none:
+        break;
+      case TxOnEnter.stxetx:
+        List<int> arr = txEnterList[_selectedtxOnEnter]!;
+        dataToWrite.insert(0, arr.first);
+        dataToWrite.add(arr.last);
+        break;
+      default:
+        dataToWrite.addAll(txEnterList[_selectedtxOnEnter]!);
+        break;
+    }
+    _serialService.write(Uint8List.fromList(dataToWrite));
   }
 
   void serialPortDisconnect() {
@@ -166,7 +202,6 @@ class SerialStreamerProvider<T> with ChangeNotifier {
 
   void selectedTXonEnterChanged(value) {
     _selectedtxOnEnter = value;
-    // _serialService.setParity(value);
     notifyListeners();
   }
 
@@ -181,13 +216,13 @@ class SerialStreamerProvider<T> with ChangeNotifier {
   }
 
   void resetRXData() {
-    _rxData = 0;
+    // _rxData = 0;
     rxDataList.clear();
     notifyListeners();
   }
 
   void resetTXData() {
-    _txData = 0;
+    // _txData = 0;
     txDataList.clear();
     notifyListeners();
   }
@@ -198,7 +233,7 @@ class SerialStreamerProvider<T> with ChangeNotifier {
   String? get selectedDataBits => _selectedDataBits;
   String? get selectedStopBits => _selectedStopBits;
   String? get selectedParity => _selectedParity;
-  String? get selectedtxOnEnter => _selectedtxOnEnter;
+  TxOnEnter get selectedtxOnEnter => _selectedtxOnEnter;
 
   bool get txAutoScroll => _txAutoScroll;
   set txAutoScroll(bool value) {
@@ -301,7 +336,7 @@ class SerialStreamerProvider<T> with ChangeNotifier {
   List<String> get dataBitList => _serialService.dataBitList;
   List<String> get stopBitList => _serialService.stopBitList;
   List<String> get parityList => _serialService.parityList;
-  List<String> get txOnEnterList => _serialService.txOnEnterList;
+  List<TxOnEnter> get txOnEnterList => txEnterList.keys.toList();
   int get rxData => _rxData;
   int get txData => _txData;
 }

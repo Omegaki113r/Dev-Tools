@@ -17,6 +17,7 @@
 import 'package:dev_tools/core/services/data_streamer/serial/serial_stub.dart'
     if (dart.library.io) 'package:dev_tools/core/services/data_streamer/serial/desktop_serial.dart'
     if (dart.library.html) 'package:dev_tools/core/services/data_streamer/serial/web_serial.dart';
+import 'package:flutter/foundation.dart';
 
 abstract class SerialInterface {
   factory SerialInterface() => getSerialInterface();

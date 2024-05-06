@@ -22,16 +22,6 @@ import 'package:flutter/material.dart';
 import 'package:serial/serial.dart';
 import 'package:usb_device/usb_device.dart';
 
-Map<String, int> txEnterList = {
-  "None": 0,
-  "CR": 1,
-  "LF": 2,
-  "CR-LF": 3,
-  "Space": 4,
-  "STX/ETX": 5,
-  "Null": 6,
-};
-
 Map<String, int> baudList = {
   "300": 300,
   "600": 600,
@@ -206,6 +196,4 @@ class WebSerialInterface implements SerialInterface {
   List<String> get stopBitList => stopBits.keys.toList();
   @override
   List<String> get parityList => parity.keys.toList();
-  @override
-  List<String> get txOnEnterList => txEnterList.keys.toList();
 }

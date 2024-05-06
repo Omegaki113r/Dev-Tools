@@ -416,6 +416,7 @@ class _SerialTabViewState extends State<SerialTabView> {
                         child: Consumer<SerialStreamerProvider>(
                           builder: (context, provider, child) {
                             return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 SizedBox(
                                   height: 50,
@@ -527,7 +528,7 @@ class _SerialTabViewState extends State<SerialTabView> {
                                                     const Spacer(),
                                                     Expanded(
                                                         child: Text(
-                                                      e,
+                                                      txEnterStringList[e]!,
                                                       textAlign: TextAlign.end,
                                                     )),
                                                   ],
@@ -538,7 +539,8 @@ class _SerialTabViewState extends State<SerialTabView> {
                                         width: 200,
                                         height: 45,
                                         onChanged: (value) {
-                                          // provider.selectedBaudRateChanged(value);
+                                          provider
+                                              .selectedTXonEnterChanged(value);
                                         },
                                         labelTextStyle: const TextStyle(
                                           fontSize: 12.0,
@@ -551,6 +553,7 @@ class _SerialTabViewState extends State<SerialTabView> {
                                     ],
                                   ),
                                 ),
+                                const Gap(10),
                                 SizedBox(
                                   height: 50,
                                   width: 150,
@@ -631,6 +634,7 @@ class _SerialTabViewState extends State<SerialTabView> {
                         child: Consumer<SerialStreamerProvider>(
                           builder: (context, provider, child) {
                             return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 SizedBox(
                                   height: 50,
@@ -730,6 +734,7 @@ class _SerialTabViewState extends State<SerialTabView> {
                                     ],
                                   ),
                                 ),
+                                const Gap(10),
                                 SizedBox(
                                   height: 50,
                                   width: 150,
