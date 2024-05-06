@@ -551,6 +551,15 @@ class _SerialTabViewState extends State<SerialTabView> {
                                     ],
                                   ),
                                 ),
+                                SizedBox(
+                                  height: 50,
+                                  width: 150,
+                                  child: SoftButton(
+                                      "Clear Data", ButtonType.concave,
+                                      onPressed: () {
+                                    provider.resetTXData();
+                                  }),
+                                ),
                                 const Gap(10),
                                 Container(
                                   height: 200,
@@ -720,6 +729,15 @@ class _SerialTabViewState extends State<SerialTabView> {
                                       // }),
                                     ],
                                   ),
+                                ),
+                                SizedBox(
+                                  height: 50,
+                                  width: 150,
+                                  child: SoftButton(
+                                      "Clear Data", ButtonType.concave,
+                                      onPressed: () {
+                                    provider.resetRXData();
+                                  }),
                                 ),
                                 const Gap(10),
                                 Container(
