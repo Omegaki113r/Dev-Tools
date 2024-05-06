@@ -42,4 +42,5 @@ abstract class SerialInterface {
   List<String> get parityList;
 
   write(Uint8List bytesToWrite);
+  ctsFlowControl(bool ctsFlowControl);
 }

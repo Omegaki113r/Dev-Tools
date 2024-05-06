@@ -131,6 +131,10 @@ class WebSerialInterface implements SerialInterface {
       throw UnimplementedError("write not implemented");
 
   @override
+  ctsFlowControl(bool ctsFlowControl) =>
+      throw UnimplementedError("CTS Flow control not implemented");
+
+  @override
   List<String> get portNameList =>
       throw UnimplementedError("get portNameList not implemented");
 

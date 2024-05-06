@@ -241,6 +241,7 @@ class SerialStreamerProvider<T> with ChangeNotifier {
   bool get ctsFlowControl => _ctsFlowControl;
   set ctsFlowControl(value) {
     _ctsFlowControl = value;
+    _serialService.ctsFlowControl(_ctsFlowControl);
     notifyListeners();
   }
 

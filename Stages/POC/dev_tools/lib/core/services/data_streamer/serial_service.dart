@@ -70,4 +70,7 @@ class SerialService {
   List<String> get parityList => _serialInterface.parityList;
 
   void write(Uint8List bytesToWrite) => _serialInterface.write(bytesToWrite);
+
+  void ctsFlowControl(bool ctsFlowControl) =>
+      _serialInterface.ctsFlowControl(ctsFlowControl);
 }

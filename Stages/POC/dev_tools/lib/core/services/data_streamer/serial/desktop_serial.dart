@@ -137,6 +137,21 @@ class DesktopSerialInterface implements SerialInterface {
     return closeState;
   }
 
+  @override
+  ctsFlowControl(bool ctsFlowControl) {
+    if (_selectedPort == null || !_selectedPort!.isOpen) return;
+    SerialPortConfig config = _selectedPort!.config;
+    config.setFlowControl(ctsFlowControl
+        ? SerialPortFlowControl.rtsCts
+        : SerialPortFlowControl.none);
+    // config.cts =
+    //     (ctsFlowControl ? SerialPortCts.flowControl : SerialPortCts.ignore)!;
+    // //NOTE - NO  IDEA why this is needed to make it not hang
+    // config.rts =
+    //     (ctsFlowControl ? SerialPortRts.flowControl : SerialPortRts.off)!;
+    _selectedPort!.config = config;
+  }
+
   void _closeStreams() {
     if (_serialPortReader != null) {
       _serialPortReader?.close();
