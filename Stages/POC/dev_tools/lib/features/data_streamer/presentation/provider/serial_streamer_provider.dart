@@ -107,7 +107,9 @@ class SerialStreamerProvider<T> with ChangeNotifier {
 
   @override
   void dispose() {
+    if (!kIsWeb) {
     _serialSearchTimer.cancel();
+    }
     _serialService.dispose();
     rxController.removeListener(rxListener);
     txController.removeListener(txListener);
