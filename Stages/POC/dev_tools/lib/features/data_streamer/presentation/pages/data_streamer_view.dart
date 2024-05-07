@@ -85,6 +85,7 @@ class _DataStreamerViewState extends State<DataStreamerView> {
           ),
           Expanded(
             child: TabBarView(
+              physics: const NeverScrollableScrollPhysics(),
               children: [
                 ChangeNotifierProvider(
                   create: (context) => SerialStreamerProvider(
