@@ -76,9 +76,11 @@ class BitwiseConvert {
         binaryText += binaryConversion(token.tokenText);
         hexText += hexConversion(token.tokenText).toUpperCase();
         octalText += octalConversion(token.tokenText);
-        print(binaryConversion(token.tokenText));
-        print(octalConversion(token.tokenText));
-        print(hexConversion(token.tokenText));
+        if (kDebugMode) {
+          print(binaryConversion(token.tokenText));
+          print(octalConversion(token.tokenText));
+          print(hexConversion(token.tokenText));
+        }
       } else {
         binaryText += token.tokenText;
         octalText += token.tokenText;
