@@ -216,12 +216,14 @@ class SerialStreamerProvider<T> with ChangeNotifier {
 
   void resetRXData() {
     // _rxData = 0;
+    rxController.clear();
     rxDataList.clear();
     notifyListeners();
   }
 
   void resetTXData() {
     // _txData = 0;
+    txController.clear();
     txDataList.clear();
     notifyListeners();
   }
