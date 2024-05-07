@@ -74,7 +74,9 @@ class WebSerialInterface implements SerialInterface {
 
   @override
   void dispose() {
-    throw UnimplementedError("dispose not implemented");
+    if (_selectedPort != null) {
+      _selectedPort!.close();
+    }
   }
 
   @override
