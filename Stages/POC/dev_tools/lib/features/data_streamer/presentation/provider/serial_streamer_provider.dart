@@ -241,7 +241,9 @@ class SerialStreamerProvider<T> with ChangeNotifier {
   bool get ctsFlowControl => _ctsFlowControl;
   set ctsFlowControl(value) {
     _ctsFlowControl = value;
-    _serialService.ctsFlowControl(_ctsFlowControl);
+    _serialService.disconnect();
+    _serialService.connect(_selectedBaudrate, _selectedDataBits,
+        _selectedParity, _selectedStopBits, _ctsFlowControl);
     notifyListeners();
   }
 

@@ -105,8 +105,7 @@ class DesktopSerialInterface implements SerialInterface {
         print("Open State: $openState");
       }
       if (openState) {
-        SerialPortConfig config = SerialPortConfig();
-        // SerialPortConfig config = _selectedPort!.config;
+        SerialPortConfig config = _selectedPort!.config;
         config.baudRate = baudList[selectedBaudrate]!;
         config.bits = dataBits[selectedDataBits]!;
         config.parity = parity[selectedParity]!;
@@ -141,14 +140,8 @@ class DesktopSerialInterface implements SerialInterface {
   ctsFlowControl(bool ctsFlowControl) {
     if (_selectedPort == null || !_selectedPort!.isOpen) return;
     SerialPortConfig config = _selectedPort!.config;
-    config.setFlowControl(ctsFlowControl
-        ? SerialPortFlowControl.rtsCts
-        : SerialPortFlowControl.none);
-    // config.cts =
-    //     (ctsFlowControl ? SerialPortCts.flowControl : SerialPortCts.ignore)!;
-    // //NOTE - NO  IDEA why this is needed to make it not hang
-    // config.rts =
-    //     (ctsFlowControl ? SerialPortRts.flowControl : SerialPortRts.off)!;
+    config.cts =
+        (ctsFlowControl ? SerialPortCts.flowControl : SerialPortCts.ignore)!;
     _selectedPort!.config = config;
   }
 
