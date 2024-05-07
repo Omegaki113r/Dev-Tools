@@ -119,11 +119,18 @@ class DesktopSerialInterface implements SerialInterface {
           _serialPortReader?.close();
         }
         _serialPortReader = SerialPortReader(_selectedPort!, timeout: 10);
+      } else {
+        disconnect();
       }
-    } else {
-      disconnect();
     }
     return openState;
+  }
+
+  @override
+  bool get isConnected {
+    if (_selectedPort == null) return false;
+    if (_selectedPort!.isOpen) return true;
+    return false;
   }
 
   @override

@@ -44,6 +44,8 @@ class SerialService {
         selectedParity, selectedStopBits, ctsFlowControl);
   }
 
+  bool get isConnected => _serialInterface.isConnected;
+
   bool disconnect() {
     return _serialInterface.disconnect();
   }

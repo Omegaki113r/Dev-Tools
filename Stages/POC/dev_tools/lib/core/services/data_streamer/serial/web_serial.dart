@@ -101,6 +101,10 @@ class WebSerialInterface implements SerialInterface {
   }
 
   @override
+  bool get isConnected =>
+      throw UnimplementedError("isConnected not implemented");
+
+  @override
   bool disconnect() {
     _closeStreams();
     throw UnimplementedError("disconnect not implemented");
