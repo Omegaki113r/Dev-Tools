@@ -72,16 +72,32 @@ class StreamDataView extends StatelessWidget {
               }
               return selected
                   ? StreamDataCell.flat(
-                      ascii: ascii ? dataList[index].ascii : null,
-                      binary: binary ? dataList[index].binary : null,
-                      decimal: decimal ? dataList[index].decimal : null,
-                      hex: hex ? dataList[index].hex : null,
+                      ascii: ascii && dataList.isNotEmpty
+                          ? dataList[index].ascii
+                          : null,
+                      binary: binary && dataList.isNotEmpty
+                          ? dataList[index].binary
+                          : null,
+                      decimal: decimal && dataList.isNotEmpty
+                          ? dataList[index].decimal
+                          : null,
+                      hex: hex && dataList.isNotEmpty
+                          ? dataList[index].hex
+                          : null,
                     )
                   : StreamDataCell(
-                      ascii: ascii ? dataList[index].ascii : null,
-                      binary: binary ? dataList[index].binary : null,
-                      decimal: decimal ? dataList[index].decimal : null,
-                      hex: hex ? dataList[index].hex : null,
+                      ascii: ascii && dataList.isNotEmpty
+                          ? dataList[index].ascii
+                          : null,
+                      binary: binary && dataList.isNotEmpty
+                          ? dataList[index].binary
+                          : null,
+                      decimal: decimal && dataList.isNotEmpty
+                          ? dataList[index].decimal
+                          : null,
+                      hex: hex && dataList.isNotEmpty
+                          ? dataList[index].hex
+                          : null,
                     );
             },
           ),
