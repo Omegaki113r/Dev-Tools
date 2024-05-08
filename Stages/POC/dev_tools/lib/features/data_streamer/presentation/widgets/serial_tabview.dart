@@ -369,6 +369,7 @@ class _SerialTabViewState extends State<SerialTabView> {
               width: double.infinity,
               controller: txController,
               onSubmitted: (value) {
+                if (!context.read<SerialStreamerProvider>().isOpen()) return;
                 context
                     .read<SerialStreamerProvider>()
                     .serialDataTransmitHandler(value);
