@@ -14,6 +14,7 @@
  * ----------	---	---------------------------------------------------------
  */
 
+import 'package:dev_tools/core/constants/app_colors.dart';
 import 'package:dev_tools/core/constants/app_strings.dart';
 import 'package:dev_tools/core/widgets/soft_card.dart';
 import 'package:dev_tools/core/widgets/soft_checkbox.dart';
@@ -103,7 +104,11 @@ class TypeConverterView extends StatelessWidget {
                           .isDecimalVisible,
                       labelStyle: const TextStyle(fontSize: 12.0),
                     ),
-                    const Gap(15),
+                    const VerticalDivider(
+                      color: color1,
+                      indent: 15,
+                      endIndent: 15,
+                    ),
                     SoftCheckbox(
                       lblBinary,
                       onChanged: (checked) => context
@@ -114,7 +119,11 @@ class TypeConverterView extends StatelessWidget {
                           .isBinaryVisible,
                       labelStyle: const TextStyle(fontSize: 12.0),
                     ),
-                    const Gap(15),
+                    const VerticalDivider(
+                      color: color1,
+                      indent: 15,
+                      endIndent: 15,
+                    ),
                     SoftCheckbox(
                       lblOctal,
                       onChanged: (checked) => context
@@ -125,7 +134,11 @@ class TypeConverterView extends StatelessWidget {
                           .isOctalVisible,
                       labelStyle: const TextStyle(fontSize: 12.0),
                     ),
-                    const Gap(15),
+                    const VerticalDivider(
+                      color: color1,
+                      indent: 15,
+                      endIndent: 15,
+                    ),
                     SoftCheckbox(
                       lblHex,
                       onChanged: (checked) => context
@@ -136,7 +149,11 @@ class TypeConverterView extends StatelessWidget {
                           .isHexVisible,
                       labelStyle: const TextStyle(fontSize: 12.0),
                     ),
-                    const Gap(15),
+                    const VerticalDivider(
+                      color: color1,
+                      indent: 15,
+                      endIndent: 15,
+                    ),
                     SoftCheckbox(
                       lblAscii,
                       onChanged: (checked) => context

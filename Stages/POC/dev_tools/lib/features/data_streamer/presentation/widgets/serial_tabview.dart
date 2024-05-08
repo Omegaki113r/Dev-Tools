@@ -109,26 +109,6 @@ class _SerialTabViewState extends State<SerialTabView> {
                                 },
                               );
                             }),
-                            // if (kIsWeb) ...[
-                            //   const Gap(20),
-                            //   Consumer<SerialStreamerProvider>(
-                            //     builder: (context, provider, child) {
-                            //       return SoftButton(
-                            //         "",
-                            //         ButtonType.flat,
-                            //         width: 150,
-                            //         height: 45,
-                            //         onPressed: () {
-                            //           provider.serialPortRefresh();
-                            //         },
-                            //         child: const Icon(
-                            //           Icons.refresh,
-                            //           color: color1,
-                            //         ),
-                            //       );
-                            //     },
-                            //   ),
-                            // ],
                             const Gap(20),
                             if (!kIsWeb) ...[
                               Consumer<SerialStreamerProvider>(
@@ -172,7 +152,11 @@ class _SerialTabViewState extends State<SerialTabView> {
                                 },
                               ),
                             ],
-                            const Gap(40),
+                            const Gap(10),
+                            const VerticalDivider(
+                              color: color1,
+                            ),
+                            const Gap(10),
                             Consumer<SerialStreamerProvider>(
                                 builder: (context, provider, child) {
                               return SoftDropDownButton.flat(
@@ -183,7 +167,6 @@ class _SerialTabViewState extends State<SerialTabView> {
                                     .map(
                                       (e) => DropdownMenuItem(
                                         value: e,
-                                        // child: Text(e),
                                         child: Row(
                                           children: [
                                             const Spacer(),
@@ -226,7 +209,6 @@ class _SerialTabViewState extends State<SerialTabView> {
                                     .map(
                                       (e) => DropdownMenuItem(
                                         value: e,
-                                        // child: Text(e),
                                         child: Row(
                                           children: [
                                             const Spacer(),
@@ -268,7 +250,6 @@ class _SerialTabViewState extends State<SerialTabView> {
                                     .map(
                                       (e) => DropdownMenuItem(
                                         value: e,
-                                        // child: Text(e),
                                         child: Row(
                                           children: [
                                             const Spacer(),
@@ -310,7 +291,6 @@ class _SerialTabViewState extends State<SerialTabView> {
                                     .map(
                                       (e) => DropdownMenuItem(
                                         value: e,
-                                        // child: Text(e),
                                         child: Row(
                                           children: [
                                             const Spacer(),
@@ -423,7 +403,6 @@ class _SerialTabViewState extends State<SerialTabView> {
                                   child: ListView(
                                     scrollDirection: Axis.horizontal,
                                     clipBehavior: Clip.none,
-                                    // crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
                                       Padding(
                                         padding: const EdgeInsets.only(
@@ -437,6 +416,11 @@ class _SerialTabViewState extends State<SerialTabView> {
                                               const TextStyle(fontSize: 12.0),
                                         ),
                                       ),
+                                      const VerticalDivider(
+                                        color: color1,
+                                        indent: 15,
+                                        endIndent: 15,
+                                      ),
                                       Padding(
                                         padding: const EdgeInsets.only(
                                             top: 8.0, right: 20, bottom: 5),
@@ -448,6 +432,11 @@ class _SerialTabViewState extends State<SerialTabView> {
                                           labelStyle:
                                               const TextStyle(fontSize: 12.0),
                                         ),
+                                      ),
+                                      const VerticalDivider(
+                                        color: color1,
+                                        indent: 15,
+                                        endIndent: 15,
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.only(
@@ -461,6 +450,11 @@ class _SerialTabViewState extends State<SerialTabView> {
                                               const TextStyle(fontSize: 12.0),
                                         ),
                                       ),
+                                      const VerticalDivider(
+                                        color: color1,
+                                        indent: 15,
+                                        endIndent: 15,
+                                      ),
                                       Padding(
                                         padding: const EdgeInsets.only(
                                             top: 8.0, right: 20, bottom: 5),
@@ -472,6 +466,11 @@ class _SerialTabViewState extends State<SerialTabView> {
                                           labelStyle:
                                               const TextStyle(fontSize: 12.0),
                                         ),
+                                      ),
+                                      const VerticalDivider(
+                                        color: color1,
+                                        indent: 15,
+                                        endIndent: 15,
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.only(
@@ -485,7 +484,9 @@ class _SerialTabViewState extends State<SerialTabView> {
                                               const TextStyle(fontSize: 12.0),
                                         ),
                                       ),
-                                      const Gap(40),
+                                      const VerticalDivider(
+                                        color: color1,
+                                      ),
                                       SoftText(
                                         "${provider.txData}",
                                         label: "TX",
@@ -508,12 +509,9 @@ class _SerialTabViewState extends State<SerialTabView> {
                                           height: 40, onPressed: () {
                                         provider.resetTXCounter();
                                       }),
-                                      // const Gap(25),
-                                      // SoftButton("Clear Transmitted", ButtonType.emboss,
-                                      //     width: 150, height: 50, onPressed: () {
-                                      //   provider.resetTXData();
-                                      // }),
-                                      const Gap(25),
+                                      const VerticalDivider(
+                                        color: color1,
+                                      ),
                                       SoftDropDownButton.flat(
                                         "",
                                         "Send on Enter",
@@ -641,7 +639,6 @@ class _SerialTabViewState extends State<SerialTabView> {
                                   child: ListView(
                                     scrollDirection: Axis.horizontal,
                                     clipBehavior: Clip.none,
-                                    // crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
                                       Padding(
                                         padding: const EdgeInsets.only(
@@ -655,6 +652,11 @@ class _SerialTabViewState extends State<SerialTabView> {
                                               const TextStyle(fontSize: 12.0),
                                         ),
                                       ),
+                                      const VerticalDivider(
+                                        color: color1,
+                                        indent: 15,
+                                        endIndent: 15,
+                                      ),
                                       Padding(
                                         padding: const EdgeInsets.only(
                                             top: 8.0, right: 20, bottom: 5),
@@ -666,6 +668,11 @@ class _SerialTabViewState extends State<SerialTabView> {
                                           labelStyle:
                                               const TextStyle(fontSize: 12.0),
                                         ),
+                                      ),
+                                      const VerticalDivider(
+                                        color: color1,
+                                        indent: 15,
+                                        endIndent: 15,
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.only(
@@ -679,6 +686,11 @@ class _SerialTabViewState extends State<SerialTabView> {
                                               const TextStyle(fontSize: 12.0),
                                         ),
                                       ),
+                                      const VerticalDivider(
+                                        color: color1,
+                                        indent: 15,
+                                        endIndent: 15,
+                                      ),
                                       Padding(
                                         padding: const EdgeInsets.only(
                                             top: 8.0, right: 20, bottom: 5),
@@ -690,6 +702,11 @@ class _SerialTabViewState extends State<SerialTabView> {
                                           labelStyle:
                                               const TextStyle(fontSize: 12.0),
                                         ),
+                                      ),
+                                      const VerticalDivider(
+                                        color: color1,
+                                        indent: 15,
+                                        endIndent: 15,
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.only(
@@ -703,7 +720,9 @@ class _SerialTabViewState extends State<SerialTabView> {
                                               const TextStyle(fontSize: 12.0),
                                         ),
                                       ),
-                                      const Gap(40),
+                                      const VerticalDivider(
+                                        color: color1,
+                                      ),
                                       SoftText(
                                         "${provider.rxData}",
                                         label: "RX",
@@ -726,11 +745,6 @@ class _SerialTabViewState extends State<SerialTabView> {
                                           height: 40, onPressed: () {
                                         provider.resetRXCounter();
                                       }),
-                                      // const Gap(25),
-                                      // SoftButton("Clear Transmitted", ButtonType.emboss,
-                                      //     width: 150, height: 50, onPressed: () {
-                                      //   provider.resetTXData();
-                                      // }),
                                     ],
                                   ),
                                 ),
