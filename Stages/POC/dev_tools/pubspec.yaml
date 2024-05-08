@@ -30,15 +30,51 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
-
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  drag_select_grid_view:
+  provider:
+  go_router:
+  window_manager:  
+  gap:
+  flutter_inset_box_shadow:
+  #Linux BLE
+  bluez:
+  #MacOS BLE
+  # flutter_blue_plus:
+  #Windows BLE
+  # win_ble:
+  #For peripheral [Windows, MacOS]
+  # flutter_ble_peripheral:
+  flutter_libserialport:
+  serial:
+  # extra_alignments:
+  # flextras:
+  # flutter_animate:
+  # focusable_control_builder:
+  # particle_field:
+  # rnd:
+  # vector_math:
+  # flutter_shaders:
+  # flutter_bluetooth_serial:
+  # desktop_window: ^0.4.0
+  logger:
+  dart_eval:
+  b:
+  realm:
+  get_it:
+  local_notifier: 
+  string_validator:
+  audioplayers:
+  # added for saving configs like last used converter types
+  shared_preferences: ^2.2.3
+  usb_device:
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons:
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -59,8 +95,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
+  assets:
+    - assets/images/xtronic_home_logo.jpg
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -88,3 +124,17 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+flutter_launcher_icons:
+  web:
+    generate: true
+    image_path: "assets/images/xtronic_home_logo.jpg"
+    background_color: "#hexcode"
+    theme_color: "#hexcode"
+  windows:
+    generate: true
+    image_path: "assets/images/xtronic_home_logo.jpg"
+    icon_size: 48 # min:48, max:256, default: 48
+  macos:
+    generate: true
+    image_path: "assets/images/xtronic_home_logo.jpg"
