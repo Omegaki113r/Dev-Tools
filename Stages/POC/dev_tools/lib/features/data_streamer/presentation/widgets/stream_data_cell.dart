@@ -32,138 +32,321 @@ class StreamDataCell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    int enabledCount = (ascii != null ? 1 : 0) +
+        (hex != null ? 1 : 0) +
+        (decimal != null ? 1 : 0) +
+        (binary != null ? 1 : 0);
+
+    List<Color> backgroundColors = getBackgroundColors();
     return isFlat
         ? Container(
-            // padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-            margin: const EdgeInsets.symmetric(horizontal: 10),
             color: Colors.white.withOpacity(0.2),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 if (ascii != null) ...[
-                  Text(
-                    ascii ?? "",
-                    style: const TextStyle(
-                      color: Colors.red,
-                      fontSize: streamCellFontSize,
+                  Container(
+                    color: color2.withOpacity(0.025),
+                    width: double.infinity,
+                    child: Text(
+                      ascii ?? "",
+                      style: TextStyle(
+                        color: color2.withOpacity(0.9),
+                        fontSize: streamCellFontSize,
+                      ),
+                      textAlign: TextAlign.end,
                     ),
-                    textAlign: TextAlign.end,
                   ),
+                  // if (enabledCount > 1) ...[
+                  //   const Divider(
+                  //     height: 1,
+                  //     color: color1,
+                  //   ),
+                  // ],
                 ],
                 if (hex != null) ...[
-                  Text(
-                    hex ?? "",
-                    style: const TextStyle(
-                      color: Colors.amber,
-                      fontSize: streamCellFontSize,
+                  Container(
+                    color: color2.withOpacity(0.05),
+                    width: double.infinity,
+                    child: Text(
+                      hex ?? "",
+                      style: TextStyle(
+                        color: color2.withOpacity(0.9),
+                        fontSize: streamCellFontSize,
+                      ),
+                      textAlign: TextAlign.end,
                     ),
-                    textAlign: TextAlign.end,
                   ),
+                  // if (enabledCount > 1) ...[
+                  //   const Divider(
+                  //     height: 1,
+                  //     color: color1,
+                  //   ),
+                  // ],
                 ],
                 if (decimal != null) ...[
-                  Text(
-                    decimal ?? "",
-                    style: const TextStyle(
-                      color: Colors.blue,
-                      fontSize: streamCellFontSize,
+                  Container(
+                    color: color2.withOpacity(0.1),
+                    width: double.infinity,
+                    child: Text(
+                      decimal ?? "",
+                      style: TextStyle(
+                        color: color2.withOpacity(0.9),
+                        fontSize: streamCellFontSize,
+                      ),
+                      textAlign: TextAlign.end,
                     ),
-                    textAlign: TextAlign.end,
                   ),
+                  // if (enabledCount > 1) ...[
+                  //   const Divider(
+                  //     height: 1,
+                  //     color: color1,
+                  //   ),
+                  // ],
                 ],
                 if (binary != null) ...[
-                  Text(
-                    binary ?? "",
-                    style: const TextStyle(
-                      color: Colors.yellow,
-                      fontSize: streamCellFontSize,
+                  Container(
+                    color: color2.withOpacity(0.2),
+                    width: double.infinity,
+                    child: Text(
+                      binary ?? "",
+                      style: TextStyle(
+                        color: color2.withOpacity(0.9),
+                        fontSize: streamCellFontSize,
+                      ),
+                      textAlign: TextAlign.end,
                     ),
-                    textAlign: TextAlign.end,
                   ),
                 ],
               ],
             ),
           )
-        : Container(
-            // decoration: BoxDecoration(
-            // gradient: LinearGradient(colors: [
-            //   color6,
-            //   color6,
-            // ], begin: Alignment.topLeft, end: Alignment.bottomRight),
-            // borderRadius: BorderRadius.all(Radius.circular(10)),
-            // border: Border.all(color: Colors.red),
-            // boxShadow: [
-            //   BoxShadow(
-            //     offset: Offset(-5, -5),
-            //     blurRadius: 10,
-            //     color: Color(0xFF312C5E),
-            //   ),
-            //   BoxShadow(
-            //     offset: Offset(5, 5),
-            //     blurRadius: 10,
-            //     color: Color(0xFF050227),
-            //   ),
-            // ],
-            // ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                // const Gap(4),
-                if (ascii != null) ...[
-                  Text(
+        : Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              // const Gap(4),
+              if (ascii != null) ...[
+                Container(
+                  color: backgroundColors[0],
+                  width: double.infinity,
+                  child: Text(
                     ascii ?? "",
-                    style: const TextStyle(
-                      color: Colors.red,
+                    style: TextStyle(
+                      color: color2.withOpacity(0.9),
                       fontSize: streamCellFontSize,
                     ),
                     textAlign: TextAlign.end,
                   ),
-                ],
-                if (hex != null) ...[
-                  // const Divider(
-                  //   indent: 30,
-                  // ),
-                  Text(
-                    hex ?? "",
-                    style: const TextStyle(
-                      color: Colors.amber,
-                      fontSize: streamCellFontSize,
-                    ),
-                    textAlign: TextAlign.end,
-                  ),
-                ],
-                if (decimal != null) ...[
-                  // const Divider(
-                  //   indent: 30,
-                  // ),
-                  Text(
-                    decimal ?? "",
-                    style: const TextStyle(
-                      color: Colors.blue,
-                      fontSize: streamCellFontSize,
-                    ),
-                    textAlign: TextAlign.end,
-                  ),
-                ],
-                if (binary != null) ...[
-                  // const Divider(
-                  //   indent: 30,
-                  // ),
-                  Text(
-                    binary ?? "",
-                    style: const TextStyle(
-                      color: Colors.yellow,
-                      fontSize: streamCellFontSize,
-                    ),
-                    textAlign: TextAlign.end,
-                  ),
-                ],
-                // const Gap(4),
+                ),
+                // if (enabledCount > 1) ...[
+                //   Divider(
+                //     height: 1,
+                //     color: color1.withOpacity(0.4),
+                //   ),
+                // ],
               ],
-            ),
+              if (hex != null) ...[
+                Container(
+                  color: backgroundColors[1],
+                  width: double.infinity,
+                  child: Text(
+                    hex ?? "",
+                    style: TextStyle(
+                      color: color2.withOpacity(0.9),
+                      fontSize: streamCellFontSize,
+                    ),
+                    textAlign: TextAlign.end,
+                  ),
+                ),
+                // if (enabledCount > 1) ...[
+                //   Divider(
+                //     height: 1,
+                //     color: color1.withOpacity(0.4),
+                //   ),
+                // ],
+              ],
+              if (decimal != null) ...[
+                Container(
+                  color: backgroundColors[2],
+                  width: double.infinity,
+                  child: Text(
+                    decimal ?? "",
+                    style: TextStyle(
+                      color: color2.withOpacity(0.9),
+                      fontSize: streamCellFontSize,
+                    ),
+                    textAlign: TextAlign.end,
+                  ),
+                ),
+                // if (enabledCount > 1) ...[
+                //   Divider(
+                //     height: 1,
+                //     color: color1.withOpacity(0.4),
+                //   ),
+                // ],
+              ],
+              if (binary != null) ...[
+                Container(
+                  color: backgroundColors[3],
+                  width: double.infinity,
+                  child: Text(
+                    binary ?? "",
+                    style: TextStyle(
+                      color: color2.withOpacity(0.9),
+                      fontSize: streamCellFontSize,
+                    ),
+                    textAlign: TextAlign.end,
+                  ),
+                ),
+              ],
+            ],
           );
+  }
+
+  List<Color> getBackgroundColors() {
+    const transparent = 0.0;
+    const backgroundColor = color2;
+    const firstColorOpacity = 0.05;
+    const secondColorOpacity = 0.1;
+    const thirdColorOpacity = 0.2;
+    const fourthColorOpacity = 0.4;
+    List<Color> backgroundColors = List.filled(4, Colors.transparent);
+    if (ascii != null && hex != null && decimal != null && binary != null) {
+      backgroundColors[0] = backgroundColor.withOpacity(firstColorOpacity);
+      backgroundColors[1] = backgroundColor.withOpacity(secondColorOpacity);
+      backgroundColors[2] = backgroundColor.withOpacity(thirdColorOpacity);
+      backgroundColors[3] = backgroundColor.withOpacity(fourthColorOpacity);
+    } else if (ascii != null &&
+        hex == null &&
+        decimal == null &&
+        binary == null) {
+      backgroundColors[0] = backgroundColor.withOpacity(transparent);
+      backgroundColors[1] = backgroundColor.withOpacity(transparent);
+      backgroundColors[2] = backgroundColor.withOpacity(transparent);
+      backgroundColors[3] = backgroundColor.withOpacity(transparent);
+    } else if (ascii != null &&
+        hex != null &&
+        decimal != null &&
+        binary == null) {
+      backgroundColors[0] = backgroundColor.withOpacity(firstColorOpacity);
+      backgroundColors[1] = backgroundColor.withOpacity(secondColorOpacity);
+      backgroundColors[2] = backgroundColor.withOpacity(thirdColorOpacity);
+      backgroundColors[3] = backgroundColor.withOpacity(transparent);
+    } else if (ascii != null &&
+        hex != null &&
+        decimal == null &&
+        binary != null) {
+      backgroundColors[0] = backgroundColor.withOpacity(firstColorOpacity);
+      backgroundColors[1] = backgroundColor.withOpacity(secondColorOpacity);
+      backgroundColors[2] = backgroundColor.withOpacity(transparent);
+      backgroundColors[3] = backgroundColor.withOpacity(thirdColorOpacity);
+    } else if (ascii != null &&
+        hex == null &&
+        decimal != null &&
+        binary != null) {
+      backgroundColors[0] = backgroundColor.withOpacity(firstColorOpacity);
+      backgroundColors[1] = backgroundColor.withOpacity(transparent);
+      backgroundColors[2] = backgroundColor.withOpacity(secondColorOpacity);
+      backgroundColors[3] = backgroundColor.withOpacity(thirdColorOpacity);
+    } else if (ascii != null &&
+        hex != null &&
+        decimal == null &&
+        binary == null) {
+      backgroundColors[0] = backgroundColor.withOpacity(firstColorOpacity);
+      backgroundColors[1] = backgroundColor.withOpacity(secondColorOpacity);
+      backgroundColors[2] = backgroundColor.withOpacity(transparent);
+      backgroundColors[3] = backgroundColor.withOpacity(transparent);
+    } else if (ascii != null &&
+        hex == null &&
+        decimal != null &&
+        binary == null) {
+      backgroundColors[0] = backgroundColor.withOpacity(firstColorOpacity);
+      backgroundColors[1] = backgroundColor.withOpacity(transparent);
+      backgroundColors[2] = backgroundColor.withOpacity(secondColorOpacity);
+      backgroundColors[3] = backgroundColor.withOpacity(transparent);
+    } else if (ascii != null &&
+        hex == null &&
+        decimal == null &&
+        binary != null) {
+      backgroundColors[0] = backgroundColor.withOpacity(firstColorOpacity);
+      backgroundColors[1] = backgroundColor.withOpacity(transparent);
+      backgroundColors[2] = backgroundColor.withOpacity(transparent);
+      backgroundColors[3] = backgroundColor.withOpacity(secondColorOpacity);
+    } else if (ascii == null &&
+        hex != null &&
+        decimal != null &&
+        binary != null) {
+      backgroundColors[0] = backgroundColor.withOpacity(transparent);
+      backgroundColors[1] = backgroundColor.withOpacity(firstColorOpacity);
+      backgroundColors[2] = backgroundColor.withOpacity(secondColorOpacity);
+      backgroundColors[3] = backgroundColor.withOpacity(thirdColorOpacity);
+    } else if (ascii == null &&
+        hex != null &&
+        decimal != null &&
+        binary == null) {
+      backgroundColors[0] = backgroundColor.withOpacity(transparent);
+      backgroundColors[1] = backgroundColor.withOpacity(firstColorOpacity);
+      backgroundColors[2] = backgroundColor.withOpacity(secondColorOpacity);
+      backgroundColors[3] = backgroundColor.withOpacity(transparent);
+    } else if (ascii == null &&
+        hex == null &&
+        decimal != null &&
+        binary != null) {
+      backgroundColors[0] = backgroundColor.withOpacity(transparent);
+      backgroundColors[1] = backgroundColor.withOpacity(transparent);
+      backgroundColors[2] = backgroundColor.withOpacity(firstColorOpacity);
+      backgroundColors[3] = backgroundColor.withOpacity(secondColorOpacity);
+    } else if (ascii == null &&
+        hex != null &&
+        decimal == null &&
+        binary != null) {
+      backgroundColors[0] = backgroundColor.withOpacity(firstColorOpacity);
+      backgroundColors[1] = backgroundColor.withOpacity(transparent);
+      backgroundColors[2] = backgroundColor.withOpacity(secondColorOpacity);
+      backgroundColors[3] = backgroundColor.withOpacity(transparent);
+    } else if (ascii == null &&
+        hex != null &&
+        decimal == null &&
+        binary == null) {
+      backgroundColors[0] = backgroundColor.withOpacity(firstColorOpacity);
+      backgroundColors[1] = backgroundColor.withOpacity(transparent);
+      backgroundColors[2] = backgroundColor.withOpacity(transparent);
+      backgroundColors[3] = backgroundColor.withOpacity(transparent);
+    } else if (ascii == null &&
+        hex == null &&
+        decimal != null &&
+        binary == null) {
+      backgroundColors[0] = backgroundColor.withOpacity(transparent);
+      backgroundColors[1] = backgroundColor.withOpacity(transparent);
+      backgroundColors[2] = backgroundColor.withOpacity(firstColorOpacity);
+      backgroundColors[3] = backgroundColor.withOpacity(transparent);
+    } else if (ascii == null &&
+        hex == null &&
+        decimal == null &&
+        binary != null) {
+      backgroundColors[0] = backgroundColor.withOpacity(transparent);
+      backgroundColors[1] = backgroundColor.withOpacity(transparent);
+      backgroundColors[2] = backgroundColor.withOpacity(transparent);
+      backgroundColors[3] = backgroundColor.withOpacity(firstColorOpacity);
+    } else if (ascii == null &&
+        hex == null &&
+        decimal != null &&
+        binary == null) {
+      backgroundColors[0] = backgroundColor.withOpacity(transparent);
+      backgroundColors[1] = backgroundColor.withOpacity(transparent);
+      backgroundColors[2] = backgroundColor.withOpacity(firstColorOpacity);
+      backgroundColors[3] = backgroundColor.withOpacity(transparent);
+    } else if (ascii == null &&
+        hex != null &&
+        decimal == null &&
+        binary == null) {
+      backgroundColors[0] = backgroundColor.withOpacity(transparent);
+      backgroundColors[1] = backgroundColor.withOpacity(firstColorOpacity);
+      backgroundColors[2] = backgroundColor.withOpacity(transparent);
+      backgroundColors[3] = backgroundColor.withOpacity(transparent);
+    }
+    return backgroundColors;
   }
 }
