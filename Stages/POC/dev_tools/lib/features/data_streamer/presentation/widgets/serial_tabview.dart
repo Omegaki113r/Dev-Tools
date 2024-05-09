@@ -1,3 +1,19 @@
+/* 
+ * Project: Xtronic Dev Tools
+ * File Name: serial_tabview.dart
+ * File Created: Friday, 10th May 2024 12:58:32 am
+ * Author: Omegaki113r (omegaki113r@gmail.com)
+ * -----
+ * Last Modified: Friday, 10th May 2024 1:29:20 am
+ * Modified By: Omegaki113r (omegaki113r@gmail.com)
+ * -----
+ * Copyright 2024 - 2024 0m3g4ki113r, Xtronic
+ * -----
+ * HISTORY:
+ * Date      	By	Comments
+ * ----------	---	---------------------------------------------------------
+ */
+
 /*
  * Project: Xtronic Dev Tools
  * File Name: serial_tabview.dart
@@ -355,8 +371,6 @@ class _SerialTabViewState extends State<SerialTabView> {
               ),
             ],
           ),
-          //   ),
-          // ),
           const Gap(10),
           Padding(
             padding: const EdgeInsets.only(
