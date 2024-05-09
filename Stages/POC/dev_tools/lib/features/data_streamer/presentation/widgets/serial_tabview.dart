@@ -4,7 +4,7 @@
  * File Created: Friday, 10th May 2024 12:58:32 am
  * Author: Omegaki113r (omegaki113r@gmail.com)
  * -----
- * Last Modified: Friday, 10th May 2024 1:31:23 am
+ * Last Modified: Friday, 10th May 2024 3:46:52 am
  * Modified By: Omegaki113r (omegaki113r@gmail.com)
  * -----
  * Copyright 2024 - 2024 0m3g4ki113r, Xtronic
@@ -36,6 +36,7 @@ import 'package:dev_tools/core/widgets/soft_text.dart';
 import 'package:dev_tools/core/widgets/soft_textfield.dart';
 import 'package:dev_tools/features/data_streamer/presentation/provider/serial_streamer_provider.dart';
 import 'package:dev_tools/features/data_streamer/presentation/widgets/stream_data_view.dart';
+import 'package:docking/docking.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
@@ -393,444 +394,1125 @@ class _SerialTabViewState extends State<SerialTabView> {
           ),
           const Gap(20),
           Expanded(
-            child: ListView(
-              children: [
-                const Gap(10),
-                Stack(
-                  clipBehavior: Clip.none,
-                  children: [
-                    Container(
-                      clipBehavior: Clip.hardEdge,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          border:
-                              Border.all(color: Colors.white.withOpacity(0.1))),
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            left: 15.0, right: 15, bottom: 15, top: 20.0),
-                        child: Consumer<SerialStreamerProvider>(
-                          builder: (context, provider, child) {
-                            return Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  height: 50,
-                                  child: ListView(
-                                    scrollDirection: Axis.horizontal,
-                                    clipBehavior: Clip.none,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 8.0, right: 20, bottom: 5),
-                                        child: SoftCheckbox(
-                                          lblAscii,
-                                          onChanged: (checked) => provider
-                                              .rxAscii = checked ?? true,
-                                          value: provider.rxAscii,
-                                          labelStyle:
-                                              const TextStyle(fontSize: 12.0),
-                                        ),
-                                      ),
-                                      const VerticalDivider(
-                                        color: color1,
-                                        indent: 15,
-                                        endIndent: 15,
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 8.0, right: 20, bottom: 5),
-                                        child: SoftCheckbox(
-                                          lblHex,
-                                          onChanged: (checked) =>
-                                              provider.rxHex = checked ?? false,
-                                          value: provider.rxHex,
-                                          labelStyle:
-                                              const TextStyle(fontSize: 12.0),
-                                        ),
-                                      ),
-                                      const VerticalDivider(
-                                        color: color1,
-                                        indent: 15,
-                                        endIndent: 15,
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 8.0, right: 20, bottom: 5),
-                                        child: SoftCheckbox(
-                                          lblDecimal,
-                                          onChanged: (checked) => provider
-                                              .rxDecimal = checked ?? false,
-                                          value: provider.rxDecimal,
-                                          labelStyle:
-                                              const TextStyle(fontSize: 12.0),
-                                        ),
-                                      ),
-                                      const VerticalDivider(
-                                        color: color1,
-                                        indent: 15,
-                                        endIndent: 15,
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 8.0, right: 20, bottom: 5),
-                                        child: SoftCheckbox(
-                                          lblBinary,
-                                          onChanged: (checked) => provider
-                                              .rxBinary = checked ?? false,
-                                          value: provider.rxBinary,
-                                          labelStyle:
-                                              const TextStyle(fontSize: 12.0),
-                                        ),
-                                      ),
-                                      const VerticalDivider(
-                                        color: color1,
-                                        indent: 15,
-                                        endIndent: 15,
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 8.0, right: 20, bottom: 5),
-                                        child: SoftCheckbox(
-                                          lblAutoScroll,
-                                          onChanged: (checked) => provider
-                                              .rxAutoScroll = checked ?? false,
-                                          value: provider.rxAutoScroll,
-                                          labelStyle:
-                                              const TextStyle(fontSize: 12.0),
-                                        ),
-                                      ),
-                                      const VerticalDivider(
-                                        color: color1,
-                                      ),
-                                      SoftText(
-                                        "${provider.rxData}",
-                                        label: "RX",
-                                        width: 150,
-                                        height: 50,
-                                        labelStyle:
-                                            const TextStyle(fontSize: 12),
-                                        textStyle: Theme.of(context)
-                                            .textTheme
-                                            .bodyLarge
-                                            ?.copyWith(fontSize: 14),
-                                        textAlign: TextAlign.end,
-                                        contentPadding:
-                                            const EdgeInsets.symmetric(
-                                                vertical: 5, horizontal: 20),
-                                      ),
-                                      const Gap(25),
-                                      SoftButton("Reset", ButtonType.emboss,
-                                          width: 100,
-                                          height: 40, onPressed: () {
-                                        provider.resetRXCounter();
-                                      }),
-                                    ],
-                                  ),
-                                ),
-                                const Gap(10),
-                                SizedBox(
-                                  height: 50,
-                                  width: 150,
-                                  child: SoftButton(
-                                      "Clear Data", ButtonType.concave,
-                                      onPressed: () {
-                                    provider.resetRXData();
-                                  }),
-                                ),
-                                const Gap(10),
-                                Container(
-                                  height: 400,
-                                  decoration: const BoxDecoration(
-                                    color: color6,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(20)),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        offset: Offset(-10, -10),
-                                        blurRadius: 20,
-                                        spreadRadius: -10,
-                                        color: Color(0xFF312C5E),
-                                        inset: true,
-                                      ),
-                                      BoxShadow(
-                                        offset: Offset(10, 10),
-                                        blurRadius: 20,
-                                        spreadRadius: -10,
-                                        color: Color(0xFF050227),
-                                        inset: true,
-                                      ),
-                                    ],
-                                  ),
-                                  child: Consumer<SerialStreamerProvider>(
-                                      builder: (context, provider, child) {
-                                    return StreamDataView(
-                                      scrollController:
-                                          provider.rxScrollController,
-                                      gridController: provider.rxController,
-                                      dataList: provider.rxDataList,
-                                      ascii: provider.rxAscii,
-                                      binary: provider.rxBinary,
-                                      hex: provider.rxHex,
-                                      decimal: provider.rxDecimal,
-                                      autoScroll: provider.rxAutoScroll,
-                                    );
-                                  }),
-                                ),
+              child: TabbedViewTheme(
+                  data: TabbedViewThemeData(
+                    tabsArea: TabsAreaThemeData(
+                        border: Border(
+                            bottom: BorderSide(color: Color(0xFF2C2754)))),
+                    tab: TabThemeData(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                      margin: EdgeInsets.only(top: 30, left: 20, right: 20),
+                      highlightedStatus: TabStatusThemeData(
+                        decoration: BoxDecoration(
+                          color: color6,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(15),
+                            topRight: Radius.circular(15),
+                          ),
+                          gradient: LinearGradient(
+                              colors: [
+                                color6,
+                                color6,
                               ],
-                            );
-                          },
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight),
+                          boxShadow: [
+                            BoxShadow(
+                              offset: Offset(-5, -5),
+                              blurRadius: 10,
+                              color: Color(0xFF312C5E),
+                            ),
+                            BoxShadow(
+                              offset: Offset(5, 5),
+                              blurRadius: 10,
+                              color: Color(0xFF050227),
+                            ),
+                          ],
                         ),
                       ),
-                    ),
-                    Positioned(
-                      top: -10.0,
-                      left: 30.0,
-                      child: Container(
+                      selectedStatus: TabStatusThemeData(
+                          decoration: BoxDecoration(
                         color: color6,
-                        child: const Text("Received Data"),
-                      ),
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(15),
+                          topRight: Radius.circular(15),
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            offset: Offset(-10, -10),
+                            blurRadius: 20,
+                            spreadRadius: -10,
+                            color: Color(0xFF312C5E),
+                            inset: true,
+                          ),
+                          BoxShadow(
+                            offset: Offset(10, 10),
+                            blurRadius: 20,
+                            spreadRadius: -10,
+                            color: Color(0xFF050227),
+                            inset: true,
+                          ),
+                        ],
+                      )),
                     ),
-                  ],
-                ),
-                const Gap(40),
-                Stack(
-                  clipBehavior: Clip.none,
-                  children: [
-                    Container(
-                      clipBehavior: Clip.hardEdge,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          border:
-                              Border.all(color: Colors.white.withOpacity(0.1))),
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            left: 15.0, right: 15, bottom: 15, top: 20.0),
-                        child: Consumer<SerialStreamerProvider>(
-                          builder: (context, provider, child) {
-                            return Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  height: 50,
-                                  child: ListView(
-                                    scrollDirection: Axis.horizontal,
-                                    clipBehavior: Clip.none,
-                                    children: [
-                                      Padding(
+                  ),
+                  child: Docking(
+                    layout: DockingLayout(
+                      root: DockingTabs(
+                        [
+                          DockingItem(
+                            name: "Received",
+                            closable: false,
+                            maximizable: false,
+                            widget: Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 20),
+                              child: SingleChildScrollView(
+                                child: Stack(
+                                  clipBehavior: Clip.none,
+                                  children: [
+                                    Container(
+                                      clipBehavior: Clip.hardEdge,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          border: Border.all(
+                                              color: Colors.white
+                                                  .withOpacity(0.1))),
+                                      child: Padding(
                                         padding: const EdgeInsets.only(
-                                            top: 8.0, right: 20, bottom: 5),
-                                        child: SoftCheckbox(
-                                          lblAscii,
-                                          onChanged: (checked) => provider
-                                              .txAscii = checked ?? true,
-                                          value: provider.txAscii,
-                                          labelStyle:
-                                              const TextStyle(fontSize: 12.0),
-                                        ),
-                                      ),
-                                      const VerticalDivider(
-                                        color: color1,
-                                        indent: 15,
-                                        endIndent: 15,
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 8.0, right: 20, bottom: 5),
-                                        child: SoftCheckbox(
-                                          lblHex,
-                                          onChanged: (checked) =>
-                                              provider.txHex = checked ?? false,
-                                          value: provider.txHex,
-                                          labelStyle:
-                                              const TextStyle(fontSize: 12.0),
-                                        ),
-                                      ),
-                                      const VerticalDivider(
-                                        color: color1,
-                                        indent: 15,
-                                        endIndent: 15,
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 8.0, right: 20, bottom: 5),
-                                        child: SoftCheckbox(
-                                          lblDecimal,
-                                          onChanged: (checked) => provider
-                                              .txDecimal = checked ?? false,
-                                          value: provider.txDecimal,
-                                          labelStyle:
-                                              const TextStyle(fontSize: 12.0),
-                                        ),
-                                      ),
-                                      const VerticalDivider(
-                                        color: color1,
-                                        indent: 15,
-                                        endIndent: 15,
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 8.0, right: 20, bottom: 5),
-                                        child: SoftCheckbox(
-                                          lblBinary,
-                                          onChanged: (checked) => provider
-                                              .txBinary = checked ?? false,
-                                          value: provider.txBinary,
-                                          labelStyle:
-                                              const TextStyle(fontSize: 12.0),
-                                        ),
-                                      ),
-                                      const VerticalDivider(
-                                        color: color1,
-                                        indent: 15,
-                                        endIndent: 15,
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 8.0, right: 20, bottom: 5),
-                                        child: SoftCheckbox(
-                                          lblAutoScroll,
-                                          onChanged: (checked) => provider
-                                              .txAutoScroll = checked ?? false,
-                                          value: provider.txAutoScroll,
-                                          labelStyle:
-                                              const TextStyle(fontSize: 12.0),
-                                        ),
-                                      ),
-                                      const VerticalDivider(
-                                        color: color1,
-                                      ),
-                                      SoftText(
-                                        "${provider.txData}",
-                                        label: "TX",
-                                        width: 150,
-                                        height: 50,
-                                        labelStyle:
-                                            const TextStyle(fontSize: 12),
-                                        textStyle: Theme.of(context)
-                                            .textTheme
-                                            .bodyLarge
-                                            ?.copyWith(fontSize: 14),
-                                        textAlign: TextAlign.end,
-                                        contentPadding:
-                                            const EdgeInsets.symmetric(
-                                                vertical: 5, horizontal: 20),
-                                      ),
-                                      const Gap(25),
-                                      SoftButton("Reset", ButtonType.emboss,
-                                          width: 100,
-                                          height: 40, onPressed: () {
-                                        provider.resetTXCounter();
-                                      }),
-                                      const VerticalDivider(
-                                        color: color1,
-                                      ),
-                                      SoftDropDownButton.flat(
-                                        "",
-                                        "Send on Enter",
-                                        selectedValue:
-                                            provider.selectedtxOnEnter,
-                                        itemList: provider.txOnEnterList
-                                            .map(
-                                              (e) => DropdownMenuItem(
-                                                value: e,
-                                                child: Row(
-                                                  children: [
-                                                    const Spacer(),
-                                                    Expanded(
-                                                        child: Text(
-                                                      txEnterStringList[e]!,
-                                                      textAlign: TextAlign.end,
-                                                    )),
-                                                  ],
+                                            left: 15.0,
+                                            right: 15,
+                                            bottom: 15,
+                                            top: 20.0),
+                                        child: Consumer<SerialStreamerProvider>(
+                                          builder: (context, provider, child) {
+                                            return Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                SizedBox(
+                                                  height: 50,
+                                                  child: ListView(
+                                                    scrollDirection:
+                                                        Axis.horizontal,
+                                                    clipBehavior: Clip.none,
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(
+                                                                top: 8.0,
+                                                                right: 20,
+                                                                bottom: 5),
+                                                        child: SoftCheckbox(
+                                                          lblAscii,
+                                                          onChanged: (checked) =>
+                                                              provider.rxAscii =
+                                                                  checked ??
+                                                                      true,
+                                                          value:
+                                                              provider.rxAscii,
+                                                          labelStyle:
+                                                              const TextStyle(
+                                                                  fontSize:
+                                                                      12.0),
+                                                        ),
+                                                      ),
+                                                      const VerticalDivider(
+                                                        color: color1,
+                                                        indent: 15,
+                                                        endIndent: 15,
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(
+                                                                top: 8.0,
+                                                                right: 20,
+                                                                bottom: 5),
+                                                        child: SoftCheckbox(
+                                                          lblHex,
+                                                          onChanged: (checked) =>
+                                                              provider.rxHex =
+                                                                  checked ??
+                                                                      false,
+                                                          value: provider.rxHex,
+                                                          labelStyle:
+                                                              const TextStyle(
+                                                                  fontSize:
+                                                                      12.0),
+                                                        ),
+                                                      ),
+                                                      const VerticalDivider(
+                                                        color: color1,
+                                                        indent: 15,
+                                                        endIndent: 15,
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(
+                                                                top: 8.0,
+                                                                right: 20,
+                                                                bottom: 5),
+                                                        child: SoftCheckbox(
+                                                          lblDecimal,
+                                                          onChanged: (checked) =>
+                                                              provider.rxDecimal =
+                                                                  checked ??
+                                                                      false,
+                                                          value: provider
+                                                              .rxDecimal,
+                                                          labelStyle:
+                                                              const TextStyle(
+                                                                  fontSize:
+                                                                      12.0),
+                                                        ),
+                                                      ),
+                                                      const VerticalDivider(
+                                                        color: color1,
+                                                        indent: 15,
+                                                        endIndent: 15,
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(
+                                                                top: 8.0,
+                                                                right: 20,
+                                                                bottom: 5),
+                                                        child: SoftCheckbox(
+                                                          lblBinary,
+                                                          onChanged: (checked) =>
+                                                              provider.rxBinary =
+                                                                  checked ??
+                                                                      false,
+                                                          value:
+                                                              provider.rxBinary,
+                                                          labelStyle:
+                                                              const TextStyle(
+                                                                  fontSize:
+                                                                      12.0),
+                                                        ),
+                                                      ),
+                                                      const VerticalDivider(
+                                                        color: color1,
+                                                        indent: 15,
+                                                        endIndent: 15,
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(
+                                                                top: 8.0,
+                                                                right: 20,
+                                                                bottom: 5),
+                                                        child: SoftCheckbox(
+                                                          lblAutoScroll,
+                                                          onChanged: (checked) =>
+                                                              provider.rxAutoScroll =
+                                                                  checked ??
+                                                                      false,
+                                                          value: provider
+                                                              .rxAutoScroll,
+                                                          labelStyle:
+                                                              const TextStyle(
+                                                                  fontSize:
+                                                                      12.0),
+                                                        ),
+                                                      ),
+                                                      const VerticalDivider(
+                                                        color: color1,
+                                                      ),
+                                                      SoftText(
+                                                        "${provider.rxData}",
+                                                        label: "RX",
+                                                        width: 150,
+                                                        height: 50,
+                                                        labelStyle:
+                                                            const TextStyle(
+                                                                fontSize: 12),
+                                                        textStyle:
+                                                            Theme.of(context)
+                                                                .textTheme
+                                                                .bodyLarge
+                                                                ?.copyWith(
+                                                                    fontSize:
+                                                                        14),
+                                                        textAlign:
+                                                            TextAlign.end,
+                                                        contentPadding:
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                                vertical: 5,
+                                                                horizontal: 20),
+                                                      ),
+                                                      const Gap(25),
+                                                      SoftButton("Reset",
+                                                          ButtonType.emboss,
+                                                          width: 100,
+                                                          height: 40,
+                                                          onPressed: () {
+                                                        provider
+                                                            .resetRXCounter();
+                                                      }),
+                                                    ],
+                                                  ),
                                                 ),
-                                              ),
-                                            )
-                                            .toList(),
-                                        width: 200,
-                                        height: 45,
-                                        onChanged: (value) {
-                                          provider
-                                              .selectedTXonEnterChanged(value);
-                                        },
-                                        labelTextStyle: const TextStyle(
-                                          fontSize: 12.0,
+                                                const Gap(10),
+                                                SizedBox(
+                                                  height: 50,
+                                                  width: 150,
+                                                  child: SoftButton(
+                                                      "Clear Data",
+                                                      ButtonType.concave,
+                                                      onPressed: () {
+                                                    provider.resetRXData();
+                                                  }),
+                                                ),
+                                                const Gap(10),
+                                                Container(
+                                                  height: 400,
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                    color: color6,
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                20)),
+                                                    boxShadow: [
+                                                      BoxShadow(
+                                                        offset:
+                                                            Offset(-10, -10),
+                                                        blurRadius: 20,
+                                                        spreadRadius: -10,
+                                                        color:
+                                                            Color(0xFF312C5E),
+                                                        inset: true,
+                                                      ),
+                                                      BoxShadow(
+                                                        offset: Offset(10, 10),
+                                                        blurRadius: 20,
+                                                        spreadRadius: -10,
+                                                        color:
+                                                            Color(0xFF050227),
+                                                        inset: true,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  child: Consumer<
+                                                          SerialStreamerProvider>(
+                                                      builder: (context,
+                                                          provider, child) {
+                                                    return StreamDataView(
+                                                      scrollController: provider
+                                                          .rxScrollController,
+                                                      gridController:
+                                                          provider.rxController,
+                                                      dataList:
+                                                          provider.rxDataList,
+                                                      ascii: provider.rxAscii,
+                                                      binary: provider.rxBinary,
+                                                      hex: provider.rxHex,
+                                                      decimal:
+                                                          provider.rxDecimal,
+                                                      autoScroll:
+                                                          provider.rxAutoScroll,
+                                                    );
+                                                  }),
+                                                ),
+                                              ],
+                                            );
+                                          },
                                         ),
-                                        itemStyle: const TextStyle(
-                                          fontSize: 12.0,
-                                          color: color1,
+                                      ),
+                                    ),
+                                    Positioned(
+                                      top: -10.0,
+                                      left: 30.0,
+                                      child: Container(
+                                        color: color6,
+                                        child: const Text("Received Data"),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          DockingItem(
+                            name: "Transmitted",
+                            closable: false,
+                            maximizable: false,
+                            widget: Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 20),
+                              child: SingleChildScrollView(
+                                child: Stack(
+                                  clipBehavior: Clip.none,
+                                  children: [
+                                    Container(
+                                      clipBehavior: Clip.hardEdge,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          border: Border.all(
+                                              color: Colors.white
+                                                  .withOpacity(0.1))),
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 15.0,
+                                            right: 15,
+                                            bottom: 15,
+                                            top: 20.0),
+                                        child: Consumer<SerialStreamerProvider>(
+                                          builder: (context, provider, child) {
+                                            return Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                SizedBox(
+                                                  height: 50,
+                                                  child: ListView(
+                                                    scrollDirection:
+                                                        Axis.horizontal,
+                                                    clipBehavior: Clip.none,
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(
+                                                                top: 8.0,
+                                                                right: 20,
+                                                                bottom: 5),
+                                                        child: SoftCheckbox(
+                                                          lblAscii,
+                                                          onChanged: (checked) =>
+                                                              provider.txAscii =
+                                                                  checked ??
+                                                                      true,
+                                                          value:
+                                                              provider.txAscii,
+                                                          labelStyle:
+                                                              const TextStyle(
+                                                                  fontSize:
+                                                                      12.0),
+                                                        ),
+                                                      ),
+                                                      const VerticalDivider(
+                                                        color: color1,
+                                                        indent: 15,
+                                                        endIndent: 15,
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(
+                                                                top: 8.0,
+                                                                right: 20,
+                                                                bottom: 5),
+                                                        child: SoftCheckbox(
+                                                          lblHex,
+                                                          onChanged: (checked) =>
+                                                              provider.txHex =
+                                                                  checked ??
+                                                                      false,
+                                                          value: provider.txHex,
+                                                          labelStyle:
+                                                              const TextStyle(
+                                                                  fontSize:
+                                                                      12.0),
+                                                        ),
+                                                      ),
+                                                      const VerticalDivider(
+                                                        color: color1,
+                                                        indent: 15,
+                                                        endIndent: 15,
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(
+                                                                top: 8.0,
+                                                                right: 20,
+                                                                bottom: 5),
+                                                        child: SoftCheckbox(
+                                                          lblDecimal,
+                                                          onChanged: (checked) =>
+                                                              provider.txDecimal =
+                                                                  checked ??
+                                                                      false,
+                                                          value: provider
+                                                              .txDecimal,
+                                                          labelStyle:
+                                                              const TextStyle(
+                                                                  fontSize:
+                                                                      12.0),
+                                                        ),
+                                                      ),
+                                                      const VerticalDivider(
+                                                        color: color1,
+                                                        indent: 15,
+                                                        endIndent: 15,
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(
+                                                                top: 8.0,
+                                                                right: 20,
+                                                                bottom: 5),
+                                                        child: SoftCheckbox(
+                                                          lblBinary,
+                                                          onChanged: (checked) =>
+                                                              provider.txBinary =
+                                                                  checked ??
+                                                                      false,
+                                                          value:
+                                                              provider.txBinary,
+                                                          labelStyle:
+                                                              const TextStyle(
+                                                                  fontSize:
+                                                                      12.0),
+                                                        ),
+                                                      ),
+                                                      const VerticalDivider(
+                                                        color: color1,
+                                                        indent: 15,
+                                                        endIndent: 15,
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(
+                                                                top: 8.0,
+                                                                right: 20,
+                                                                bottom: 5),
+                                                        child: SoftCheckbox(
+                                                          lblAutoScroll,
+                                                          onChanged: (checked) =>
+                                                              provider.txAutoScroll =
+                                                                  checked ??
+                                                                      false,
+                                                          value: provider
+                                                              .txAutoScroll,
+                                                          labelStyle:
+                                                              const TextStyle(
+                                                                  fontSize:
+                                                                      12.0),
+                                                        ),
+                                                      ),
+                                                      const VerticalDivider(
+                                                        color: color1,
+                                                      ),
+                                                      SoftText(
+                                                        "${provider.txData}",
+                                                        label: "TX",
+                                                        width: 150,
+                                                        height: 50,
+                                                        labelStyle:
+                                                            const TextStyle(
+                                                                fontSize: 12),
+                                                        textStyle:
+                                                            Theme.of(context)
+                                                                .textTheme
+                                                                .bodyLarge
+                                                                ?.copyWith(
+                                                                    fontSize:
+                                                                        14),
+                                                        textAlign:
+                                                            TextAlign.end,
+                                                        contentPadding:
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                                vertical: 5,
+                                                                horizontal: 20),
+                                                      ),
+                                                      const Gap(25),
+                                                      SoftButton("Reset",
+                                                          ButtonType.emboss,
+                                                          width: 100,
+                                                          height: 40,
+                                                          onPressed: () {
+                                                        provider
+                                                            .resetTXCounter();
+                                                      }),
+                                                      const VerticalDivider(
+                                                        color: color1,
+                                                      ),
+                                                      SoftDropDownButton.flat(
+                                                        "",
+                                                        "Send on Enter",
+                                                        selectedValue: provider
+                                                            .selectedtxOnEnter,
+                                                        itemList:
+                                                            provider
+                                                                .txOnEnterList
+                                                                .map(
+                                                                  (e) =>
+                                                                      DropdownMenuItem(
+                                                                    value: e,
+                                                                    child: Row(
+                                                                      children: [
+                                                                        const Spacer(),
+                                                                        Expanded(
+                                                                            child:
+                                                                                Text(
+                                                                          txEnterStringList[
+                                                                              e]!,
+                                                                          textAlign:
+                                                                              TextAlign.end,
+                                                                        )),
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                )
+                                                                .toList(),
+                                                        width: 200,
+                                                        height: 45,
+                                                        onChanged: (value) {
+                                                          provider
+                                                              .selectedTXonEnterChanged(
+                                                                  value);
+                                                        },
+                                                        labelTextStyle:
+                                                            const TextStyle(
+                                                          fontSize: 12.0,
+                                                        ),
+                                                        itemStyle:
+                                                            const TextStyle(
+                                                          fontSize: 12.0,
+                                                          color: color1,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                const Gap(10),
+                                                SizedBox(
+                                                  height: 50,
+                                                  width: 150,
+                                                  child: SoftButton(
+                                                      "Clear Data",
+                                                      ButtonType.concave,
+                                                      onPressed: () {
+                                                    provider.resetTXData();
+                                                  }),
+                                                ),
+                                                const Gap(10),
+                                                Container(
+                                                  height: 400,
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                    color: color6,
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                20)),
+                                                    boxShadow: [
+                                                      BoxShadow(
+                                                        offset:
+                                                            Offset(-10, -10),
+                                                        blurRadius: 20,
+                                                        spreadRadius: -10,
+                                                        color:
+                                                            Color(0xFF312C5E),
+                                                        inset: true,
+                                                      ),
+                                                      BoxShadow(
+                                                        offset: Offset(10, 10),
+                                                        blurRadius: 20,
+                                                        spreadRadius: -10,
+                                                        color:
+                                                            Color(0xFF050227),
+                                                        inset: true,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  child: Consumer<
+                                                          SerialStreamerProvider>(
+                                                      builder: (context,
+                                                          provider, child) {
+                                                    return StreamDataView(
+                                                      scrollController: provider
+                                                          .txScrollController,
+                                                      gridController:
+                                                          provider.txController,
+                                                      dataList:
+                                                          provider.txDataList,
+                                                      ascii: provider.txAscii,
+                                                      binary: provider.txBinary,
+                                                      hex: provider.txHex,
+                                                      decimal:
+                                                          provider.txDecimal,
+                                                      autoScroll:
+                                                          provider.txAutoScroll,
+                                                    );
+                                                  }),
+                                                ),
+                                              ],
+                                            );
+                                          },
                                         ),
                                       ),
-                                    ],
-                                  ),
-                                ),
-                                const Gap(10),
-                                SizedBox(
-                                  height: 50,
-                                  width: 150,
-                                  child: SoftButton(
-                                      "Clear Data", ButtonType.concave,
-                                      onPressed: () {
-                                    provider.resetTXData();
-                                  }),
-                                ),
-                                const Gap(10),
-                                Container(
-                                  height: 200,
-                                  decoration: const BoxDecoration(
-                                    color: color6,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(20)),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        offset: Offset(-10, -10),
-                                        blurRadius: 20,
-                                        spreadRadius: -10,
-                                        color: Color(0xFF312C5E),
-                                        inset: true,
+                                    ),
+                                    Positioned(
+                                      top: -10.0,
+                                      left: 30.0,
+                                      child: Container(
+                                        color: color6,
+                                        child: const Text("Transmitted Data"),
                                       ),
-                                      BoxShadow(
-                                        offset: Offset(10, 10),
-                                        blurRadius: 20,
-                                        spreadRadius: -10,
-                                        color: Color(0xFF050227),
-                                        inset: true,
-                                      ),
-                                    ],
-                                  ),
-                                  child: Consumer<SerialStreamerProvider>(
-                                      builder: (context, provider, child) {
-                                    return StreamDataView(
-                                      scrollController:
-                                          provider.txScrollController,
-                                      gridController: provider.txController,
-                                      dataList: provider.txDataList,
-                                      ascii: provider.txAscii,
-                                      binary: provider.txBinary,
-                                      hex: provider.txHex,
-                                      decimal: provider.txDecimal,
-                                      autoScroll: provider.txAutoScroll,
-                                    );
-                                  }),
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            );
-                          },
-                        ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    Positioned(
-                      top: -10.0,
-                      left: 30.0,
-                      child: Container(
-                        color: color6,
-                        child: const Text("Transmitted Data"),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
+                  ))),
+          // Expanded(
+          //   child: ListView(
+          //     children: [
+          //       const Gap(10),
+          //       // Stack(
+          //       //   clipBehavior: Clip.none,
+          //       //   children: [
+          //       //     Container(
+          //       //       clipBehavior: Clip.hardEdge,
+          //       //       decoration: BoxDecoration(
+          //       //           borderRadius: BorderRadius.circular(20),
+          //       //           border:
+          //       //               Border.all(color: Colors.white.withOpacity(0.1))),
+          //       //       child: Padding(
+          //       //         padding: const EdgeInsets.only(
+          //       //             left: 15.0, right: 15, bottom: 15, top: 20.0),
+          //       //         child: Consumer<SerialStreamerProvider>(
+          //       //           builder: (context, provider, child) {
+          //       //             return Column(
+          //       //               crossAxisAlignment: CrossAxisAlignment.start,
+          //       //               children: [
+          //       //                 SizedBox(
+          //       //                   height: 50,
+          //       //                   child: ListView(
+          //       //                     scrollDirection: Axis.horizontal,
+          //       //                     clipBehavior: Clip.none,
+          //       //                     children: [
+          //       //                       Padding(
+          //       //                         padding: const EdgeInsets.only(
+          //       //                             top: 8.0, right: 20, bottom: 5),
+          //       //                         child: SoftCheckbox(
+          //       //                           lblAscii,
+          //       //                           onChanged: (checked) => provider
+          //       //                               .rxAscii = checked ?? true,
+          //       //                           value: provider.rxAscii,
+          //       //                           labelStyle:
+          //       //                               const TextStyle(fontSize: 12.0),
+          //       //                         ),
+          //       //                       ),
+          //       //                       const VerticalDivider(
+          //       //                         color: color1,
+          //       //                         indent: 15,
+          //       //                         endIndent: 15,
+          //       //                       ),
+          //       //                       Padding(
+          //       //                         padding: const EdgeInsets.only(
+          //       //                             top: 8.0, right: 20, bottom: 5),
+          //       //                         child: SoftCheckbox(
+          //       //                           lblHex,
+          //       //                           onChanged: (checked) =>
+          //       //                               provider.rxHex = checked ?? false,
+          //       //                           value: provider.rxHex,
+          //       //                           labelStyle:
+          //       //                               const TextStyle(fontSize: 12.0),
+          //       //                         ),
+          //       //                       ),
+          //       //                       const VerticalDivider(
+          //       //                         color: color1,
+          //       //                         indent: 15,
+          //       //                         endIndent: 15,
+          //       //                       ),
+          //       //                       Padding(
+          //       //                         padding: const EdgeInsets.only(
+          //       //                             top: 8.0, right: 20, bottom: 5),
+          //       //                         child: SoftCheckbox(
+          //       //                           lblDecimal,
+          //       //                           onChanged: (checked) => provider
+          //       //                               .rxDecimal = checked ?? false,
+          //       //                           value: provider.rxDecimal,
+          //       //                           labelStyle:
+          //       //                               const TextStyle(fontSize: 12.0),
+          //       //                         ),
+          //       //                       ),
+          //       //                       const VerticalDivider(
+          //       //                         color: color1,
+          //       //                         indent: 15,
+          //       //                         endIndent: 15,
+          //       //                       ),
+          //       //                       Padding(
+          //       //                         padding: const EdgeInsets.only(
+          //       //                             top: 8.0, right: 20, bottom: 5),
+          //       //                         child: SoftCheckbox(
+          //       //                           lblBinary,
+          //       //                           onChanged: (checked) => provider
+          //       //                               .rxBinary = checked ?? false,
+          //       //                           value: provider.rxBinary,
+          //       //                           labelStyle:
+          //       //                               const TextStyle(fontSize: 12.0),
+          //       //                         ),
+          //       //                       ),
+          //       //                       const VerticalDivider(
+          //       //                         color: color1,
+          //       //                         indent: 15,
+          //       //                         endIndent: 15,
+          //       //                       ),
+          //       //                       Padding(
+          //       //                         padding: const EdgeInsets.only(
+          //       //                             top: 8.0, right: 20, bottom: 5),
+          //       //                         child: SoftCheckbox(
+          //       //                           lblAutoScroll,
+          //       //                           onChanged: (checked) => provider
+          //       //                               .rxAutoScroll = checked ?? false,
+          //       //                           value: provider.rxAutoScroll,
+          //       //                           labelStyle:
+          //       //                               const TextStyle(fontSize: 12.0),
+          //       //                         ),
+          //       //                       ),
+          //       //                       const VerticalDivider(
+          //       //                         color: color1,
+          //       //                       ),
+          //       //                       SoftText(
+          //       //                         "${provider.rxData}",
+          //       //                         label: "RX",
+          //       //                         width: 150,
+          //       //                         height: 50,
+          //       //                         labelStyle:
+          //       //                             const TextStyle(fontSize: 12),
+          //       //                         textStyle: Theme.of(context)
+          //       //                             .textTheme
+          //       //                             .bodyLarge
+          //       //                             ?.copyWith(fontSize: 14),
+          //       //                         textAlign: TextAlign.end,
+          //       //                         contentPadding:
+          //       //                             const EdgeInsets.symmetric(
+          //       //                                 vertical: 5, horizontal: 20),
+          //       //                       ),
+          //       //                       const Gap(25),
+          //       //                       SoftButton("Reset", ButtonType.emboss,
+          //       //                           width: 100,
+          //       //                           height: 40, onPressed: () {
+          //       //                         provider.resetRXCounter();
+          //       //                       }),
+          //       //                     ],
+          //       //                   ),
+          //       //                 ),
+          //       //                 const Gap(10),
+          //       //                 SizedBox(
+          //       //                   height: 50,
+          //       //                   width: 150,
+          //       //                   child: SoftButton(
+          //       //                       "Clear Data", ButtonType.concave,
+          //       //                       onPressed: () {
+          //       //                     provider.resetRXData();
+          //       //                   }),
+          //       //                 ),
+          //       //                 const Gap(10),
+          //       //                 Container(
+          //       //                   height: 400,
+          //       //                   decoration: const BoxDecoration(
+          //       //                     color: color6,
+          //       //                     borderRadius:
+          //       //                         BorderRadius.all(Radius.circular(20)),
+          //       //                     boxShadow: [
+          //       //                       BoxShadow(
+          //       //                         offset: Offset(-10, -10),
+          //       //                         blurRadius: 20,
+          //       //                         spreadRadius: -10,
+          //       //                         color: Color(0xFF312C5E),
+          //       //                         inset: true,
+          //       //                       ),
+          //       //                       BoxShadow(
+          //       //                         offset: Offset(10, 10),
+          //       //                         blurRadius: 20,
+          //       //                         spreadRadius: -10,
+          //       //                         color: Color(0xFF050227),
+          //       //                         inset: true,
+          //       //                       ),
+          //       //                     ],
+          //       //                   ),
+          //       //                   child: Consumer<SerialStreamerProvider>(
+          //       //                       builder: (context, provider, child) {
+          //       //                     return StreamDataView(
+          //       //                       scrollController:
+          //       //                           provider.rxScrollController,
+          //       //                       gridController: provider.rxController,
+          //       //                       dataList: provider.rxDataList,
+          //       //                       ascii: provider.rxAscii,
+          //       //                       binary: provider.rxBinary,
+          //       //                       hex: provider.rxHex,
+          //       //                       decimal: provider.rxDecimal,
+          //       //                       autoScroll: provider.rxAutoScroll,
+          //       //                     );
+          //       //                   }),
+          //       //                 ),
+          //       //               ],
+          //       //             );
+          //       //           },
+          //       //         ),
+          //       //       ),
+          //       //     ),
+          //       //     Positioned(
+          //       //       top: -10.0,
+          //       //       left: 30.0,
+          //       //       child: Container(
+          //       //         color: color6,
+          //       //         child: const Text("Received Data"),
+          //       //       ),
+          //       //     ),
+          //       //   ],
+          //       // ),
+
+          //       const Gap(40),
+          //       Stack(
+          //         clipBehavior: Clip.none,
+          //         children: [
+          //           Container(
+          //             clipBehavior: Clip.hardEdge,
+          //             decoration: BoxDecoration(
+          //                 borderRadius: BorderRadius.circular(20),
+          //                 border:
+          //                     Border.all(color: Colors.white.withOpacity(0.1))),
+          //             child: Padding(
+          //               padding: const EdgeInsets.only(
+          //                   left: 15.0, right: 15, bottom: 15, top: 20.0),
+          //               child: Consumer<SerialStreamerProvider>(
+          //                 builder: (context, provider, child) {
+          //                   return Column(
+          //                     crossAxisAlignment: CrossAxisAlignment.start,
+          //                     children: [
+          //                       SizedBox(
+          //                         height: 50,
+          //                         child: ListView(
+          //                           scrollDirection: Axis.horizontal,
+          //                           clipBehavior: Clip.none,
+          //                           children: [
+          //                             Padding(
+          //                               padding: const EdgeInsets.only(
+          //                                   top: 8.0, right: 20, bottom: 5),
+          //                               child: SoftCheckbox(
+          //                                 lblAscii,
+          //                                 onChanged: (checked) => provider
+          //                                     .txAscii = checked ?? true,
+          //                                 value: provider.txAscii,
+          //                                 labelStyle:
+          //                                     const TextStyle(fontSize: 12.0),
+          //                               ),
+          //                             ),
+          //                             const VerticalDivider(
+          //                               color: color1,
+          //                               indent: 15,
+          //                               endIndent: 15,
+          //                             ),
+          //                             Padding(
+          //                               padding: const EdgeInsets.only(
+          //                                   top: 8.0, right: 20, bottom: 5),
+          //                               child: SoftCheckbox(
+          //                                 lblHex,
+          //                                 onChanged: (checked) =>
+          //                                     provider.txHex = checked ?? false,
+          //                                 value: provider.txHex,
+          //                                 labelStyle:
+          //                                     const TextStyle(fontSize: 12.0),
+          //                               ),
+          //                             ),
+          //                             const VerticalDivider(
+          //                               color: color1,
+          //                               indent: 15,
+          //                               endIndent: 15,
+          //                             ),
+          //                             Padding(
+          //                               padding: const EdgeInsets.only(
+          //                                   top: 8.0, right: 20, bottom: 5),
+          //                               child: SoftCheckbox(
+          //                                 lblDecimal,
+          //                                 onChanged: (checked) => provider
+          //                                     .txDecimal = checked ?? false,
+          //                                 value: provider.txDecimal,
+          //                                 labelStyle:
+          //                                     const TextStyle(fontSize: 12.0),
+          //                               ),
+          //                             ),
+          //                             const VerticalDivider(
+          //                               color: color1,
+          //                               indent: 15,
+          //                               endIndent: 15,
+          //                             ),
+          //                             Padding(
+          //                               padding: const EdgeInsets.only(
+          //                                   top: 8.0, right: 20, bottom: 5),
+          //                               child: SoftCheckbox(
+          //                                 lblBinary,
+          //                                 onChanged: (checked) => provider
+          //                                     .txBinary = checked ?? false,
+          //                                 value: provider.txBinary,
+          //                                 labelStyle:
+          //                                     const TextStyle(fontSize: 12.0),
+          //                               ),
+          //                             ),
+          //                             const VerticalDivider(
+          //                               color: color1,
+          //                               indent: 15,
+          //                               endIndent: 15,
+          //                             ),
+          //                             Padding(
+          //                               padding: const EdgeInsets.only(
+          //                                   top: 8.0, right: 20, bottom: 5),
+          //                               child: SoftCheckbox(
+          //                                 lblAutoScroll,
+          //                                 onChanged: (checked) => provider
+          //                                     .txAutoScroll = checked ?? false,
+          //                                 value: provider.txAutoScroll,
+          //                                 labelStyle:
+          //                                     const TextStyle(fontSize: 12.0),
+          //                               ),
+          //                             ),
+          //                             const VerticalDivider(
+          //                               color: color1,
+          //                             ),
+          //                             SoftText(
+          //                               "${provider.txData}",
+          //                               label: "TX",
+          //                               width: 150,
+          //                               height: 50,
+          //                               labelStyle:
+          //                                   const TextStyle(fontSize: 12),
+          //                               textStyle: Theme.of(context)
+          //                                   .textTheme
+          //                                   .bodyLarge
+          //                                   ?.copyWith(fontSize: 14),
+          //                               textAlign: TextAlign.end,
+          //                               contentPadding:
+          //                                   const EdgeInsets.symmetric(
+          //                                       vertical: 5, horizontal: 20),
+          //                             ),
+          //                             const Gap(25),
+          //                             SoftButton("Reset", ButtonType.emboss,
+          //                                 width: 100,
+          //                                 height: 40, onPressed: () {
+          //                               provider.resetTXCounter();
+          //                             }),
+          //                             const VerticalDivider(
+          //                               color: color1,
+          //                             ),
+          //                             SoftDropDownButton.flat(
+          //                               "",
+          //                               "Send on Enter",
+          //                               selectedValue:
+          //                                   provider.selectedtxOnEnter,
+          //                               itemList: provider.txOnEnterList
+          //                                   .map(
+          //                                     (e) => DropdownMenuItem(
+          //                                       value: e,
+          //                                       child: Row(
+          //                                         children: [
+          //                                           const Spacer(),
+          //                                           Expanded(
+          //                                               child: Text(
+          //                                             txEnterStringList[e]!,
+          //                                             textAlign: TextAlign.end,
+          //                                           )),
+          //                                         ],
+          //                                       ),
+          //                                     ),
+          //                                   )
+          //                                   .toList(),
+          //                               width: 200,
+          //                               height: 45,
+          //                               onChanged: (value) {
+          //                                 provider
+          //                                     .selectedTXonEnterChanged(value);
+          //                               },
+          //                               labelTextStyle: const TextStyle(
+          //                                 fontSize: 12.0,
+          //                               ),
+          //                               itemStyle: const TextStyle(
+          //                                 fontSize: 12.0,
+          //                                 color: color1,
+          //                               ),
+          //                             ),
+          //                           ],
+          //                         ),
+          //                       ),
+          //                       const Gap(10),
+          //                       SizedBox(
+          //                         height: 50,
+          //                         width: 150,
+          //                         child: SoftButton(
+          //                             "Clear Data", ButtonType.concave,
+          //                             onPressed: () {
+          //                           provider.resetTXData();
+          //                         }),
+          //                       ),
+          //                       const Gap(10),
+          //                       Container(
+          //                         height: 400,
+          //                         decoration: const BoxDecoration(
+          //                           color: color6,
+          //                           borderRadius:
+          //                               BorderRadius.all(Radius.circular(20)),
+          //                           boxShadow: [
+          //                             BoxShadow(
+          //                               offset: Offset(-10, -10),
+          //                               blurRadius: 20,
+          //                               spreadRadius: -10,
+          //                               color: Color(0xFF312C5E),
+          //                               inset: true,
+          //                             ),
+          //                             BoxShadow(
+          //                               offset: Offset(10, 10),
+          //                               blurRadius: 20,
+          //                               spreadRadius: -10,
+          //                               color: Color(0xFF050227),
+          //                               inset: true,
+          //                             ),
+          //                           ],
+          //                         ),
+          //                         child: Consumer<SerialStreamerProvider>(
+          //                             builder: (context, provider, child) {
+          //                           return StreamDataView(
+          //                             scrollController:
+          //                                 provider.txScrollController,
+          //                             gridController: provider.txController,
+          //                             dataList: provider.txDataList,
+          //                             ascii: provider.txAscii,
+          //                             binary: provider.txBinary,
+          //                             hex: provider.txHex,
+          //                             decimal: provider.txDecimal,
+          //                             autoScroll: provider.txAutoScroll,
+          //                           );
+          //                         }),
+          //                       ),
+          //                     ],
+          //                   );
+          //                 },
+          //               ),
+          //             ),
+          //           ),
+          //           Positioned(
+          //             top: -10.0,
+          //             left: 30.0,
+          //             child: Container(
+          //               color: color6,
+          //               child: const Text("Transmitted Data"),
+          //             ),
+          //           ),
+          //         ],
+          //       ),
+          //     ],
+          //   ),
+          // ),
         ],
       ),
     );
