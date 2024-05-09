@@ -58,8 +58,8 @@ class SerialStreamerProvider<T> with ChangeNotifier {
   List<StreamDataEntity> rxDataList = [];
   List<StreamDataEntity> txDataList = [];
   ScrollController rxScrollController = ScrollController();
-  DragSelectGridViewController rxController = DragSelectGridViewController();
   ScrollController txScrollController = ScrollController();
+  DragSelectGridViewController rxController = DragSelectGridViewController();
   DragSelectGridViewController txController = DragSelectGridViewController();
 
   bool _txAutoScroll = true;
