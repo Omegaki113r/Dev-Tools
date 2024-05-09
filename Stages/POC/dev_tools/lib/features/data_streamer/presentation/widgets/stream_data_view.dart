@@ -88,10 +88,10 @@ class StreamDataView extends StatelessWidget {
               mainAxisExtent: mainAxisHeight,
             ),
             itemBuilder: (context, index, selected) {
-              if (autoScroll) {
-                scrollController
-                    .jumpTo(scrollController.position.maxScrollExtent);
-              }
+              // if (autoScroll) {
+              //   scrollController
+              //       .jumpTo(scrollController.position.maxScrollExtent);
+              // }
               return selected
                   ? StreamDataCell.flat(
                       ascii: ascii && dataList.isNotEmpty
