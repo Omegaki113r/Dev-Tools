@@ -18,9 +18,12 @@ import 'dart:async';
 import 'package:dev_tools/core/services/data_streamer/serial_service.dart';
 import 'package:dev_tools/features/data_streamer/domain/entities/stream_data_entitiy.dart';
 import 'package:dev_tools/features/data_streamer/domain/usecases/serial_convert_usecase.dart';
+import 'package:docking/docking.dart';
 import 'package:drag_select_grid_view/drag_select_grid_view.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
+enum TXDataType { ascii, hex, decimal, binary }
 
 enum TxOnEnter { none, cr, lf, crlf, space, stxetx, nul }
 
@@ -59,8 +62,13 @@ class SerialStreamerProvider<T> with ChangeNotifier {
   List<StreamDataEntity> txDataList = [];
   ScrollController rxScrollController = ScrollController();
   ScrollController txScrollController = ScrollController();
-  DragSelectGridViewController rxController = DragSelectGridViewController();
-  DragSelectGridViewController txController = DragSelectGridViewController();
+  DragSelectGridViewController rxGridViewController =
+      DragSelectGridViewController();
+  DragSelectGridViewController txGridViewController =
+      DragSelectGridViewController();
+
+  final TextEditingController _txEditingController = TextEditingController();
+  TXDataType _txDataType = TXDataType.ascii;
 
   bool _txAutoScroll = true;
   bool _ctsFlowControl = false;
@@ -87,20 +95,25 @@ class SerialStreamerProvider<T> with ChangeNotifier {
         _serialSearchTimerCallback,
       );
     }
-    rxController.addListener(rxListener);
-    txController.addListener(txListener);
+    _txEditingController.addListener(txEditingListener);
+    rxGridViewController.addListener(rxListener);
+    txGridViewController.addListener(txListener);
   }
 
   void rxListener() {
     if (kDebugMode) {
-      print(rxController.value);
+      print(rxGridViewController.value);
     }
     notifyListeners();
   }
 
   void txListener() {
     if (kDebugMode) {
-      print(txController.value);
+      print(txGridViewController.value);
+    }
+    notifyListeners();
+  }
+
     }
     notifyListeners();
   }
@@ -111,8 +124,11 @@ class SerialStreamerProvider<T> with ChangeNotifier {
       _serialSearchTimer.cancel();
     }
     _serialService.dispose();
-    rxController.removeListener(rxListener);
-    txController.removeListener(txListener);
+    rxGridViewController.removeListener(rxListener);
+    txGridViewController.removeListener(txListener);
+    rxGridViewController.dispose();
+    txGridViewController.dispose();
+    _txEditingController.dispose();
     super.dispose();
   }
 
@@ -220,14 +236,14 @@ class SerialStreamerProvider<T> with ChangeNotifier {
 
   void resetRXData() {
     // _rxData = 0;
-    rxController.clear();
+    rxGridViewController.clear();
     rxDataList.clear();
     notifyListeners();
   }
 
   void resetTXData() {
     // _txData = 0;
-    txController.clear();
+    txGridViewController.clear();
     txDataList.clear();
     notifyListeners();
   }
@@ -352,4 +368,6 @@ class SerialStreamerProvider<T> with ChangeNotifier {
   List<TxOnEnter> get txOnEnterList => txEnterList.keys.toList();
   int get rxData => _rxData;
   int get txData => _txData;
+
+  TextEditingController get txEditingController => _txEditingController;
 }
