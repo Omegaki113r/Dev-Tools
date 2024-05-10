@@ -136,7 +136,7 @@ class SerialStreamerProvider<T> with ChangeNotifier {
     _rxData += incomingBytes.length;
     _convertUsecase.convertCharacter(incomingBytes).listen((event) {
       rxDataList.add(event);
-      if (_rxAutoScroll)
+      if (_rxAutoScroll && rxScrollController.hasClients)
         rxScrollController.jumpTo(rxScrollController.position.maxScrollExtent);
       notifyListeners();
     });
@@ -148,7 +148,7 @@ class SerialStreamerProvider<T> with ChangeNotifier {
         .convertCharacter(transmittableString.codeUnits)
         .listen((event) {
       txDataList.add(event);
-      if (_txAutoScroll)
+      if (_txAutoScroll && txScrollController.hasClients)
         txScrollController.jumpTo(txScrollController.position.maxScrollExtent);
       notifyListeners();
     });
