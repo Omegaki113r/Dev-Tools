@@ -397,14 +397,14 @@ class _SerialTabViewState extends State<SerialTabView> {
               child: TabbedViewTheme(
                   data: TabbedViewThemeData(
                     tabsArea: TabsAreaThemeData(
-                        border: Border(
+                        border: const Border(
                             bottom: BorderSide(color: Color(0xFF2C2754)))),
                     tab: TabThemeData(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                      margin: EdgeInsets.only(top: 30, left: 20, right: 20),
-                      highlightedStatus: TabStatusThemeData(
-                        decoration: BoxDecoration(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 30, vertical: 10),
+                      margin:
+                          const EdgeInsets.only(top: 30, left: 20, right: 20),
+                      decoration: const BoxDecoration(
                           color: color6,
                           borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(15),
@@ -432,7 +432,7 @@ class _SerialTabViewState extends State<SerialTabView> {
                         ),
                       ),
                       selectedStatus: TabStatusThemeData(
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                         color: color6,
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(15),
@@ -458,6 +458,7 @@ class _SerialTabViewState extends State<SerialTabView> {
                     ),
                   ),
                   child: Docking(
+                    maximizableTabsArea: false,
                     layout: DockingLayout(
                       root: DockingTabs(
                         [
@@ -465,9 +466,9 @@ class _SerialTabViewState extends State<SerialTabView> {
                             name: "Received",
                             closable: false,
                             maximizable: false,
-                            widget: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 20),
-                              child: SingleChildScrollView(
+                            widget: SingleChildScrollView(
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 30.0),
                                 child: Stack(
                                   clipBehavior: Clip.none,
                                   children: [
@@ -745,9 +746,9 @@ class _SerialTabViewState extends State<SerialTabView> {
                             name: "Transmitted",
                             closable: false,
                             maximizable: false,
-                            widget: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 20),
-                              child: SingleChildScrollView(
+                            widget: SingleChildScrollView(
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 30.0),
                                 child: Stack(
                                   clipBehavior: Clip.none,
                                   children: [
