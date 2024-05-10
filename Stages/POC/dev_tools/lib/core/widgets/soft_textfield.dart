@@ -16,6 +16,7 @@
 
 import 'package:dev_tools/core/constants/app_colors.dart';
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
+import 'package:flutter/services.dart';
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
 import 'package:gap/gap.dart';
 
@@ -25,12 +26,14 @@ class SoftTextField extends StatefulWidget {
   final Function(String)? onSubmitted;
   final double? width;
   final double? height;
+  final List<TextInputFormatter>? inputFormatter;
   final String? label;
   final bool? readOnly;
   const SoftTextField({
     super.key,
     this.height,
     this.width,
+    this.inputFormatter,
     this.label,
     this.readOnly,
     required this.controller,
@@ -88,6 +91,7 @@ class _SoftTextFieldState extends State<SoftTextField> {
                 },
                 readOnly: widget.readOnly ?? false,
                 controller: widget.controller,
+                inputFormatters: widget.inputFormatter,
                 onChanged: (String value) {
                   if (widget.onChanged != null) widget.onChanged!(value);
                 }),
