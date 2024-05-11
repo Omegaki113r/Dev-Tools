@@ -114,7 +114,108 @@ class SerialStreamerProvider<T> with ChangeNotifier {
     notifyListeners();
   }
 
+  void txEditingListener(String newValue) {
+    int currentPosition = _txEditingController.selection.base.offset;
+    bool cursorAtEnd = (newValue.length == currentPosition);
+    switch (_txDataType) {
+      case TXDataType.ascii:
+        break;
+      case TXDataType.hex:
+        if (newValue.length < previousTransmitString.length) {
+          previousTransmitString = _txEditingController.text;
+          return;
+        }
+        if (!isHexadecimal(newValue.characters.last) &&
+            newValue.characters.last != " ") {
+          _txEditingController.text =
+              newValue.substring(0, newValue.length - 1);
+          _txEditingController.selection =
+              TextSelection.collapsed(offset: _txEditingController.text.length);
+          return;
+        }
+        String formattedString = "";
+        List<String> splittedStringList = newValue.split(" ");
+        if (newValue.characters.last == " ") {
+          splittedStringList.last += " ";
+        }
+        for (int idx = 0; idx < splittedStringList.length; ++idx) {
+          if (splittedStringList[idx].isEmpty) continue;
+          if (splittedStringList[idx].length > 2 &&
+              idx + 1 < splittedStringList.length) {
+            splittedStringList[idx + 1] = splittedStringList[idx].substring(2) +
+                splittedStringList[idx + 1];
+            splittedStringList[idx] =
+                splittedStringList[idx].replaceRange(2, null, "");
+          } else if (splittedStringList[idx].length > 2) {
+            splittedStringList.add(splittedStringList[idx].substring(2));
+          }
+        }
+        for (int idx = 0; idx < splittedStringList.length; ++idx) {
+          if (splittedStringList[idx].isEmpty) continue;
+          if (splittedStringList[idx].length < 2) {
+            if (idx < splittedStringList.length - 1) {
+              formattedString += "${splittedStringList[idx].toUpperCase()} ";
+            } else {
+              formattedString += "${splittedStringList[idx].toUpperCase()}";
+            }
+          } else {
+            formattedString += "${splittedStringList[idx].toUpperCase()} ";
+          }
+        }
+        _txEditingController.text = formattedString;
+        break;
+      case TXDataType.decimal:
+        break;
+      case TXDataType.binary:
+        if (newValue.length < previousTransmitString.length) {
+          previousTransmitString = _txEditingController.text;
+          return;
+        }
+        if (newValue.characters.last != "1" &&
+            newValue.characters.last != "0" &&
+            newValue.characters.last != " ") {
+          _txEditingController.text =
+              newValue.substring(0, newValue.length - 1);
+          _txEditingController.selection =
+              TextSelection.collapsed(offset: _txEditingController.text.length);
+          return;
+        }
+        String formattedString = "";
+        List<String> splittedStringList = newValue.split(" ");
+        if (newValue.characters.last == " ") {
+          splittedStringList.last += " ";
+        }
+        for (int idx = 0; idx < splittedStringList.length; ++idx) {
+          if (splittedStringList[idx].isEmpty) continue;
+          if (splittedStringList[idx].length > 8 &&
+              idx + 1 < splittedStringList.length) {
+            splittedStringList[idx + 1] = splittedStringList[idx].substring(8) +
+                splittedStringList[idx + 1];
+            splittedStringList[idx] =
+                splittedStringList[idx].replaceRange(8, null, "");
+          } else if (splittedStringList[idx].length > 8) {
+            splittedStringList.add(splittedStringList[idx].substring(8));
+          }
+        }
+        for (int idx = 0; idx < splittedStringList.length; ++idx) {
+          if (splittedStringList[idx].isEmpty) continue;
+          if (splittedStringList[idx].length < 8) {
+            if (idx < splittedStringList.length - 1) {
+              formattedString += "${splittedStringList[idx].toUpperCase()} ";
+            } else {
+              formattedString += "${splittedStringList[idx].toUpperCase()}";
+            }
+          } else {
+            formattedString += "${splittedStringList[idx].toUpperCase()} ";
+          }
+        }
+        _txEditingController.text = formattedString;
+        break;
     }
+    _txEditingController.selection = TextSelection.collapsed(
+        offset:
+            cursorAtEnd ? _txEditingController.text.length : currentPosition);
+    previousTransmitString = _txEditingController.text;
     notifyListeners();
   }
 
