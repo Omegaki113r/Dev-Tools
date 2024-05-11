@@ -357,6 +357,14 @@ class SerialStreamerProvider<T> with ChangeNotifier {
   String? get selectedParity => _selectedParity;
   TxOnEnter get selectedtxOnEnter => _selectedtxOnEnter;
 
+  TXDataType get txDataType => _txDataType;
+  set txDataType(TXDataType newType) {
+    _txDataType = newType;
+    previousTransmitString = "";
+    _txEditingController.clear();
+    notifyListeners();
+  }
+
   bool get txAutoScroll => _txAutoScroll;
   set txAutoScroll(bool value) {
     _txAutoScroll = value;
