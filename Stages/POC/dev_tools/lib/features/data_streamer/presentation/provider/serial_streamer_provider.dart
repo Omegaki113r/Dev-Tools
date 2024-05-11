@@ -15,6 +15,7 @@
  */
 
 import 'dart:async';
+import 'dart:convert';
 import 'package:dev_tools/core/services/data_streamer/serial_service.dart';
 import 'package:dev_tools/features/data_streamer/domain/entities/stream_data_entitiy.dart';
 import 'package:dev_tools/features/data_streamer/domain/usecases/serial_convert_usecase.dart';
@@ -22,6 +23,7 @@ import 'package:docking/docking.dart';
 import 'package:drag_select_grid_view/drag_select_grid_view.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:string_validator/string_validator.dart';
 
 enum TXDataType { ascii, hex, decimal, binary }
 
@@ -67,6 +69,7 @@ class SerialStreamerProvider<T> with ChangeNotifier {
   DragSelectGridViewController txGridViewController =
       DragSelectGridViewController();
 
+  String previousTransmitString = "";
   final TextEditingController _txEditingController = TextEditingController();
   TXDataType _txDataType = TXDataType.ascii;
 
@@ -95,7 +98,7 @@ class SerialStreamerProvider<T> with ChangeNotifier {
         _serialSearchTimerCallback,
       );
     }
-    _txEditingController.addListener(txEditingListener);
+    // _txEditingController.addListener(txEditingListener);
     rxGridViewController.addListener(rxListener);
     txGridViewController.addListener(txListener);
   }
