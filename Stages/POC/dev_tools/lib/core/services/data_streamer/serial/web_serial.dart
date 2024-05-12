@@ -13,9 +13,6 @@
  * Date      	By	Comments
  * ----------	---	---------------------------------------------------------
  */
-
-import 'dart:html';
-
 import 'package:dev_tools/core/services/data_streamer/serial/serial_interface.dart';
 import 'package:flutter/foundation.dart';
 import 'package:serial/serial.dart';

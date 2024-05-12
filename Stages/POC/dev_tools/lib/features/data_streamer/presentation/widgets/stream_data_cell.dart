@@ -12,9 +12,7 @@
 
 import 'package:dev_tools/core/constants/app_colors.dart';
 import 'package:dev_tools/core/constants/app_constants.dart';
-import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
-import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
-import 'package:gap/gap.dart';
+import 'package:flutter/material.dart';
 
 class StreamDataCell extends StatelessWidget {
   final String? ascii;
@@ -32,11 +30,6 @@ class StreamDataCell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int enabledCount = (ascii != null ? 1 : 0) +
-        (hex != null ? 1 : 0) +
-        (decimal != null ? 1 : 0) +
-        (binary != null ? 1 : 0);
-
     List<Color> backgroundColors = getBackgroundColors();
     return isFlat
         ? Container(
@@ -58,12 +51,6 @@ class StreamDataCell extends StatelessWidget {
                       textAlign: TextAlign.end,
                     ),
                   ),
-                  // if (enabledCount > 1) ...[
-                  //   const Divider(
-                  //     height: 1,
-                  //     color: color1,
-                  //   ),
-                  // ],
                 ],
                 if (hex != null) ...[
                   Container(
@@ -78,12 +65,6 @@ class StreamDataCell extends StatelessWidget {
                       textAlign: TextAlign.end,
                     ),
                   ),
-                  // if (enabledCount > 1) ...[
-                  //   const Divider(
-                  //     height: 1,
-                  //     color: color1,
-                  //   ),
-                  // ],
                 ],
                 if (decimal != null) ...[
                   Container(
@@ -98,12 +79,6 @@ class StreamDataCell extends StatelessWidget {
                       textAlign: TextAlign.end,
                     ),
                   ),
-                  // if (enabledCount > 1) ...[
-                  //   const Divider(
-                  //     height: 1,
-                  //     color: color1,
-                  //   ),
-                  // ],
                 ],
                 if (binary != null) ...[
                   Container(
@@ -126,7 +101,6 @@ class StreamDataCell extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              // const Gap(4),
               if (ascii != null) ...[
                 Container(
                   color: backgroundColors[0],
@@ -140,12 +114,6 @@ class StreamDataCell extends StatelessWidget {
                     textAlign: TextAlign.end,
                   ),
                 ),
-                // if (enabledCount > 1) ...[
-                //   Divider(
-                //     height: 1,
-                //     color: color1.withOpacity(0.4),
-                //   ),
-                // ],
               ],
               if (hex != null) ...[
                 Container(
@@ -160,12 +128,6 @@ class StreamDataCell extends StatelessWidget {
                     textAlign: TextAlign.end,
                   ),
                 ),
-                // if (enabledCount > 1) ...[
-                //   Divider(
-                //     height: 1,
-                //     color: color1.withOpacity(0.4),
-                //   ),
-                // ],
               ],
               if (decimal != null) ...[
                 Container(
@@ -180,12 +142,6 @@ class StreamDataCell extends StatelessWidget {
                     textAlign: TextAlign.end,
                   ),
                 ),
-                // if (enabledCount > 1) ...[
-                //   Divider(
-                //     height: 1,
-                //     color: color1.withOpacity(0.4),
-                //   ),
-                // ],
               ],
               if (binary != null) ...[
                 Container(

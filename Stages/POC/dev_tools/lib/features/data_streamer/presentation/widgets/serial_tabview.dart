@@ -396,10 +396,13 @@ class _SerialTabViewState extends State<SerialTabView> {
                     controller: context
                         .watch<SerialStreamerProvider>()
                         .txEditingController,
-                    onChanged: (p0) => context.read<SerialStreamerProvider>().txEditingListener(p0),
+                    onChanged: (p0) => context
+                        .read<SerialStreamerProvider>()
+                        .txEditingListener(p0),
                     onSubmitted: (value) {
-                      if (!context.read<SerialStreamerProvider>().isOpen())
+                      if (!context.read<SerialStreamerProvider>().isOpen()) {
                         return;
+                      }
                       context
                           .read<SerialStreamerProvider>()
                           .serialDataTransmitHandler(value);
@@ -412,7 +415,7 @@ class _SerialTabViewState extends State<SerialTabView> {
                 ),
                 SizedBox(
                   height: 100,
-                  width: 275,
+                  width: 375,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
@@ -424,8 +427,8 @@ class _SerialTabViewState extends State<SerialTabView> {
                         children: [
                           Expanded(
                             child: ListTile(
-                              title: Text(
-                                "ASCII",
+                              title: const Text(
+                                lblAscii,
                                 style: TextStyle(color: color2, fontSize: 12),
                               ),
                               leading: Radio(
@@ -441,8 +444,8 @@ class _SerialTabViewState extends State<SerialTabView> {
                           ),
                           Expanded(
                             child: ListTile(
-                              title: Text(
-                                "Hex",
+                              title: const Text(
+                                lblHex,
                                 style: TextStyle(color: color2, fontSize: 12),
                               ),
                               leading: Radio(
@@ -465,12 +468,12 @@ class _SerialTabViewState extends State<SerialTabView> {
                         children: [
                           Expanded(
                             child: ListTile(
-                              title: Text(
-                                "Decimal",
+                              title: const Text(
+                                lblBinary,
                                 style: TextStyle(color: color2, fontSize: 12),
                               ),
                               leading: Radio(
-                                value: TXDataType.decimal,
+                                value: TXDataType.binary,
                                 groupValue: context
                                     .watch<SerialStreamerProvider>()
                                     .txDataType,
@@ -545,6 +548,17 @@ class _SerialTabViewState extends State<SerialTabView> {
                   selectedStatus: TabStatusThemeData(
                       decoration: const BoxDecoration(
                     color: color6,
+                    border: Border(
+                      top: BorderSide(
+                        color: Color(0xFF2C2754),
+                      ),
+                      left: BorderSide(
+                        color: Color(0xFF2C2754),
+                      ),
+                      right: BorderSide(
+                        color: Color(0xFF2C2754),
+                      ),
+                    ),
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(15),
                       topRight: Radius.circular(15),

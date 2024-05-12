@@ -33,7 +33,7 @@ class MainView extends StatelessWidget {
       child: Container(
         clipBehavior: Clip.hardEdge,
         decoration: BoxDecoration(
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(
               offset: Offset(-10, 0),
               blurRadius: 20,
@@ -41,11 +41,11 @@ class MainView extends StatelessWidget {
             ),
           ],
           gradient: LinearGradient(
-            colors: [
+            colors: const [
               Color.fromRGBO(255, 255, 255, 0.8),
               Color.fromRGBO(255, 255, 255, 0),
             ],
-            stops: [
+            stops: const [
               0.1,
               0.3,
             ],
@@ -53,11 +53,11 @@ class MainView extends StatelessWidget {
             end: Alignment.bottomRight,
           ),
           borderRadius: borderBottom
-              ? BorderRadius.only(
+              ? const BorderRadius.only(
                   bottomLeft: Radius.circular(20),
                   bottomRight: Radius.circular(20),
                 )
-              : BorderRadius.only(
+              : const BorderRadius.only(
                   topLeft: Radius.circular(20),
                   bottomLeft: Radius.circular(20),
                 ),
@@ -70,11 +70,11 @@ class MainView extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: color6,
                   borderRadius: borderBottom
-                      ? BorderRadius.only(
+                      ? const BorderRadius.only(
                           bottomLeft: Radius.circular(20),
                           bottomRight: Radius.circular(20),
                         )
-                      : BorderRadius.only(
+                      : const BorderRadius.only(
                           topLeft: Radius.circular(20),
                           bottomLeft: Radius.circular(20),
                         ),

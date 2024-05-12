@@ -15,11 +15,9 @@
  */
 
 import 'dart:async';
-import 'dart:convert';
 import 'package:dev_tools/core/services/data_streamer/serial_service.dart';
 import 'package:dev_tools/features/data_streamer/domain/entities/stream_data_entitiy.dart';
 import 'package:dev_tools/features/data_streamer/domain/usecases/serial_convert_usecase.dart';
-import 'package:docking/docking.dart';
 import 'package:drag_select_grid_view/drag_select_grid_view.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -159,7 +157,7 @@ class SerialStreamerProvider<T> with ChangeNotifier {
             if (idx < splittedStringList.length - 1) {
               formattedString += "${splittedStringList[idx].toUpperCase()} ";
             } else {
-              formattedString += "${splittedStringList[idx].toUpperCase()}";
+              formattedString += splittedStringList[idx].toUpperCase();
             }
           } else {
             formattedString += "${splittedStringList[idx].toUpperCase()} ";
@@ -206,7 +204,7 @@ class SerialStreamerProvider<T> with ChangeNotifier {
             if (idx < splittedStringList.length - 1) {
               formattedString += "${splittedStringList[idx].toUpperCase()} ";
             } else {
-              formattedString += "${splittedStringList[idx].toUpperCase()}";
+              formattedString += splittedStringList[idx].toUpperCase();
             }
           } else {
             formattedString += "${splittedStringList[idx].toUpperCase()} ";
@@ -256,8 +254,9 @@ class SerialStreamerProvider<T> with ChangeNotifier {
     _rxData += incomingBytes.length;
     _convertUsecase.convertCharacter(incomingBytes).listen((event) {
       rxDataList.add(event);
-      if (_rxAutoScroll && rxScrollController.hasClients)
+      if (_rxAutoScroll && rxScrollController.hasClients) {
         rxScrollController.jumpTo(rxScrollController.position.maxScrollExtent);
+      }
       notifyListeners();
     });
   }
@@ -268,8 +267,9 @@ class SerialStreamerProvider<T> with ChangeNotifier {
         .convertCharacter(transmittableString.codeUnits)
         .listen((event) {
       txDataList.add(event);
-      if (_txAutoScroll && txScrollController.hasClients)
+      if (_txAutoScroll && txScrollController.hasClients) {
         txScrollController.jumpTo(txScrollController.position.maxScrollExtent);
+      }
       notifyListeners();
     });
     List<int> dataToWrite = transmittableString.codeUnits.toList();
