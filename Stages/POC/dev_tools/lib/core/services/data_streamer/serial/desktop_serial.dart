@@ -110,9 +110,8 @@ class DesktopSerialInterface implements SerialInterface {
         config.bits = dataBits[selectedDataBits]!;
         config.parity = parity[selectedParity]!;
         config.stopBits = stopBits[selectedStopBits]!;
-        config.setFlowControl(ctsFlowControl
-            ? SerialPortFlowControl.rtsCts
-            : SerialPortFlowControl.none);
+        config.cts =
+            (ctsFlowControl ? SerialPortCts.flowControl : SerialPortCts.ignore);
         _selectedPort!.config = config;
         // try {
         if (_serialPortReader != null) {
