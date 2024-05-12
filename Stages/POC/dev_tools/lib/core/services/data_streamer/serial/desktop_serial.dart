@@ -147,7 +147,7 @@ class DesktopSerialInterface implements SerialInterface {
     if (_selectedPort == null || !_selectedPort!.isOpen) return;
     SerialPortConfig config = _selectedPort!.config;
     config.cts =
-        (ctsFlowControl ? SerialPortCts.flowControl : SerialPortCts.ignore)!;
+        (ctsFlowControl ? SerialPortCts.flowControl : SerialPortCts.ignore);
     _selectedPort!.config = config;
   }
 
