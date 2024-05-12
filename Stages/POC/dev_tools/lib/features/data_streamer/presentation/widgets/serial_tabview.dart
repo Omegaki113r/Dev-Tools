@@ -4,7 +4,7 @@
  * File Created: Friday, 10th May 2024 12:58:32 am
  * Author: Omegaki113r (omegaki113r@gmail.com)
  * -----
- * Last Modified: Sunday, 12th May 2024 1:41:28 am
+ * Last Modified: Monday, 13th May 2024 1:13:37 am
  * Modified By: Omegaki113r (omegaki113r@gmail.com)
  * -----
  * Copyright 2024 - 2024 0m3g4ki113r, Xtronic
@@ -39,7 +39,6 @@ import 'package:dev_tools/features/data_streamer/presentation/widgets/stream_dat
 import 'package:docking/docking.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
-import 'package:flutter/services.dart';
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
@@ -459,13 +458,6 @@ class _SerialTabViewState extends State<SerialTabView> {
                               ),
                             ),
                           ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
                           Expanded(
                             child: ListTile(
                               title: const Text(
@@ -483,23 +475,55 @@ class _SerialTabViewState extends State<SerialTabView> {
                               ),
                             ),
                           ),
-                          Expanded(
-                            child: ListTile(
-                              title: Text(
-                                "Binary",
-                                style: TextStyle(color: color2, fontSize: 12),
-                              ),
-                              leading: Radio(
-                                value: TXDataType.binary,
-                                groupValue: context
-                                    .watch<SerialStreamerProvider>()
-                                    .txDataType,
-                                onChanged: (value) => context
-                                    .read<SerialStreamerProvider>()
-                                    .txDataType = value!,
-                              ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Gap(20),
+                          SoftDropDownButton.flat(
+                            "",
+                            "Send on Enter",
+                            selectedValue: context
+                                .watch<SerialStreamerProvider>()
+                                .selectedtxOnEnter,
+                            itemList: context
+                                .read<SerialStreamerProvider>()
+                                .txOnEnterList
+                                .map(
+                                  (e) => DropdownMenuItem(
+                                    value: e,
+                                    child: Row(
+                                      children: [
+                                        const Spacer(),
+                                        Expanded(
+                                            child: Text(
+                                          txEnterStringList[e]!,
+                                          textAlign: TextAlign.end,
+                                        )),
+                                      ],
+                                    ),
+                                  ),
+                                )
+                                .toList(),
+                            width: 200,
+                            height: 45,
+                            onChanged: (value) {
+                              context
+                                  .read<SerialStreamerProvider>()
+                                  .selectedTXonEnterChanged(value);
+                            },
+                            labelTextStyle: const TextStyle(
+                              fontSize: 12.0,
+                            ),
+                            itemStyle: const TextStyle(
+                              fontSize: 12.0,
+                              color: color1,
                             ),
                           ),
+                          const Spacer(),
                         ],
                       ),
                     ],
@@ -934,44 +958,6 @@ class _SerialTabViewState extends State<SerialTabView> {
                                         width: 100, height: 40, onPressed: () {
                                       provider.resetTXCounter();
                                     }),
-                                    const VerticalDivider(
-                                      color: color1,
-                                    ),
-                                    SoftDropDownButton.flat(
-                                      "",
-                                      "Send on Enter",
-                                      selectedValue: provider.selectedtxOnEnter,
-                                      itemList: provider.txOnEnterList
-                                          .map(
-                                            (e) => DropdownMenuItem(
-                                              value: e,
-                                              child: Row(
-                                                children: [
-                                                  const Spacer(),
-                                                  Expanded(
-                                                      child: Text(
-                                                    txEnterStringList[e]!,
-                                                    textAlign: TextAlign.end,
-                                                  )),
-                                                ],
-                                              ),
-                                            ),
-                                          )
-                                          .toList(),
-                                      width: 200,
-                                      height: 45,
-                                      onChanged: (value) {
-                                        provider
-                                            .selectedTXonEnterChanged(value);
-                                      },
-                                      labelTextStyle: const TextStyle(
-                                        fontSize: 12.0,
-                                      ),
-                                      itemStyle: const TextStyle(
-                                        fontSize: 12.0,
-                                        color: color1,
-                                      ),
-                                    ),
                                   ],
                                 ),
                               ),
