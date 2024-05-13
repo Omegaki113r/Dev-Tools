@@ -16,6 +16,8 @@
 
 import 'dart:async';
 import 'package:dev_tools/core/services/data_streamer/serial_service.dart';
+import 'package:dev_tools/features/bitwise_calculator/domain/entities/bitwise_converter_entity.dart';
+import 'package:dev_tools/features/bitwise_calculator/domain/usecases/bitwise_convert_usecase.dart';
 import 'package:dev_tools/features/data_streamer/domain/entities/stream_data_entitiy.dart';
 import 'package:dev_tools/features/data_streamer/domain/usecases/serial_convert_usecase.dart';
 import 'package:drag_select_grid_view/drag_select_grid_view.dart';
@@ -262,17 +264,67 @@ class SerialStreamerProvider<T> with ChangeNotifier {
   }
 
   void serialDataTransmitHandler(String transmittableString) {
-    _txData += transmittableString.length;
-    _convertUsecase
-        .convertCharacter(transmittableString.codeUnits)
-        .listen((event) {
-      txDataList.add(event);
-      if (_txAutoScroll && txScrollController.hasClients) {
-        txScrollController.jumpTo(txScrollController.position.maxScrollExtent);
-      }
-      notifyListeners();
-    });
-    List<int> dataToWrite = transmittableString.codeUnits.toList();
+    List<int> dataToWrite = [];
+    switch (_txDataType) {
+      case TXDataType.ascii:
+        _txData += transmittableString.length;
+        _convertUsecase
+            .convertCharacter(transmittableString.codeUnits)
+            .listen((event) {
+          txDataList.add(event);
+          if (_txAutoScroll && txScrollController.hasClients) {
+            txScrollController
+                .jumpTo(txScrollController.position.maxScrollExtent);
+          }
+          notifyListeners();
+        });
+        dataToWrite = transmittableString.codeUnits.toList();
+        break;
+      case TXDataType.binary:
+        List<String> splittedStringList = transmittableString.split(" ");
+        _txData += splittedStringList.length;
+        splittedStringList.forEach((element) {
+          if (element.isNotEmpty) {
+            dataToWrite.add(int.parse(element, radix: 2));
+            BitwiseConvert converter = BitwiseConvert();
+            BitwiseConverterEntity convertedEntity =
+                converter.convertFromBinary(element);
+            txDataList.add(StreamDataEntity(
+                convertedEntity.ascii,
+                convertedEntity.binary,
+                convertedEntity.decimal,
+                convertedEntity.hex));
+            if (_txAutoScroll && txScrollController.hasClients) {
+              txScrollController
+                  .jumpTo(txScrollController.position.maxScrollExtent);
+            }
+          }
+        });
+        break;
+      case TXDataType.hex:
+        List<String> splittedStringList = transmittableString.split(" ");
+        _txData += splittedStringList.length;
+        splittedStringList.forEach((element) {
+          if (element.isNotEmpty) {
+            dataToWrite.add(int.parse(element, radix: 16));
+            BitwiseConvert converter = BitwiseConvert();
+            BitwiseConverterEntity convertedEntity =
+                converter.convertFromHex(element);
+            txDataList.add(StreamDataEntity(
+                convertedEntity.ascii,
+                convertedEntity.binary,
+                convertedEntity.decimal,
+                convertedEntity.hex));
+            if (_txAutoScroll && txScrollController.hasClients) {
+              txScrollController
+                  .jumpTo(txScrollController.position.maxScrollExtent);
+            }
+          }
+        });
+        break;
+      default:
+        break;
+    }
     switch (_selectedtxOnEnter) {
       case TxOnEnter.none:
         break;
