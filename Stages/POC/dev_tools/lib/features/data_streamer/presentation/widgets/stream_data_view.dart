@@ -44,7 +44,7 @@ class StreamDataView extends StatelessWidget {
       builder: (context, boxConstraint) {
         double divisableWidth = 20;
         if (binary) {
-          divisableWidth = 54;
+          divisableWidth = 60;
         } else if (decimal) {
           divisableWidth = 26;
         } else if (hex) {
