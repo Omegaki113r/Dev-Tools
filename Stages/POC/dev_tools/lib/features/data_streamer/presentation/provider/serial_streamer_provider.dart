@@ -267,7 +267,6 @@ class SerialStreamerProvider<T> with ChangeNotifier {
     List<int> dataToWrite = [];
     switch (_txDataType) {
       case TXDataType.ascii:
-        _txData += transmittableString.length;
         _convertUsecase
             .convertCharacter(transmittableString.codeUnits)
             .listen((event) {
@@ -277,8 +276,65 @@ class SerialStreamerProvider<T> with ChangeNotifier {
                 .jumpTo(txScrollController.position.maxScrollExtent);
           }
           notifyListeners();
+        }).onDone(() {
+          dataToWrite = transmittableString.codeUnits.toList();
+          switch (_selectedtxOnEnter) {
+            case TxOnEnter.none:
+              break;
+            case TxOnEnter.stxetx:
+              List<int> arr = txEnterList[_selectedtxOnEnter]!;
+              BitwiseConvert converter = BitwiseConvert();
+              BitwiseConverterEntity convertedEntity =
+                  converter.convertFromDecimal(arr.first.toRadixString(10));
+              txDataList.insert(
+                  0,
+                  StreamDataEntity(
+                      convertedEntity.ascii,
+                      convertedEntity.binary,
+                      convertedEntity.decimal,
+                      convertedEntity.hex));
+              dataToWrite.insert(0, arr.first);
+              convertedEntity =
+                  converter.convertFromDecimal(arr.last.toRadixString(10));
+              txDataList.add(StreamDataEntity(
+                  convertedEntity.ascii,
+                  convertedEntity.binary,
+                  convertedEntity.decimal,
+                  convertedEntity.hex));
+              dataToWrite.add(arr.last);
+              break;
+            default:
+              for (var element in txEnterList[_selectedtxOnEnter]!) {
+                BitwiseConvert converter = BitwiseConvert();
+                BitwiseConverterEntity convertedEntity =
+                    converter.convertFromDecimal(element.toRadixString(10));
+                String asciiValue = "";
+                switch (int.parse(convertedEntity.hex, radix: 16)) {
+                  case 0x0A:
+                    asciiValue = "\\n";
+                    break;
+                  case 0x0D:
+                    asciiValue = "\\r";
+                    break;
+                  case 0x00:
+                    asciiValue = "\\0";
+                    break;
+                  default:
+                    asciiValue = convertedEntity.ascii;
+                    break;
+                }
+                txDataList.add(StreamDataEntity(
+                    asciiValue,
+                    convertedEntity.binary,
+                    convertedEntity.decimal,
+                    convertedEntity.hex));
+              }
+              _txData += txDataList.length;
+              dataToWrite.addAll(txEnterList[_selectedtxOnEnter]!);
+              break;
+          }
+          _serialService.write(Uint8List.fromList(dataToWrite));
         });
-        dataToWrite = transmittableString.codeUnits.toList();
         break;
       case TXDataType.binary:
         List<String> splittedStringList = transmittableString.split(" ");
@@ -300,10 +356,63 @@ class SerialStreamerProvider<T> with ChangeNotifier {
             }
           }
         });
+        switch (_selectedtxOnEnter) {
+          case TxOnEnter.none:
+            break;
+          case TxOnEnter.stxetx:
+            List<int> arr = txEnterList[_selectedtxOnEnter]!;
+            BitwiseConvert converter = BitwiseConvert();
+            BitwiseConverterEntity convertedEntity =
+                converter.convertFromDecimal(arr.first.toRadixString(10));
+            txDataList.insert(
+                0,
+                StreamDataEntity(convertedEntity.ascii, convertedEntity.binary,
+                    convertedEntity.decimal, convertedEntity.hex));
+            dataToWrite.insert(0, arr.first);
+            convertedEntity =
+                converter.convertFromDecimal(arr.last.toRadixString(10));
+            txDataList.add(StreamDataEntity(
+                convertedEntity.ascii,
+                convertedEntity.binary,
+                convertedEntity.decimal,
+                convertedEntity.hex));
+            dataToWrite.add(arr.last);
+            break;
+          default:
+            for (var element in txEnterList[_selectedtxOnEnter]!) {
+              BitwiseConvert converter = BitwiseConvert();
+              BitwiseConverterEntity convertedEntity =
+                  converter.convertFromBinary(element.toRadixString(2));
+              String asciiValue = "";
+              switch (int.parse(convertedEntity.hex, radix: 16)) {
+                case 0x0A:
+                  asciiValue = "\\n";
+                  break;
+                case 0x0D:
+                  asciiValue = "\\r";
+                  break;
+                case 0x00:
+                  asciiValue = "\\0";
+                  break;
+                default:
+                  asciiValue = convertedEntity.ascii;
+                  break;
+              }
+              txDataList.add(StreamDataEntity(
+                  asciiValue,
+                  convertedEntity.binary,
+                  convertedEntity.decimal,
+                  convertedEntity.hex));
+            }
+            _txData += txDataList.length;
+            dataToWrite.addAll(txEnterList[_selectedtxOnEnter]!);
+            break;
+        }
+        _serialService.write(Uint8List.fromList(dataToWrite));
         break;
       case TXDataType.hex:
         List<String> splittedStringList = transmittableString.split(" ");
-        _txData += splittedStringList.length;
+
         splittedStringList.forEach((element) {
           if (element.isNotEmpty) {
             dataToWrite.add(int.parse(element, radix: 16));
@@ -321,23 +430,64 @@ class SerialStreamerProvider<T> with ChangeNotifier {
             }
           }
         });
+        switch (_selectedtxOnEnter) {
+          case TxOnEnter.none:
+            break;
+          case TxOnEnter.stxetx:
+            List<int> arr = txEnterList[_selectedtxOnEnter]!;
+            BitwiseConvert converter = BitwiseConvert();
+            BitwiseConverterEntity convertedEntity =
+                converter.convertFromDecimal(arr.first.toRadixString(10));
+            txDataList.insert(
+                0,
+                StreamDataEntity(convertedEntity.ascii, convertedEntity.binary,
+                    convertedEntity.decimal, convertedEntity.hex));
+            dataToWrite.insert(0, arr.first);
+            convertedEntity =
+                converter.convertFromDecimal(arr.last.toRadixString(10));
+            txDataList.add(StreamDataEntity(
+                convertedEntity.ascii,
+                convertedEntity.binary,
+                convertedEntity.decimal,
+                convertedEntity.hex));
+            dataToWrite.add(arr.last);
+            break;
+          default:
+            for (var element in txEnterList[_selectedtxOnEnter]!) {
+              BitwiseConvert converter = BitwiseConvert();
+              BitwiseConverterEntity convertedEntity =
+                  converter.convertFromHex(element.toRadixString(16));
+              String asciiValue = "";
+              switch (int.parse(convertedEntity.hex, radix: 16)) {
+                case 0x0A:
+                  asciiValue = "\\n";
+                  break;
+                case 0x0D:
+                  asciiValue = "\\r";
+                  break;
+                case 0x00:
+                  asciiValue = "\\0";
+                  break;
+                default:
+                  asciiValue = convertedEntity.ascii;
+                  break;
+              }
+              txDataList.add(StreamDataEntity(
+                  asciiValue,
+                  convertedEntity.binary,
+                  convertedEntity.decimal,
+                  convertedEntity.hex));
+            }
+            _txData += txDataList.length;
+            dataToWrite.addAll(txEnterList[_selectedtxOnEnter]!);
+            break;
+        }
+        _serialService.write(Uint8List.fromList(dataToWrite));
         break;
       default:
         break;
     }
-    switch (_selectedtxOnEnter) {
-      case TxOnEnter.none:
-        break;
-      case TxOnEnter.stxetx:
-        List<int> arr = txEnterList[_selectedtxOnEnter]!;
-        dataToWrite.insert(0, arr.first);
-        dataToWrite.add(arr.last);
-        break;
-      default:
-        dataToWrite.addAll(txEnterList[_selectedtxOnEnter]!);
-        break;
-    }
-    _serialService.write(Uint8List.fromList(dataToWrite));
+    notifyListeners();
   }
 
   void serialPortDisconnect() {

@@ -68,7 +68,7 @@ dependencies:
   string_validator:
   audioplayers:
   # added for saving configs like last used converter types
-  shared_preferences: ^2.2.3
+  shared_preferences:
   docking:
   multi_split_view:
 

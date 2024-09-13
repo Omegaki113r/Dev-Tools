@@ -19,6 +19,7 @@ import 'package:dev_tools/features/bitwise_calculator/domain/entities/bitwise_so
 import 'package:dev_tools/features/bitwise_calculator/domain/usecases/bitwise_convert_usecase.dart';
 import 'package:dev_tools/features/bitwise_calculator/domain/usecases/bitwise_evaluate_usecase.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 enum ChangedType { hex, octal, decimal, binary, ascii }
 
@@ -31,6 +32,7 @@ class BitwiseCalculatorProvider with ChangeNotifier {
   final TextEditingController _octalEditingController = TextEditingController();
   final TextEditingController _asciiEditingController = TextEditingController();
 
+  late SharedPreferences prefs;
   bool _isDecimalVisible = true;
   bool _isBinaryVisible = false;
   bool _isOctalVisible = false;
@@ -42,7 +44,26 @@ class BitwiseCalculatorProvider with ChangeNotifier {
   final BitwiseConvert _bitwiseConvert;
   final BitwiseEvaluate _bitwiseEvaluate;
 
-  BitwiseCalculatorProvider(this._bitwiseConvert, this._bitwiseEvaluate);
+  BitwiseCalculatorProvider(this._bitwiseConvert, this._bitwiseEvaluate) {
+    SharedPreferences.getInstance().then((sharedPreference) {
+      prefs = sharedPreference;
+      _isDecimalVisible = prefs.getBool("isDecimalVisible") ?? false;
+      _isBinaryVisible = prefs.getBool("isBinaryVisible") ?? false;
+      _isOctalVisible = prefs.getBool("isOctalVisible") ?? false;
+      _isHexVisible = prefs.getBool("isHexVisible") ?? false;
+      _isAsciiVisible = prefs.getBool("isAsciiVisible") ?? false;
+
+      if (!_isDecimalVisible &&
+          !_isBinaryVisible &&
+          !_isOctalVisible &&
+          !_isHexVisible &&
+          !_isAsciiVisible) {
+        _isDecimalVisible = true;
+        _isHexVisible = true;
+      }
+      notifyListeners();
+    });
+  }
 
   void changeText(ChangedType type, String text) {
     var currentPosition = 0;
@@ -164,6 +185,7 @@ class BitwiseCalculatorProvider with ChangeNotifier {
       return;
     }
     _isDecimalVisible = newValue;
+    prefs.setBool("isDecimalVisible", newValue);
     notifyListeners();
   }
 
@@ -177,6 +199,7 @@ class BitwiseCalculatorProvider with ChangeNotifier {
       return;
     }
     _isBinaryVisible = newValue;
+    prefs.setBool("isBinaryVisible", newValue);
     notifyListeners();
   }
 
@@ -190,6 +213,7 @@ class BitwiseCalculatorProvider with ChangeNotifier {
       return;
     }
     _isOctalVisible = newValue;
+    prefs.setBool("isOctalVisible", newValue);
     notifyListeners();
   }
 
@@ -203,6 +227,7 @@ class BitwiseCalculatorProvider with ChangeNotifier {
       return;
     }
     _isHexVisible = newValue;
+    prefs.setBool("isHexVisible", newValue);
     notifyListeners();
   }
 
@@ -216,6 +241,7 @@ class BitwiseCalculatorProvider with ChangeNotifier {
       return;
     }
     _isAsciiVisible = newValue;
+    prefs.setBool("isAsciiVisible", newValue);
     notifyListeners();
   }
 }

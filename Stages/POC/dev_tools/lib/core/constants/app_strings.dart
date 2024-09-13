@@ -18,7 +18,7 @@ const String appName = "Xtronic DevTools";
 const String developerPrefix = "Developed By: ";
 const String versionPrefix = "Version: ";
 const String developer = "0m3g4ki113r";
-const String version = "0.0.5-alpha";
+const String version = "0.0.6-alpha";
 
 const String lblConnect = "Connect";
 const String lblDisconnect = "Disconnect";
