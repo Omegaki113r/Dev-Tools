@@ -214,7 +214,6 @@ class MyTreeView extends StatelessWidget {
               },
               builder: (context, node) {
                 if (node.data == null) {
-                  print("null");
                   return Container();
                 }
                 return Padding(
@@ -288,7 +287,7 @@ class MyTreeView extends StatelessWidget {
                                   value: DataType.eOBJECT,
                                   child: Text("Object")),
                               DropdownMenuItem(
-                                  value: DataType.eARRAY, child: Text("Array")),
+                                  value: DataType.eARRAY, child: Text("Array"))
                             ],
                             onChanged: (val) {
                               context
@@ -328,6 +327,7 @@ class MyTreeView extends StatelessWidget {
                         const SizedBox(
                           width: 20,
                         ),
+                        Expanded(child: Container()),
                         IconButton(
                           onPressed: () {
                             context.read<JsonProvider>().delete(node);
