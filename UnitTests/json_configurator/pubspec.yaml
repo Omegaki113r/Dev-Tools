@@ -12,6 +12,7 @@ dependencies:
   animated_tree_view:
   provider:
   collection:
+  path_provider:
 
 dev_dependencies:
   flutter_test:
