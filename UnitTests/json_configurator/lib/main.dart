@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:animated_tree_view/animated_tree_view.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +13,6 @@ enum DataType { eSTRING, eNUMBER, eBOOL, eOBJECT, eARRAY }
 class MyNode {
   MyNode(
       {required this.title,
-      this.children = const <MyNode>[],
       this.isRoot = false,
       this.type = DataType.eSTRING,
       this.editing = false}) {
@@ -32,7 +33,7 @@ class MyNode {
   bool isChecked = false;
   bool editing;
   DataType type;
-  final List<MyNode> children;
+  List<MyNode> children = [];
   late MyNode parent;
   TextEditingController nameEditController = TextEditingController();
   TextEditingController stringEditController = TextEditingController();
@@ -81,6 +82,7 @@ class JsonProvider with ChangeNotifier {
   changeEditing(TreeNode<MyNode> node) {
     // print(node.key);
     // print(sampleTree.toString());
+    print(sampleTree.childrenAsList.length);
     node.data?.editing = !node.data!.editing;
     if (node.data!.title.isEmpty) {
       node.data?.title = "< NAME >";
@@ -91,8 +93,11 @@ class JsonProvider with ChangeNotifier {
   delete(TreeNode<MyNode> node) {
     // print(node.key);
     // print(sampleTree.toString());
-    node.clear();
-    sampleTree.remove(node);
+    // sampleTree.remove(node);
+    // node.clear();
+    node.data!.nameEditController.dispose();
+    node.data!.stringEditController.dispose();
+    node.delete();
     notifyListeners();
   }
 
@@ -306,7 +311,7 @@ class MyTreeView extends StatelessWidget {
         return Column(children: [
           Expanded(
             child: TreeView.simple(
-              tree: context.watch<JsonProvider>().sampleTree,
+              tree: value.sampleTree,
               // showRootNode: true,
               expansionIndicatorBuilder: (context, node) =>
                   NoExpansionIndicator(tree: node),
@@ -461,10 +466,23 @@ class MyTreeView extends StatelessWidget {
           ),
           SizedBox(
             height: 100,
-            width: double.infinity,
-            child: TextButton(
-              child: const Text("Generate"),
-              onPressed: () => context.read<JsonProvider>().generateJSON(),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                TextButton(
+                  child: const Text("Load"),
+                  onPressed: () => null,
+                ),
+                TextButton(
+                  child: const Text("Generate JSON"),
+                  onPressed: () => context.read<JsonProvider>().generateJSON(),
+                ),
+                TextButton(
+                  child: const Text("Generate C String"),
+                  onPressed: () =>
+                      context.read<JsonProvider>().generateCString(),
+                ),
+              ],
             ),
           ),
         ]);
