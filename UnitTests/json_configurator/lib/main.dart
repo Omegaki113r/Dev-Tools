@@ -169,6 +169,68 @@ class JsonProvider with ChangeNotifier {
     if (node.isRoot) print(jsonString);
     return jsonString;
   }
+
+  String generateCString({TreeNode<MyNode>? node, String jsonString = ""}) {
+    node ??= sampleTree;
+    if (jsonString.isEmpty) jsonString = "{";
+    if (node.children.isEmpty) return jsonString;
+    for (var element in node.childrenAsList) {
+      TreeNode<MyNode> childNode = element as TreeNode<MyNode>;
+      switch (childNode.data!.type) {
+        case DataType.eSTRING:
+          if (node.data!.type != DataType.eARRAY) {
+            jsonString += "\\\"";
+            jsonString += childNode.data!.title;
+            jsonString += "\\\":";
+          }
+          jsonString += "\\\"";
+          jsonString += childNode.data!.data;
+          jsonString += "\\\"";
+          break;
+        case DataType.eNUMBER:
+          if (node.data!.type != DataType.eARRAY) {
+            jsonString += "\\\"";
+            jsonString += childNode.data!.title;
+            jsonString += "\\\":";
+          }
+          jsonString += childNode.data!.data;
+          break;
+        case DataType.eBOOL:
+          if (node.data!.type != DataType.eARRAY) {
+            jsonString += "\\\"";
+            jsonString += childNode.data!.title;
+            jsonString += "\\\":";
+          }
+          jsonString += childNode.data!.isChecked.toString();
+          break;
+        case DataType.eOBJECT:
+          if (node.data!.type == DataType.eARRAY) {
+            jsonString += "{";
+          }
+          jsonString += "\\\"";
+          jsonString += childNode.data!.title;
+          jsonString += "\\\":{";
+          jsonString = generateCString(node: childNode, jsonString: jsonString);
+          jsonString += "}";
+          if (node.data!.type == DataType.eARRAY) {
+            jsonString += "}";
+          }
+          break;
+        case DataType.eARRAY:
+          jsonString += "\\\"";
+          jsonString += childNode.data!.title;
+          jsonString += "\\\":[";
+          jsonString = generateCString(node: childNode, jsonString: jsonString);
+          jsonString += "]";
+          break;
+      }
+      jsonString += ",";
+    }
+    jsonString = jsonString.substring(0, jsonString.length - 1);
+    if (node.isRoot) jsonString += "}";
+    if (node.isRoot) print(jsonString);
+    return jsonString;
+  }
 }
 
 void main() => runApp(
