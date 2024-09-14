@@ -252,6 +252,55 @@ class MyTreeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //SECTION START Custom Decoding
+    TreeNode<MyNode> x = TreeNode.root(data: MyNode(title: " { } "));
+    String s =
+        "{\"scl\":12,\"sda\":13,\"device\":{\"address\":55,\"frequency\":100000},\"pullup_en\":true}";
+    Map<String, dynamic> data = jsonDecode(s);
+    data.forEach((key, value) {
+      // print(value.runtimeType);
+      switch (value.runtimeType) {
+        case int:
+          print("int");
+          var val = MyNode(title: key, type: DataType.eNUMBER);
+          val.data = value.toString();
+          val.stringEditController.text = value.toString();
+          x.add(TreeNode<MyNode>(data: val));
+          break;
+        case List:
+          print("List found");
+          break;
+        case bool:
+          print("bool");
+          var val = MyNode(title: key, type: DataType.eBOOL);
+          val.isChecked = value;
+          x.add(TreeNode<MyNode>(data: val));
+          break;
+        default:
+          print("maybe map");
+          TreeNode<MyNode> childNode =
+              TreeNode(data: MyNode(title: key, type: DataType.eOBJECT));
+          // MyNode val = MyNode(title: key, type: DataType.eOBJECT);
+          Map<String, dynamic> childMap = value as Map<String, dynamic>;
+          for (MapEntry<String, dynamic> element in childMap.entries) {
+            switch (element.value.runtimeType) {
+              case int:
+                var childVal =
+                    MyNode(title: element.key, type: DataType.eNUMBER);
+                childVal.data = element.value.toString();
+                childVal.stringEditController.text = element.value.toString();
+                childNode.add(TreeNode<MyNode>(data: childVal));
+                break;
+              default:
+            }
+          }
+          x.add(childNode);
+          break;
+      }
+    });
+    context.read<JsonProvider>().sampleTree = x;
+    //SECTION END Custom Decoding
+
     return Consumer<JsonProvider>(
       builder: (context, value, child) {
         return Column(children: [
