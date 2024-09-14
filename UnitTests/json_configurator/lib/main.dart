@@ -116,30 +116,43 @@ class JsonProvider with ChangeNotifier {
       TreeNode<MyNode> childNode = element as TreeNode<MyNode>;
       switch (childNode.data!.type) {
         case DataType.eSTRING:
+          if (node.data!.type != DataType.eARRAY) {
+            jsonString += "\"";
+            jsonString += childNode.data!.title;
+            jsonString += "\":";
+          }
           jsonString += "\"";
-          jsonString += childNode.data!.title;
-          jsonString += "\":\"";
           jsonString += childNode.data!.data;
           jsonString += "\"";
           break;
         case DataType.eNUMBER:
-          jsonString += "\"";
-          jsonString += childNode.data!.title;
-          jsonString += "\":";
+          if (node.data!.type != DataType.eARRAY) {
+            jsonString += "\"";
+            jsonString += childNode.data!.title;
+            jsonString += "\":";
+          }
           jsonString += childNode.data!.data;
           break;
         case DataType.eBOOL:
-          jsonString += "\"";
-          jsonString += childNode.data!.title;
-          jsonString += "\":";
+          if (node.data!.type != DataType.eARRAY) {
+            jsonString += "\"";
+            jsonString += childNode.data!.title;
+            jsonString += "\":";
+          }
           jsonString += childNode.data!.isChecked.toString();
           break;
         case DataType.eOBJECT:
+          if (node.data!.type == DataType.eARRAY) {
+            jsonString += "{";
+          }
           jsonString += "\"";
           jsonString += childNode.data!.title;
           jsonString += "\":{";
           jsonString = generateJSON(node: childNode, jsonString: jsonString);
           jsonString += "}";
+          if (node.data!.type == DataType.eARRAY) {
+            jsonString += "}";
+          }
           break;
         case DataType.eARRAY:
           jsonString += "\"";
@@ -205,17 +218,9 @@ class MyTreeView extends StatelessWidget {
                   return Container();
                 }
                 return Padding(
-                  padding: EdgeInsets.fromLTRB(4, 8, 8, 8),
+                  padding: const EdgeInsets.fromLTRB(4, 8, 8, 8),
                   child: Row(
                     children: [
-                      // if (!node.isRoot) ...[
-                      //   IconButton(
-                      //     onPressed: () {
-                      //       context.read<JsonProvider>().delete(node);
-                      //     },
-                      //     icon: Icon(Icons.remove),
-                      //   ),
-                      // ],
                       if (node.data!.type == DataType.eARRAY ||
                           node.data!.type == DataType.eOBJECT ||
                           node.isRoot) ...[
@@ -226,36 +231,44 @@ class MyTreeView extends StatelessWidget {
                             child: IconButton(
                               onPressed: () =>
                                   context.read<JsonProvider>().add(node),
-                              icon: Icon(
+                              icon: const Icon(
                                 Icons.add,
                               ),
                             ),
                           ),
                         ),
                       ] else ...[
-                        SizedBox(width: 50),
+                        const SizedBox(width: 50),
                       ],
-                      SizedBox(width: 10),
-                      SizedBox(
-                        width: 100,
-                        child: node.data!.editing
-                            ? TextField(
-                                controller: node.data!.nameEditController,
-                                maxLines: 1,
-                                onEditingComplete: () => context
-                                    .read<JsonProvider>()
-                                    .changeEditing(node))
-                            : Text(node.data!.title),
-                      ),
+                      if (!node.isRoot &&
+                          (node.parent as TreeNode<MyNode>).data!.type !=
+                              DataType.eARRAY) ...[
+                        const SizedBox(width: 10),
+                        SizedBox(
+                          width: 100,
+                          child: node.data!.editing
+                              ? TextField(
+                                  controller: node.data!.nameEditController,
+                                  maxLines: 1,
+                                  onEditingComplete: () => context
+                                      .read<JsonProvider>()
+                                      .changeEditing(node))
+                              : Text(node.data!.title),
+                        ),
+                      ],
                       if (!node.isRoot) ...[
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        IconButton(
-                          onPressed: () =>
-                              context.read<JsonProvider>().changeEditing(node),
-                          icon: Icon(Icons.edit),
-                        ),
+                        if ((node.parent as TreeNode<MyNode>).data!.type !=
+                            DataType.eARRAY) ...[
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          IconButton(
+                            onPressed: () => context
+                                .read<JsonProvider>()
+                                .changeEditing(node),
+                            icon: const Icon(Icons.edit),
+                          ),
+                        ],
                         const SizedBox(
                           width: 20,
                         ),
@@ -319,7 +332,7 @@ class MyTreeView extends StatelessWidget {
                           onPressed: () {
                             context.read<JsonProvider>().delete(node);
                           },
-                          icon: Icon(Icons.delete),
+                          icon: const Icon(Icons.delete),
                         ),
                         const SizedBox(
                           width: 20,
@@ -339,7 +352,7 @@ class MyTreeView extends StatelessWidget {
             height: 100,
             width: double.infinity,
             child: TextButton(
-              child: Text("Generate"),
+              child: const Text("Generate"),
               onPressed: () => context.read<JsonProvider>().generateJSON(),
             ),
           ),
