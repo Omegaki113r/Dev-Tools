@@ -13,6 +13,7 @@ dependencies:
   provider:
   collection:
   path_provider:
+  file_picker: ^8.1.2
 
 dev_dependencies:
   flutter_test:
