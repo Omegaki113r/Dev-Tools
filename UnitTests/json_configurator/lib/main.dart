@@ -149,15 +149,15 @@ class JsonProvider with ChangeNotifier {
         case DataType.eOBJECT:
           if (node.data!.type == DataType.eARRAY) {
             jsonString += "{";
+          } else {
+            jsonString += "\"";
+            jsonString += childNode.data!.title;
+            jsonString += "\":{";
           }
-          jsonString += "\"";
-          jsonString += childNode.data!.title;
-          jsonString += "\":{";
           jsonString = generateJSON(node: childNode, jsonString: jsonString);
-          jsonString += "}";
-          if (node.data!.type == DataType.eARRAY) {
-            jsonString += "}";
-          }
+          if (node.data!.type != DataType.eARRAY) jsonString += "}";
+          if (node.data!.type == DataType.eARRAY) jsonString += "}";
+
           break;
         case DataType.eARRAY:
           jsonString += "\"";
@@ -215,15 +215,15 @@ class JsonProvider with ChangeNotifier {
         case DataType.eOBJECT:
           if (node.data!.type == DataType.eARRAY) {
             jsonString += "{";
+          } else {
+            jsonString += "\\\"";
+            jsonString += childNode.data!.title;
+            jsonString += "\\\":{";
           }
-          jsonString += "\\\"";
-          jsonString += childNode.data!.title;
-          jsonString += "\\\":{";
           jsonString = generateCString(node: childNode, jsonString: jsonString);
-          jsonString += "}";
-          if (node.data!.type == DataType.eARRAY) {
-            jsonString += "}";
-          }
+          if (node.data!.type != DataType.eARRAY) jsonString += "}";
+          if (node.data!.type == DataType.eARRAY) jsonString += "}";
+
           break;
         case DataType.eARRAY:
           jsonString += "\\\"";
@@ -344,21 +344,27 @@ class MyTreeView extends StatelessWidget {
                         ),
                         DropdownButton<DataType>(
                             value: node.data!.type,
-                            items: const [
-                              DropdownMenuItem(
+                            items: [
+                              const DropdownMenuItem(
                                   value: DataType.eSTRING,
                                   child: Text("String")),
-                              DropdownMenuItem(
+                              const DropdownMenuItem(
                                   value: DataType.eNUMBER,
                                   child: Text("Number")),
-                              DropdownMenuItem(
+                              const DropdownMenuItem(
                                   value: DataType.eBOOL,
                                   child: Text("Boolean")),
-                              DropdownMenuItem(
+                              const DropdownMenuItem(
                                   value: DataType.eOBJECT,
                                   child: Text("Object")),
-                              DropdownMenuItem(
-                                  value: DataType.eARRAY, child: Text("Array"))
+                              if ((node.parent as TreeNode<MyNode>)
+                                      .data!
+                                      .type !=
+                                  DataType.eARRAY) ...[
+                                const DropdownMenuItem(
+                                    value: DataType.eARRAY,
+                                    child: Text("Array"))
+                              ]
                             ],
                             onChanged: (val) {
                               context
@@ -412,10 +418,6 @@ class MyTreeView extends StatelessWidget {
                     ],
                   ),
                 );
-                // return ListTile(
-                //   title: Text("Item ${node.level}-${node.key}"),
-                //   subtitle: Text('Level ${node.level}'),
-                // );
               },
             ),
           ),
