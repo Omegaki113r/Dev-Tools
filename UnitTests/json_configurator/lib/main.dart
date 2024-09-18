@@ -241,7 +241,7 @@ class JsonProvider with ChangeNotifier {
     return jsonString;
   }
 
-  LoadJSON() {
+  loadJSON() {
     FilePicker.platform.pickFiles().then((value) {
       if (kDebugMode) print("loaded");
       if (value != null) {
@@ -249,7 +249,7 @@ class JsonProvider with ChangeNotifier {
         file.readAsString().then((value) {
           String s = value;
           Map<String, dynamic> data = jsonDecode(s);
-          TreeNode<MyNode> generatedNodes = GenerateTree(data);
+          TreeNode<MyNode> generatedNodes = generateTreeWithMap(data);
           sampleTree = generatedNodes;
           update();
         });
@@ -257,12 +257,58 @@ class JsonProvider with ChangeNotifier {
     });
   }
 
-  TreeNode<MyNode> GenerateTree(Map<String, dynamic> data,
+  TreeNode<MyNode> generateTreeWithList(List<dynamic> data,
+      {TreeNode<MyNode>? node}) {
+    TreeNode<MyNode> _node =
+        node ?? TreeNode.root(data: MyNode(title: " { } "));
+    for (var element in data) {
+      switch (element.runtimeType) {
+        case int:
+          if (kDebugMode) print("int");
+          var val = MyNode(title: "", type: DataType.eNUMBER);
+          val.data = element.toString();
+          val.stringEditController.text = element.toString();
+          _node.add(TreeNode<MyNode>(data: val));
+          break;
+        case bool:
+          if (kDebugMode) print("bool");
+          var val = MyNode(title: "", type: DataType.eBOOL);
+          val.isChecked = element;
+          _node.add(TreeNode<MyNode>(data: val));
+          break;
+        case String:
+          if (kDebugMode) print("string");
+          var val = MyNode(title: "", type: DataType.eSTRING);
+          val.data = element;
+          val.stringEditController.text = element;
+          _node.add(TreeNode<MyNode>(data: val));
+          break;
+        default:
+          if (kDebugMode) print("maybe map");
+          TreeNode<MyNode> childNode =
+              TreeNode(data: MyNode(title: "", type: DataType.eOBJECT));
+          Map<String, dynamic> childMap = element as Map<String, dynamic>;
+          childNode = generateTreeWithMap(childMap, node: childNode);
+          _node.add(childNode);
+          break;
+      }
+    }
+    return _node;
+  }
+
+  TreeNode<MyNode> generateTreeWithMap(Map<String, dynamic> data,
       {TreeNode<MyNode>? node}) {
     TreeNode<MyNode> _node =
         node ?? TreeNode.root(data: MyNode(title: " { } "));
     data.forEach((key, value) {
       switch (value.runtimeType) {
+        case String:
+          if (kDebugMode) print("string");
+          var val = MyNode(title: key, type: DataType.eSTRING);
+          val.data = value;
+          val.stringEditController.text = value;
+          _node.add(TreeNode<MyNode>(data: val));
+          break;
         case int:
           if (kDebugMode) print("int");
           var val = MyNode(title: key, type: DataType.eNUMBER);
@@ -270,33 +316,26 @@ class JsonProvider with ChangeNotifier {
           val.stringEditController.text = value.toString();
           _node.add(TreeNode<MyNode>(data: val));
           break;
-        case List:
-          if (kDebugMode) print("List found");
-          break;
         case bool:
           if (kDebugMode) print("bool");
           var val = MyNode(title: key, type: DataType.eBOOL);
           val.isChecked = value;
           _node.add(TreeNode<MyNode>(data: val));
           break;
+        case List:
+          if (kDebugMode) print("List found");
+          TreeNode<MyNode> childNode =
+              TreeNode(data: MyNode(title: key, type: DataType.eARRAY));
+          List<dynamic> childMap = value as List<dynamic>;
+          childNode = generateTreeWithList(childMap, node: childNode);
+          _node.add(childNode);
+          break;
         default:
           if (kDebugMode) print("maybe map");
           TreeNode<MyNode> childNode =
               TreeNode(data: MyNode(title: key, type: DataType.eOBJECT));
           Map<String, dynamic> childMap = value as Map<String, dynamic>;
-          childNode = GenerateTree(childMap, node: childNode);
-          // for (MapEntry<String, dynamic> element in childMap.entries) {
-          //   switch (element.value.runtimeType) {
-          //     case int:
-          //       var childVal =
-          //           MyNode(title: element.key, type: DataType.eNUMBER);
-          //       childVal.data = element.value.toString();
-          //       childVal.stringEditController.text = element.value.toString();
-          //       childNode.add(TreeNode<MyNode>(data: childVal));
-          //       break;
-          //     default:
-          //   }
-          // }
+          childNode = generateTreeWithMap(childMap, node: childNode);
           _node.add(childNode);
           break;
       }
@@ -492,7 +531,7 @@ class MyTreeView extends StatelessWidget {
                 TextButton(
                   child: const Text("Load"),
                   onPressed: () {
-                    context.read<JsonProvider>().LoadJSON();
+                    context.read<JsonProvider>().loadJSON();
                   },
                 ),
                 TextButton(

@@ -1,4 +1,5 @@
 {
+    "string": "string",
     "scl": 12,
     "sda": 13,
     "device": {
@@ -8,5 +9,16 @@
             "device": 10
         }
     },
+    "test": [
+        12,
+        23,
+        34,
+        45,
+        true,
+        "sda",
+        {
+            "device": 10
+        }
+    ],
     "pullup_en": true
 }
