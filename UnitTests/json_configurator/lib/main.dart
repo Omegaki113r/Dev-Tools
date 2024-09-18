@@ -24,10 +24,6 @@ class MyNode {
     stringEditController.addListener(() {
       data = stringEditController.text;
     });
-
-    // for (var element in children) {
-    //   element.parent = this;
-    // }
   }
   final bool isRoot;
   String title = "";
@@ -35,7 +31,6 @@ class MyNode {
   bool isChecked = false;
   bool editing;
   DataType type;
-  // List<MyNode> children = [];
   late MyNode parent;
   TextEditingController nameEditController = TextEditingController();
   TextEditingController stringEditController = TextEditingController();
@@ -95,10 +90,6 @@ class JsonProvider with ChangeNotifier {
                 type: (node.childrenAsList.first as TreeNode<MyNode>)
                     .data!
                     .type)));
-        // node.add(TreeNode<MyNode>(
-        //     data: MyNode(
-        //         title: "data",
-        //         type: ((node.children[0] as TreeNode).data as MyNode).type)));
       } else {
         node.add(TreeNode<MyNode>(data: MyNode(title: "data")));
       }
@@ -511,7 +502,7 @@ class MyTreeView extends StatelessWidget {
                           onPressed: () {
                             context.read<JsonProvider>().delete(node);
                           },
-                          icon: const Icon(Icons.delete),
+                          icon: const Icon(Icons.delete, color: Colors.red),
                         ),
                         const SizedBox(
                           width: 20,
