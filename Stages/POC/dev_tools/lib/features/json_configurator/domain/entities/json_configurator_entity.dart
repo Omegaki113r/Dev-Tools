@@ -4,7 +4,7 @@
  * File Created: Wednesday, 18th September 2024 7:27:59 pm
  * Author: Omegaki113r (omegaki113r@gmail.com)
  * -----
- * Last Modified: Thursday, 19th September 2024 12:56:43 pm
+ * Last Modified: Thursday, 19th September 2024 11:39:54 pm
  * Modified By: Omegaki113r (omegaki113r@gmail.com)
  * -----
  * Copyright 2024 - 2024 0m3g4ki113r, Xtronic
@@ -31,6 +31,7 @@ class JSONConfiguratorEntity {
       this.stringValue = "",
       this.numberValue = 0,
       this.boolValue = false}) {
+    nameEditController.text = title;
     nameEditController.addListener(nameEditControllerListenHandler);
     stringEditController.addListener(stringEditControllerListenHandler);
   }

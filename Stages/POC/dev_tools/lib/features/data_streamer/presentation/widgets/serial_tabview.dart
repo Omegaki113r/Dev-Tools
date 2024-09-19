@@ -4,7 +4,7 @@
  * File Created: Friday, 10th May 2024 12:58:32 am
  * Author: Omegaki113r (omegaki113r@gmail.com)
  * -----
- * Last Modified: Thursday, 19th September 2024 9:03:52 pm
+ * Last Modified: Thursday, 19th September 2024 9:26:24 pm
  * Modified By: Omegaki113r (omegaki113r@gmail.com)
  * -----
  * Copyright 2024 - 2024 0m3g4ki113r, Xtronic
@@ -97,12 +97,12 @@ class _SerialTabViewState extends State<SerialTabView> {
                             Consumer<SerialStreamerProvider>(
                                 builder: (context, provider, child) {
                               return SoftButton(
-                                provider.port == null
+                                ButtonType.flat,
+                                label: provider.port == null
                                     ? lblConnect
                                     : provider.isOpen()
                                         ? lblDisconnect
                                         : lblConnect,
-                                ButtonType.flat,
                                 width: 150,
                                 height: 45,
                                 onPressed: () {
@@ -749,8 +749,10 @@ class _SerialTabViewState extends State<SerialTabView> {
                                               vertical: 5, horizontal: 20),
                                     ),
                                     const Gap(25),
-                                    SoftButton("Reset", ButtonType.flat,
-                                        width: 100, height: 40, onPressed: () {
+                                    SoftButton(ButtonType.flat,
+                                        label: "Reset",
+                                        width: 100,
+                                        height: 40, onPressed: () {
                                       provider.resetRXCounter();
                                     }),
                                   ],
@@ -760,8 +762,8 @@ class _SerialTabViewState extends State<SerialTabView> {
                               SizedBox(
                                 height: 50,
                                 width: 150,
-                                child: SoftButton("Clear Data", ButtonType.flat,
-                                    onPressed: () {
+                                child: SoftButton(ButtonType.flat,
+                                    label: "Clear Data", onPressed: () {
                                   provider.resetRXData();
                                 }),
                               ),
@@ -953,8 +955,10 @@ class _SerialTabViewState extends State<SerialTabView> {
                                               vertical: 5, horizontal: 20),
                                     ),
                                     const Gap(25),
-                                    SoftButton("Reset", ButtonType.flat,
-                                        width: 100, height: 40, onPressed: () {
+                                    SoftButton(ButtonType.flat,
+                                        label: "Reset",
+                                        width: 100,
+                                        height: 40, onPressed: () {
                                       provider.resetTXCounter();
                                     }),
                                   ],
@@ -964,8 +968,8 @@ class _SerialTabViewState extends State<SerialTabView> {
                               SizedBox(
                                 height: 50,
                                 width: 150,
-                                child: SoftButton("Clear Data", ButtonType.flat,
-                                    onPressed: () {
+                                child: SoftButton(ButtonType.flat,
+                                    label: "Clear Data", onPressed: () {
                                   provider.resetTXData();
                                 }),
                               ),

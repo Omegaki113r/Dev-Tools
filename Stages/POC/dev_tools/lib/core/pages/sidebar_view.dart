@@ -58,8 +58,8 @@ class _SidebarState extends State<SidebarView> {
               scrollDirection: Axis.horizontal,
               children: [
                 SoftButton(
-                  lblBitwiseCalculator,
                   ButtonType.flat,
+                  label: lblBitwiseCalculator,
                   height: 60,
                   width: 150,
                   padding: const EdgeInsets.only(
@@ -74,8 +74,8 @@ class _SidebarState extends State<SidebarView> {
                 ),
                 const SoftDivider(),
                 SoftButton(
-                  lblDataStreamer,
                   ButtonType.flat,
+                  label: lblDataStreamer,
                   height: 60,
                   width: 150,
                   padding: const EdgeInsets.only(
@@ -90,8 +90,8 @@ class _SidebarState extends State<SidebarView> {
                 ),
                 const SoftDivider(),
                 SoftButton(
-                  lblJSONConfigurator,
                   ButtonType.flat,
+                  label: lblJSONConfigurator,
                   height: 60,
                   padding: const EdgeInsets.only(
                     top: 20.0,
@@ -104,8 +104,8 @@ class _SidebarState extends State<SidebarView> {
                   },
                 ),
                 SoftButton(
-                  "About",
                   ButtonType.flat,
+                  label: "About",
                   height: 60,
                   width: 150,
                   padding: const EdgeInsets.only(
@@ -154,8 +154,8 @@ class _SidebarState extends State<SidebarView> {
             Column(
               children: [
                 SoftButton(
-                  lblBitwiseCalculator,
                   ButtonType.flat,
+                  label: lblBitwiseCalculator,
                   height: 60,
                   padding: const EdgeInsets.only(
                     top: 20.0,
@@ -169,8 +169,8 @@ class _SidebarState extends State<SidebarView> {
                 ),
                 const SoftDivider(),
                 SoftButton(
-                  lblDataStreamer,
                   ButtonType.flat,
+                  label: lblDataStreamer,
                   height: 60,
                   padding: const EdgeInsets.only(
                     top: 20.0,
@@ -184,8 +184,8 @@ class _SidebarState extends State<SidebarView> {
                 ),
                 const SoftDivider(),
                 SoftButton(
-                  lblJSONConfigurator,
                   ButtonType.flat,
+                  label: lblJSONConfigurator,
                   height: 60,
                   padding: const EdgeInsets.only(
                     top: 20.0,

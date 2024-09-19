@@ -4,7 +4,7 @@
  * File Created: Wednesday, 18th September 2024 6:57:14 pm
  * Author: Omegaki113r (omegaki113r@gmail.com)
  * -----
- * Last Modified: Thursday, 19th September 2024 9:06:46 pm
+ * Last Modified: Friday, 20th September 2024 12:03:24 am
  * Modified By: Omegaki113r (omegaki113r@gmail.com)
  * -----
  * Copyright 2024 - 2024 0m3g4ki113r, Xtronic
@@ -16,6 +16,7 @@
 
 import 'package:dev_tools/core/constants/app_constants.dart';
 import 'package:dev_tools/core/widgets/soft_button.dart';
+import 'package:dev_tools/core/widgets/soft_textfield.dart';
 import 'package:dev_tools/features/json_configurator/domain/entities/json_configurator_entity.dart';
 import 'package:dev_tools/features/json_configurator/presentation/provider/json_configurator_provider.dart';
 import 'package:flutter/material.dart';
@@ -38,21 +39,24 @@ class JSONConfiguratorView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Expanded(
-                  child: SoftButton("Load", ButtonType.flat,
+                  child: SoftButton(ButtonType.flat,
+                      label: "Load",
                       padding: const EdgeInsets.symmetric(
                           horizontal: 30, vertical: 15), onPressed: () {
                     provider.loadJSON();
                   }),
                 ),
                 Expanded(
-                  child: SoftButton("Generate JSON", ButtonType.flat,
+                  child: SoftButton(ButtonType.flat,
+                      label: "Generate JSON",
                       padding: const EdgeInsets.symmetric(
                           horizontal: 30, vertical: 15), onPressed: () {
                     provider.generateJSON();
                   }),
                 ),
                 Expanded(
-                  child: SoftButton("Generate C String", ButtonType.flat,
+                  child: SoftButton(ButtonType.flat,
+                      label: "Generate C String",
                       padding: const EdgeInsets.symmetric(
                           horizontal: 30, vertical: 15), onPressed: () {
                     provider.generateCString();
@@ -66,7 +70,7 @@ class JSONConfiguratorView extends StatelessWidget {
               tree: provider.jsonTree,
               expansionIndicatorBuilder: (context, node) =>
                   NoExpansionIndicator(tree: node),
-              indentation: const Indentation(style: IndentStyle.roundJoint),
+              indentation: const Indentation(style: IndentStyle.squareJoint),
               onTreeReady: (controller) =>
                   provider.treeViewController = controller,
               builder: (context, node) {
@@ -79,20 +83,13 @@ class JSONConfiguratorView extends StatelessWidget {
                           node.isRoot) ...[
                         SizedBox(
                           width: 50,
-                          child: Container(
-                            color: Colors.green,
-                            child: IconButton(
-                              onPressed: () => context
-                                  .read<JSONConfiguratorProvider>()
-                                  .add(node),
-                              icon: const Icon(
-                                Icons.add,
-                              ),
-                            ),
-                          ),
+                          height: 50,
+                          child: SoftButton(ButtonType.emboss,
+                              child: const Icon(Icons.add),
+                              onPressed: () => provider.add(node)),
                         ),
                       ] else ...[
-                        const SizedBox(width: 50),
+                        const SizedBox(width: 50, height: 50),
                       ],
                       if (!node.isRoot &&
                           (node.parent as TreeNode<JSONConfiguratorEntity>)
@@ -101,16 +98,20 @@ class JSONConfiguratorView extends StatelessWidget {
                               JSONDataType.eARRAY) ...[
                         const SizedBox(width: 10),
                         SizedBox(
-                          width: 100,
-                          child: node.data!.editing
-                              ? TextField(
+                            width: 150,
+                            child: AnimatedCrossFade(
+                              duration: const Duration(milliseconds: 200),
+                              crossFadeState: node.data!.editing
+                                  ? CrossFadeState.showSecond
+                                  : CrossFadeState.showFirst,
+                              firstChild: Text(node.data!.title),
+                              secondChild: SoftTextField(
+                                  label: "name",
                                   controller: node.data!.nameEditController,
-                                  maxLines: 1,
-                                  onEditingComplete: () => context
-                                      .read<JSONConfiguratorProvider>()
-                                      .changeEditing(node))
-                              : Text(node.data!.title),
-                        ),
+                                  onEditingComplete: () {
+                                    provider.changeEditing(node);
+                                  }),
+                            )),
                       ],
                       if (!node.isRoot) ...[
                         if ((node.parent as TreeNode<JSONConfiguratorEntity>)
@@ -169,16 +170,19 @@ class JSONConfiguratorView extends StatelessWidget {
                         ),
                         switch (node.data!.dataType) {
                           JSONDataType.eSTRING => Expanded(
-                                child: TextField(
-                              controller: node.data!.stringEditController,
-                            )),
+                              child: SoftTextField(
+                                label: "String",
+                                controller: node.data!.stringEditController,
+                              ),
+                            ),
                           JSONDataType.eNUMBER => Expanded(
-                                child: TextField(
+                                child: SoftTextField(
+                              label: "Number",
                               controller: node.data!.stringEditController,
-                              keyboardType:
+                              textInputType:
                                   const TextInputType.numberWithOptions(
                                       decimal: true),
-                              inputFormatters: <TextInputFormatter>[
+                              inputFormatter: <TextInputFormatter>[
                                 FilteringTextInputFormatter.allow(
                                     RegExp(r'^\d+(\.\d*)?')),
                               ],
