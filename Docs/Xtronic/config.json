@@ -1,24 +1,10 @@
 {
-    "string": "string",
     "scl": 12,
     "sda": 13,
-    "device": {
-        "address": 55,
-        "frequency": 100000,
-        "test": {
-            "device": 10
-        }
-    },
-    "test": [
-        12,
-        23,
-        34,
-        45,
-        true,
-        "sda",
+    "devices": [
         {
-            "device": 10
+            "address": 55,
+            "frequency": 100000
         }
-    ],
-    "pullup_en": true
+    ]
 }

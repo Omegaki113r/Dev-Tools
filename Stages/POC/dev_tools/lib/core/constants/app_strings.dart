@@ -38,3 +38,5 @@ const String lblAutoScroll = "AutoScroll";
 const String lblSerial = "Serial";
 const String lblWebSocket = "Web Socket";
 const String lblMQTT = "MQTT";
+
+const String lblJSONConfigurator = "JSON Configurator";

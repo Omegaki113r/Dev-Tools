@@ -71,6 +71,10 @@ dependencies:
   shared_preferences:
   docking:
   multi_split_view:
+  collection:
+  path_provider:
+  file_picker: ^8.1.2
+  animated_tree_view:
 
 dev_dependencies:
   flutter_test:

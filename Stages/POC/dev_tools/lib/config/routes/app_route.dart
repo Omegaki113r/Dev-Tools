@@ -18,6 +18,7 @@ import 'package:dev_tools/core/constants/app_constants.dart';
 import 'package:dev_tools/core/pages/application_view.dart';
 import 'package:dev_tools/features/bitwise_calculator/presentation/pages/bitwise_calculator_view.dart';
 import 'package:dev_tools/features/data_streamer/presentation/pages/data_streamer_view.dart';
+import 'package:dev_tools/features/json_configurator/presentation/pages/json_configurator_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
@@ -53,7 +54,7 @@ class AppRoute {
   static final GoRouter _router = GoRouter(
     navigatorKey: _rootNavigatorKey,
     // initialLocation: dataStreamerRoute,
-    initialLocation: bitwiseCalculatorRoute,
+    initialLocation: jSONConfiguratorRoute,
     routes: [
       ShellRoute(
         navigatorKey: _shellNavigatorKey,
@@ -82,6 +83,19 @@ class AppRoute {
                   context: context,
                   state: state,
                   child: const DataStreamerView());
+            },
+          ),
+          GoRoute(
+            parentNavigatorKey: _shellNavigatorKey,
+            path: jSONConfiguratorRoute,
+            builder: (context, state) {
+              return const JSONConfiguratorView();
+            },
+            pageBuilder: (context, state) {
+              return buildPageWithDefaultTransition(
+                  context: context,
+                  state: state,
+                  child: const JSONConfiguratorView());
             },
           ),
         ],

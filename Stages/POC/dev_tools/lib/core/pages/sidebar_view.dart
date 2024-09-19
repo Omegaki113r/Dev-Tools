@@ -88,6 +88,21 @@ class _SidebarState extends State<SidebarView> {
                     GoRouter.of(context).go(dataStreamerRoute);
                   },
                 ),
+                const SoftDivider(),
+                SoftButton(
+                  lblJSONConfigurator,
+                  ButtonType.flat,
+                  height: 60,
+                  padding: const EdgeInsets.only(
+                    top: 20.0,
+                    bottom: 20.0,
+                    left: 20.0,
+                    right: 30.0,
+                  ),
+                  onPressed: () {
+                    GoRouter.of(context).go(jSONConfiguratorRoute);
+                  },
+                ),
                 SoftButton(
                   "About",
                   ButtonType.flat,
@@ -165,6 +180,21 @@ class _SidebarState extends State<SidebarView> {
                   ),
                   onPressed: () {
                     GoRouter.of(context).go(dataStreamerRoute);
+                  },
+                ),
+                const SoftDivider(),
+                SoftButton(
+                  lblJSONConfigurator,
+                  ButtonType.flat,
+                  height: 60,
+                  padding: const EdgeInsets.only(
+                    top: 20.0,
+                    bottom: 20.0,
+                    left: 20.0,
+                    right: 30.0,
+                  ),
+                  onPressed: () {
+                    GoRouter.of(context).go(jSONConfiguratorRoute);
                   },
                 ),
                 const SoftDivider(),

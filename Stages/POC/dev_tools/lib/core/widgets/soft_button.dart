@@ -83,13 +83,19 @@ class _SoftButtonState extends State<SoftButton>
           //       ? FlatSoftButton(widget.label)
           //       : ConvexSoftButton(widget.label),
           // ),
-          child: switch (widget._buttonState) {
-            ButtonState.defaultState => FlatSoftButton(
-                widget.label,
-                child: widget.child,
-              ),
-            ButtonState.pressedState => ConvexSoftButton(widget.label),
+          child: switch (widget.buttonType) {
+            ButtonType.flat => FlatSoftButton(widget.label),
+            ButtonType.concave => ConcaveSoftButton(widget.label),
+            ButtonType.convex => ConvexSoftButton(widget.label),
+            ButtonType.emboss => EmbossSoftButton(widget.label),
           },
+          // child: switch (widget._buttonState) {
+          //   ButtonState.defaultState => FlatSoftButton(
+          //       widget.label,
+          //       child: widget.child,
+          //     ),
+          //   ButtonState.pressedState => ConvexSoftButton(widget.label),
+          // },
         ),
       ),
     );
@@ -239,8 +245,7 @@ class ConvexSoftButton extends StatelessWidget {
 
 class EmbossSoftButton extends StatelessWidget {
   final String label;
-  final double height;
-  const EmbossSoftButton(this.label, this.height, {super.key});
+  const EmbossSoftButton(this.label, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -268,14 +273,11 @@ class EmbossSoftButton extends StatelessWidget {
       ),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: SizedBox(
-          height: height,
-          child: Center(
-            child: Text(
-              label,
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.labelLarge,
-            ),
+        child: Center(
+          child: Text(
+            label,
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.labelLarge,
           ),
         ),
       ),
