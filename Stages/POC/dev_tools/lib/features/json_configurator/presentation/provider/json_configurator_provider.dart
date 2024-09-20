@@ -4,7 +4,7 @@
  * File Created: Wednesday, 18th September 2024 7:00:36 pm
  * Author: Omegaki113r (omegaki113r@gmail.com)
  * -----
- * Last Modified: Thursday, 19th September 2024 12:58:28 pm
+ * Last Modified: Friday, 20th September 2024 8:01:19 pm
  * Modified By: Omegaki113r (omegaki113r@gmail.com)
  * -----
  * Copyright 2024 - 2024 0m3g4ki113r, Xtronic
@@ -24,10 +24,15 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+enum JSONStringType { eJSON, eCJSON }
+
 class JSONConfiguratorProvider with ChangeNotifier {
   TreeNode<JSONConfiguratorEntity> jsonTree = TreeNode.root(
       data: JSONConfiguratorEntity(JSONDataType.eROOT, title: " { } "));
   late TreeViewController treeViewController;
+  JSONStringType currentType = JSONStringType.eJSON;
+  String jsonString = "";
+  String jsonCString = "";
 
   add(TreeNode<JSONConfiguratorEntity> node) {
     if (node.data!.dataType == JSONDataType.eARRAY) {
@@ -51,6 +56,8 @@ class JSONConfiguratorProvider with ChangeNotifier {
       node.add(TreeNode<JSONConfiguratorEntity>(
           data: JSONConfiguratorEntity(JSONDataType.eSTRING, title: "data")));
     }
+    jsonString = generateJSON();
+    jsonCString = generateCString();
     notifyListeners();
   }
 
@@ -60,6 +67,8 @@ class JSONConfiguratorProvider with ChangeNotifier {
     node.data!.dispose();
     node.clear();
     node.delete();
+    jsonString = generateJSON();
+    jsonCString = generateCString();
     notifyListeners();
   }
 
@@ -69,6 +78,8 @@ class JSONConfiguratorProvider with ChangeNotifier {
     if (node.data!.title != null && node.data!.title!.isEmpty) {
       node.data?.title = "< NAME >";
     }
+    jsonString = generateJSON();
+    jsonCString = generateCString();
     notifyListeners();
   }
 
@@ -89,11 +100,31 @@ class JSONConfiguratorProvider with ChangeNotifier {
         element.data!.dataType = newType;
       }
     }
+    jsonString = generateJSON();
+    jsonCString = generateCString();
     notifyListeners();
   }
 
   changeBool(TreeNode<JSONConfiguratorEntity> node, bool newValue) {
     node.data!.boolValue = newValue;
+    jsonString = generateJSON();
+    jsonCString = generateCString();
+    notifyListeners();
+  }
+
+  dataChanged(TreeNode<JSONConfiguratorEntity> node, String newData) {
+    jsonString = generateJSON();
+    jsonCString = generateCString();
+    notifyListeners();
+  }
+
+  changeJSONStringType(JSONStringType type) {
+    currentType = type;
+    notifyListeners();
+  }
+
+  toggleExpansion(TreeNode<JSONConfiguratorEntity> node) {
+    treeViewController.toggleExpansion(node);
     notifyListeners();
   }
 
@@ -107,11 +138,15 @@ class JSONConfiguratorProvider with ChangeNotifier {
           Map<String, dynamic> data = jsonDecode(s);
           jsonTree.clear();
           jsonTree = generateTreeWithMap(data, node: jsonTree);
+          jsonString = generateJSON();
+          jsonCString = generateCString();
           notifyListeners();
         });
       }
     });
   }
+
+  saveJSON() {}
 
   String generateJSON(
       {TreeNode<JSONConfiguratorEntity>? node, String jsonString = ""}) {

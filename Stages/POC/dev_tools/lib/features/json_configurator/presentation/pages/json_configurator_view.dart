@@ -4,7 +4,7 @@
  * File Created: Wednesday, 18th September 2024 6:57:14 pm
  * Author: Omegaki113r (omegaki113r@gmail.com)
  * -----
- * Last Modified: Friday, 20th September 2024 12:03:24 am
+ * Last Modified: Friday, 20th September 2024 8:01:23 pm
  * Modified By: Omegaki113r (omegaki113r@gmail.com)
  * -----
  * Copyright 2024 - 2024 0m3g4ki113r, Xtronic
@@ -14,14 +14,19 @@
  * ----------	---	---------------------------------------------------------
  */
 
+import 'package:dev_tools/core/constants/app_colors.dart';
 import 'package:dev_tools/core/constants/app_constants.dart';
 import 'package:dev_tools/core/widgets/soft_button.dart';
+import 'package:dev_tools/core/widgets/soft_divider.dart';
+import 'package:dev_tools/core/widgets/soft_text.dart';
 import 'package:dev_tools/core/widgets/soft_textfield.dart';
 import 'package:dev_tools/features/json_configurator/domain/entities/json_configurator_entity.dart';
 import 'package:dev_tools/features/json_configurator/presentation/provider/json_configurator_provider.dart';
+import 'package:dev_tools/features/json_configurator/presentation/widgets/json_node_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_tree_view/animated_tree_view.dart';
 import 'package:flutter/services.dart';
+import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
 class JSONConfiguratorView extends StatelessWidget {
@@ -33,37 +38,90 @@ class JSONConfiguratorView extends StatelessWidget {
         builder: (context, provider, child) {
       return Column(
         children: [
-          SizedBox(
-            height: 85,
+          Padding(
+            padding: const EdgeInsets.only(left: 10.0),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
+                SoftButton(ButtonType.flat,
+                    label: "Load",
+                    width: 50,
+                    height: 50,
+                    child: const Icon(
+                      Icons.folder_open_sharp,
+                      color: color1,
+                    ), onPressed: () {
+                  provider.loadJSON();
+                }),
+                const Gap(20),
+                SoftButton(ButtonType.flat,
+                    label: "Save",
+                    width: 50,
+                    height: 50,
+                    child: const Icon(
+                      Icons.save,
+                      color: color1,
+                    ), onPressed: () {
+                  provider.saveJSON();
+                }),
+                const Gap(20),
                 Expanded(
-                  child: SoftButton(ButtonType.flat,
-                      label: "Load",
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 30, vertical: 15), onPressed: () {
-                    provider.loadJSON();
-                  }),
+                  child: SoftText(
+                      provider.currentType == JSONStringType.eJSON
+                          ? provider.jsonString
+                          : provider.jsonCString,
+                      label: provider.currentType == JSONStringType.eJSON
+                          ? "JSON String"
+                          : "JSON C String",
+                      maxLines: 1,
+                      textStyle: Theme.of(context)
+                          .textTheme
+                          .bodyLarge
+                          ?.copyWith(fontSize: 15),
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 20, horizontal: 20)),
                 ),
-                Expanded(
-                  child: SoftButton(ButtonType.flat,
-                      label: "Generate JSON",
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 30, vertical: 15), onPressed: () {
-                    provider.generateJSON();
-                  }),
-                ),
-                Expanded(
-                  child: SoftButton(ButtonType.flat,
-                      label: "Generate C String",
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 30, vertical: 15), onPressed: () {
-                    provider.generateCString();
-                  }),
+                SizedBox(
+                  height: 100,
+                  width: 200,
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: ListTile(
+                          title: Text(
+                            "JSON String",
+                            style: TextStyle(color: color2, fontSize: 12),
+                          ),
+                          leading: Radio<JSONStringType>(
+                            value: JSONStringType.eJSON,
+                            groupValue: provider.currentType,
+                            onChanged: (jsonType) {
+                              provider.changeJSONStringType(jsonType!);
+                            },
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: ListTile(
+                          title: Text(
+                            "C JSON String",
+                            style: TextStyle(color: color2, fontSize: 12),
+                          ),
+                          leading: Radio<JSONStringType>(
+                              value: JSONStringType.eCJSON,
+                              groupValue: provider.currentType,
+                              onChanged: (jsonType) {
+                                provider.changeJSONStringType(jsonType!);
+                              }),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
+          ),
+          const Divider(
+            color: Colors.white54,
           ),
           Expanded(
             child: TreeView.simple(
@@ -74,144 +132,7 @@ class JSONConfiguratorView extends StatelessWidget {
               onTreeReady: (controller) =>
                   provider.treeViewController = controller,
               builder: (context, node) {
-                return Padding(
-                  padding: const EdgeInsets.fromLTRB(4, 8, 8, 8),
-                  child: Row(
-                    children: [
-                      if (node.data!.dataType == JSONDataType.eARRAY ||
-                          node.data!.dataType == JSONDataType.eOBJECT ||
-                          node.isRoot) ...[
-                        SizedBox(
-                          width: 50,
-                          height: 50,
-                          child: SoftButton(ButtonType.emboss,
-                              child: const Icon(Icons.add),
-                              onPressed: () => provider.add(node)),
-                        ),
-                      ] else ...[
-                        const SizedBox(width: 50, height: 50),
-                      ],
-                      if (!node.isRoot &&
-                          (node.parent as TreeNode<JSONConfiguratorEntity>)
-                                  .data!
-                                  .dataType !=
-                              JSONDataType.eARRAY) ...[
-                        const SizedBox(width: 10),
-                        SizedBox(
-                            width: 150,
-                            child: AnimatedCrossFade(
-                              duration: const Duration(milliseconds: 200),
-                              crossFadeState: node.data!.editing
-                                  ? CrossFadeState.showSecond
-                                  : CrossFadeState.showFirst,
-                              firstChild: Text(node.data!.title),
-                              secondChild: SoftTextField(
-                                  label: "name",
-                                  controller: node.data!.nameEditController,
-                                  onEditingComplete: () {
-                                    provider.changeEditing(node);
-                                  }),
-                            )),
-                      ],
-                      if (!node.isRoot) ...[
-                        if ((node.parent as TreeNode<JSONConfiguratorEntity>)
-                                .data!
-                                .dataType !=
-                            JSONDataType.eARRAY) ...[
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          IconButton(
-                            onPressed: () => context
-                                .read<JSONConfiguratorProvider>()
-                                .changeEditing(node),
-                            icon: const Icon(Icons.edit),
-                          ),
-                        ],
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        DropdownButton<JSONDataType>(
-                            value: node.data!.dataType,
-                            items: [
-                              const DropdownMenuItem(
-                                  value: JSONDataType.eSTRING,
-                                  child: Text("String")),
-                              const DropdownMenuItem(
-                                  value: JSONDataType.eNUMBER,
-                                  child: Text("Number")),
-                              const DropdownMenuItem(
-                                  value: JSONDataType.eBOOL,
-                                  child: Text("Boolean")),
-                              const DropdownMenuItem(
-                                  value: JSONDataType.eOBJECT,
-                                  child: Text("Object")),
-                              if ((node.parent
-                                          as TreeNode<JSONConfiguratorEntity>)
-                                      .data!
-                                      .dataType !=
-                                  JSONDataType.eARRAY) ...[
-                                const DropdownMenuItem(
-                                    value: JSONDataType.eARRAY,
-                                    child: Text("Array"))
-                              ]
-                            ],
-                            onChanged: (val) {
-                              context
-                                  .read<JSONConfiguratorProvider>()
-                                  .changeType(node, val!);
-                            }),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        const Text(" : "),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        switch (node.data!.dataType) {
-                          JSONDataType.eSTRING => Expanded(
-                              child: SoftTextField(
-                                label: "String",
-                                controller: node.data!.stringEditController,
-                              ),
-                            ),
-                          JSONDataType.eNUMBER => Expanded(
-                                child: SoftTextField(
-                              label: "Number",
-                              controller: node.data!.stringEditController,
-                              textInputType:
-                                  const TextInputType.numberWithOptions(
-                                      decimal: true),
-                              inputFormatter: <TextInputFormatter>[
-                                FilteringTextInputFormatter.allow(
-                                    RegExp(r'^\d+(\.\d*)?')),
-                              ],
-                            )),
-                          JSONDataType.eBOOL => Checkbox(
-                              value: node.data!.boolValue,
-                              onChanged: (value) =>
-                                  provider.changeBool(node, value!)),
-                          JSONDataType.eOBJECT => Expanded(child: Container()),
-                          JSONDataType.eARRAY => Expanded(child: Container()),
-                          JSONDataType.eROOT => Expanded(child: Container()),
-                        },
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        Expanded(child: Container()),
-                        IconButton(
-                          onPressed: () {
-                            provider.delete(node);
-                          },
-                          icon: const Icon(Icons.delete, color: Colors.red),
-                        ),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                      ]
-                    ],
-                  ),
-                );
+                return JSONNode(node);
               },
             ),
           )
