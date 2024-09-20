@@ -4,7 +4,7 @@
  * File Created: Friday, 20th September 2024 1:44:22 am
  * Author: Omegaki113r (omegaki113r@gmail.com)
  * -----
- * Last Modified: Friday, 20th September 2024 11:21:11 pm
+ * Last Modified: Saturday, 21st September 2024 2:53:08 am
  * Modified By: Omegaki113r (omegaki113r@gmail.com)
  * -----
  * Copyright 2024 - 2024 0m3g4ki113r, Xtronic
@@ -143,11 +143,12 @@ class JSONNode extends StatelessWidget {
                         : CrossFadeState.showFirst,
                     firstChild: Text(node.data!.title),
                     secondChild: SoftTextField(
-                        label: lblName,
-                        controller: node.data!.nameEditController,
-                        onEditingComplete: () {
-                          provider.changeEditing(node);
-                        }),
+                      label: lblName,
+                      controller: node.data!.nameEditController,
+                      onChanged: (updatedData) =>
+                          provider.onTitleChanged(node, updatedData),
+                      onEditingComplete: () => provider.changeEditing(node),
+                    ),
                   )),
             ],
             if (!node.isRoot) ...[
@@ -238,9 +239,7 @@ class JSONNode extends StatelessWidget {
                   child: SoftTextField(
                     label: lblString,
                     controller: node.data!.stringEditController,
-                    onChanged: (string) {
-                      provider.dataChanged(node, string);
-                    },
+                    onChanged: (string) => provider.onDataChanged(node, string),
                   ),
                 ),
               ] else if (node.data!.dataType == JSONDataType.eNUMBER) ...[
@@ -248,15 +247,93 @@ class JSONNode extends StatelessWidget {
                     child: SoftTextField(
                   label: lblNumber,
                   controller: node.data!.stringEditController,
-                  textInputType:
-                      const TextInputType.numberWithOptions(decimal: true),
+                  // textInputType:
+                  //     const TextInputType.numberWithOptions(decimal: true),
                   inputFormatter: <TextInputFormatter>[
-                    FilteringTextInputFormatter.allow(RegExp(r'^\d+(\.\d*)?')),
+                    if (node.data!.numberType == JSONNumberType.eDecimal) ...[
+                      FilteringTextInputFormatter.allow(
+                          RegExp(r'^\d+(\.\d*)?')),
+                    ] else if (node.data!.numberType ==
+                        JSONNumberType.eBinary) ...[
+                      FilteringTextInputFormatter.allow(RegExp(r'^[01]+$')),
+                    ] else if (node.data!.numberType ==
+                        JSONNumberType.eOctal) ...[
+                      FilteringTextInputFormatter.allow(RegExp(r'^[0-7]+$')),
+                    ] else if (node.data!.numberType ==
+                        JSONNumberType.eHex) ...[
+                      FilteringTextInputFormatter.allow(
+                          RegExp(r'^[0-9A-Fa-f]+$')),
+                    ],
                   ],
-                  onChanged: (string) {
-                    provider.dataChanged(node, string);
-                  },
+                  onChanged: (string) => provider.onDataChanged(node, string),
                 )),
+                const Gap(20),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Radio(
+                          value: JSONNumberType.eDecimal,
+                          groupValue: node.data!.numberType,
+                          onChanged: (value) => provider.numberTypeChanged(
+                              node, JSONNumberType.eDecimal),
+                        ),
+                        const Text(
+                          lblDecimal,
+                          style: TextStyle(color: color2, fontSize: 12),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Radio(
+                          value: JSONNumberType.eBinary,
+                          groupValue: node.data!.numberType,
+                          onChanged: (value) => provider.numberTypeChanged(
+                              node, JSONNumberType.eBinary),
+                        ),
+                        const Text(
+                          lblBinary,
+                          style: TextStyle(color: color2, fontSize: 12),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    Row(
+                      children: [
+                        Radio(
+                          value: JSONNumberType.eHex,
+                          groupValue: node.data!.numberType,
+                          onChanged: (value) => provider.numberTypeChanged(
+                              node, JSONNumberType.eHex),
+                        ),
+                        const Text(
+                          lblHex,
+                          style: TextStyle(color: color2, fontSize: 12),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Radio(
+                          value: JSONNumberType.eOctal,
+                          groupValue: node.data!.numberType,
+                          onChanged: (value) => provider.numberTypeChanged(
+                              node, JSONNumberType.eOctal),
+                        ),
+                        const Text(
+                          lblOctal,
+                          style: TextStyle(color: color2, fontSize: 12),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                const Gap(20),
               ] else if (node.data!.dataType == JSONDataType.eBOOL) ...[
                 SoftCheckbox("",
                     onChanged: (value) => provider.changeBool(node, value!),
