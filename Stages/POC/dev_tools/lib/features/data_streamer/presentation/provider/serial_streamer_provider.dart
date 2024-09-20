@@ -16,11 +16,16 @@
 
 import 'dart:async';
 import 'package:dev_tools/core/services/data_streamer/serial_service.dart';
+import 'package:dev_tools/features/bitwise_calculator/domain/entities/bitwise_converter_entity.dart';
+import 'package:dev_tools/features/bitwise_calculator/domain/usecases/bitwise_convert_usecase.dart';
 import 'package:dev_tools/features/data_streamer/domain/entities/stream_data_entitiy.dart';
 import 'package:dev_tools/features/data_streamer/domain/usecases/serial_convert_usecase.dart';
 import 'package:drag_select_grid_view/drag_select_grid_view.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:string_validator/string_validator.dart';
+
+enum TXDataType { ascii, hex, decimal, binary }
 
 enum TxOnEnter { none, cr, lf, crlf, space, stxetx, nul }
 
@@ -58,9 +63,15 @@ class SerialStreamerProvider<T> with ChangeNotifier {
   List<StreamDataEntity> rxDataList = [];
   List<StreamDataEntity> txDataList = [];
   ScrollController rxScrollController = ScrollController();
-  DragSelectGridViewController rxController = DragSelectGridViewController();
   ScrollController txScrollController = ScrollController();
-  DragSelectGridViewController txController = DragSelectGridViewController();
+  DragSelectGridViewController rxGridViewController =
+      DragSelectGridViewController();
+  DragSelectGridViewController txGridViewController =
+      DragSelectGridViewController();
+
+  String previousTransmitString = "";
+  final TextEditingController _txEditingController = TextEditingController();
+  TXDataType _txDataType = TXDataType.ascii;
 
   bool _txAutoScroll = true;
   bool _ctsFlowControl = false;
@@ -87,21 +98,127 @@ class SerialStreamerProvider<T> with ChangeNotifier {
         _serialSearchTimerCallback,
       );
     }
-    rxController.addListener(rxListener);
-    txController.addListener(txListener);
+    // _txEditingController.addListener(txEditingListener);
+    rxGridViewController.addListener(rxListener);
+    txGridViewController.addListener(txListener);
   }
 
   void rxListener() {
     if (kDebugMode) {
-      print(rxController.value);
+      print(rxGridViewController.value);
     }
     notifyListeners();
   }
 
   void txListener() {
     if (kDebugMode) {
-      print(txController.value);
+      print(txGridViewController.value);
     }
+    notifyListeners();
+  }
+
+  void txEditingListener(String newValue) {
+    int currentPosition = _txEditingController.selection.base.offset;
+    bool cursorAtEnd = (newValue.length == currentPosition);
+    switch (_txDataType) {
+      case TXDataType.ascii:
+        break;
+      case TXDataType.hex:
+        if (newValue.length < previousTransmitString.length) {
+          previousTransmitString = _txEditingController.text;
+          return;
+        }
+        if (!isHexadecimal(newValue.characters.last) &&
+            newValue.characters.last != " ") {
+          _txEditingController.text =
+              newValue.substring(0, newValue.length - 1);
+          _txEditingController.selection =
+              TextSelection.collapsed(offset: _txEditingController.text.length);
+          return;
+        }
+        String formattedString = "";
+        List<String> splittedStringList = newValue.split(" ");
+        if (newValue.characters.last == " ") {
+          splittedStringList.last += " ";
+        }
+        for (int idx = 0; idx < splittedStringList.length; ++idx) {
+          if (splittedStringList[idx].isEmpty) continue;
+          if (splittedStringList[idx].length > 2 &&
+              idx + 1 < splittedStringList.length) {
+            splittedStringList[idx + 1] = splittedStringList[idx].substring(2) +
+                splittedStringList[idx + 1];
+            splittedStringList[idx] =
+                splittedStringList[idx].replaceRange(2, null, "");
+          } else if (splittedStringList[idx].length > 2) {
+            splittedStringList.add(splittedStringList[idx].substring(2));
+          }
+        }
+        for (int idx = 0; idx < splittedStringList.length; ++idx) {
+          if (splittedStringList[idx].isEmpty) continue;
+          if (splittedStringList[idx].length < 2) {
+            if (idx < splittedStringList.length - 1) {
+              formattedString += "${splittedStringList[idx].toUpperCase()} ";
+            } else {
+              formattedString += splittedStringList[idx].toUpperCase();
+            }
+          } else {
+            formattedString += "${splittedStringList[idx].toUpperCase()} ";
+          }
+        }
+        _txEditingController.text = formattedString;
+        break;
+      case TXDataType.decimal:
+        break;
+      case TXDataType.binary:
+        if (newValue.length < previousTransmitString.length) {
+          previousTransmitString = _txEditingController.text;
+          return;
+        }
+        if (newValue.characters.last != "1" &&
+            newValue.characters.last != "0" &&
+            newValue.characters.last != " ") {
+          _txEditingController.text =
+              newValue.substring(0, newValue.length - 1);
+          _txEditingController.selection =
+              TextSelection.collapsed(offset: _txEditingController.text.length);
+          return;
+        }
+        String formattedString = "";
+        List<String> splittedStringList = newValue.split(" ");
+        if (newValue.characters.last == " ") {
+          splittedStringList.last += " ";
+        }
+        for (int idx = 0; idx < splittedStringList.length; ++idx) {
+          if (splittedStringList[idx].isEmpty) continue;
+          if (splittedStringList[idx].length > 8 &&
+              idx + 1 < splittedStringList.length) {
+            splittedStringList[idx + 1] = splittedStringList[idx].substring(8) +
+                splittedStringList[idx + 1];
+            splittedStringList[idx] =
+                splittedStringList[idx].replaceRange(8, null, "");
+          } else if (splittedStringList[idx].length > 8) {
+            splittedStringList.add(splittedStringList[idx].substring(8));
+          }
+        }
+        for (int idx = 0; idx < splittedStringList.length; ++idx) {
+          if (splittedStringList[idx].isEmpty) continue;
+          if (splittedStringList[idx].length < 8) {
+            if (idx < splittedStringList.length - 1) {
+              formattedString += "${splittedStringList[idx].toUpperCase()} ";
+            } else {
+              formattedString += splittedStringList[idx].toUpperCase();
+            }
+          } else {
+            formattedString += "${splittedStringList[idx].toUpperCase()} ";
+          }
+        }
+        _txEditingController.text = formattedString;
+        break;
+    }
+    _txEditingController.selection = TextSelection.collapsed(
+        offset:
+            cursorAtEnd ? _txEditingController.text.length : currentPosition);
+    previousTransmitString = _txEditingController.text;
     notifyListeners();
   }
 
@@ -111,8 +228,11 @@ class SerialStreamerProvider<T> with ChangeNotifier {
       _serialSearchTimer.cancel();
     }
     _serialService.dispose();
-    rxController.removeListener(rxListener);
-    txController.removeListener(txListener);
+    rxGridViewController.removeListener(rxListener);
+    txGridViewController.removeListener(txListener);
+    rxGridViewController.dispose();
+    txGridViewController.dispose();
+    _txEditingController.dispose();
     super.dispose();
   }
 
@@ -136,32 +256,238 @@ class SerialStreamerProvider<T> with ChangeNotifier {
     _rxData += incomingBytes.length;
     _convertUsecase.convertCharacter(incomingBytes).listen((event) {
       rxDataList.add(event);
+      if (_rxAutoScroll && rxScrollController.hasClients) {
+        rxScrollController.jumpTo(rxScrollController.position.maxScrollExtent);
+      }
       notifyListeners();
     });
   }
 
   void serialDataTransmitHandler(String transmittableString) {
-    _txData += transmittableString.length;
-    _convertUsecase
-        .convertCharacter(transmittableString.codeUnits)
-        .listen((event) {
-      txDataList.add(event);
-      notifyListeners();
-    });
-    List<int> dataToWrite = transmittableString.codeUnits.toList();
-    switch (_selectedtxOnEnter) {
-      case TxOnEnter.none:
+    List<int> dataToWrite = [];
+    switch (_txDataType) {
+      case TXDataType.ascii:
+        _convertUsecase
+            .convertCharacter(transmittableString.codeUnits)
+            .listen((event) {
+          txDataList.add(event);
+          if (_txAutoScroll && txScrollController.hasClients) {
+            txScrollController
+                .jumpTo(txScrollController.position.maxScrollExtent);
+          }
+          notifyListeners();
+        }).onDone(() {
+          dataToWrite = transmittableString.codeUnits.toList();
+          switch (_selectedtxOnEnter) {
+            case TxOnEnter.none:
+              break;
+            case TxOnEnter.stxetx:
+              List<int> arr = txEnterList[_selectedtxOnEnter]!;
+              BitwiseConvert converter = BitwiseConvert();
+              BitwiseConverterEntity convertedEntity =
+                  converter.convertFromDecimal(arr.first.toRadixString(10));
+              txDataList.insert(
+                  0,
+                  StreamDataEntity(
+                      convertedEntity.ascii,
+                      convertedEntity.binary,
+                      convertedEntity.decimal,
+                      convertedEntity.hex));
+              dataToWrite.insert(0, arr.first);
+              convertedEntity =
+                  converter.convertFromDecimal(arr.last.toRadixString(10));
+              txDataList.add(StreamDataEntity(
+                  convertedEntity.ascii,
+                  convertedEntity.binary,
+                  convertedEntity.decimal,
+                  convertedEntity.hex));
+              dataToWrite.add(arr.last);
+              break;
+            default:
+              for (var element in txEnterList[_selectedtxOnEnter]!) {
+                BitwiseConvert converter = BitwiseConvert();
+                BitwiseConverterEntity convertedEntity =
+                    converter.convertFromDecimal(element.toRadixString(10));
+                String asciiValue = "";
+                switch (int.parse(convertedEntity.hex, radix: 16)) {
+                  case 0x0A:
+                    asciiValue = "\\n";
+                    break;
+                  case 0x0D:
+                    asciiValue = "\\r";
+                    break;
+                  case 0x00:
+                    asciiValue = "\\0";
+                    break;
+                  default:
+                    asciiValue = convertedEntity.ascii;
+                    break;
+                }
+                txDataList.add(StreamDataEntity(
+                    asciiValue,
+                    convertedEntity.binary,
+                    convertedEntity.decimal,
+                    convertedEntity.hex));
+              }
+              _txData += txDataList.length;
+              dataToWrite.addAll(txEnterList[_selectedtxOnEnter]!);
+              break;
+          }
+          _serialService.write(Uint8List.fromList(dataToWrite));
+        });
         break;
-      case TxOnEnter.stxetx:
-        List<int> arr = txEnterList[_selectedtxOnEnter]!;
-        dataToWrite.insert(0, arr.first);
-        dataToWrite.add(arr.last);
+      case TXDataType.binary:
+        List<String> splittedStringList = transmittableString.split(" ");
+        _txData += splittedStringList.length;
+        splittedStringList.forEach((element) {
+          if (element.isNotEmpty) {
+            dataToWrite.add(int.parse(element, radix: 2));
+            BitwiseConvert converter = BitwiseConvert();
+            BitwiseConverterEntity convertedEntity =
+                converter.convertFromBinary(element);
+            txDataList.add(StreamDataEntity(
+                convertedEntity.ascii,
+                convertedEntity.binary,
+                convertedEntity.decimal,
+                convertedEntity.hex));
+            if (_txAutoScroll && txScrollController.hasClients) {
+              txScrollController
+                  .jumpTo(txScrollController.position.maxScrollExtent);
+            }
+          }
+        });
+        switch (_selectedtxOnEnter) {
+          case TxOnEnter.none:
+            break;
+          case TxOnEnter.stxetx:
+            List<int> arr = txEnterList[_selectedtxOnEnter]!;
+            BitwiseConvert converter = BitwiseConvert();
+            BitwiseConverterEntity convertedEntity =
+                converter.convertFromDecimal(arr.first.toRadixString(10));
+            txDataList.insert(
+                0,
+                StreamDataEntity(convertedEntity.ascii, convertedEntity.binary,
+                    convertedEntity.decimal, convertedEntity.hex));
+            dataToWrite.insert(0, arr.first);
+            convertedEntity =
+                converter.convertFromDecimal(arr.last.toRadixString(10));
+            txDataList.add(StreamDataEntity(
+                convertedEntity.ascii,
+                convertedEntity.binary,
+                convertedEntity.decimal,
+                convertedEntity.hex));
+            dataToWrite.add(arr.last);
+            break;
+          default:
+            for (var element in txEnterList[_selectedtxOnEnter]!) {
+              BitwiseConvert converter = BitwiseConvert();
+              BitwiseConverterEntity convertedEntity =
+                  converter.convertFromBinary(element.toRadixString(2));
+              String asciiValue = "";
+              switch (int.parse(convertedEntity.hex, radix: 16)) {
+                case 0x0A:
+                  asciiValue = "\\n";
+                  break;
+                case 0x0D:
+                  asciiValue = "\\r";
+                  break;
+                case 0x00:
+                  asciiValue = "\\0";
+                  break;
+                default:
+                  asciiValue = convertedEntity.ascii;
+                  break;
+              }
+              txDataList.add(StreamDataEntity(
+                  asciiValue,
+                  convertedEntity.binary,
+                  convertedEntity.decimal,
+                  convertedEntity.hex));
+            }
+            _txData += txDataList.length;
+            dataToWrite.addAll(txEnterList[_selectedtxOnEnter]!);
+            break;
+        }
+        _serialService.write(Uint8List.fromList(dataToWrite));
+        break;
+      case TXDataType.hex:
+        List<String> splittedStringList = transmittableString.split(" ");
+
+        splittedStringList.forEach((element) {
+          if (element.isNotEmpty) {
+            dataToWrite.add(int.parse(element, radix: 16));
+            BitwiseConvert converter = BitwiseConvert();
+            BitwiseConverterEntity convertedEntity =
+                converter.convertFromHex(element);
+            txDataList.add(StreamDataEntity(
+                convertedEntity.ascii,
+                convertedEntity.binary,
+                convertedEntity.decimal,
+                convertedEntity.hex));
+            if (_txAutoScroll && txScrollController.hasClients) {
+              txScrollController
+                  .jumpTo(txScrollController.position.maxScrollExtent);
+            }
+          }
+        });
+        switch (_selectedtxOnEnter) {
+          case TxOnEnter.none:
+            break;
+          case TxOnEnter.stxetx:
+            List<int> arr = txEnterList[_selectedtxOnEnter]!;
+            BitwiseConvert converter = BitwiseConvert();
+            BitwiseConverterEntity convertedEntity =
+                converter.convertFromDecimal(arr.first.toRadixString(10));
+            txDataList.insert(
+                0,
+                StreamDataEntity(convertedEntity.ascii, convertedEntity.binary,
+                    convertedEntity.decimal, convertedEntity.hex));
+            dataToWrite.insert(0, arr.first);
+            convertedEntity =
+                converter.convertFromDecimal(arr.last.toRadixString(10));
+            txDataList.add(StreamDataEntity(
+                convertedEntity.ascii,
+                convertedEntity.binary,
+                convertedEntity.decimal,
+                convertedEntity.hex));
+            dataToWrite.add(arr.last);
+            break;
+          default:
+            for (var element in txEnterList[_selectedtxOnEnter]!) {
+              BitwiseConvert converter = BitwiseConvert();
+              BitwiseConverterEntity convertedEntity =
+                  converter.convertFromHex(element.toRadixString(16));
+              String asciiValue = "";
+              switch (int.parse(convertedEntity.hex, radix: 16)) {
+                case 0x0A:
+                  asciiValue = "\\n";
+                  break;
+                case 0x0D:
+                  asciiValue = "\\r";
+                  break;
+                case 0x00:
+                  asciiValue = "\\0";
+                  break;
+                default:
+                  asciiValue = convertedEntity.ascii;
+                  break;
+              }
+              txDataList.add(StreamDataEntity(
+                  asciiValue,
+                  convertedEntity.binary,
+                  convertedEntity.decimal,
+                  convertedEntity.hex));
+            }
+            _txData += txDataList.length;
+            dataToWrite.addAll(txEnterList[_selectedtxOnEnter]!);
+            break;
+        }
+        _serialService.write(Uint8List.fromList(dataToWrite));
         break;
       default:
-        dataToWrite.addAll(txEnterList[_selectedtxOnEnter]!);
         break;
     }
-    _serialService.write(Uint8List.fromList(dataToWrite));
+    notifyListeners();
   }
 
   void serialPortDisconnect() {
@@ -216,14 +542,14 @@ class SerialStreamerProvider<T> with ChangeNotifier {
 
   void resetRXData() {
     // _rxData = 0;
-    rxController.clear();
+    rxGridViewController.clear();
     rxDataList.clear();
     notifyListeners();
   }
 
   void resetTXData() {
     // _txData = 0;
-    txController.clear();
+    txGridViewController.clear();
     txDataList.clear();
     notifyListeners();
   }
@@ -235,6 +561,14 @@ class SerialStreamerProvider<T> with ChangeNotifier {
   String? get selectedStopBits => _selectedStopBits;
   String? get selectedParity => _selectedParity;
   TxOnEnter get selectedtxOnEnter => _selectedtxOnEnter;
+
+  TXDataType get txDataType => _txDataType;
+  set txDataType(TXDataType newType) {
+    _txDataType = newType;
+    previousTransmitString = "";
+    _txEditingController.clear();
+    notifyListeners();
+  }
 
   bool get txAutoScroll => _txAutoScroll;
   set txAutoScroll(bool value) {
@@ -348,4 +682,6 @@ class SerialStreamerProvider<T> with ChangeNotifier {
   List<TxOnEnter> get txOnEnterList => txEnterList.keys.toList();
   int get rxData => _rxData;
   int get txData => _txData;
+
+  TextEditingController get txEditingController => _txEditingController;
 }

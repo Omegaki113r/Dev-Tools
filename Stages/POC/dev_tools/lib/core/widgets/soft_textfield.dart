@@ -16,6 +16,7 @@
 
 import 'package:dev_tools/core/constants/app_colors.dart';
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
+import 'package:flutter/services.dart';
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
 import 'package:gap/gap.dart';
 
@@ -23,19 +24,25 @@ class SoftTextField extends StatefulWidget {
   final TextEditingController controller;
   final Function(String)? onChanged;
   final Function(String)? onSubmitted;
+  final void Function()? onEditingComplete;
   final double? width;
   final double? height;
+  final List<TextInputFormatter>? inputFormatter;
+  final TextInputType? textInputType;
   final String? label;
   final bool? readOnly;
   const SoftTextField({
     super.key,
     this.height,
     this.width,
+    this.inputFormatter,
+    this.textInputType,
     this.label,
     this.readOnly,
     required this.controller,
     this.onChanged,
     this.onSubmitted,
+    this.onEditingComplete,
   });
 
   @override
@@ -81,13 +88,20 @@ class _SoftTextFieldState extends State<SoftTextField> {
                   isDense: true,
                   // contentPadding: EdgeInsets.all(0),
                 ),
+                keyboardType: widget.textInputType,
                 focusNode: focusNode,
+                readOnly: widget.readOnly ?? false,
+                controller: widget.controller,
+                inputFormatters: widget.inputFormatter,
                 onSubmitted: (String value) {
                   if (widget.onSubmitted != null) widget.onSubmitted!(value);
                   focusNode.requestFocus();
                 },
-                readOnly: widget.readOnly ?? false,
-                controller: widget.controller,
+                onEditingComplete: () {
+                  if (widget.onEditingComplete != null) {
+                    widget.onEditingComplete!();
+                  }
+                },
                 onChanged: (String value) {
                   if (widget.onChanged != null) widget.onChanged!(value);
                 }),

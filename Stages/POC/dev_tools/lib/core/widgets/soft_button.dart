@@ -16,6 +16,7 @@
 
 import 'package:dev_tools/core/constants/app_colors.dart';
 import 'package:dev_tools/core/constants/app_constants.dart';
+import 'package:dev_tools/core/constants/app_strings.dart';
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
 
@@ -25,7 +26,7 @@ enum ButtonState {
 }
 
 class SoftButton extends StatefulWidget {
-  final String label;
+  final String? label;
   final ButtonType buttonType;
   final Widget? child;
   final double? height;
@@ -34,8 +35,9 @@ class SoftButton extends StatefulWidget {
   final EdgeInsetsGeometry? padding;
   final ButtonState _buttonState;
   final Duration duration = const Duration(seconds: 2);
-  const SoftButton(this.label, this.buttonType,
+  const SoftButton(this.buttonType,
       {super.key,
+      this.label,
       this.child,
       this.padding,
       this.height,
@@ -56,39 +58,21 @@ class _SoftButtonState extends State<SoftButton>
       padding:
           widget.padding != null ? widget.padding! : const EdgeInsets.all(0),
       child: GestureDetector(
-        // onTap: () => onPressed(),
-        onTapUp: (details) {
-          // setState(() {
-          //   widget._buttonState = ButtonState.DEFAULT;
-          // });
-        },
-        onTapDown: (details) {
-          widget.onPressed();
-          setState(() {
-            // widget._buttonState = ButtonState.PRESSED;
-          });
-        },
+        onTap: () => widget.onPressed(),
+        onTapUp: (details) {},
+        onTapDown: (details) {},
         child: SizedBox(
           height: widget.height,
           width: widget.width,
-          // child: AnimatedSwitcher(
-          //   duration: Duration(milliseconds: 5),
-          //   transitionBuilder: (child, animation) {
-          //     return ScaleTransition(
-          //       scale: animation,
-          //       child: child,
-          //     );
-          //   },
-          //   child: widget._buttonState == ButtonState.DEFAULT
-          //       ? FlatSoftButton(widget.label)
-          //       : ConvexSoftButton(widget.label),
-          // ),
-          child: switch (widget._buttonState) {
-            ButtonState.defaultState => FlatSoftButton(
-                widget.label,
-                child: widget.child,
-              ),
-            ButtonState.pressedState => ConvexSoftButton(widget.label),
+          child: switch (widget.buttonType) {
+            ButtonType.flat =>
+              FlatSoftButton(label: widget.label, child: widget.child),
+            ButtonType.concave =>
+              ConcaveSoftButton(label: widget.label, child: widget.child),
+            ButtonType.convex =>
+              ConvexSoftButton(label: widget.label, child: widget.child),
+            ButtonType.emboss =>
+              EmbossSoftButton(label: widget.label, child: widget.child),
           },
         ),
       ),
@@ -118,15 +102,13 @@ class _SoftButtonState extends State<SoftButton>
 }
 
 class FlatSoftButton extends StatelessWidget {
-  final String label;
+  final String? label;
   final Widget? child;
-  // final double height;
-  const FlatSoftButton(this.label, {super.key, this.child});
+  const FlatSoftButton({super.key, this.label, this.child});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 30),
       decoration: const BoxDecoration(
         // color: color6,
         gradient: LinearGradient(colors: [
@@ -150,7 +132,7 @@ class FlatSoftButton extends StatelessWidget {
       child: Center(
         child: child ??
             Text(
-              label,
+              label ?? lblLabelNotProvided,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.labelLarge,
             ),
@@ -160,13 +142,13 @@ class FlatSoftButton extends StatelessWidget {
 }
 
 class ConcaveSoftButton extends StatelessWidget {
-  final String label;
-  const ConcaveSoftButton(this.label, {super.key});
+  final String? label;
+  final Widget? child;
+  const ConcaveSoftButton({super.key, this.label, this.child});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: double.infinity,
       decoration: const BoxDecoration(
         // color: color6,
         gradient: LinearGradient(colors: [
@@ -188,24 +170,25 @@ class ConcaveSoftButton extends StatelessWidget {
         ],
       ),
       child: Center(
-        child: Text(
-          label,
-          textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.labelLarge,
-        ),
+        child: child ??
+            Text(
+              label ?? lblLabelNotProvided,
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.labelLarge,
+            ),
       ),
     );
   }
 }
 
 class ConvexSoftButton extends StatelessWidget {
-  final String label;
-  const ConvexSoftButton(this.label, {super.key});
+  final String? label;
+  final Widget? child;
+  const ConvexSoftButton({super.key, this.label, this.child});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: double.infinity,
       decoration: const BoxDecoration(
         // color: color6,
         gradient: LinearGradient(colors: [
@@ -227,25 +210,25 @@ class ConvexSoftButton extends StatelessWidget {
         ],
       ),
       child: Center(
-        child: Text(
-          label,
-          textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.labelLarge,
-        ),
+        child: child ??
+            Text(
+              label ?? lblLabelNotProvided,
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.labelLarge,
+            ),
       ),
     );
   }
 }
 
 class EmbossSoftButton extends StatelessWidget {
-  final String label;
-  final double height;
-  const EmbossSoftButton(this.label, this.height, {super.key});
+  final String? label;
+  final Widget? child;
+  const EmbossSoftButton({super.key, this.label, this.child});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: double.infinity,
       decoration: const BoxDecoration(
         color: color6,
         borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -268,15 +251,13 @@ class EmbossSoftButton extends StatelessWidget {
       ),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: SizedBox(
-          height: height,
-          child: Center(
-            child: Text(
-              label,
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.labelLarge,
-            ),
-          ),
+        child: Center(
+          child: child ??
+              Text(
+                label ?? lblLabelNotProvided,
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.labelLarge,
+              ),
         ),
       ),
     );

@@ -42,34 +42,56 @@ class StreamDataView extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, boxConstraint) {
-        double divisableWidth = 40;
+        double divisableWidth = 20;
         if (binary) {
-          divisableWidth = 75;
+          divisableWidth = 60;
         } else if (decimal) {
-          divisableWidth = 55;
+          divisableWidth = 26;
         } else if (hex) {
-          divisableWidth = 40;
-        } else {
           divisableWidth = 20;
+        } else {
+          divisableWidth = 12;
         }
+        double mainAxisHeight = 70;
+        int enabledCount = (ascii ? 1 : 0) +
+            (hex ? 1 : 0) +
+            (decimal ? 1 : 0) +
+            (binary ? 1 : 0);
+        switch (enabledCount) {
+          case 1:
+            mainAxisHeight = 18;
+            break;
+          case 2:
+            mainAxisHeight = 34;
+            break;
+          case 3:
+            mainAxisHeight = 52;
+            break;
+          case 4:
+            mainAxisHeight = 68;
+            break;
+        }
+
         return Container(
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
               border: Border.all(color: Colors.white.withOpacity(0.1))),
           child: DragSelectGridView(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            // padding: const EdgeInsets.symmetric(horizontal: 20),
             scrollController: scrollController,
             gridController: gridController,
             itemCount: dataList.length,
             gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
               maxCrossAxisExtent: divisableWidth,
+              mainAxisSpacing: 4,
+              mainAxisExtent: mainAxisHeight,
             ),
             itemBuilder: (context, index, selected) {
-              if (autoScroll) {
-                scrollController
-                    .jumpTo(scrollController.position.maxScrollExtent);
-              }
+              // if (autoScroll) {
+              //   scrollController
+              //       .jumpTo(scrollController.position.maxScrollExtent);
+              // }
               return selected
                   ? StreamDataCell.flat(
                       ascii: ascii && dataList.isNotEmpty

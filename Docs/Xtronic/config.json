@@ -1,0 +1,10 @@
+{
+    "scl": 12,
+    "sda": 13,
+    "devices": [
+        {
+            "address": 55,
+            "frequency": 100000
+        }
+    ]
+}

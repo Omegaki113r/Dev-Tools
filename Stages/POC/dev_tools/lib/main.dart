@@ -4,7 +4,7 @@
  * File Created: Tuesday, 26th December 2023 2:12:03 pm
  * Author: Omegaki113r (omegaki113r@gmail.com)
  * -----
- * Last Modified: Wednesday, 24th April 2024 4:25:09 pm
+ * Last Modified: Wednesday, 18th September 2024 7:04:48 pm
  * Modified By: Omegaki113r (omegaki113r@gmail.com)
  * -----
  * Copyright 2024 - 2024 0m3g4ki113r, Xtronic
@@ -20,6 +20,7 @@ import 'package:dev_tools/config/routes/app_route.dart';
 import 'package:dev_tools/features/bitwise_calculator/domain/usecases/bitwise_convert_usecase.dart';
 import 'package:dev_tools/features/bitwise_calculator/domain/usecases/bitwise_evaluate_usecase.dart';
 import 'package:dev_tools/features/data_streamer/presentation/provider/streamer_provider.dart';
+import 'package:dev_tools/features/json_configurator/presentation/provider/json_configurator_provider.dart';
 import 'package:dev_tools/service_locator.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -62,6 +63,9 @@ class App extends StatelessWidget {
         ),
         ChangeNotifierProvider<StreamerProvider>(
           create: (context) => StreamerProvider(),
+        ),
+        ChangeNotifierProvider<JSONConfiguratorProvider>(
+          create: (context) => JSONConfiguratorProvider(),
         )
       ],
       child: MaterialApp.router(

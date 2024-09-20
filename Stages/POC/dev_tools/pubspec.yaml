@@ -68,8 +68,14 @@ dependencies:
   string_validator:
   audioplayers:
   # added for saving configs like last used converter types
-  shared_preferences: ^2.2.3
-  usb_device:
+  shared_preferences:
+  docking:
+  multi_split_view:
+  collection:
+  path_provider:
+  file_picker: ^8.1.2
+  animated_tree_view:
+  toastification: ^2.2.0
 
 dev_dependencies:
   flutter_test:

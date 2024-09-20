@@ -58,8 +58,8 @@ class _SidebarState extends State<SidebarView> {
               scrollDirection: Axis.horizontal,
               children: [
                 SoftButton(
-                  lblBitwiseCalculator,
                   ButtonType.flat,
+                  label: lblBitwiseCalculator,
                   height: 60,
                   width: 150,
                   padding: const EdgeInsets.only(
@@ -74,8 +74,8 @@ class _SidebarState extends State<SidebarView> {
                 ),
                 const SoftDivider(),
                 SoftButton(
-                  lblDataStreamer,
                   ButtonType.flat,
+                  label: lblDataStreamer,
                   height: 60,
                   width: 150,
                   padding: const EdgeInsets.only(
@@ -88,9 +88,24 @@ class _SidebarState extends State<SidebarView> {
                     GoRouter.of(context).go(dataStreamerRoute);
                   },
                 ),
+                const SoftDivider(),
                 SoftButton(
-                  "About",
                   ButtonType.flat,
+                  label: lblJSONConfigurator,
+                  height: 60,
+                  padding: const EdgeInsets.only(
+                    top: 20.0,
+                    bottom: 20.0,
+                    left: 20.0,
+                    right: 30.0,
+                  ),
+                  onPressed: () {
+                    GoRouter.of(context).go(jSONConfiguratorRoute);
+                  },
+                ),
+                SoftButton(
+                  ButtonType.flat,
+                  label: lblAbout,
                   height: 60,
                   width: 150,
                   padding: const EdgeInsets.only(
@@ -106,7 +121,7 @@ class _SidebarState extends State<SidebarView> {
                       barrierDismissible: false, // user must tap button!
                       builder: (BuildContext context) {
                         return AlertDialog(
-                          title: const Text('About'),
+                          title: const Text(lblAbout),
                           content: const Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisSize: MainAxisSize.min,
@@ -139,8 +154,8 @@ class _SidebarState extends State<SidebarView> {
             Column(
               children: [
                 SoftButton(
-                  lblBitwiseCalculator,
                   ButtonType.flat,
+                  label: lblBitwiseCalculator,
                   height: 60,
                   padding: const EdgeInsets.only(
                     top: 20.0,
@@ -154,8 +169,8 @@ class _SidebarState extends State<SidebarView> {
                 ),
                 const SoftDivider(),
                 SoftButton(
-                  lblDataStreamer,
                   ButtonType.flat,
+                  label: lblDataStreamer,
                   height: 60,
                   padding: const EdgeInsets.only(
                     top: 20.0,
@@ -165,6 +180,21 @@ class _SidebarState extends State<SidebarView> {
                   ),
                   onPressed: () {
                     GoRouter.of(context).go(dataStreamerRoute);
+                  },
+                ),
+                const SoftDivider(),
+                SoftButton(
+                  ButtonType.flat,
+                  label: lblJSONConfigurator,
+                  height: 60,
+                  padding: const EdgeInsets.only(
+                    top: 20.0,
+                    bottom: 20.0,
+                    left: 20.0,
+                    right: 30.0,
+                  ),
+                  onPressed: () {
+                    GoRouter.of(context).go(jSONConfiguratorRoute);
                   },
                 ),
                 const SoftDivider(),
