@@ -61,7 +61,20 @@ class JSONConfiguratorView extends StatelessWidget {
                       Icons.save,
                       color: color1,
                     ), onPressed: () {
-                  provider.saveJSON();
+                  toastification.show(
+                      context: context,
+                      type: ToastificationType.info,
+                      style: ToastificationStyle.flat,
+                      alignment: Alignment.bottomCenter,
+                      autoCloseDuration: const Duration(seconds: 2),
+                      backgroundColor: color6,
+                      showProgressBar: false,
+                      showIcon: false,
+                      borderSide: const BorderSide(color: color1, width: 0.5),
+                      description: const Text(
+                        lblCopiedToClipboard,
+                        style: TextStyle(color: color2),
+                      ));
                 }),
                 const Gap(20),
                 Expanded(

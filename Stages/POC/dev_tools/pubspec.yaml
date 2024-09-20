@@ -75,6 +75,7 @@ dependencies:
   path_provider:
   file_picker: ^8.1.2
   animated_tree_view:
+  toastification: ^2.2.0
 
 dev_dependencies:
   flutter_test:
