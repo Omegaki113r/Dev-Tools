@@ -4,7 +4,7 @@
  * File Created: Friday, 20th September 2024 1:44:22 am
  * Author: Omegaki113r (omegaki113r@gmail.com)
  * -----
- * Last Modified: Friday, 20th September 2024 10:44:34 pm
+ * Last Modified: Friday, 20th September 2024 11:21:11 pm
  * Modified By: Omegaki113r (omegaki113r@gmail.com)
  * -----
  * Copyright 2024 - 2024 0m3g4ki113r, Xtronic
@@ -37,6 +37,54 @@ class JSONNode extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<JSONConfiguratorProvider>(
         builder: (context, provider, child) {
+      if (node.isRoot) {
+        return Container(
+          padding: const EdgeInsets.only(left: 10),
+          height: 75,
+          decoration: const BoxDecoration(
+            border: Border(
+              bottom: BorderSide(color: Colors.white54, width: 0.25),
+            ),
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: 50,
+                height: 50,
+                child: SoftButton(ButtonType.convex,
+                    child: Icon(
+                      node.isExpanded
+                          ? Icons.arrow_upward
+                          : Icons.arrow_forward,
+                      color: color1,
+                    ),
+                    onPressed: () => provider.toggleExpansion(node)),
+              ),
+              const Gap(20),
+              SizedBox(
+                width: 50,
+                height: 50,
+                child: SoftButton(ButtonType.emboss,
+                    child: const Icon(Icons.add, color: color1),
+                    onPressed: () => provider.add(node)),
+              ),
+              const Gap(20),
+              Text(node.data!.title),
+              Expanded(child: Container()),
+              const Gap(20),
+              SoftButton(ButtonType.convex,
+                  width: 50,
+                  height: 50,
+                  child: const Icon(Icons.delete, color: Colors.red),
+                  onPressed: () {
+                provider.delete(node);
+              }),
+              const Gap(20),
+            ],
+          ),
+        );
+      }
       return Container(
         padding: const EdgeInsets.only(left: 10),
         height: 75,
