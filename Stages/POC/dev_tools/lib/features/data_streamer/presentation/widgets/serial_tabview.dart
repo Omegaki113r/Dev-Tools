@@ -4,7 +4,7 @@
  * File Created: Friday, 10th May 2024 12:58:32 am
  * Author: Omegaki113r (omegaki113r@gmail.com)
  * -----
- * Last Modified: Thursday, 19th September 2024 9:26:24 pm
+ * Last Modified: Friday, 20th September 2024 10:39:23 pm
  * Modified By: Omegaki113r (omegaki113r@gmail.com)
  * -----
  * Copyright 2024 - 2024 0m3g4ki113r, Xtronic
@@ -121,11 +121,10 @@ class _SerialTabViewState extends State<SerialTabView> {
                                         context: context,
                                         builder: (context) {
                                           return const AlertDialog(
-                                            title: Text("NOT SUPPORTED YET!"),
+                                            title: Text(lblNotSupportedYet),
                                             content: Padding(
                                               padding: EdgeInsets.all(30.0),
-                                              child: Text(
-                                                  "Web API for Serial Communication SUCKS!!!.. I am not happy with the results. Therefore this feature flagged as UNFINISHED!!.. "),
+                                              child: Text(lblWEBAPINotice),
                                             ),
                                           );
                                         });
@@ -138,8 +137,8 @@ class _SerialTabViewState extends State<SerialTabView> {
                               Consumer<SerialStreamerProvider>(
                                 builder: (context, provider, child) {
                                   return SoftDropDownButton.flat(
-                                    "No COM Port",
-                                    "Port",
+                                    lblNoCOMPORT,
+                                    lblPort,
                                     width: 150,
                                     height: 45,
                                     selectedValue: provider.port,
@@ -185,7 +184,7 @@ class _SerialTabViewState extends State<SerialTabView> {
                                 builder: (context, provider, child) {
                               return SoftDropDownButton.flat(
                                 "",
-                                "Baud",
+                                lblBaud,
                                 selectedValue: provider.selectedBaudRate,
                                 itemList: provider.baudrateList
                                     .map(
@@ -227,7 +226,7 @@ class _SerialTabViewState extends State<SerialTabView> {
                                 builder: (context, provider, child) {
                               return SoftDropDownButton.flat(
                                 "",
-                                "Data bits",
+                                lblDataBits,
                                 selectedValue: provider.selectedDataBits,
                                 itemList: provider.dataBitList
                                     .map(
@@ -268,7 +267,7 @@ class _SerialTabViewState extends State<SerialTabView> {
                                 builder: (context, provider, child) {
                               return SoftDropDownButton.flat(
                                 "",
-                                "Stop bits",
+                                lblStopBits,
                                 selectedValue: provider.selectedStopBits,
                                 itemList: provider.stopBitList
                                     .map(
@@ -309,7 +308,7 @@ class _SerialTabViewState extends State<SerialTabView> {
                                 builder: (context, provider, child) {
                               return SoftDropDownButton.flat(
                                 "",
-                                "Parity",
+                                lblParity,
                                 selectedValue: provider.selectedParity,
                                 itemList: provider.parityList
                                     .map(
@@ -356,7 +355,7 @@ class _SerialTabViewState extends State<SerialTabView> {
                             padding: const EdgeInsets.only(
                                 top: 8.0, right: 20, bottom: 5),
                             child: SoftCheckbox(
-                              "CTS Flow Control",
+                              lblCTSFlowControl,
                               onChanged: (checked) =>
                                   provider.ctsFlowControl = checked,
                               value: provider.ctsFlowControl,
@@ -374,7 +373,7 @@ class _SerialTabViewState extends State<SerialTabView> {
                 left: 30.0,
                 child: Container(
                   color: color6,
-                  child: const Text("Configuration"),
+                  child: const Text(lblConfiguration),
                 ),
               ),
             ],
@@ -390,7 +389,7 @@ class _SerialTabViewState extends State<SerialTabView> {
               children: [
                 Expanded(
                   child: SoftTextField(
-                    label: "TX",
+                    label: lblTX,
                     width: double.infinity,
                     controller: context
                         .watch<SerialStreamerProvider>()
@@ -485,7 +484,7 @@ class _SerialTabViewState extends State<SerialTabView> {
                           const Gap(20),
                           SoftDropDownButton.flat(
                             "",
-                            "Send on Enter",
+                            lblSendOnEnter,
                             selectedValue: context
                                 .watch<SerialStreamerProvider>()
                                 .selectedtxOnEnter,
@@ -621,7 +620,7 @@ class _SerialTabViewState extends State<SerialTabView> {
     return DockingTabs(
       [
         DockingItem(
-          name: "Received",
+          name: lblReceived,
           closable: false,
           maximizable: false,
           widget: SingleChildScrollView(
@@ -735,7 +734,7 @@ class _SerialTabViewState extends State<SerialTabView> {
                                     ),
                                     SoftText(
                                       "${provider.rxData}",
-                                      label: "RX",
+                                      label: lblRX,
                                       width: 150,
                                       height: 50,
                                       labelStyle: const TextStyle(fontSize: 12),
@@ -750,7 +749,7 @@ class _SerialTabViewState extends State<SerialTabView> {
                                     ),
                                     const Gap(25),
                                     SoftButton(ButtonType.flat,
-                                        label: "Reset",
+                                        label: lblReset,
                                         width: 100,
                                         height: 40, onPressed: () {
                                       provider.resetRXCounter();
@@ -763,7 +762,7 @@ class _SerialTabViewState extends State<SerialTabView> {
                                 height: 50,
                                 width: 150,
                                 child: SoftButton(ButtonType.flat,
-                                    label: "Clear Data", onPressed: () {
+                                    label: lblClearData, onPressed: () {
                                   provider.resetRXData();
                                 }),
                               ),
@@ -818,7 +817,7 @@ class _SerialTabViewState extends State<SerialTabView> {
                     left: 30.0,
                     child: Container(
                       color: color6,
-                      child: const Text("Received Data"),
+                      child: const Text(lblReceivedData),
                     ),
                   ),
                 ],
@@ -827,7 +826,7 @@ class _SerialTabViewState extends State<SerialTabView> {
           ),
         ),
         DockingItem(
-          name: "Transmitted",
+          name: lblTransmitted,
           closable: false,
           maximizable: false,
           widget: SingleChildScrollView(
@@ -941,7 +940,7 @@ class _SerialTabViewState extends State<SerialTabView> {
                                     ),
                                     SoftText(
                                       "${provider.txData}",
-                                      label: "TX",
+                                      label: lblTX,
                                       width: 150,
                                       height: 50,
                                       labelStyle: const TextStyle(fontSize: 12),
@@ -956,7 +955,7 @@ class _SerialTabViewState extends State<SerialTabView> {
                                     ),
                                     const Gap(25),
                                     SoftButton(ButtonType.flat,
-                                        label: "Reset",
+                                        label: lblReset,
                                         width: 100,
                                         height: 40, onPressed: () {
                                       provider.resetTXCounter();
@@ -969,7 +968,7 @@ class _SerialTabViewState extends State<SerialTabView> {
                                 height: 50,
                                 width: 150,
                                 child: SoftButton(ButtonType.flat,
-                                    label: "Clear Data", onPressed: () {
+                                    label: lblClearData, onPressed: () {
                                   provider.resetTXData();
                                 }),
                               ),
@@ -1024,7 +1023,7 @@ class _SerialTabViewState extends State<SerialTabView> {
                     left: 30.0,
                     child: Container(
                       color: color6,
-                      child: const Text("Transmitted Data"),
+                      child: const Text(lblTransmittedData),
                     ),
                   ),
                 ],

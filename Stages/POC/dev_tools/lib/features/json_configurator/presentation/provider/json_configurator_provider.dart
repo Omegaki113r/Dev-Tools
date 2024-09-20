@@ -4,7 +4,7 @@
  * File Created: Wednesday, 18th September 2024 7:00:36 pm
  * Author: Omegaki113r (omegaki113r@gmail.com)
  * -----
- * Last Modified: Friday, 20th September 2024 8:01:19 pm
+ * Last Modified: Friday, 20th September 2024 10:41:12 pm
  * Modified By: Omegaki113r (omegaki113r@gmail.com)
  * -----
  * Copyright 2024 - 2024 0m3g4ki113r, Xtronic
@@ -19,16 +19,18 @@ import 'dart:io';
 
 import 'package:animated_tree_view/animated_tree_view.dart';
 import 'package:dev_tools/core/constants/app_constants.dart';
+import 'package:dev_tools/core/constants/app_strings.dart';
 import 'package:dev_tools/features/json_configurator/domain/entities/json_configurator_entity.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 enum JSONStringType { eJSON, eCJSON }
 
 class JSONConfiguratorProvider with ChangeNotifier {
   TreeNode<JSONConfiguratorEntity> jsonTree = TreeNode.root(
-      data: JSONConfiguratorEntity(JSONDataType.eROOT, title: " { } "));
+      data: JSONConfiguratorEntity(JSONDataType.eROOT, title: lblJSONRoot));
   late TreeViewController treeViewController;
   JSONStringType currentType = JSONStringType.eJSON;
   String jsonString = "";
@@ -46,15 +48,16 @@ class JSONConfiguratorProvider with ChangeNotifier {
           (node.childrenAsList.first as TreeNode<JSONConfiguratorEntity>)
               .data!
               .dataType,
-          title: "data",
+          title: lblData,
         )));
       } else {
         node.add(TreeNode<JSONConfiguratorEntity>(
-            data: JSONConfiguratorEntity(JSONDataType.eSTRING, title: "data")));
+            data:
+                JSONConfiguratorEntity(JSONDataType.eSTRING, title: lblData)));
       }
     } else {
       node.add(TreeNode<JSONConfiguratorEntity>(
-          data: JSONConfiguratorEntity(JSONDataType.eSTRING, title: "data")));
+          data: JSONConfiguratorEntity(JSONDataType.eSTRING, title: lblData)));
     }
     jsonString = generateJSON();
     jsonCString = generateCString();
@@ -76,7 +79,7 @@ class JSONConfiguratorProvider with ChangeNotifier {
     if (kDebugMode) print(jsonTree.childrenAsList.length);
     node.data?.editing = !node.data!.editing;
     if (node.data!.title != null && node.data!.title!.isEmpty) {
-      node.data?.title = "< NAME >";
+      node.data?.title = lblData;
     }
     jsonString = generateJSON();
     jsonCString = generateCString();
@@ -147,6 +150,11 @@ class JSONConfiguratorProvider with ChangeNotifier {
   }
 
   saveJSON() {}
+
+  copyJSON() async {
+    await Clipboard.setData(ClipboardData(
+        text: currentType == JSONStringType.eJSON ? jsonString : jsonCString));
+  }
 
   String generateJSON(
       {TreeNode<JSONConfiguratorEntity>? node, String jsonString = ""}) {

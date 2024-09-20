@@ -4,7 +4,7 @@
  * File Created: Friday, 20th September 2024 1:44:22 am
  * Author: Omegaki113r (omegaki113r@gmail.com)
  * -----
- * Last Modified: Friday, 20th September 2024 7:58:09 pm
+ * Last Modified: Friday, 20th September 2024 10:44:34 pm
  * Modified By: Omegaki113r (omegaki113r@gmail.com)
  * -----
  * Copyright 2024 - 2024 0m3g4ki113r, Xtronic
@@ -17,6 +17,7 @@
 import 'package:animated_tree_view/tree_view/tree_node.dart';
 import 'package:dev_tools/core/constants/app_colors.dart';
 import 'package:dev_tools/core/constants/app_constants.dart';
+import 'package:dev_tools/core/constants/app_strings.dart';
 import 'package:dev_tools/core/widgets/soft_button.dart';
 import 'package:dev_tools/core/widgets/soft_checkbox.dart';
 import 'package:dev_tools/core/widgets/soft_dropdown_button.dart';
@@ -94,7 +95,7 @@ class JSONNode extends StatelessWidget {
                         : CrossFadeState.showFirst,
                     firstChild: Text(node.data!.title),
                     secondChild: SoftTextField(
-                        label: "Name",
+                        label: lblName,
                         controller: node.data!.nameEditController,
                         onEditingComplete: () {
                           provider.changeEditing(node);
@@ -119,7 +120,7 @@ class JSONNode extends StatelessWidget {
               const Gap(20),
               SoftDropDownButton.flat(
                 "",
-                "Type",
+                lblType,
                 width: 200,
                 height: 50,
                 selectedValue: node.data!.dataType,
@@ -129,7 +130,7 @@ class JSONNode extends StatelessWidget {
                     child: Row(
                       children: [
                         Spacer(),
-                        Expanded(child: Text("String")),
+                        Expanded(child: Text(lblString)),
                       ],
                     ),
                   ),
@@ -138,7 +139,7 @@ class JSONNode extends StatelessWidget {
                     child: Row(
                       children: [
                         Spacer(),
-                        Expanded(child: Text("Number")),
+                        Expanded(child: Text(lblNumber)),
                       ],
                     ),
                   ),
@@ -147,7 +148,7 @@ class JSONNode extends StatelessWidget {
                     child: Row(
                       children: [
                         Spacer(),
-                        Expanded(child: Text("Boolean")),
+                        Expanded(child: Text(lblBoolean)),
                       ],
                     ),
                   ),
@@ -156,7 +157,7 @@ class JSONNode extends StatelessWidget {
                     child: Row(
                       children: [
                         Spacer(),
-                        Expanded(child: Text("Object")),
+                        Expanded(child: Text(lblObject)),
                       ],
                     ),
                   ),
@@ -169,7 +170,7 @@ class JSONNode extends StatelessWidget {
                       child: Row(
                         children: [
                           Spacer(),
-                          Expanded(child: Text("Array")),
+                          Expanded(child: Text(lblArray)),
                         ],
                       ),
                     )
@@ -182,39 +183,42 @@ class JSONNode extends StatelessWidget {
                 },
               ),
               const Gap(20),
-              const Text(" : "),
+              const Text(lblJSONSeperator),
               const Gap(20),
-              switch (node.data!.dataType) {
-                JSONDataType.eSTRING => Expanded(
-                    child: SoftTextField(
-                      label: "String",
-                      controller: node.data!.stringEditController,
-                      onChanged: (string) {
-                        provider.dataChanged(node, string);
-                      },
-                    ),
-                  ),
-                JSONDataType.eNUMBER => Expanded(
-                      child: SoftTextField(
-                    label: "Number",
+              if (node.data!.dataType == JSONDataType.eSTRING) ...[
+                Expanded(
+                  child: SoftTextField(
+                    label: lblString,
                     controller: node.data!.stringEditController,
-                    textInputType:
-                        const TextInputType.numberWithOptions(decimal: true),
-                    inputFormatter: <TextInputFormatter>[
-                      FilteringTextInputFormatter.allow(
-                          RegExp(r'^\d+(\.\d*)?')),
-                    ],
                     onChanged: (string) {
                       provider.dataChanged(node, string);
                     },
-                  )),
-                JSONDataType.eBOOL => SoftCheckbox("",
+                  ),
+                ),
+              ] else if (node.data!.dataType == JSONDataType.eNUMBER) ...[
+                Expanded(
+                    child: SoftTextField(
+                  label: lblNumber,
+                  controller: node.data!.stringEditController,
+                  textInputType:
+                      const TextInputType.numberWithOptions(decimal: true),
+                  inputFormatter: <TextInputFormatter>[
+                    FilteringTextInputFormatter.allow(RegExp(r'^\d+(\.\d*)?')),
+                  ],
+                  onChanged: (string) {
+                    provider.dataChanged(node, string);
+                  },
+                )),
+              ] else if (node.data!.dataType == JSONDataType.eBOOL) ...[
+                SoftCheckbox("",
                     onChanged: (value) => provider.changeBool(node, value!),
                     value: node.data!.boolValue),
-                JSONDataType.eOBJECT => Expanded(child: Container()),
-                JSONDataType.eARRAY => Expanded(child: Container()),
-                JSONDataType.eROOT => Expanded(child: Container()),
-              },
+                Expanded(child: Container()),
+              ] else if (node.data!.dataType == JSONDataType.eOBJECT) ...[
+                Expanded(child: Container())
+              ] else if (node.data!.dataType == JSONDataType.eARRAY) ...[
+                Expanded(child: Container())
+              ],
               const Gap(20),
               SoftButton(ButtonType.convex,
                   width: 50,

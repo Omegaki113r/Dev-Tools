@@ -4,7 +4,7 @@
  * File Created: Wednesday, 18th September 2024 6:57:14 pm
  * Author: Omegaki113r (omegaki113r@gmail.com)
  * -----
- * Last Modified: Friday, 20th September 2024 8:01:23 pm
+ * Last Modified: Friday, 20th September 2024 10:26:23 pm
  * Modified By: Omegaki113r (omegaki113r@gmail.com)
  * -----
  * Copyright 2024 - 2024 0m3g4ki113r, Xtronic
@@ -16,18 +16,16 @@
 
 import 'package:dev_tools/core/constants/app_colors.dart';
 import 'package:dev_tools/core/constants/app_constants.dart';
+import 'package:dev_tools/core/constants/app_strings.dart';
 import 'package:dev_tools/core/widgets/soft_button.dart';
-import 'package:dev_tools/core/widgets/soft_divider.dart';
 import 'package:dev_tools/core/widgets/soft_text.dart';
-import 'package:dev_tools/core/widgets/soft_textfield.dart';
-import 'package:dev_tools/features/json_configurator/domain/entities/json_configurator_entity.dart';
 import 'package:dev_tools/features/json_configurator/presentation/provider/json_configurator_provider.dart';
 import 'package:dev_tools/features/json_configurator/presentation/widgets/json_node_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_tree_view/animated_tree_view.dart';
-import 'package:flutter/services.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
+import 'package:toastification/toastification.dart';
 
 class JSONConfiguratorView extends StatelessWidget {
   const JSONConfiguratorView({super.key});
@@ -43,7 +41,7 @@ class JSONConfiguratorView extends StatelessWidget {
             child: Row(
               children: [
                 SoftButton(ButtonType.flat,
-                    label: "Load",
+                    label: lblLoad,
                     width: 50,
                     height: 50,
                     child: const Icon(
@@ -54,13 +52,14 @@ class JSONConfiguratorView extends StatelessWidget {
                 }),
                 const Gap(20),
                 SoftButton(ButtonType.flat,
-                    label: "Save",
+                    label: lblCopy,
                     width: 50,
                     height: 50,
                     child: const Icon(
-                      Icons.save,
+                      Icons.copy,
                       color: color1,
                     ), onPressed: () {
+                  provider.copyJSON();
                   toastification.show(
                       context: context,
                       type: ToastificationType.info,
@@ -83,8 +82,8 @@ class JSONConfiguratorView extends StatelessWidget {
                           ? provider.jsonString
                           : provider.jsonCString,
                       label: provider.currentType == JSONStringType.eJSON
-                          ? "JSON String"
-                          : "JSON C String",
+                          ? lblJSONString
+                          : lblCJSONString,
                       maxLines: 1,
                       textStyle: Theme.of(context)
                           .textTheme
@@ -100,8 +99,8 @@ class JSONConfiguratorView extends StatelessWidget {
                     children: [
                       Expanded(
                         child: ListTile(
-                          title: Text(
-                            "JSON String",
+                          title: const Text(
+                            lblJSONString,
                             style: TextStyle(color: color2, fontSize: 12),
                           ),
                           leading: Radio<JSONStringType>(
@@ -115,8 +114,8 @@ class JSONConfiguratorView extends StatelessWidget {
                       ),
                       Expanded(
                         child: ListTile(
-                          title: Text(
-                            "C JSON String",
+                          title: const Text(
+                            lblCJSONString,
                             style: TextStyle(color: color2, fontSize: 12),
                           ),
                           leading: Radio<JSONStringType>(
@@ -139,6 +138,7 @@ class JSONConfiguratorView extends StatelessWidget {
           Expanded(
             child: TreeView.simple(
               tree: provider.jsonTree,
+              expansionBehavior: ExpansionBehavior.scrollToLastChild,
               expansionIndicatorBuilder: (context, node) =>
                   NoExpansionIndicator(tree: node),
               indentation: const Indentation(style: IndentStyle.squareJoint),

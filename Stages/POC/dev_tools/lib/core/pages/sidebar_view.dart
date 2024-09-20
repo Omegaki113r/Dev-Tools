@@ -105,7 +105,7 @@ class _SidebarState extends State<SidebarView> {
                 ),
                 SoftButton(
                   ButtonType.flat,
-                  label: "About",
+                  label: lblAbout,
                   height: 60,
                   width: 150,
                   padding: const EdgeInsets.only(
@@ -121,7 +121,7 @@ class _SidebarState extends State<SidebarView> {
                       barrierDismissible: false, // user must tap button!
                       builder: (BuildContext context) {
                         return AlertDialog(
-                          title: const Text('About'),
+                          title: const Text(lblAbout),
                           content: const Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisSize: MainAxisSize.min,

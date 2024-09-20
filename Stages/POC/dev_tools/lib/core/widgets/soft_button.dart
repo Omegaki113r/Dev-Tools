@@ -16,6 +16,7 @@
 
 import 'package:dev_tools/core/constants/app_colors.dart';
 import 'package:dev_tools/core/constants/app_constants.dart';
+import 'package:dev_tools/core/constants/app_strings.dart';
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
 
@@ -131,7 +132,7 @@ class FlatSoftButton extends StatelessWidget {
       child: Center(
         child: child ??
             Text(
-              label ?? "LABEL NOT PROVIDED",
+              label ?? lblLabelNotProvided,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.labelLarge,
             ),
@@ -171,7 +172,7 @@ class ConcaveSoftButton extends StatelessWidget {
       child: Center(
         child: child ??
             Text(
-              label ?? "LABEL NOT PROVIDED",
+              label ?? lblLabelNotProvided,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.labelLarge,
             ),
@@ -211,7 +212,7 @@ class ConvexSoftButton extends StatelessWidget {
       child: Center(
         child: child ??
             Text(
-              label ?? "LABEL NOT PROVIDED",
+              label ?? lblLabelNotProvided,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.labelLarge,
             ),
@@ -253,7 +254,7 @@ class EmbossSoftButton extends StatelessWidget {
         child: Center(
           child: child ??
               Text(
-                label ?? "LABEL NOT PROVIDED",
+                label ?? lblLabelNotProvided,
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.labelLarge,
               ),

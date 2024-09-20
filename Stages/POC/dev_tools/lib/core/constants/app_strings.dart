@@ -18,7 +18,7 @@ const String appName = "Xtronic DevTools";
 const String developerPrefix = "Developed By: ";
 const String versionPrefix = "Version: ";
 const String developer = "0m3g4ki113r";
-const String version = "0.0.6-alpha";
+const String version = "0.0.7-alpha";
 
 const String lblConnect = "Connect";
 const String lblDisconnect = "Disconnect";
@@ -40,3 +40,45 @@ const String lblWebSocket = "Web Socket";
 const String lblMQTT = "MQTT";
 
 const String lblJSONConfigurator = "JSON Configurator";
+const String lblJSONString = "JSON String";
+const String lblCJSONString = "JSON C String";
+
+const String lblLoad = "Load";
+const String lblCopy = "Copy";
+const String lblCopiedToClipboard = "Copied to Clipboard!";
+
+const String lblAbout = "About";
+const String lblLabelNotProvided = "LABEL NOT PROVIDED";
+
+const String lblNotSupportedYet = "NOT SUPPORTED YET!";
+const String lblWEBAPINotice =
+    "Web API for Serial Communication SUCKS!!!.. I am not happy with the results. Therefore this feature flagged as UNFINISHED!!.. ";
+
+const String lblNoCOMPORT = "No COM Port";
+const String lblPort = "Port";
+const String lblBaud = "Baud";
+const String lblDataBits = "Data Bits";
+const String lblStopBits = "Stop Bits";
+const String lblParity = "Parity";
+const String lblCTSFlowControl = "CTS Flow Control";
+const String lblConfiguration = "Configuration";
+const String lblTX = "TX";
+const String lblRX = "RX";
+const String lblSendOnEnter = "Send On Enter";
+const String lblReceived = "Received";
+const String lblReset = "Reset";
+const String lblClearData = "Clear Data";
+const String lblReceivedData = "Received Data";
+const String lblTransmitted = "Transmitted";
+const String lblTransmittedData = "Transmitted Data";
+
+const String lblJSONRoot = " { } ";
+const String lblData = "data";
+const String lblName = "Name";
+const String lblType = "Type";
+const String lblString = "String";
+const String lblNumber = "Number";
+const String lblBoolean = "Boolean";
+const String lblObject = "Object";
+const String lblArray = "Array";
+const String lblJSONSeperator = " : ";
