@@ -4,7 +4,7 @@
  * File Created: Wednesday, 18th September 2024 7:00:36 pm
  * Author: Omegaki113r (omegaki113r@gmail.com)
  * -----
- * Last Modified: Friday, 20th September 2024 10:41:12 pm
+ * Last Modified: Friday, 20th September 2024 11:57:17 pm
  * Modified By: Omegaki113r (omegaki113r@gmail.com)
  * -----
  * Copyright 2024 - 2024 0m3g4ki113r, Xtronic
@@ -69,7 +69,9 @@ class JSONConfiguratorProvider with ChangeNotifier {
     // node.data!.stringEditController.dispose();
     node.data!.dispose();
     node.clear();
-    node.delete();
+    if (!node.isRoot) {
+      node.delete();
+    }
     jsonString = generateJSON();
     jsonCString = generateCString();
     notifyListeners();
@@ -135,16 +137,19 @@ class JSONConfiguratorProvider with ChangeNotifier {
     FilePicker.platform.pickFiles().then((value) {
       if (kDebugMode) print("loaded");
       if (value != null) {
-        File file = File(value.files.single.path!);
-        file.readAsString().then((value) {
-          String s = value;
-          Map<String, dynamic> data = jsonDecode(s);
-          jsonTree.clear();
-          jsonTree = generateTreeWithMap(data, node: jsonTree);
-          jsonString = generateJSON();
-          jsonCString = generateCString();
-          notifyListeners();
-        });
+        String dataRead = "";
+        if (kIsWeb) {
+          dataRead = String.fromCharCodes(value.files.single.bytes!);
+        } else {
+          File file = File(value.files.single.path!);
+          dataRead = file.readAsStringSync();
+        }
+        Map<String, dynamic> data = jsonDecode(dataRead);
+        jsonTree.clear();
+        jsonTree = generateTreeWithMap(data, node: jsonTree);
+        jsonString = generateJSON();
+        jsonCString = generateCString();
+        notifyListeners();
       }
     });
   }
@@ -160,7 +165,12 @@ class JSONConfiguratorProvider with ChangeNotifier {
       {TreeNode<JSONConfiguratorEntity>? node, String jsonString = ""}) {
     node ??= jsonTree;
     if (jsonString.isEmpty) jsonString = "{";
-    if (node.children.isEmpty) return jsonString;
+    if (node.children.isEmpty) {
+      if (node.isRoot) {
+        jsonString += "}";
+      }
+      return jsonString;
+    }
     for (var element in node.childrenAsList) {
       TreeNode<JSONConfiguratorEntity> childNode =
           element as TreeNode<JSONConfiguratorEntity>;
@@ -227,7 +237,12 @@ class JSONConfiguratorProvider with ChangeNotifier {
       {TreeNode<JSONConfiguratorEntity>? node, String jsonString = ""}) {
     node ??= jsonTree;
     if (jsonString.isEmpty) jsonString = "{";
-    if (node.children.isEmpty) return jsonString;
+    if (node.children.isEmpty) {
+      if (node.isRoot) {
+        jsonString += "}";
+      }
+      return jsonString;
+    }
     for (var element in node.childrenAsList) {
       TreeNode<JSONConfiguratorEntity> childNode =
           element as TreeNode<JSONConfiguratorEntity>;
