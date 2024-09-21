@@ -4,7 +4,7 @@
  * File Created: Friday, 20th September 2024 1:44:22 am
  * Author: Omegaki113r (omegaki113r@gmail.com)
  * -----
- * Last Modified: Saturday, 21st September 2024 5:37:25 pm
+ * Last Modified: Saturday, 21st September 2024 5:43:27 pm
  * Modified By: Omegaki113r (omegaki113r@gmail.com)
  * -----
  * Copyright 2024 - 2024 0m3g4ki113r, Xtronic
@@ -247,8 +247,6 @@ class JSONNode extends StatelessWidget {
                     child: SoftTextField(
                   label: lblNumber,
                   controller: node.data!.stringEditController,
-                  // textInputType:
-                  //     const TextInputType.numberWithOptions(decimal: true),
                   inputFormatter: <TextInputFormatter>[
                     if (node.data!.numberType == JSONNumberType.eDecimal) ...[
                       FilteringTextInputFormatter.allow(RegExp(regExDecimal)),
