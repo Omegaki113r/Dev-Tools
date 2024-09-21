@@ -4,7 +4,7 @@
  * File Created: Wednesday, 18th September 2024 7:00:36 pm
  * Author: Omegaki113r (omegaki113r@gmail.com)
  * -----
- * Last Modified: Friday, 20th September 2024 11:57:17 pm
+ * Last Modified: Saturday, 21st September 2024 4:22:51 pm
  * Modified By: Omegaki113r (omegaki113r@gmail.com)
  * -----
  * Copyright 2024 - 2024 0m3g4ki113r, Xtronic
@@ -18,13 +18,18 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:animated_tree_view/animated_tree_view.dart';
+import 'package:dev_tools/core/constants/app_colors.dart';
 import 'package:dev_tools/core/constants/app_constants.dart';
 import 'package:dev_tools/core/constants/app_strings.dart';
+import 'package:dev_tools/features/bitwise_calculator/domain/entities/bitwise_converter_entity.dart';
+import 'package:dev_tools/features/bitwise_calculator/domain/usecases/bitwise_convert_usecase.dart';
 import 'package:dev_tools/features/json_configurator/domain/entities/json_configurator_entity.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:string_validator/string_validator.dart';
+import 'package:toastification/toastification.dart';
 
 enum JSONStringType { eJSON, eCJSON }
 
@@ -117,7 +122,56 @@ class JSONConfiguratorProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  dataChanged(TreeNode<JSONConfiguratorEntity> node, String newData) {
+  onTitleChanged(TreeNode<JSONConfiguratorEntity> node, String newData) {
+    node.data!.title = newData;
+    jsonString = generateJSON();
+    jsonCString = generateCString();
+    notifyListeners();
+  }
+
+  onDataChanged(TreeNode<JSONConfiguratorEntity> node, String newData) {
+    if (newData.contains(".")) {
+      toastification.show(
+          type: ToastificationType.error,
+          style: ToastificationStyle.flat,
+          alignment: Alignment.bottomCenter,
+          autoCloseDuration: const Duration(seconds: 2),
+          backgroundColor: color6,
+          showProgressBar: false,
+          showIcon: false,
+          borderSide: const BorderSide(color: color1, width: 0.5),
+          description: const Text(
+            lblFloatingPointsNotYetSupported,
+            style: TextStyle(color: color2),
+          ));
+    }
+    if (node.data!.dataType == JSONDataType.eNUMBER) {
+      BitwiseConvert converter = BitwiseConvert();
+      if (newData.isEmpty) {
+        newData = node.data!.dataValue;
+      }
+      switch (node.data!.numberType) {
+        case JSONNumberType.eBinary:
+          node.data!.numberValue = converter.convertFromBinary(newData);
+          node.data!.stringEditController.text = node.data!.numberValue!.binary;
+          break;
+        case JSONNumberType.eOctal:
+          node.data!.numberValue = converter.convertFromOctal(newData);
+          node.data!.stringEditController.text = node.data!.numberValue!.octal;
+          break;
+        case JSONNumberType.eDecimal:
+          node.data!.numberValue = converter.convertFromDecimal(newData);
+          node.data!.stringEditController.text =
+              node.data!.numberValue!.decimal;
+          break;
+        case JSONNumberType.eHex:
+          node.data!.numberValue = converter.convertFromHex(newData);
+          node.data!.stringEditController.text = node.data!.numberValue!.hex;
+          break;
+      }
+    } else {
+      node.data!.dataValue = newData;
+    }
     jsonString = generateJSON();
     jsonCString = generateCString();
     notifyListeners();
@@ -125,6 +179,37 @@ class JSONConfiguratorProvider with ChangeNotifier {
 
   changeJSONStringType(JSONStringType type) {
     currentType = type;
+    notifyListeners();
+  }
+
+  numberTypeChanged(
+      TreeNode<JSONConfiguratorEntity> node, JSONNumberType type) {
+    node.data!.numberType = type;
+    BitwiseConvert converter = BitwiseConvert();
+    switch (node.data!.numberType) {
+      case JSONNumberType.eBinary:
+        node.data!.numberValue = converter
+            .convertFromDecimal(node.data!.numberValue?.decimal ?? "0");
+        node.data!.stringEditController.text = node.data!.numberValue!.binary;
+        break;
+      case JSONNumberType.eOctal:
+        node.data!.numberValue = converter
+            .convertFromDecimal(node.data!.numberValue?.decimal ?? "0");
+        node.data!.stringEditController.text = node.data!.numberValue!.octal;
+        break;
+      case JSONNumberType.eDecimal:
+        node.data!.numberValue = converter
+            .convertFromDecimal(node.data!.numberValue?.decimal ?? "0");
+        node.data!.stringEditController.text = node.data!.numberValue!.decimal;
+        break;
+      case JSONNumberType.eHex:
+        node.data!.numberValue = converter
+            .convertFromDecimal(node.data!.numberValue?.decimal ?? "0");
+        node.data!.stringEditController.text = node.data!.numberValue!.hex;
+        break;
+    }
+    // node.data!.stringValue = node.data!.stringEditController.text;
+
     notifyListeners();
   }
 
@@ -182,7 +267,7 @@ class JSONConfiguratorProvider with ChangeNotifier {
             jsonString += "\":";
           }
           jsonString += "\"";
-          jsonString += childNode.data!.stringValue;
+          jsonString += childNode.data!.dataValue;
           jsonString += "\"";
           break;
         case JSONDataType.eNUMBER:
@@ -191,7 +276,7 @@ class JSONConfiguratorProvider with ChangeNotifier {
             jsonString += childNode.data!.title ?? "";
             jsonString += "\":";
           }
-          jsonString += childNode.data!.numberValue.toString();
+          jsonString += childNode.data!.numberValue?.decimal ?? "0";
           break;
         case JSONDataType.eBOOL:
           if (node.data!.dataType != JSONDataType.eARRAY) {
@@ -229,7 +314,6 @@ class JSONConfiguratorProvider with ChangeNotifier {
     }
     jsonString = jsonString.substring(0, jsonString.length - 1);
     if (node.isRoot) jsonString += "}";
-    if (node.isRoot) if (kDebugMode) print(jsonString);
     return jsonString;
   }
 
@@ -254,7 +338,7 @@ class JSONConfiguratorProvider with ChangeNotifier {
             jsonString += "\\\":";
           }
           jsonString += "\\\"";
-          jsonString += childNode.data!.stringValue;
+          jsonString += childNode.data!.dataValue;
           jsonString += "\\\"";
           break;
         case JSONDataType.eNUMBER:
@@ -263,7 +347,7 @@ class JSONConfiguratorProvider with ChangeNotifier {
             jsonString += childNode.data!.title ?? "";
             jsonString += "\\\":";
           }
-          jsonString += childNode.data!.numberValue.toString();
+          jsonString += childNode.data!.numberValue?.decimal ?? "";
           break;
         case JSONDataType.eBOOL:
           if (node.data!.dataType != JSONDataType.eARRAY) {
@@ -300,7 +384,6 @@ class JSONConfiguratorProvider with ChangeNotifier {
     }
     jsonString = jsonString.substring(0, jsonString.length - 1);
     if (node.isRoot) jsonString += "}";
-    if (node.isRoot) if (kDebugMode) print(jsonString);
     return jsonString;
   }
 
@@ -324,7 +407,7 @@ class JSONConfiguratorProvider with ChangeNotifier {
         case String:
           if (kDebugMode) print("string");
           var val = JSONConfiguratorEntity(JSONDataType.eSTRING);
-          val.stringValue = element;
+          val.dataValue = element;
           val.stringEditController.text = element;
           node.add(TreeNode<JSONConfiguratorEntity>(data: val));
           break;
@@ -349,14 +432,16 @@ class JSONConfiguratorProvider with ChangeNotifier {
         case String:
           if (kDebugMode) print("string");
           var val = JSONConfiguratorEntity(JSONDataType.eSTRING, title: key);
-          val.stringValue = value;
+          val.dataValue = value;
           val.stringEditController.text = value;
           node.add(TreeNode<JSONConfiguratorEntity>(data: val));
           break;
         case int:
           if (kDebugMode) print("int");
           var val = JSONConfiguratorEntity(JSONDataType.eNUMBER, title: key);
-          val.numberValue = value;
+          BitwiseConvert convert = BitwiseConvert();
+          val.numberValue = convert.convertFromDecimal(value.toString());
+          // val.numberValue = value;
           val.stringEditController.text = value.toString();
           node.add(TreeNode<JSONConfiguratorEntity>(data: val));
           break;

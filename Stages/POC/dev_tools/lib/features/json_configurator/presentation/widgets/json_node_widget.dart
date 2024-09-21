@@ -4,7 +4,7 @@
  * File Created: Friday, 20th September 2024 1:44:22 am
  * Author: Omegaki113r (omegaki113r@gmail.com)
  * -----
- * Last Modified: Saturday, 21st September 2024 2:53:08 am
+ * Last Modified: Saturday, 21st September 2024 5:37:25 pm
  * Modified By: Omegaki113r (omegaki113r@gmail.com)
  * -----
  * Copyright 2024 - 2024 0m3g4ki113r, Xtronic
@@ -251,18 +251,16 @@ class JSONNode extends StatelessWidget {
                   //     const TextInputType.numberWithOptions(decimal: true),
                   inputFormatter: <TextInputFormatter>[
                     if (node.data!.numberType == JSONNumberType.eDecimal) ...[
-                      FilteringTextInputFormatter.allow(
-                          RegExp(r'^\d+(\.\d*)?')),
+                      FilteringTextInputFormatter.allow(RegExp(regExDecimal)),
                     ] else if (node.data!.numberType ==
                         JSONNumberType.eBinary) ...[
-                      FilteringTextInputFormatter.allow(RegExp(r'^[01]+$')),
+                      FilteringTextInputFormatter.allow(RegExp(regExBinary)),
                     ] else if (node.data!.numberType ==
                         JSONNumberType.eOctal) ...[
-                      FilteringTextInputFormatter.allow(RegExp(r'^[0-7]+$')),
+                      FilteringTextInputFormatter.allow(RegExp(regExOctal)),
                     ] else if (node.data!.numberType ==
                         JSONNumberType.eHex) ...[
-                      FilteringTextInputFormatter.allow(
-                          RegExp(r'^[0-9A-Fa-f]+$')),
+                      FilteringTextInputFormatter.allow(RegExp(regExHex)),
                     ],
                   ],
                   onChanged: (string) => provider.onDataChanged(node, string),
