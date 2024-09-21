@@ -20,6 +20,7 @@ import 'package:dev_tools/core/widgets/soft_text.dart';
 import 'package:dev_tools/core/widgets/soft_textfield.dart';
 import 'package:dev_tools/features/bitwise_calculator/presentation/provider/bitwise_calculator_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class BinaryBitwise extends StatelessWidget {
@@ -37,6 +38,9 @@ class BinaryBitwise extends StatelessWidget {
                 padding: const EdgeInsets.all(30),
                 child: SoftTextField(
                   label: lblBinary,
+                  inputFormatter: <TextInputFormatter>[
+                    FilteringTextInputFormatter.allow(RegExp(regExBinary))
+                  ],
                   controller: context
                       .read<BitwiseCalculatorProvider>()
                       .binaryController,
