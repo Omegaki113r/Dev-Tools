@@ -69,8 +69,11 @@ dependencies:
   audioplayers:
   # added for saving configs like last used converter types
   shared_preferences:
+
   docking:
   multi_split_view:
+  # flutter_resizable_container: ^3.0.0
+
   collection:
   path_provider:
   file_picker: ^8.1.2

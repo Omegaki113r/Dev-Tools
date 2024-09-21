@@ -4,7 +4,7 @@
  * File Created: Wednesday, 18th September 2024 7:00:36 pm
  * Author: Omegaki113r (omegaki113r@gmail.com)
  * -----
- * Last Modified: Saturday, 21st September 2024 4:22:51 pm
+ * Last Modified: Saturday, 21st September 2024 6:18:04 pm
  * Modified By: Omegaki113r (omegaki113r@gmail.com)
  * -----
  * Copyright 2024 - 2024 0m3g4ki113r, Xtronic
@@ -234,6 +234,9 @@ class JSONConfiguratorProvider with ChangeNotifier {
         jsonTree = generateTreeWithMap(data, node: jsonTree);
         jsonString = generateJSON();
         jsonCString = generateCString();
+
+        treeViewController.expandAllChildren(jsonTree);
+
         notifyListeners();
       }
     });

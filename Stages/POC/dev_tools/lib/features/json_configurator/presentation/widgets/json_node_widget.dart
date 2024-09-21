@@ -4,7 +4,7 @@
  * File Created: Friday, 20th September 2024 1:44:22 am
  * Author: Omegaki113r (omegaki113r@gmail.com)
  * -----
- * Last Modified: Saturday, 21st September 2024 5:43:27 pm
+ * Last Modified: Sunday, 22nd September 2024 1:32:10 am
  * Modified By: Omegaki113r (omegaki113r@gmail.com)
  * -----
  * Copyright 2024 - 2024 0m3g4ki113r, Xtronic
@@ -235,34 +235,41 @@ class JSONNode extends StatelessWidget {
               const Text(lblJSONSeperator),
               const Gap(20),
               if (node.data!.dataType == JSONDataType.eSTRING) ...[
-                Expanded(
+                SizedBox(
+                  width: 200,
                   child: SoftTextField(
                     label: lblString,
                     controller: node.data!.stringEditController,
                     onChanged: (string) => provider.onDataChanged(node, string),
                   ),
                 ),
+                Expanded(child: Container()),
               ] else if (node.data!.dataType == JSONDataType.eNUMBER) ...[
-                Expanded(
+                SizedBox(
+                    width: 200,
                     child: SoftTextField(
-                  label: lblNumber,
-                  controller: node.data!.stringEditController,
-                  inputFormatter: <TextInputFormatter>[
-                    if (node.data!.numberType == JSONNumberType.eDecimal) ...[
-                      FilteringTextInputFormatter.allow(RegExp(regExDecimal)),
-                    ] else if (node.data!.numberType ==
-                        JSONNumberType.eBinary) ...[
-                      FilteringTextInputFormatter.allow(RegExp(regExBinary)),
-                    ] else if (node.data!.numberType ==
-                        JSONNumberType.eOctal) ...[
-                      FilteringTextInputFormatter.allow(RegExp(regExOctal)),
-                    ] else if (node.data!.numberType ==
-                        JSONNumberType.eHex) ...[
-                      FilteringTextInputFormatter.allow(RegExp(regExHex)),
-                    ],
-                  ],
-                  onChanged: (string) => provider.onDataChanged(node, string),
-                )),
+                      label: lblNumber,
+                      controller: node.data!.stringEditController,
+                      inputFormatter: <TextInputFormatter>[
+                        if (node.data!.numberType ==
+                            JSONNumberType.eDecimal) ...[
+                          FilteringTextInputFormatter.allow(
+                              RegExp(regExDecimal)),
+                        ] else if (node.data!.numberType ==
+                            JSONNumberType.eBinary) ...[
+                          FilteringTextInputFormatter.allow(
+                              RegExp(regExBinary)),
+                        ] else if (node.data!.numberType ==
+                            JSONNumberType.eOctal) ...[
+                          FilteringTextInputFormatter.allow(RegExp(regExOctal)),
+                        ] else if (node.data!.numberType ==
+                            JSONNumberType.eHex) ...[
+                          FilteringTextInputFormatter.allow(RegExp(regExHex)),
+                        ],
+                      ],
+                      onChanged: (string) =>
+                          provider.onDataChanged(node, string),
+                    )),
                 const Gap(20),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -329,7 +336,7 @@ class JSONNode extends StatelessWidget {
                     ),
                   ],
                 ),
-                const Gap(20),
+                Expanded(child: Container()),
               ] else if (node.data!.dataType == JSONDataType.eBOOL) ...[
                 SoftCheckbox("",
                     onChanged: (value) => provider.changeBool(node, value!),
@@ -344,8 +351,10 @@ class JSONNode extends StatelessWidget {
               SoftButton(ButtonType.convex,
                   width: 50,
                   height: 50,
-                  child: const Icon(Icons.delete, color: Colors.red),
-                  onPressed: () {
+                  child: const Icon(
+                    Icons.delete,
+                    color: Colors.red,
+                  ), onPressed: () {
                 provider.delete(node);
               }),
               const Gap(20),
