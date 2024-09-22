@@ -20,6 +20,7 @@ import 'package:dev_tools/core/widgets/soft_text.dart';
 import 'package:dev_tools/core/widgets/soft_textfield.dart';
 import 'package:dev_tools/features/bitwise_calculator/presentation/provider/bitwise_calculator_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class DecimalBitwise extends StatelessWidget {
@@ -39,6 +40,9 @@ class DecimalBitwise extends StatelessWidget {
                 padding: const EdgeInsets.all(30),
                 child: SoftTextField(
                   label: lblDecimal,
+                  inputFormatter: <TextInputFormatter>[
+                    FilteringTextInputFormatter.allow(RegExp(regExDecimal))
+                  ],
                   controller: context
                       .read<BitwiseCalculatorProvider>()
                       .decimalController,

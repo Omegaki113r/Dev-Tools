@@ -31,6 +31,7 @@ class SoftTextField extends StatefulWidget {
   final TextInputType? textInputType;
   final String? label;
   final bool? readOnly;
+  final BoxBorder? border;
   const SoftTextField({
     super.key,
     this.height,
@@ -39,6 +40,7 @@ class SoftTextField extends StatefulWidget {
     this.textInputType,
     this.label,
     this.readOnly,
+    this.border,
     required this.controller,
     this.onChanged,
     this.onSubmitted,
@@ -56,10 +58,10 @@ class _SoftTextFieldState extends State<SoftTextField> {
     return Container(
       width: widget.width,
       height: widget.height,
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: color6,
-        borderRadius: BorderRadius.all(Radius.circular(20)),
-        boxShadow: [
+        borderRadius: const BorderRadius.all(Radius.circular(20)),
+        boxShadow: const [
           BoxShadow(
             offset: Offset(-10, -10),
             blurRadius: 20,
@@ -75,6 +77,7 @@ class _SoftTextFieldState extends State<SoftTextField> {
             inset: true,
           ),
         ],
+        border: widget.border,
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),

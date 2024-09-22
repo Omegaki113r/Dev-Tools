@@ -4,7 +4,7 @@
  * File Created: Tuesday, 26th December 2023 2:12:03 pm
  * Author: Omegaki113r (omegaki113r@gmail.com)
  * -----
- * Last Modified: Wednesday, 18th September 2024 7:04:48 pm
+ * Last Modified: Saturday, 21st September 2024 4:15:28 pm
  * Modified By: Omegaki113r (omegaki113r@gmail.com)
  * -----
  * Copyright 2024 - 2024 0m3g4ki113r, Xtronic
@@ -25,6 +25,7 @@ import 'package:dev_tools/service_locator.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:toastification/toastification.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:dev_tools/config/themes/app_themes.dart';
 import 'package:dev_tools/features/bitwise_calculator/presentation/provider/bitwise_calculator_provider.dart';
@@ -68,11 +69,13 @@ class App extends StatelessWidget {
           create: (context) => JSONConfiguratorProvider(),
         )
       ],
-      child: MaterialApp.router(
-        routerConfig: AppRoute.router,
-        themeMode: ThemeMode.system,
-        theme: lightTheme,
-        darkTheme: darkTheme,
+      child: ToastificationWrapper(
+        child: MaterialApp.router(
+          routerConfig: AppRoute.router,
+          themeMode: ThemeMode.system,
+          theme: lightTheme,
+          darkTheme: darkTheme,
+        ),
       ),
     );
   }

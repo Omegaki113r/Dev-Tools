@@ -15,6 +15,7 @@
  */
 
 import 'dart:async';
+import 'dart:isolate';
 import 'package:dev_tools/core/services/data_streamer/serial_service.dart';
 import 'package:dev_tools/features/bitwise_calculator/domain/entities/bitwise_converter_entity.dart';
 import 'package:dev_tools/features/bitwise_calculator/domain/usecases/bitwise_convert_usecase.dart';
@@ -24,6 +25,7 @@ import 'package:drag_select_grid_view/drag_select_grid_view.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:string_validator/string_validator.dart';
+import 'package:typed_data/typed_buffers.dart';
 
 enum TXDataType { ascii, hex, decimal, binary }
 
@@ -252,15 +254,18 @@ class SerialStreamerProvider<T> with ChangeNotifier {
     }
   }
 
-  void _serialDataReceivedHandler(Uint8List incomingBytes) {
+  void _serialDataReceivedHandler(Uint8List incomingBytes) async {
     _rxData += incomingBytes.length;
-    _convertUsecase.convertCharacter(incomingBytes).listen((event) {
-      rxDataList.add(event);
-      if (_rxAutoScroll && rxScrollController.hasClients) {
-        rxScrollController.jumpTo(rxScrollController.position.maxScrollExtent);
-      }
-      notifyListeners();
-    });
+    _convertUsecase.convertCharacter(incomingBytes).listen(
+      (event) {
+        rxDataList.add(event);
+        if (_rxAutoScroll && rxScrollController.hasClients) {
+          rxScrollController
+              .jumpTo(rxScrollController.position.maxScrollExtent);
+        }
+      },
+      onDone: () => notifyListeners(),
+    );
   }
 
   void serialDataTransmitHandler(String transmittableString) {

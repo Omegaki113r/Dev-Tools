@@ -18,7 +18,7 @@ const String appName = "Xtronic DevTools";
 const String developerPrefix = "Developed By: ";
 const String versionPrefix = "Version: ";
 const String developer = "0m3g4ki113r";
-const String version = "0.0.7-alpha";
+const String version = "0.0.8-alpha";
 
 const String lblConnect = "Connect";
 const String lblDisconnect = "Disconnect";
@@ -46,6 +46,8 @@ const String lblCJSONString = "JSON C String";
 const String lblLoad = "Load";
 const String lblCopy = "Copy";
 const String lblCopiedToClipboard = "Copied to Clipboard!";
+const String lblFloatingPointsNotYetSupported =
+    "Floating point number conversion not yet supported!";
 
 const String lblAbout = "About";
 const String lblLabelNotProvided = "LABEL NOT PROVIDED";
@@ -82,3 +84,8 @@ const String lblBoolean = "Boolean";
 const String lblObject = "Object";
 const String lblArray = "Array";
 const String lblJSONSeperator = " : ";
+
+const String regExDecimal = r'^\d+(\.\d*)?';
+const String regExBinary = r'^[01]+';
+const String regExOctal = r'^[0-7]+';
+const String regExHex = r'^[0-9A-Fa-f]+';
