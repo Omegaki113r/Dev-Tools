@@ -266,7 +266,6 @@ class SerialStreamerProvider<T> with ChangeNotifier {
       },
       onDone: () => notifyListeners(),
     );
-    // notifyListeners();
   }
 
   void serialDataTransmitHandler(String transmittableString) {
