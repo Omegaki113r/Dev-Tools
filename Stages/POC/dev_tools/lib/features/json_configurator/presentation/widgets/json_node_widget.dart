@@ -4,7 +4,7 @@
  * File Created: Friday, 20th September 2024 1:44:22 am
  * Author: Omegaki113r (omegaki113r@gmail.com)
  * -----
- * Last Modified: Sunday, 22nd September 2024 1:32:10 am
+ * Last Modified: Sunday, 22nd September 2024 5:27:50 pm
  * Modified By: Omegaki113r (omegaki113r@gmail.com)
  * -----
  * Copyright 2024 - 2024 0m3g4ki113r, Xtronic
@@ -49,37 +49,49 @@ class JSONNode extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(
-                width: 50,
-                height: 50,
-                child: SoftButton(ButtonType.convex,
-                    child: Icon(
-                      node.isExpanded
-                          ? Icons.arrow_upward
-                          : Icons.arrow_forward,
-                      color: color1,
-                    ),
-                    onPressed: () => provider.toggleExpansion(node)),
+              Tooltip(
+                message: msgExpandCollapseNode,
+                waitDuration: tooltipWaitDuration,
+                child: SizedBox(
+                  width: 50,
+                  height: 50,
+                  child: SoftButton(ButtonType.convex,
+                      child: Icon(
+                        node.isExpanded
+                            ? Icons.arrow_upward
+                            : Icons.arrow_forward,
+                        color: color1,
+                      ),
+                      onPressed: () => provider.toggleExpansion(node)),
+                ),
               ),
               const Gap(20),
-              SizedBox(
-                width: 50,
-                height: 50,
-                child: SoftButton(ButtonType.emboss,
-                    child: const Icon(Icons.add, color: color1),
-                    onPressed: () => provider.add(node)),
+              Tooltip(
+                message: msgAddChildNode,
+                waitDuration: tooltipWaitDuration,
+                child: SizedBox(
+                  width: 50,
+                  height: 50,
+                  child: SoftButton(ButtonType.emboss,
+                      child: const Icon(Icons.add, color: color1),
+                      onPressed: () => provider.add(node)),
+                ),
               ),
               const Gap(20),
               Text(node.data!.title),
               Expanded(child: Container()),
               const Gap(20),
-              SoftButton(ButtonType.convex,
-                  width: 50,
-                  height: 50,
-                  child: const Icon(Icons.delete, color: Colors.red),
-                  onPressed: () {
-                provider.delete(node);
-              }),
+              Tooltip(
+                message: msgDeleteChildNode,
+                waitDuration: tooltipWaitDuration,
+                child: SoftButton(ButtonType.convex,
+                    width: 50,
+                    height: 50,
+                    child: const Icon(Icons.delete, color: Colors.red),
+                    onPressed: () {
+                  provider.delete(node);
+                }),
+              ),
               const Gap(20),
             ],
           ),
@@ -98,29 +110,37 @@ class JSONNode extends StatelessWidget {
           children: [
             if (node.data!.dataType == JSONDataType.eARRAY ||
                 node.data!.dataType == JSONDataType.eOBJECT) ...[
-              SizedBox(
-                width: 50,
-                height: 50,
-                child: SoftButton(ButtonType.convex,
-                    child: Icon(
-                      node.isExpanded
-                          ? Icons.arrow_upward
-                          : Icons.arrow_forward,
-                      color: color1,
-                    ),
-                    onPressed: () => provider.toggleExpansion(node)),
+              Tooltip(
+                message: msgExpandCollapseNode,
+                waitDuration: tooltipWaitDuration,
+                child: SizedBox(
+                  width: 50,
+                  height: 50,
+                  child: SoftButton(ButtonType.convex,
+                      child: Icon(
+                        node.isExpanded
+                            ? Icons.arrow_upward
+                            : Icons.arrow_forward,
+                        color: color1,
+                      ),
+                      onPressed: () => provider.toggleExpansion(node)),
+                ),
               ),
-              const SizedBox(width: 10),
+              const Gap(10),
             ],
             if (node.data!.dataType == JSONDataType.eARRAY ||
                 node.data!.dataType == JSONDataType.eOBJECT ||
                 node.isRoot) ...[
-              SizedBox(
-                width: 50,
-                height: 50,
-                child: SoftButton(ButtonType.emboss,
-                    child: const Icon(Icons.add, color: color1),
-                    onPressed: () => provider.add(node)),
+              Tooltip(
+                message: msgAddChildNode,
+                waitDuration: tooltipWaitDuration,
+                child: SizedBox(
+                  width: 50,
+                  height: 50,
+                  child: SoftButton(ButtonType.emboss,
+                      child: const Icon(Icons.add, color: color1),
+                      onPressed: () => provider.add(node)),
+                ),
               ),
             ] else ...[
               const SizedBox(
@@ -348,15 +368,19 @@ class JSONNode extends StatelessWidget {
                 Expanded(child: Container())
               ],
               const Gap(20),
-              SoftButton(ButtonType.convex,
-                  width: 50,
-                  height: 50,
-                  child: const Icon(
-                    Icons.delete,
-                    color: Colors.red,
-                  ), onPressed: () {
-                provider.delete(node);
-              }),
+              Tooltip(
+                message: msgDeleteChildNode,
+                waitDuration: tooltipWaitDuration,
+                child: SoftButton(ButtonType.convex,
+                    width: 50,
+                    height: 50,
+                    child: const Icon(
+                      Icons.delete,
+                      color: Colors.red,
+                    ), onPressed: () {
+                  provider.delete(node);
+                }),
+              ),
               const Gap(20),
             ],
           ],
