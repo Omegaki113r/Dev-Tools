@@ -89,3 +89,9 @@ const String regExDecimal = r'^\d+(\.\d*)?';
 const String regExBinary = r'^[01]+';
 const String regExOctal = r'^[0-7]+';
 const String regExHex = r'^[0-9A-Fa-f]+';
+
+const String msgLoadJSONFromFile = "Load JSON from file";
+const String msgCopyToClipboard = "Copy the string to clipboard";
+const String msgAddChildNode = "Add JSON child";
+const String msgExpandCollapseNode = "Expand/Collapse";
+const String msgDeleteChildNode = "Delete JSON child and it's contents";

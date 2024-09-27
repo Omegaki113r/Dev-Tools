@@ -4,7 +4,7 @@
  * File Created: Wednesday, 18th September 2024 6:57:14 pm
  * Author: Omegaki113r (omegaki113r@gmail.com)
  * -----
- * Last Modified: Friday, 20th September 2024 10:26:23 pm
+ * Last Modified: Sunday, 22nd September 2024 5:28:03 pm
  * Modified By: Omegaki113r (omegaki113r@gmail.com)
  * -----
  * Copyright 2024 - 2024 0m3g4ki113r, Xtronic
@@ -40,41 +40,49 @@ class JSONConfiguratorView extends StatelessWidget {
             padding: const EdgeInsets.only(left: 10.0),
             child: Row(
               children: [
-                SoftButton(ButtonType.flat,
-                    label: lblLoad,
-                    width: 50,
-                    height: 50,
-                    child: const Icon(
-                      Icons.folder_open_sharp,
-                      color: color1,
-                    ), onPressed: () {
-                  provider.loadJSON();
-                }),
+                Tooltip(
+                  message: msgLoadJSONFromFile,
+                  waitDuration: tooltipWaitDuration,
+                  child: SoftButton(ButtonType.flat,
+                      label: lblLoad,
+                      width: 50,
+                      height: 50,
+                      child: const Icon(
+                        Icons.folder_open_sharp,
+                        color: color1,
+                      ), onPressed: () {
+                    provider.loadJSON();
+                  }),
+                ),
                 const Gap(20),
-                SoftButton(ButtonType.flat,
-                    label: lblCopy,
-                    width: 50,
-                    height: 50,
-                    child: const Icon(
-                      Icons.copy,
-                      color: color1,
-                    ), onPressed: () {
-                  provider.copyJSON();
-                  toastification.show(
-                      context: context,
-                      type: ToastificationType.info,
-                      style: ToastificationStyle.flat,
-                      alignment: Alignment.bottomCenter,
-                      autoCloseDuration: const Duration(seconds: 2),
-                      backgroundColor: color6,
-                      showProgressBar: false,
-                      showIcon: false,
-                      borderSide: const BorderSide(color: color1, width: 0.5),
-                      description: const Text(
-                        lblCopiedToClipboard,
-                        style: TextStyle(color: color2),
-                      ));
-                }),
+                Tooltip(
+                  message: msgCopyToClipboard,
+                  waitDuration: tooltipWaitDuration,
+                  child: SoftButton(ButtonType.flat,
+                      label: lblCopy,
+                      width: 50,
+                      height: 50,
+                      child: const Icon(
+                        Icons.copy,
+                        color: color1,
+                      ), onPressed: () {
+                    provider.copyJSON();
+                    toastification.show(
+                        context: context,
+                        type: ToastificationType.info,
+                        style: ToastificationStyle.flat,
+                        alignment: Alignment.bottomCenter,
+                        autoCloseDuration: const Duration(seconds: 2),
+                        backgroundColor: color6,
+                        showProgressBar: false,
+                        showIcon: false,
+                        borderSide: const BorderSide(color: color1, width: 0.5),
+                        description: const Text(
+                          lblCopiedToClipboard,
+                          style: TextStyle(color: color2),
+                        ));
+                  }),
+                ),
                 const Gap(20),
                 Expanded(
                   child: SoftText(

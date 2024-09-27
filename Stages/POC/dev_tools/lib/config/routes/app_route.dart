@@ -54,7 +54,7 @@ class AppRoute {
   static final GoRouter _router = GoRouter(
     navigatorKey: _rootNavigatorKey,
     // initialLocation: dataStreamerRoute,
-    initialLocation: jSONConfiguratorRoute,
+    initialLocation: bitwiseCalculatorRoute,
     routes: [
       ShellRoute(
         navigatorKey: _shellNavigatorKey,

@@ -4,7 +4,7 @@
  * File Created: Wednesday, 18th September 2024 7:00:36 pm
  * Author: Omegaki113r (omegaki113r@gmail.com)
  * -----
- * Last Modified: Saturday, 21st September 2024 6:18:04 pm
+ * Last Modified: Friday, 27th September 2024 3:43:14 pm
  * Modified By: Omegaki113r (omegaki113r@gmail.com)
  * -----
  * Copyright 2024 - 2024 0m3g4ki113r, Xtronic
@@ -393,36 +393,63 @@ class JSONConfiguratorProvider with ChangeNotifier {
   TreeNode<JSONConfiguratorEntity> generateTreeWithList(List<dynamic> data,
       {required TreeNode<JSONConfiguratorEntity> node}) {
     for (var element in data) {
-      switch (element.runtimeType) {
-        case int:
-          if (kDebugMode) print("int");
-          var val = JSONConfiguratorEntity(JSONDataType.eNUMBER);
-          val.numberValue = element;
-          val.stringEditController.text = element.toString();
-          node.add(TreeNode<JSONConfiguratorEntity>(data: val));
-          break;
-        case bool:
-          if (kDebugMode) print("bool");
-          var val = JSONConfiguratorEntity(JSONDataType.eBOOL);
-          val.boolValue = element;
-          node.add(TreeNode<JSONConfiguratorEntity>(data: val));
-          break;
-        case String:
-          if (kDebugMode) print("string");
-          var val = JSONConfiguratorEntity(JSONDataType.eSTRING);
-          val.dataValue = element;
-          val.stringEditController.text = element;
-          node.add(TreeNode<JSONConfiguratorEntity>(data: val));
-          break;
-        default:
-          if (kDebugMode) print("maybe map");
-          TreeNode<JSONConfiguratorEntity> childNode =
-              TreeNode(data: JSONConfiguratorEntity(JSONDataType.eOBJECT));
-          Map<String, dynamic> childMap = element as Map<String, dynamic>;
-          childNode = generateTreeWithMap(childMap, node: childNode);
-          node.add(childNode);
-          break;
+      if (element is int) {
+        if (kDebugMode) print("int");
+        var val = JSONConfiguratorEntity(JSONDataType.eNUMBER);
+        BitwiseConvert convert = BitwiseConvert();
+        val.numberValue = convert.convertFromDecimal(element.toString());
+        // val.numberValue = value;
+        val.stringEditController.text = element.toString();
+        node.add(TreeNode<JSONConfiguratorEntity>(data: val));
+      } else if (element is bool) {
+        if (kDebugMode) print("bool");
+        var val = JSONConfiguratorEntity(JSONDataType.eBOOL);
+        val.boolValue = element;
+        node.add(TreeNode<JSONConfiguratorEntity>(data: val));
+      } else if (element is String) {
+        if (kDebugMode) print("string");
+        var val = JSONConfiguratorEntity(JSONDataType.eSTRING);
+        val.dataValue = element;
+        val.stringEditController.text = element;
+        node.add(TreeNode<JSONConfiguratorEntity>(data: val));
+      } else {
+        if (kDebugMode) print("maybe map");
+        TreeNode<JSONConfiguratorEntity> childNode =
+            TreeNode(data: JSONConfiguratorEntity(JSONDataType.eOBJECT));
+        Map<String, dynamic> childMap = element as Map<String, dynamic>;
+        childNode = generateTreeWithMap(childMap, node: childNode);
+        node.add(childNode);
       }
+      // switch (element.runtimeType) {
+      //   case int:
+      //     if (kDebugMode) print("int");
+      //     var val = JSONConfiguratorEntity(JSONDataType.eNUMBER);
+      //     val.numberValue = element;
+      //     val.stringEditController.text = element.toString();
+      //     node.add(TreeNode<JSONConfiguratorEntity>(data: val));
+      //     break;
+      //   case bool:
+      //     if (kDebugMode) print("bool");
+      //     var val = JSONConfiguratorEntity(JSONDataType.eBOOL);
+      //     val.boolValue = element;
+      //     node.add(TreeNode<JSONConfiguratorEntity>(data: val));
+      //     break;
+      //   case String:
+      //     if (kDebugMode) print("string");
+      //     var val = JSONConfiguratorEntity(JSONDataType.eSTRING);
+      //     val.dataValue = element;
+      //     val.stringEditController.text = element;
+      //     node.add(TreeNode<JSONConfiguratorEntity>(data: val));
+      //     break;
+      //   default:
+      //     if (kDebugMode) print("maybe map");
+      //     TreeNode<JSONConfiguratorEntity> childNode =
+      //         TreeNode(data: JSONConfiguratorEntity(JSONDataType.eOBJECT));
+      //     Map<String, dynamic> childMap = element as Map<String, dynamic>;
+      //     childNode = generateTreeWithMap(childMap, node: childNode);
+      //     node.add(childNode);
+      //     break;
+      // }
     }
     return node;
   }
@@ -431,46 +458,81 @@ class JSONConfiguratorProvider with ChangeNotifier {
       Map<String, dynamic> data,
       {required TreeNode<JSONConfiguratorEntity> node}) {
     data.forEach((key, value) {
-      switch (value.runtimeType) {
-        case String:
-          if (kDebugMode) print("string");
-          var val = JSONConfiguratorEntity(JSONDataType.eSTRING, title: key);
-          val.dataValue = value;
-          val.stringEditController.text = value;
-          node.add(TreeNode<JSONConfiguratorEntity>(data: val));
-          break;
-        case int:
-          if (kDebugMode) print("int");
-          var val = JSONConfiguratorEntity(JSONDataType.eNUMBER, title: key);
-          BitwiseConvert convert = BitwiseConvert();
-          val.numberValue = convert.convertFromDecimal(value.toString());
-          // val.numberValue = value;
-          val.stringEditController.text = value.toString();
-          node.add(TreeNode<JSONConfiguratorEntity>(data: val));
-          break;
-        case bool:
-          if (kDebugMode) print("bool");
-          var val = JSONConfiguratorEntity(JSONDataType.eBOOL, title: key);
-          val.boolValue = value;
-          node.add(TreeNode<JSONConfiguratorEntity>(data: val));
-          break;
-        case List:
-          if (kDebugMode) print("List found");
-          TreeNode<JSONConfiguratorEntity> childNode = TreeNode(
-              data: JSONConfiguratorEntity(JSONDataType.eARRAY, title: key));
-          List<dynamic> childMap = value as List<dynamic>;
-          childNode = generateTreeWithList(childMap, node: childNode);
-          node.add(childNode);
-          break;
-        default:
-          if (kDebugMode) print("maybe map");
-          TreeNode<JSONConfiguratorEntity> childNode = TreeNode(
-              data: JSONConfiguratorEntity(JSONDataType.eOBJECT, title: key));
-          Map<String, dynamic> childMap = value as Map<String, dynamic>;
-          childNode = generateTreeWithMap(childMap, node: childNode);
-          node.add(childNode);
-          break;
+      if (value is int) {
+        if (kDebugMode) print("int");
+        var val = JSONConfiguratorEntity(JSONDataType.eNUMBER, title: key);
+        BitwiseConvert convert = BitwiseConvert();
+        val.numberValue = convert.convertFromDecimal(value.toString());
+        // val.numberValue = value;
+        val.stringEditController.text = value.toString();
+        node.add(TreeNode<JSONConfiguratorEntity>(data: val));
+      } else if (value is bool) {
+        if (kDebugMode) print("bool");
+        var val = JSONConfiguratorEntity(JSONDataType.eBOOL, title: key);
+        val.boolValue = value;
+        node.add(TreeNode<JSONConfiguratorEntity>(data: val));
+      } else if (value is String) {
+        if (kDebugMode) print("string");
+        var val = JSONConfiguratorEntity(JSONDataType.eSTRING, title: key);
+        val.dataValue = value;
+        val.stringEditController.text = value;
+        node.add(TreeNode<JSONConfiguratorEntity>(data: val));
+      } else if (value is List<dynamic>) {
+        if (kDebugMode) print("List found");
+        TreeNode<JSONConfiguratorEntity> childNode = TreeNode(
+            data: JSONConfiguratorEntity(JSONDataType.eARRAY, title: key));
+        List<dynamic> childMap = value as List<dynamic>;
+        childNode = generateTreeWithList(childMap, node: childNode);
+        node.add(childNode);
+      } else {
+        if (kDebugMode) print("maybe map");
+        TreeNode<JSONConfiguratorEntity> childNode = TreeNode(
+            data: JSONConfiguratorEntity(JSONDataType.eOBJECT, title: key));
+        Map<String, dynamic> childMap = value as Map<String, dynamic>;
+        childNode = generateTreeWithMap(childMap, node: childNode);
+        node.add(childNode);
       }
+
+      // switch (value.runtimeType) {
+      //   case String:
+      //     if (kDebugMode) print("string");
+      //     var val = JSONConfiguratorEntity(JSONDataType.eSTRING, title: key);
+      //     val.dataValue = value;
+      //     val.stringEditController.text = value;
+      //     node.add(TreeNode<JSONConfiguratorEntity>(data: val));
+      //     break;
+      //   case int:
+      //     if (kDebugMode) print("int");
+      //     var val = JSONConfiguratorEntity(JSONDataType.eNUMBER, title: key);
+      //     BitwiseConvert convert = BitwiseConvert();
+      //     val.numberValue = convert.convertFromDecimal(value.toString());
+      //     // val.numberValue = value;
+      //     val.stringEditController.text = value.toString();
+      //     node.add(TreeNode<JSONConfiguratorEntity>(data: val));
+      //     break;
+      //   case bool:
+      //     if (kDebugMode) print("bool");
+      //     var val = JSONConfiguratorEntity(JSONDataType.eBOOL, title: key);
+      //     val.boolValue = value;
+      //     node.add(TreeNode<JSONConfiguratorEntity>(data: val));
+      //     break;
+      //   case List:
+      //     if (kDebugMode) print("List found");
+      //     TreeNode<JSONConfiguratorEntity> childNode = TreeNode(
+      //         data: JSONConfiguratorEntity(JSONDataType.eARRAY, title: key));
+      //     List<dynamic> childMap = value as List<dynamic>;
+      //     childNode = generateTreeWithList(childMap, node: childNode);
+      //     node.add(childNode);
+      //     break;
+      //   default:
+      //     if (kDebugMode) print("maybe map");
+      //     TreeNode<JSONConfiguratorEntity> childNode = TreeNode(
+      //         data: JSONConfiguratorEntity(JSONDataType.eOBJECT, title: key));
+      //     Map<String, dynamic> childMap = value as Map<String, dynamic>;
+      //     childNode = generateTreeWithMap(childMap, node: childNode);
+      //     node.add(childNode);
+      //     break;
+      // }
     });
     return node;
   }

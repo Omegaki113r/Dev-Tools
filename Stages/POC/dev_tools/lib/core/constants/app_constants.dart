@@ -28,3 +28,5 @@ enum SelectedView { bitwiseCalculator, streamer }
 enum StreamerType { serial, websocket, mqtt }
 
 enum JSONDataType { eROOT, eSTRING, eNUMBER, eBOOL, eOBJECT, eARRAY }
+
+const Duration tooltipWaitDuration = Duration(milliseconds: 500);
