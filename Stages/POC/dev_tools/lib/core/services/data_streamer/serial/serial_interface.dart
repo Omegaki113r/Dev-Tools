@@ -23,7 +23,7 @@ abstract class SerialInterface {
   factory SerialInterface() => getSerialInterface();
   void dispose();
   bool fetchPortList();
-  bool connect(String selectedBaudrate, String selectedDataBits,
+  Future<bool> connect(String selectedBaudrate, String selectedDataBits,
       String selectedParity, String selectedStopBits, bool ctsFlowControl);
   bool get isConnected;
   bool disconnect();

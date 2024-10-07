@@ -96,7 +96,7 @@ class DesktopSerialInterface implements SerialInterface {
   }
 
   @override
-  bool connect(String selectedBaudrate, String selectedDataBits,
+  Future<bool> connect(String selectedBaudrate, String selectedDataBits,
       String selectedParity, String selectedStopBits, bool ctsFlowControl) {
     bool openState = false;
     if (_selectedPort != null && !_selectedPort!.isOpen) {
@@ -122,7 +122,7 @@ class DesktopSerialInterface implements SerialInterface {
         disconnect();
       }
     }
-    return openState;
+    return Future.value(openState);
   }
 
   @override

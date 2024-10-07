@@ -48,7 +48,7 @@ class SerialConvert {
   }
 
   String _ascii(byte) {
-    return String.fromCharCode(byte).replaceAll('\n', '');
+    return String.fromCharCode(byte).replaceAll('\n', '').replaceAll('\r', '');
   }
 
   String _binary(byte) {
