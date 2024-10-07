@@ -13,6 +13,8 @@
  * Date      	By	Comments
  * ----------	---	---------------------------------------------------------
  */
+
+import 'dart:html';
 import 'package:dev_tools/core/services/data_streamer/serial/serial_interface.dart';
 import 'package:flutter/foundation.dart';
 import 'package:serial/serial.dart';
@@ -55,6 +57,8 @@ SerialInterface getSerialInterface() => WebSerialInterface();
 class WebSerialInterface implements SerialInterface {
   final Map<String, SerialPort?> _portList = {};
   SerialPort? _selectedPort;
+  ReadableStreamReader? _serialPortReader;
+  bool _isOpen = false;
 
   int _baudrate = 115200;
   Parity _parity = Parity.none;
@@ -81,40 +85,56 @@ class WebSerialInterface implements SerialInterface {
   }
 
   @override
-  bool connect(String selectedBaudrate, String selectedDataBits,
-      String selectedParity, String selectedStopBits, bool ctsFlowControl) {
-    // SerialPort port = await window.navigator.serial.requestPort();
-    // if (port != null) {
-    //   _selectedPort = port;
-    //   _selectedPort?.open(
-    //       baudRate: _baudrate,
-    //       dataBits: _dataBits,
-    //       stopBits: _stopBits,
-    //       parity: _parity);
-    //   return true;
+  Future<bool> connect(
+      String selectedBaudrate,
+      String selectedDataBits,
+      String selectedParity,
+      String selectedStopBits,
+      bool ctsFlowControl) async {
+    if (_selectedPort != null) {
+      await _selectedPort?.close();
+      _selectedPort = null;
+    }
+    SerialPort port = await window.navigator.serial.requestPort();
+    _selectedPort = port;
+    await _selectedPort?.open(
+        baudRate: _baudrate,
+        dataBits: _dataBits,
+        stopBits: _stopBits,
+        parity: _parity);
+    _serialPortReader = _selectedPort?.readable.reader;
+    _isOpen = true;
+    // final reader = port.readable.reader;
+    // while (true) {
+    //   final result = await reader.read();
+    //   print(result?.value ?? "");
     // }
-    // return false;
-    return false;
+    return true;
   }
 
   @override
-  bool get isConnected =>
-      throw UnimplementedError("isConnected not implemented");
+  bool get isConnected => _isOpen;
 
   @override
   bool disconnect() {
     _closeStreams();
-    throw UnimplementedError("disconnect not implemented");
+    _selectedPort?.close();
+    _isOpen = false;
+    _selectedPort = null;
+    return true;
   }
 
-  void _closeStreams() =>
-      throw UnimplementedError("_closeStreams not implemented");
+  void _closeStreams() {
+    if (_serialPortReader != null) {
+      _serialPortReader?.releaseLock();
+    }
+  }
 
   @override
   String get name => throw UnimplementedError("name getter not implemented");
 
   @override
-  bool get isOpen => throw UnimplementedError("isOpen getter not implemented");
+  bool get isOpen => _isOpen;
 
   @override
   get port => _selectedPort;
@@ -124,8 +144,23 @@ class WebSerialInterface implements SerialInterface {
     throw UnimplementedError("set port not implemented");
   }
 
+  // @override
+  // Stream? get reader => _selectedPort!.readable.reader.read().asStream();
+
   @override
-  Stream? get reader => _selectedPort!.readable.reader.read().asStream().cast();
+  Stream? get reader => timedCounter();
+
+  Stream<Uint8List> timedCounter() async* {
+    while (true) {
+      await Future.delayed(const Duration(milliseconds: 400));
+      try {
+        final result = await _serialPortReader?.read();
+        yield result!.value;
+      } catch (e) {
+        return;
+      }
+    }
+  }
 
   @override
   write(Uint8List bytesToWrite) =>

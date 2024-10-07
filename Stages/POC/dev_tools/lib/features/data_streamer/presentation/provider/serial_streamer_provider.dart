@@ -15,7 +15,6 @@
  */
 
 import 'dart:async';
-import 'dart:isolate';
 import 'package:dev_tools/core/services/data_streamer/serial_service.dart';
 import 'package:dev_tools/features/bitwise_calculator/domain/entities/bitwise_converter_entity.dart';
 import 'package:dev_tools/features/bitwise_calculator/domain/usecases/bitwise_convert_usecase.dart';
@@ -244,13 +243,18 @@ class SerialStreamerProvider<T> with ChangeNotifier {
     }
   }
 
-  void serialPortConnect() {
-    if (_serialService.connect(_selectedBaudrate, _selectedDataBits,
-        _selectedParity, _selectedStopBits, _ctsFlowControl)) {
+  void serialPortConnect() async {
+    bool isConnected = await _serialService.connect(_selectedBaudrate,
+        _selectedDataBits, _selectedParity, _selectedStopBits, _ctsFlowControl);
+    if (isConnected) {
       _serialService.reader?.listen((data) {
         _serialDataReceivedHandler(data);
       });
       notifyListeners();
+    } else {
+      if (kDebugMode) {
+        print("connect failed");
+      }
     }
   }
 
@@ -674,10 +678,10 @@ class SerialStreamerProvider<T> with ChangeNotifier {
   }
 
   bool isOpen() {
-    if (!kIsWeb) {
-      return _serialService.port.isOpen;
+    if (kIsWeb) {
+      return _serialService.isConnected;
     }
-    return false;
+    return _serialService.port.isOpen;
   }
 
   List<String> get baudrateList => _serialService.baudrateList;

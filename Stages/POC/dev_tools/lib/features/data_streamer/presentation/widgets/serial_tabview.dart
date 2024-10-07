@@ -4,7 +4,7 @@
  * File Created: Friday, 10th May 2024 12:58:32 am
  * Author: Omegaki113r (omegaki113r@gmail.com)
  * -----
- * Last Modified: Sunday, 22nd September 2024 1:41:28 am
+ * Last Modified: Monday, 7th October 2024 8:27:42 am
  * Modified By: Omegaki113r (omegaki113r@gmail.com)
  * -----
  * Copyright 2024 - 2024 0m3g4ki113r, Xtronic
@@ -116,18 +116,22 @@ class _SerialTabViewState extends State<SerialTabView> {
                                       provider.serialPortConnect();
                                     }
                                   } else {
-                                    // provider.serialPortConnect();
-                                    showDialog(
-                                        context: context,
-                                        builder: (context) {
-                                          return const AlertDialog(
-                                            title: Text(lblNotSupportedYet),
-                                            content: Padding(
-                                              padding: EdgeInsets.all(30.0),
-                                              child: Text(lblWEBAPINotice),
-                                            ),
-                                          );
-                                        });
+                                    if (provider.isOpen()) {
+                                      provider.serialPortDisconnect();
+                                    } else {
+                                      provider.serialPortConnect();
+                                    }
+                                    // showDialog(
+                                    //     context: context,
+                                    //     builder: (context) {
+                                    //       return const AlertDialog(
+                                    //         title: Text(lblNotSupportedYet),
+                                    //         content: Padding(
+                                    //           padding: EdgeInsets.all(30.0),
+                                    //           child: Text(lblWEBAPINotice),
+                                    //         ),
+                                    //       );
+                                    //     });
                                   }
                                 },
                               );
