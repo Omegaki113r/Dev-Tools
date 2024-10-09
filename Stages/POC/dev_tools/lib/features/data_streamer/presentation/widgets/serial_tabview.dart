@@ -4,7 +4,7 @@
  * File Created: Friday, 10th May 2024 12:58:32 am
  * Author: Omegaki113r (omegaki113r@gmail.com)
  * -----
- * Last Modified: Monday, 7th October 2024 8:27:42 am
+ * Last Modified: Monday, 7th October 2024 10:18:21 am
  * Modified By: Omegaki113r (omegaki113r@gmail.com)
  * -----
  * Copyright 2024 - 2024 0m3g4ki113r, Xtronic
@@ -42,6 +42,7 @@ import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
+import 'package:toastification/toastification.dart';
 
 class SerialTabView extends StatefulWidget {
   const SerialTabView({super.key});
@@ -214,6 +215,27 @@ class _SerialTabViewState extends State<SerialTabView> {
                                   if (kDebugMode) {
                                     print(value);
                                   }
+                                  if (kIsWeb) {
+                                    if (provider.isOpen()) {
+                                      toastification.show(
+                                          context: context,
+                                          type: ToastificationType.error,
+                                          style: ToastificationStyle.flat,
+                                          alignment: Alignment.bottomCenter,
+                                          autoCloseDuration:
+                                              const Duration(seconds: 5),
+                                          backgroundColor: color6,
+                                          showProgressBar: false,
+                                          showIcon: false,
+                                          borderSide: const BorderSide(
+                                              color: color1, width: 0.5),
+                                          description: const Text(
+                                            msgCannotChangeConfigAfterConnect,
+                                            style: TextStyle(color: color2),
+                                          ));
+                                      return;
+                                    }
+                                  }
                                   provider.selectedBaudRateChanged(value);
                                 },
                                 labelTextStyle: const TextStyle(
@@ -254,6 +276,27 @@ class _SerialTabViewState extends State<SerialTabView> {
                                 onChanged: (value) {
                                   if (kDebugMode) {
                                     print(value);
+                                  }
+                                  if (kIsWeb) {
+                                    if (provider.isOpen()) {
+                                      toastification.show(
+                                          context: context,
+                                          type: ToastificationType.error,
+                                          style: ToastificationStyle.flat,
+                                          alignment: Alignment.bottomCenter,
+                                          autoCloseDuration:
+                                              const Duration(seconds: 5),
+                                          backgroundColor: color6,
+                                          showProgressBar: false,
+                                          showIcon: false,
+                                          borderSide: const BorderSide(
+                                              color: color1, width: 0.5),
+                                          description: const Text(
+                                            msgCannotChangeConfigAfterConnect,
+                                            style: TextStyle(color: color2),
+                                          ));
+                                      return;
+                                    }
                                   }
                                   provider.selectedDataBitsChanged(value);
                                 },
@@ -296,6 +339,27 @@ class _SerialTabViewState extends State<SerialTabView> {
                                   if (kDebugMode) {
                                     print(value);
                                   }
+                                  if (kIsWeb) {
+                                    if (provider.isOpen()) {
+                                      toastification.show(
+                                          context: context,
+                                          type: ToastificationType.error,
+                                          style: ToastificationStyle.flat,
+                                          alignment: Alignment.bottomCenter,
+                                          autoCloseDuration:
+                                              const Duration(seconds: 5),
+                                          backgroundColor: color6,
+                                          showProgressBar: false,
+                                          showIcon: false,
+                                          borderSide: const BorderSide(
+                                              color: color1, width: 0.5),
+                                          description: const Text(
+                                            msgCannotChangeConfigAfterConnect,
+                                            style: TextStyle(color: color2),
+                                          ));
+                                      return;
+                                    }
+                                  }
                                   provider.selectedStopBitsChanged(value);
                                 },
                                 labelTextStyle: const TextStyle(
@@ -337,6 +401,27 @@ class _SerialTabViewState extends State<SerialTabView> {
                                 onChanged: (value) {
                                   if (kDebugMode) {
                                     print(value);
+                                  }
+                                  if (kIsWeb) {
+                                    if (provider.isOpen()) {
+                                      toastification.show(
+                                          context: context,
+                                          type: ToastificationType.error,
+                                          style: ToastificationStyle.flat,
+                                          alignment: Alignment.bottomCenter,
+                                          autoCloseDuration:
+                                              const Duration(seconds: 5),
+                                          backgroundColor: color6,
+                                          showProgressBar: false,
+                                          showIcon: false,
+                                          borderSide: const BorderSide(
+                                              color: color1, width: 0.5),
+                                          description: const Text(
+                                            msgCannotChangeConfigAfterConnect,
+                                            style: TextStyle(color: color2),
+                                          ));
+                                      return;
+                                    }
                                   }
                                   provider.selectedParityChanged(value);
                                 },

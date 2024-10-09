@@ -80,6 +80,8 @@ dependencies:
   animated_tree_view:
   toastification: ^2.2.0
 
+  mqtt_client: ^10.5.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

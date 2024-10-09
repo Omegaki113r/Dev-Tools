@@ -18,7 +18,7 @@ const String appName = "Xtronic DevTools";
 const String developerPrefix = "Developed By: ";
 const String versionPrefix = "Version: ";
 const String developer = "0m3g4ki113r";
-const String version = "0.0.9-alpha";
+const String version = "0.0.10-alpha";
 
 const String lblConnect = "Connect";
 const String lblDisconnect = "Disconnect";
@@ -63,6 +63,8 @@ const String lblDataBits = "Data Bits";
 const String lblStopBits = "Stop Bits";
 const String lblParity = "Parity";
 const String lblCTSFlowControl = "CTS Flow Control";
+const String msgCannotChangeConfigAfterConnect =
+    "Web doesn't support configuration change after connection is established. Please disconnect from serial port, change the configuration and reconnect";
 const String lblConfiguration = "Configuration";
 const String lblTX = "TX";
 const String lblRX = "RX";
@@ -85,10 +87,11 @@ const String lblObject = "Object";
 const String lblArray = "Array";
 const String lblJSONSeperator = " : ";
 
-const String regExDecimal = r'^\d+(\.\d*)?';
-const String regExBinary = r'^[01]+';
-const String regExOctal = r'^[0-7]+';
-const String regExHex = r'^[0-9A-Fa-f]+';
+// const String regExDecimal = r'^\d+(\.\d*)?';
+const String regExDecimal = r'[\d+\-*/() <<>> &| ]';
+const String regExBinary = r'[01+\-*/() <<>> &| ]';
+const String regExOctal = r'[0-7+\-*/() <<>> &| ]';
+const String regExHex = r'[0-9A-Fa-f+\-*/() <<>> &| ]';
 
 const String msgLoadJSONFromFile = "Load JSON from file";
 const String msgCopyToClipboard = "Copy the string to clipboard";
